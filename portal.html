@@ -3,198 +3,177 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Researcher Portal | Precision Labs</title>
+    <title>Researcher Dashboard | Precision Labs</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        .faq-tab.active { background-color: #2563eb; color: white; border-color: #2563eb; shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1); }
-        .faq-item:hover { border-color: #2563eb; transform: translateY(-2px); }
-        .chat-scroll::-webkit-scrollbar { width: 6px; }
-        .chat-scroll::-webkit-scrollbar-track { background: #f1f5f9; }
-        .chat-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        .study-link:hover { color: #2563eb; background-color: #eff6ff; }
+        .sidebar-item.active { background-color: #f1f5f9; color: #2563eb; border-right: 4px solid #2563eb; }
         * { -webkit-tap-highlight-color: transparent; }
     </style>
 </head>
-<body class="bg-slate-50 font-sans antialiased text-slate-900 h-screen flex flex-col overflow-hidden">
+<body class="bg-slate-50 font-sans antialiased text-slate-900 min-h-screen">
 
-    <nav class="bg-white border-b border-slate-200 h-16 flex items-center px-6 justify-between flex-shrink-0 z-50">
-    <a href="index.html" class="flex items-center gap-2 hover:opacity-80 transition-opacity cursor-pointer">
-        <div class="w-8 h-8 bg-blue-600 rounded flex items-center justify-center text-white">
-            <i class="fas fa-atom text-xs"></i>
-        </div>
-        <span class="font-bold text-lg tracking-tighter uppercase italic text-slate-900">
-            Precision<span class="text-blue-600">Labs</span>
-        </span>
-    </a>
-    <div class="flex gap-6 text-[10px] font-black uppercase tracking-widest text-slate-400">
-        <a href="catalog.html" class="hover:text-blue-600 transition-colors">Catalog</a>
-        <a href="index.html" class="hover:text-blue-600 transition-colors">Logout</a>
-    </div>
-</nav>
+    <script>
+        // Security Guard
+        if (localStorage.getItem('portalAuthorized') !== 'true') {
+            window.location.href = 'login.html';
+        }
+    </script>
 
-    <div class="flex flex-1 overflow-hidden">
-        
-        <aside class="w-72 bg-white border-r border-slate-200 hidden md:flex flex-col">
-            <div class="p-6 border-b border-slate-100">
-                <h2 class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-4">Database Filters</h2>
-                <div class="space-y-2">
-                    <button onclick="filterFaq('all', this)" class="faq-tab active w-full text-left px-4 py-3 rounded-xl border border-slate-100 text-[10px] font-bold uppercase tracking-widest transition-all">
-                        <i class="fas fa-layer-group mr-2"></i> All Data
-                    </button>
-                    <button onclick="filterFaq('handling', this)" class="faq-tab w-full text-left px-4 py-3 rounded-xl border border-slate-100 text-[10px] font-bold uppercase tracking-widest transition-all">
-                        <i class="fas fa-vial mr-2"></i> Handling
-                    </button>
-                    <button onclick="filterFaq('storage', this)" class="faq-tab w-full text-left px-4 py-3 rounded-xl border border-slate-100 text-[10px] font-bold uppercase tracking-widest transition-all">
-                        <i class="fas fa-snowflake mr-2"></i> Storage
-                    </button>
-                    <button onclick="filterFaq('math', this)" class="faq-tab w-full text-left px-4 py-3 rounded-xl border border-slate-100 text-[10px] font-bold uppercase tracking-widest transition-all">
-                        <i class="fas fa-calculator mr-2"></i> Concentration
-                    </button>
-                </div>
+    <nav class="bg-white border-b border-slate-200 h-16 flex items-center px-6 justify-between sticky top-0 z-50">
+        <div class="flex items-center gap-2">
+            <div class="w-8 h-8 bg-blue-600 rounded flex items-center justify-center text-white">
+                <i class="fas fa-database text-xs"></i>
             </div>
-            
-            <div class="p-6 flex-1 flex flex-col justify-end">
-                <div class="bg-blue-50 border border-blue-100 p-4 rounded-2xl mb-4">
-                    <p class="text-[10px] font-black text-blue-800 uppercase tracking-widest mb-2">Lab Status</p>
-                    <div class="flex items-center gap-2">
-                        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                        <span class="text-[10px] text-emerald-700 font-bold uppercase">Systems Nominal</span>
-                    </div>
-                </div>
-                <div class="text-[9px] text-slate-400 leading-relaxed text-center uppercase tracking-tighter">
-                    Encrypted Research Environment<br>Precision Labs v2.4
-                </div>
+            <span class="font-bold text-lg tracking-tighter uppercase italic">Precision<span class="text-blue-600">Intelligence</span></span>
+        </div>
+        <div class="flex items-center gap-4">
+            <span class="hidden md:block text-[9px] font-black uppercase tracking-widest text-emerald-500 bg-emerald-50 px-3 py-1 rounded-full">Secure Session Active</span>
+            <a href="catalog.html" class="text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-blue-600">Exit Terminal</a>
+        </div>
+    </nav>
+
+    <div class="flex flex-col md:flex-row min-h-[calc(100vh-64px)]">
+        
+        <aside class="w-full md:w-72 bg-white border-r border-slate-200 p-6 space-y-8">
+            <div>
+                <h3 class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-4">Research Modules</h3>
+                <nav class="space-y-1">
+                    <button onclick="showModule('protocols')" class="sidebar-item active w-full text-left px-4 py-3 text-xs font-bold uppercase tracking-tight rounded-lg transition-all">
+                        <i class="fas fa-vial mr-3"></i> Lab Protocols
+                    </button>
+                    <button onclick="showModule('studies')" class="sidebar-item w-full text-left px-4 py-3 text-xs font-bold uppercase tracking-tight rounded-lg transition-all">
+                        <i class="fas fa-microscope mr-3"></i> Clinical Studies
+                    </button>
+                    <button onclick="showModule('calculators')" class="sidebar-item w-full text-left px-4 py-3 text-xs font-bold uppercase tracking-tight rounded-lg transition-all">
+                        <i class="fas fa-calculator mr-3"></i> Reconstitution Math
+                    </button>
+                </nav>
+            </div>
+
+            <div class="bg-slate-900 rounded-2xl p-4 text-white">
+                <p class="text-[9px] font-black uppercase tracking-[0.2em] text-blue-400 mb-2">Support Terminal</p>
+                <p class="text-[11px] leading-relaxed text-slate-300 mb-4">Direct access to lab staff for technical inquiries.</p>
+                <a href="contact.html" class="block w-full text-center bg-white text-slate-900 py-2 rounded-lg text-[9px] font-black uppercase tracking-widest hover:bg-blue-600 hover:text-white transition-all">Open Ticket</a>
             </div>
         </aside>
 
-        <main class="flex-1 flex flex-col bg-slate-50 overflow-y-auto chat-scroll p-4 md:p-12">
+        <main class="flex-1 p-6 md:p-12">
             
-            <div class="max-w-4xl mx-auto w-full mb-12">
-                <div class="text-center mb-10">
-                    <h2 class="text-[10px] font-black uppercase tracking-[0.4em] text-blue-600 mb-4">Precision Intelligence</h2>
-                    <h1 class="text-4xl md:text-5xl font-black text-slate-900 italic uppercase tracking-tighter mb-4">Technical Knowledge Base</h1>
-                    <p class="text-slate-500 text-sm md:text-base font-medium">Verified laboratory protocols and molecular stability data for professional researchers.</p>
+            <section id="module-protocols" class="module-section space-y-8">
+                <header>
+                    <h1 class="text-3xl font-black italic uppercase tracking-tighter">Laboratory Protocols</h1>
+                    <p class="text-slate-500 text-sm italic">Standard operating procedures for reagent handling.</p>
+                </header>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-white border border-slate-200 rounded-3xl p-6 shadow-sm">
+                        <div class="w-10 h-10 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center mb-4"><i class="fas fa-snowflake"></i></div>
+                        <h4 class="font-black uppercase italic tracking-tight mb-2">Cold Chain Integrity</h4>
+                        <p class="text-xs text-slate-500 leading-relaxed">Lyophilized peptides should be stored at -20°C for long-term stability. For active research phases, 2°C – 8°C is sufficient for up to 24 months in powder form.</p>
+                    </div>
+                    <div class="bg-white border border-slate-200 rounded-3xl p-6 shadow-sm">
+                        <div class="w-10 h-10 bg-emerald-50 text-emerald-600 rounded-full flex items-center justify-center mb-4"><i class="fas fa-tint"></i></div>
+                        <h4 class="font-black uppercase italic tracking-tight mb-2">Reconstitution Best Practices</h4>
+                        <p class="text-xs text-slate-500 leading-relaxed">Utilize Bacteriostatic Water (0.9% Benzyl Alcohol) for multi-use vials. Avoid mechanical agitation; use gentle swirling to maintain molecular structure.</p>
+                    </div>
                 </div>
+            </section>
 
-                <div class="relative max-w-2xl mx-auto mb-12">
-                    <input type="text" id="faqSearch" onkeyup="searchFaq()" placeholder="Search protocols (e.g., 'Storage', 'Reconstitution')..." 
-                    class="w-full bg-white border-2 border-slate-200 rounded-2xl py-5 px-8 text-sm focus:outline-none focus:border-blue-600 focus:ring-4 focus:ring-blue-50 transition-all shadow-xl shadow-slate-200/50">
-                    <i class="fas fa-search absolute right-8 top-1/2 -translate-y-1/2 text-slate-300"></i>
+            <section id="module-studies" class="module-section hidden space-y-8">
+                <header>
+                    <h1 class="text-3xl font-black italic uppercase tracking-tighter">Clinical Study Database</h1>
+                    <p class="text-slate-500 text-sm italic">Verified research papers and clinical trial results.</p>
+                </header>
+
+                <div class="bg-white border border-slate-200 rounded-3xl overflow-hidden shadow-sm">
+                    <table class="w-full text-left">
+                        <thead class="bg-slate-50 border-b border-slate-200">
+                            <tr>
+                                <th class="p-4 text-[10px] font-black uppercase tracking-widest text-slate-400">Compound</th>
+                                <th class="p-4 text-[10px] font-black uppercase tracking-widest text-slate-400">Study Focus</th>
+                                <th class="p-4 text-[10px] font-black uppercase tracking-widest text-slate-400">Source</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-xs">
+                            <tr class="border-b border-slate-50">
+                                <td class="p-4 font-bold">Tirzepatide</td>
+                                <td class="p-4 text-slate-500">SURMOUNT-1 Clinical Trial (Weight Management)</td>
+                                <td class="p-4"><a href="https://pubmed.ncbi.nlm.nih.gov/35658024/" target="_blank" class="text-blue-600 font-bold hover:underline">PubMed <i class="fas fa-external-link-alt ml-1 text-[9px]"></i></a></td>
+                            </tr>
+                            <tr class="border-b border-slate-50">
+                                <td class="p-4 font-bold">BPC-157</td>
+                                <td class="p-4 text-slate-500">Gastric juice peptide BPC 157 and tendon repair</td>
+                                <td class="p-4"><a href="https://pubmed.ncbi.nlm.nih.gov/21030671/" target="_blank" class="text-blue-600 font-bold hover:underline">PubMed <i class="fas fa-external-link-alt ml-1 text-[9px]"></i></a></td>
+                            </tr>
+                            <tr>
+                                <td class="p-4 font-bold">Retatrutide</td>
+                                <td class="p-4 text-slate-500">Triple–Hormone-Receptor Agonist for Obesity</td>
+                                <td class="p-4"><a href="https://www.nejm.org/doi/full/10.1056/NEJMoa2301972" target="_blank" class="text-blue-600 font-bold hover:underline">NEJM <i class="fas fa-external-link-alt ml-1 text-[9px]"></i></a></td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
+                <p class="text-[9px] text-slate-400 uppercase tracking-widest text-center">More studies added weekly. Contact lab for specific requests.</p>
+            </section>
 
-                <div id="faq-grid" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    
-                    <div class="faq-item bg-white border border-slate-200 rounded-3xl p-6 transition-all cursor-pointer group" data-category="handling" onclick="toggleFaq('f1')">
-                        <div class="flex justify-between items-start gap-4">
-                            <span class="text-sm font-black uppercase tracking-tight text-slate-900">What is the "Wall-Drip" method?</span>
-                            <i id="icon-f1" class="fas fa-plus text-[10px] text-slate-300 group-hover:text-blue-600"></i>
+            <section id="module-calculators" class="module-section hidden space-y-8">
+                <header>
+                    <h1 class="text-3xl font-black italic uppercase tracking-tighter">Reconstitution Calculator</h1>
+                    <p class="text-slate-500 text-sm italic">Calculate precise concentrations for research accuracy.</p>
+                </header>
+
+                <div class="max-w-md bg-slate-900 rounded-[2.5rem] p-8 text-white shadow-2xl">
+                    <div class="space-y-6">
+                        <div>
+                            <label class="text-[9px] font-black uppercase tracking-widest text-blue-400 block mb-2">Vial Total (mg)</label>
+                            <input type="number" id="calc-mg" value="10" class="w-full bg-white/10 border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-blue-500">
                         </div>
-                        <div id="f1" class="hidden mt-4 text-xs text-slate-500 leading-relaxed border-t border-slate-50 pt-4">
-                            To prevent molecular denaturing, point the needle at the glass wall of the vial. Allow the Bacteriostatic Water to run down the glass into the lyophilized powder. **Never spray directly onto the powder**, as high-pressure impact can damage fragile peptide bonds.
+                        <div>
+                            <label class="text-[9px] font-black uppercase tracking-widest text-blue-400 block mb-2">Water Added (mL)</label>
+                            <input type="number" id="calc-ml" value="2" class="w-full bg-white/10 border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-blue-500">
+                        </div>
+                        <button onclick="runCalc()" class="w-full bg-blue-600 py-4 rounded-xl font-black uppercase tracking-widest text-[10px]">Calculate Concentration</button>
+                        
+                        <div id="calc-result" class="pt-6 border-t border-white/10 text-center hidden">
+                            <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Concentration</p>
+                            <p id="result-text" class="text-3xl font-black italic text-white leading-none"></p>
+                            <p class="text-[10px] text-slate-500 mt-2">10 Units on U-100 syringe = <span id="result-units" class="text-blue-400"></span></p>
                         </div>
                     </div>
-
-                    <div class="faq-item bg-white border border-slate-200 rounded-3xl p-6 transition-all cursor-pointer group" data-category="storage" onclick="toggleFaq('f2')">
-                        <div class="flex justify-between items-start gap-4">
-                            <span class="text-sm font-black uppercase tracking-tight text-slate-900">Storage for reconstituted reagents?</span>
-                            <i id="icon-f2" class="fas fa-plus text-[10px] text-slate-300 group-hover:text-blue-600"></i>
-                        </div>
-                        <div id="f2" class="hidden mt-4 text-xs text-slate-500 leading-relaxed border-t border-slate-50 pt-4">
-                            Reconstituted peptides must be stored at 2°C – 8°C (36°F – 46°F). Avoid the refrigerator door due to temperature fluctuations. Once in solution, research integrity is typically maintained for 14-21 days.
-                        </div>
-                    </div>
-
-                    <div class="faq-item bg-white border border-slate-200 rounded-3xl p-6 transition-all cursor-pointer group" data-category="math" onclick="toggleFaq('f3')">
-                        <div class="flex justify-between items-start gap-4">
-                            <span class="text-sm font-black uppercase tracking-tight text-slate-900">Calculating mg per mL concentration?</span>
-                            <i id="icon-f3" class="fas fa-plus text-[10px] text-slate-300 group-hover:text-blue-600"></i>
-                        </div>
-                        <div id="f3" class="hidden mt-4 text-xs text-slate-500 leading-relaxed border-t border-slate-50 pt-4">
-                            Divide the total vial mg by the mL of water added. 
-                            <br><br>
-                            <strong>Formula:</strong> 10mg Vial ÷ 2mL Water = 5mg/mL. On a standard U-100 syringe, 10 units = 0.5mg of reagent.
-                        </div>
-                    </div>
-
-                    <div class="faq-item bg-white border border-slate-200 rounded-3xl p-6 transition-all cursor-pointer group" data-category="handling" onclick="toggleFaq('f4')">
-                        <div class="flex justify-between items-start gap-4">
-                            <span class="text-sm font-black uppercase tracking-tight text-slate-900">Can I shake the vial to mix?</span>
-                            <i id="icon-f4" class="fas fa-plus text-[10px] text-slate-300 group-hover:text-blue-600"></i>
-                        </div>
-                        <div id="f4" class="hidden mt-4 text-xs text-slate-500 leading-relaxed border-t border-slate-50 pt-4">
-                            No. Shaking causes "shearing stress," which breaks the delicate amino acid chains. Always use a gentle, circular swirling motion until the solution is completely clear.
-                        </div>
-                    </div>
-
-                    <div class="faq-item bg-white border border-slate-200 rounded-3xl p-6 transition-all cursor-pointer group" data-category="storage" onclick="toggleFaq('f5')">
-                        <div class="flex justify-between items-start gap-4">
-                            <span class="text-sm font-black uppercase tracking-tight text-slate-900">Stability during transit heat?</span>
-                            <i id="icon-f5" class="fas fa-plus text-[10px] text-slate-300 group-hover:text-blue-600"></i>
-                        </div>
-                        <div id="f5" class="hidden mt-4 text-xs text-slate-500 leading-relaxed border-t border-slate-50 pt-4">
-                            Lyophilized (powder) peptides are extremely stable. They can withstand room-temperature exposure for up to 4 weeks during transit without degradation. Always refrigerate immediately upon arrival.
-                        </div>
-                    </div>
-
-                    <div class="faq-item bg-white border border-slate-200 rounded-3xl p-6 transition-all cursor-pointer group" data-category="handling" onclick="toggleFaq('f6')">
-                        <div class="flex justify-between items-start gap-4">
-                            <span class="text-sm font-black uppercase tracking-tight text-slate-900">Significance of the vacuum seal?</span>
-                            <i id="icon-f6" class="fas fa-plus text-[10px] text-slate-300 group-hover:text-blue-600"></i>
-                        </div>
-                        <div id="f6" class="hidden mt-4 text-xs text-slate-500 leading-relaxed border-t border-slate-50 pt-4">
-                            The vacuum seal protects against oxidation. A "pull" on the syringe during reconstitution indicates an airtight, sterile environment. If no vacuum is present, the vial's integrity may be compromised.
-                        </div>
-                    </div>
-
                 </div>
-
-                <div class="mt-16 text-center border-t border-slate-200 pt-12">
-    <p class="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400 mb-6">Unlisted Technical Inquiry?</p>
-    <a href="contact.html" class="bg-slate-900 text-white px-10 py-4 rounded-2xl text-[11px] font-black uppercase tracking-widest hover:bg-blue-600 transition-all shadow-xl shadow-slate-900/10 inline-block">
-        Contact Lab Staff
-    </a>
-</div>
-            </div>
+            </section>
 
         </main>
     </div>
 
     <script>
-        function toggleFaq(id) {
-            const el = document.getElementById(id);
-            const icon = document.getElementById('icon-' + id);
-            if (el.classList.contains('hidden')) {
-                el.classList.remove('hidden');
-                icon.classList.replace('fa-plus', 'fa-minus');
-                icon.classList.add('text-blue-600');
-            } else {
-                el.classList.add('hidden');
-                icon.classList.replace('fa-minus', 'fa-plus');
-                icon.classList.remove('text-blue-600');
+        function showModule(id) {
+            // Update Sidebar UI
+            document.querySelectorAll('.sidebar-item').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.getAttribute('onclick').includes(id)) btn.classList.add('active');
+            });
+
+            // Update Sections
+            document.querySelectorAll('.module-section').forEach(sec => sec.classList.add('hidden'));
+            document.getElementById('module-' + id).classList.remove('hidden');
+        }
+
+        function runCalc() {
+            const mg = document.getElementById('calc-mg').value;
+            const ml = document.getElementById('calc-ml').value;
+            const resText = document.getElementById('result-text');
+            const resUnits = document.getElementById('result-units');
+            const resDiv = document.getElementById('calc-result');
+
+            if(mg && ml) {
+                const conc = mg / ml;
+                resText.innerText = conc.toFixed(2) + " mg / mL";
+                resUnits.innerText = (conc / 10).toFixed(2) + " mg";
+                resDiv.classList.remove('hidden');
             }
-        }
-
-        function filterFaq(cat, btn) {
-            // Mobile: Close menu if open (logic could be added if you use a mobile burger)
-            document.querySelectorAll('.faq-tab').forEach(t => t.classList.remove('active'));
-            btn.classList.add('active');
-
-            document.querySelectorAll('.faq-item').forEach(item => {
-                if (cat === 'all' || item.getAttribute('data-category') === cat) {
-                    item.style.display = 'block';
-                } else {
-                    item.style.display = 'none';
-                }
-            });
-        }
-
-        function searchFaq() {
-            let input = document.getElementById('faqSearch').value.toLowerCase();
-            let items = document.querySelectorAll('.faq-item');
-            items.forEach(item => {
-                let text = item.innerText.toLowerCase();
-                item.style.display = text.includes(input) ? 'block' : 'none';
-            });
         }
     </script>
 </body>
