@@ -4,6 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Institutional Access | Precision Labs</title>
+    
+    <meta name="description" content="Precision Labs Secure Researcher Terminal. Authorized institutional access only.">
+    <meta name="author" content="Precision Labs">
+    <meta name="theme-color" content="#0f172a"> 
+
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚛️</text></svg>">
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
@@ -12,19 +19,22 @@
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
+        * { -webkit-tap-highlight-color: transparent; }
     </style>
 </head>
-<body class="bg-slate-900 font-sans antialiased text-white min-h-screen flex flex-col items-center justify-center p-6">
+<body class="bg-slate-900 font-sans antialiased text-white min-h-screen flex flex-col items-center justify-center p-6 relative overflow-hidden">
 
-    <div class="login-box max-w-md w-full">
-        <div class="flex items-center justify-center gap-3 mb-12">
-            <div class="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center text-white">
+    <div class="absolute top-0 right-0 w-96 h-96 bg-blue-600 rounded-full blur-[150px] opacity-10 pointer-events-none"></div>
+
+    <div class="login-box max-w-md w-full relative z-10">
+        <a href="index.html" class="flex items-center justify-center gap-3 mb-12 hover:opacity-80 transition-opacity">
+            <div class="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center text-white shadow-xl shadow-blue-600/20">
                 <i class="fas fa-atom text-xl"></i>
             </div>
             <span class="font-bold text-2xl tracking-tighter uppercase italic text-white">
                 Precision<span class="text-blue-600">Labs</span>
             </span>
-        </div>
+        </a>
 
         <div class="bg-white/5 backdrop-blur-xl border border-white/10 p-8 md:p-10 rounded-[3rem] shadow-2xl">
             <div class="text-center mb-8">
@@ -36,7 +46,7 @@
                 <div>
                     <label class="text-[9px] font-black uppercase tracking-widest text-slate-500 ml-4 mb-2 block">Researcher Access Code</label>
                     <input type="password" id="accessCode" placeholder="••••••••" 
-                    class="w-full bg-white/5 border border-white/10 rounded-2xl py-4 px-6 text-center text-xl tracking-[0.5em] focus:outline-none focus:border-blue-600 focus:bg-white/10 transition-all">
+                    class="w-full bg-white/5 border border-white/10 rounded-2xl py-4 px-6 text-center text-xl tracking-[0.5em] focus:outline-none focus:border-blue-600 focus:bg-white/10 transition-all text-white placeholder-slate-700">
                 </div>
 
                 <button onclick="checkAccess()" class="w-full bg-blue-600 text-white py-5 rounded-2xl font-black uppercase tracking-widest text-xs hover:bg-white hover:text-slate-900 transition-all shadow-xl shadow-blue-600/20">
@@ -51,7 +61,7 @@
 
         <div class="mt-12 text-center">
             <p class="text-[10px] text-slate-500 font-bold uppercase tracking-widest mb-4">No access code?</p>
-            <a href="contact.html" class="text-blue-500 font-black text-[10px] uppercase tracking-widest hover:text-white transition-colors underline decoration-2 underline-offset-4">
+            <a href="support.html" class="text-blue-500 font-black text-[10px] uppercase tracking-widest hover:text-white transition-colors underline decoration-2 underline-offset-4">
                 Request Institutional Clearance
             </a>
         </div>
@@ -62,20 +72,22 @@
             const code = document.getElementById('accessCode').value.toUpperCase();
             const error = document.getElementById('errorMessage');
             
-            // THE ACCESS CODE: You can change "LAB2026" to whatever you want
+            // MASTER ACCESS CODE
             if (code === 'LAB2026') {
                 localStorage.setItem('portalAuthorized', 'true');
                 window.location.href = 'portal.html';
             } else {
                 error.classList.remove('hidden');
                 document.getElementById('accessCode').value = '';
-                // Shake effect
-                document.querySelector('.login-box').classList.add('animate-bounce');
-                setTimeout(() => document.querySelector('.login-box').classList.remove('animate-bounce'), 500);
+                // Add a gentle error feedback
+                const box = document.querySelector('.login-box');
+                box.style.animation = 'none';
+                box.offsetHeight; /* trigger reflow */
+                box.style.animation = 'slideUp 0.8s ease-out';
             }
         }
 
-        // Allow "Enter" key
+        // Allow "Enter" key to submit
         document.getElementById('accessCode').addEventListener('keypress', function (e) {
             if (e.key === 'Enter') checkAccess();
         });
