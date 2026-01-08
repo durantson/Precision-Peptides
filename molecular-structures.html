@@ -3,128 +3,98 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Molecular Database | Precision Labs</title>
+    <title>Molecular Intelligence | Precision Labs</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://3Dmol.org/build/3Dmol-min.js"></script>
     <style>
-        /* This creates the high-end "scientific render" background look */
-        .molecule-bg { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); }
-        /* Adds depth to the molecule images */
-        .molecule-img { filter: drop-shadow(0 10px 15px rgba(0,0,0,0.3)); }
+        .mol-container { width: 100%; height: 300px; position: relative; background: radial-gradient(circle, #1e293b 0%, #0f172a 100%); }
         .sidebar-item.active { background-color: #f1f5f9; color: #2563eb; border-right: 4px solid #2563eb; }
-        .no-scrollbar::-webkit-scrollbar { display: none; }
         * { -webkit-tap-highlight-color: transparent; }
     </style>
 </head>
 <body class="bg-slate-50 font-sans antialiased text-slate-900 min-h-screen">
 
     <script>
-        // Security Guard: Keeps the page gated
-        if (localStorage.getItem('portalAuthorized') !== 'true') {
-            window.location.href = 'login.html';
-        }
+        if (localStorage.getItem('portalAuthorized') !== 'true') { window.location.href = 'login.html'; }
     </script>
 
     <nav class="bg-white border-b border-slate-200 h-16 flex items-center px-6 justify-between sticky top-0 z-50">
         <div class="flex items-center gap-2">
-            <div class="w-8 h-8 bg-blue-600 rounded flex items-center justify-center text-white">
-                <i class="fas fa-database text-xs"></i>
-            </div>
+            <div class="w-8 h-8 bg-blue-600 rounded flex items-center justify-center text-white"><i class="fas fa-cube text-xs"></i></div>
             <span class="font-bold text-lg tracking-tighter uppercase italic">Precision<span class="text-blue-600">Intelligence</span></span>
         </div>
-        <div class="flex items-center gap-4">
-            <span class="hidden md:block text-[9px] font-black uppercase tracking-widest text-emerald-500 bg-emerald-50 px-3 py-1 rounded-full">Secure Session Active</span>
-            <a href="catalog.html" class="text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-blue-600">Exit Terminal</a>
-        </div>
+        <a href="portal.html" class="text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-blue-600">Back to Dashboard</a>
     </nav>
 
     <div class="flex flex-col md:flex-row min-h-[calc(100vh-64px)]">
-        
-        <aside class="w-full md:w-72 bg-white border-r border-slate-200 p-6 space-y-8">
-            <div>
-                <a href="portal.html" class="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-slate-400 mb-8 hover:text-blue-600 transition-colors">
-                    <i class="fas fa-chevron-left"></i> Back to Dashboard
-                </a>
-                <h3 class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-4">Database Modules</h3>
-                <nav class="space-y-1">
-                    <div class="sidebar-item active w-full text-left px-4 py-3 text-xs font-bold uppercase tracking-tight rounded-lg transition-all cursor-default">
-                        <i class="fas fa-cubes mr-3"></i> 3D Structure Viewer
-                    </div>
-                </nav>
-            </div>
-        </aside>
-
         <main class="flex-1 p-6 md:p-12 overflow-y-auto">
-             <header class="mb-12">
-                <h1 class="text-3xl font-black italic uppercase tracking-tighter">Molecular Structures</h1>
-                <p class="text-slate-500 text-sm italic">Three-dimensional chemical models and formula data.</p>
+            <header class="mb-12">
+                <h2 class="text-[10px] font-black uppercase tracking-[0.4em] text-blue-600 mb-2">3D Visualization</h2>
+                <h1 class="text-4xl font-black italic uppercase tracking-tighter mb-4">Molecular Database</h1>
+                <p class="text-slate-500 text-sm max-w-2xl">Interactive 3D spatial models. Drag to rotate, scroll to zoom. Data sourced via PubChem API.</p>
             </header>
 
-            <div id="molecule-grid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+            <div id="molecule-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 </div>
         </main>
     </div>
 
     <script>
-        // DATABASE: Holds chemical data and image links for all 27 items.
-        // NOTE: You will need to replace "mol-placeholder.png" with actual 3D renders.
-        // NOTE: Ensure the formulas/MW accurately match your specific reagent specs.
-        const moleculeData = [
-            { name: "Tirzepatide", formula: "C225H348N48O68", mw: "4813.45", img: "mol-placeholder.png" },
-            { name: "Retatrutide", formula: "C221H342N46O68", mw: "4731.33", img: "mol-placeholder.png" },
-            { name: "Semaglutide", formula: "C187H291N45O59", mw: "4113.58", img: "mol-placeholder.png" },
-            { name: "BPC-157", formula: "C62H98N16O22", mw: "1419.51", img: "mol-placeholder.png" },
-            { name: "TB-500", formula: "C212H350N56O78S", mw: "4963.50", img: "mol-placeholder.png" },
-            // ... (The list continues for all 27 products. I've shortened it for display here, 
-            // but the full code block below includes all of them for you to copy).
-            { name: "GHK-Cu", formula: "C14H24CuN6O4", mw: "403.92", img: "mol-placeholder.png" },
-            { name: "IGF-1 LR3", formula: "C400H625N111O115S9", mw: "9111.6", img: "mol-placeholder.png" },
-            { name: "Semax", formula: "C37H51N9O10S", mw: "813.97", img: "mol-placeholder.png" },
-            { name: "NA-Semax", formula: "Modified C37H51N9O10S", mw: "Var.", img: "mol-placeholder.png" },
-            { name: "Selank", formula: "C33H57N11O9", mw: "751.9", img: "mol-placeholder.png" },
-            { name: "NA-Selank", formula: "Modified C33H57N11O9", mw: "Var.", img: "mol-placeholder.png" },
-            { name: "NAD+", formula: "C21H27N7O14P2", mw: "663.43", img: "mol-placeholder.png" },
-            { name: "Epitalon", formula: "C14H22N4O9", mw: "390.35", img: "mol-placeholder.png" },
-            { name: "MOTS-c", formula: "C101H152N28O22S2", mw: "2174.6", img: "mol-placeholder.png" },
-            { name: "FOXO4-DRI", formula: "C236H360N66O65S2", mw: "5366.1", img: "mol-placeholder.png" },
-            { name: "LL-37", formula: "C205H340N60O53", mw: "4493.3", img: "mol-placeholder.png" },
-            { name: "Thymosin α1", formula: "C129H215N33O55", mw: "3108.3", img: "mol-placeholder.png" },
-            { name: "DSIP", formula: "C35H48N10O15", mw: "848.81", img: "mol-placeholder.png" },
-            { name: "Melanotan 2", formula: "C50H69N15O9", mw: "1024.2", img: "mol-placeholder.png" },
-            { name: "CJC-1295 (No DAC)", formula: "C152H252N44O42", mw: "3367.9", img: "mol-placeholder.png" },
-            { name: "Ipamorelin", formula: "C38H49N9O5", mw: "711.86", img: "mol-placeholder.png" },
-            { name: "AOD-9604", formula: "C78H123N23O23S2", mw: "1815.1", img: "mol-placeholder.png" },
-            { name: "Cardarine", formula: "C21H18F3NO3S2", mw: "453.5", img: "mol-placeholder.png" },
-            { name: "Tesamorelin", formula: "C221H366N72O67S", mw: "5135.9", img: "mol-placeholder.png" },
-            { name: "KPV", formula: "C16H32N6O4", mw: "372.46", img: "mol-placeholder.png" },
-            { name: "AICAR", formula: "C9H14N4O5", mw: "258.23", img: "mol-placeholder.png" },
-            { name: "PT-141", formula: "C50H68N14O10", mw: "1025.2", img: "mol-placeholder.png" }
+        // Data for the 3D Viewer (Using PubChem CIDs for accuracy)
+        const molecules = [
+            { name: "Tirzepatide", cid: "16235086", formula: "C225H348N48O68" },
+            { name: "Semaglutide", cid: "56843331", formula: "C187H291N45O59" },
+            { name: "BPC-157", cid: "10182582", formula: "C62H98N16O22" },
+            { name: "NAD+", cid: "5892", formula: "C21H27N7O14P2" },
+            { name: "Cardarine", cid: "9831648", formula: "C21H18F3NO3S2" },
+            { name: "Melanotan 2", cid: "92432", formula: "C50H69N15O9" },
+            { name: "AICAR", cid: "65110", formula: "C9H14N4O5" },
+            { name: "PT-141", cid: "10051280", formula: "C50H68N14O10" },
+            { name: "DSIP", cid: "439294", formula: "C35H48N10O15" }
         ];
 
         function renderMolecules() {
             const grid = document.getElementById('molecule-grid');
-            grid.innerHTML = moleculeData.map(m => `
-                <div class="bg-white border border-slate-200 rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all group">
-                    <div class="molecule-bg h-56 flex items-center justify-center p-6 relative overflow-hidden">
-                        <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle, #ffffff 1px, transparent 1px); background-size: 20px 20px;"></div>
-                        <img src="images/${m.img}" class="molecule-img h-full object-contain relative z-10 transition-transform duration-700 group-hover:scale-110 group-hover:rotate-3" alt="${m.name} Structure">
-                    </div>
+            grid.innerHTML = molecules.map((m, idx) => `
+                <div class="bg-white border border-slate-200 rounded-[2.5rem] overflow-hidden shadow-xl shadow-slate-200/50 group transition-all hover:border-blue-600">
+                    <div id="container-${idx}" class="mol-container" data-cid="${m.cid}"></div>
                     
-                    <div class="p-6">
-                        <h3 class="text-xl font-black italic uppercase tracking-tighter text-slate-900 mb-4">${m.name}</h3>
-                        <div class="space-y-2 text-xs">
-                            <div class="flex justify-between border-b border-slate-100 pb-2">
-                                <span class="font-bold text-slate-400 uppercase tracking-widest">Formula</span>
-                                <span class="font-mono font-bold text-blue-600">${m.formula}</span>
+                    <div class="p-8">
+                        <div class="flex justify-between items-start mb-4">
+                            <div>
+                                <h3 class="text-xl font-black italic uppercase tracking-tighter text-slate-900">${m.name}</h3>
+                                <p class="text-[10px] font-bold text-blue-600 uppercase tracking-widest">${m.formula}</p>
                             </div>
-                            <div class="flex justify-between pt-2">
-                                <span class="font-bold text-slate-400 uppercase tracking-widest">Mol. Weight</span>
-                                <span class="font-mono font-bold text-slate-900">${m.mw} g/mol</span>
-                            </div>
+                            <div class="bg-slate-50 px-3 py-1 rounded-full text-[9px] font-bold text-slate-400">CID: ${m.cid}</div>
                         </div>
+                        <button onclick="initViewer('container-${idx}', '${m.cid}')" class="w-full bg-slate-900 text-white py-3 rounded-xl font-black uppercase tracking-widest text-[9px] hover:bg-blue-600 transition-all">
+                            Initialize 3D View
+                        </button>
                     </div>
                 </div>
             `).join('');
+        }
+
+        function initViewer(id, cid) {
+            const element = document.getElementById(id);
+            element.innerHTML = ""; // Clear button
+            
+            const viewer = $3Dmol.createViewer(id, { backgroundColor: 'transparent' });
+            
+            // Pull 3D data from PubChem
+            fetch(`https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/${cid}/record/SDF/?record_type=3d`)
+                .then(response => response.text())
+                .then(data => {
+                    viewer.addModel(data, "sdf");
+                    viewer.setStyle({}, { stick: { radius: 0.15, colorscheme: 'Jmol' }, sphere: { scale: 0.25 } });
+                    viewer.zoomTo();
+                    viewer.render();
+                    viewer.animate({loop: "backAndForth", step: 0.5});
+                })
+                .catch(err => {
+                    element.innerHTML = "<div class='text-white text-xs p-10'>3D Data currently unavailable for this sequence.</div>";
+                });
         }
 
         renderMolecules();
