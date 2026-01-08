@@ -3,88 +3,164 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About Our Laboratory | Precision Peptides</title>
+    <title>Our Science & Protocols | Precision Peptides</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&display=swap" rel="stylesheet">
-    <style>body { font-family: 'Inter', sans-serif; }</style>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .grid-bg {
+            background-size: 40px 40px;
+            background-image: linear-gradient(to right, #f1f5f9 1px, transparent 1px),
+                              linear-gradient(to bottom, #f1f5f9 1px, transparent 1px);
+        }
+        .protocol-card { transition: all 0.3s ease; }
+        .protocol-card:hover { transform: translateY(-5px); border-color: #2563eb; }
+    </style>
 </head>
-<body class="bg-white text-slate-900 leading-relaxed">
+<body class="bg-white font-sans antialiased text-slate-900">
 
-    <nav class="bg-white border-b border-slate-200 h-20 flex items-center px-6 sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto w-full flex justify-between items-center text-2xl font-black italic uppercase">
-            <a href="index.html">Precision<span class="text-sky-500">Peptides</span></a>
+    <nav class="bg-white/90 backdrop-blur-md border-b border-slate-200 h-16 flex items-center px-6 md:px-12 justify-between sticky top-0 z-50">
+        <div class="flex items-center gap-2">
+            <div class="w-8 h-8 bg-blue-600 rounded flex items-center justify-center text-white"><i class="fas fa-atom text-xs"></i></div>
+            <span class="font-bold text-lg tracking-tighter uppercase italic text-slate-900">Precision<span class="text-blue-600">Labs</span></span>
+        </div>
+        <div class="flex gap-6 text-[10px] font-black uppercase tracking-widest text-slate-400">
+            <a href="index.html" class="hover:text-blue-600 transition-colors">Home</a>
+            <a href="catalog.html" class="hover:text-blue-600 transition-colors">Catalog</a>
+            <a href="portal.html" class="hover:text-blue-600 transition-colors">Portal</a>
         </div>
     </nav>
 
-    <section class="bg-slate-900 py-24 px-6 text-white text-center relative overflow-hidden">
-        <div class="max-w-4xl mx-auto relative z-10">
-            <h1 class="text-5xl font-extrabold mb-6 uppercase tracking-tight">The Precision Standard</h1>
-            <p class="text-xl text-slate-400 font-light">Pioneering the synthesis of ultra-pure reagents for the advancement of biological science.</p>
-        </div>
-        <div class="absolute inset-0 opacity-10 flex justify-center items-center pointer-events-none">
-            <svg class="w-full h-full" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" stroke="white" fill="none" stroke-width="0.5" stroke-dasharray="2 2"/></svg>
-        </div>
-    </section>
-
-    <main class="max-w-6xl mx-auto py-20 px-6">
-        <div class="grid lg:grid-cols-2 gap-20 items-center mb-32">
-            <div>
-                <h2 class="text-[10px] font-bold text-sky-600 uppercase tracking-[0.3em] mb-4">Our Mission</h2>
-                <h3 class="text-3xl font-bold mb-6 uppercase leading-tight">Eliminating Variable Outcomes in Research.</h3>
-                <p class="text-slate-600 mb-6">
-                    In the world of high-stakes biological research, the integrity of your reagent is the only variable that cannot be left to chance. Precision Peptides was founded to bridge the gap between "commercial grade" and "institutional grade" synthetic compounds.
-                </p>
-                <p class="text-slate-600">
-                    We specialize in the synthesis of complex peptides and coenzymes, utilizing Solid Phase Peptide Synthesis (SPPS) and rigorous multi-stage purification to ensure that every vial meeting our catalog standards is &ge;99% pure.
+    <main>
+        
+        <header class="relative py-24 px-6 md:px-12 border-b border-slate-100 grid-bg">
+            <div class="max-w-4xl mx-auto text-center">
+                <div class="inline-block bg-slate-900 text-white px-4 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest mb-6">
+                    Est. 2024 • Research Reagents
+                </div>
+                <h1 class="text-5xl md:text-7xl font-black italic text-slate-900 uppercase tracking-tighter mb-8">
+                    The Science of <span class="text-blue-600">Purity</span>
+                </h1>
+                <p class="text-xl text-slate-500 font-medium leading-relaxed max-w-2xl mx-auto">
+                    Precision Peptides was founded to solve the reproducibility crisis in academic research. We provide highly stable, HPLC-verified lyophilized reagents for institutional and private laboratories.
                 </p>
             </div>
-            <div class="bg-slate-50 rounded-3xl p-8 border border-slate-100 shadow-inner">
-                 
-            </div>
-        </div>
+        </header>
 
-        <div class="grid md:grid-cols-3 gap-12 text-center">
-            <div>
-                <div class="w-12 h-12 bg-sky-500/10 text-sky-600 rounded-full flex items-center justify-center mx-auto mb-6">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
-                </div>
-                <h4 class="font-bold uppercase text-sm mb-3">Purity Absolute</h4>
-                <p class="text-xs text-slate-500 leading-relaxed">No vial leaves our facility without Mass Spectrometry and HPLC verification. Our purity benchmarks exceed industry averages by 15%.</p>
-            </div>
-            <div>
-                <div class="w-12 h-12 bg-sky-500/10 text-sky-600 rounded-full flex items-center justify-center mx-auto mb-6">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
-                </div>
-                <h4 class="font-bold uppercase text-sm mb-3">Analytical Transparency</h4>
-                <p class="text-xs text-slate-500 leading-relaxed">We provide full-spectrum raw data reports to our partners. We believe that researchers deserve to see the same data our chemists see.</p>
-            </div>
-            <div>
-                <div class="w-12 h-12 bg-sky-500/10 text-sky-600 rounded-full flex items-center justify-center mx-auto mb-6">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path></svg>
-                </div>
-                <h4 class="font-bold uppercase text-sm mb-3">Global Logistics</h4>
-                <p class="text-xs text-slate-500 leading-relaxed">Operating from our central hub, we manage cold-chain distribution to research universities and private labs in over 45 countries.</p>
-            </div>
-        </div>
-
-        <section class="mt-32 p-12 bg-slate-50 rounded-[3rem] border border-slate-200">
-            <div class="max-w-3xl">
-                <h2 class="text-2xl font-bold mb-6 uppercase tracking-tight">Supply Chain Integrity</h2>
-                <p class="text-slate-600 text-sm mb-8 leading-relaxed">
-                    By controlling every step—from raw amino acid procurement to final vacuum-sealing—we eliminate the risk of contamination common in third-party brokered reagents. Our facility adheres to ISO 9001 quality management protocols and uses the same purification technology found in pharmaceutical drug development.
-                </p>
+        <section class="py-20 px-6 md:px-12 max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 
-                <div class="flex flex-wrap gap-4 pt-4">
-                    <div class="px-4 py-2 bg-white rounded-lg border border-slate-200 text-[10px] font-bold uppercase tracking-widest">ISO 9001:2015</div>
-                    <div class="px-4 py-2 bg-white rounded-lg border border-slate-200 text-[10px] font-bold uppercase tracking-widest">GLP Compliant</div>
-                    <div class="px-4 py-2 bg-white rounded-lg border border-slate-200 text-[10px] font-bold uppercase tracking-widest">GMP Grade Facility</div>
+                <div class="protocol-card bg-slate-50 p-8 rounded-[2rem] border border-slate-100">
+                    <div class="w-12 h-12 bg-white rounded-xl shadow-sm flex items-center justify-center text-blue-600 text-xl mb-6">
+                        <i class="fas fa-microscope"></i>
+                    </div>
+                    <h3 class="text-xl font-black italic uppercase text-slate-900 mb-4">Synthesis Protocol</h3>
+                    <p class="text-sm text-slate-500 leading-relaxed">
+                        Our reagents are synthesized using Solid Phase Peptide Synthesis (SPPS). We utilize a strict purification process to remove trifluoroacetic acid (TFA) salts, ensuring a final acetate salt form that is safer for cellular cultures.
+                    </p>
                 </div>
+
+                <div class="protocol-card bg-slate-50 p-8 rounded-[2rem] border border-slate-100">
+                    <div class="w-12 h-12 bg-white rounded-xl shadow-sm flex items-center justify-center text-blue-600 text-xl mb-6">
+                        <i class="fas fa-file-contract"></i>
+                    </div>
+                    <h3 class="text-xl font-black italic uppercase text-slate-900 mb-4">Verification</h3>
+                    <p class="text-sm text-slate-500 leading-relaxed">
+                        We operate on a "Trust, Verify, Verify Again" model. Every batch is subjected to High-Performance Liquid Chromatography (HPLC) and Mass Spectrometry (MS) via third-party labs (Janoshik / MZ Biolabs) before being cataloged.
+                    </p>
+                </div>
+
+                <div class="protocol-card bg-slate-50 p-8 rounded-[2rem] border border-slate-100">
+                    <div class="w-12 h-12 bg-white rounded-xl shadow-sm flex items-center justify-center text-blue-600 text-xl mb-6">
+                        <i class="fas fa-snowflake"></i>
+                    </div>
+                    <h3 class="text-xl font-black italic uppercase text-slate-900 mb-4">Cold Chain</h3>
+                    <p class="text-sm text-slate-500 leading-relaxed">
+                        Stability is paramount. Our inventory is stored at -20°C in climate-controlled facilities. Orders are packed with thermal insulation to prevent peptide degradation during the "last mile" of shipping.
+                    </p>
+                </div>
+
             </div>
         </section>
+
+        <section class="bg-slate-900 py-24 px-6 md:px-12 text-white overflow-hidden relative">
+            <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-600 rounded-full blur-[150px] opacity-20 pointer-events-none"></div>
+
+            <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center relative z-10">
+                
+                <div>
+                    <div class="flex items-center gap-2 mb-6 text-blue-400">
+                        <i class="fas fa-check-circle"></i>
+                        <span class="text-xs font-bold uppercase tracking-widest">Zero Tolerance Policy</span>
+                    </div>
+                    <h2 class="text-4xl md:text-5xl font-black italic uppercase tracking-tight mb-6">
+                        99.0% Purity<br>Or It's Rejected.
+                    </h2>
+                    <p class="text-slate-400 text-lg leading-relaxed mb-8">
+                        The industry standard is often loose, accepting 95-98% purity which introduces unknown impurities into your research. Precision Peptides rejects any batch testing below 99.0%.
+                    </p>
+                    <a href="catalog.html" class="inline-block bg-white text-slate-900 px-8 py-4 rounded-xl font-bold text-xs uppercase tracking-widest hover:bg-blue-600 hover:text-white transition-all">
+                        View Our Catalog
+                    </a>
+                </div>
+
+                <div class="relative group">
+                    <div class="absolute inset-0 bg-blue-600 rounded-[2rem] rotate-3 opacity-20 group-hover:rotate-6 transition-transform duration-500"></div>
+                    <div class="bg-white text-slate-900 p-8 rounded-[2rem] relative shadow-2xl">
+                        <div class="flex justify-between items-start mb-8 border-b border-slate-100 pb-6">
+                            <div>
+                                <h4 class="font-bold text-xl uppercase italic">Certificate of Analysis</h4>
+                                <p class="text-xs text-slate-400 font-mono">Batch #PP-2024-TIRZ-09</p>
+                            </div>
+                            <div class="text-right">
+                                <div class="bg-emerald-100 text-emerald-700 px-3 py-1 rounded font-bold text-xs uppercase">Pass</div>
+                            </div>
+                        </div>
+                        
+                        <div class="space-y-4 font-mono text-xs">
+                            <div class="flex justify-between">
+                                <span class="text-slate-500">Compound:</span>
+                                <span class="font-bold">Tirzepatide</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-slate-500">Sequence Purity:</span>
+                                <span class="font-bold text-emerald-600">99.82%</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-slate-500">Net Peptide Content:</span>
+                                <span class="font-bold">91.4%</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-slate-500">Mass Spec:</span>
+                                <span class="font-bold">4813.53 Da (Confirmed)</span>
+                            </div>
+                        </div>
+
+                        <div class="mt-8 pt-6 border-t border-slate-100 flex items-center gap-4">
+                            <i class="fas fa-qrcode text-4xl text-slate-900"></i>
+                            <div class="text-[10px] text-slate-400 uppercase tracking-widest">
+                                Scan to verify<br>Third-Party Lab Data
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <section class="py-16 px-6 md:px-12 max-w-4xl mx-auto text-center">
+            <i class="fas fa-balance-scale text-4xl text-slate-300 mb-6"></i>
+            <h3 class="text-sm font-black uppercase tracking-widest text-slate-900 mb-4">Regulatory Compliance</h3>
+            <p class="text-xs text-slate-500 leading-loose">
+                Precision Peptides is a specialized supplier of chemical reagents. All products listed are for <strong>In-Vitro Laboratory Research Use Only</strong>. They are not intended for use as food additives, drugs, cosmetics, household chemicals, or other inappropriate applications. The buyer acknowledges that the products have not been tested by Precision Peptides for safety and efficacy in food, drug, medical device, cosmetic, commercial or any other use.
+            </p>
+        </section>
+
     </main>
 
-    <footer class="py-12 border-t border-slate-200 text-center text-[10px] uppercase tracking-widest text-slate-400">
-        © 2026 Precision Peptides | Advancing The Frontiers of Molecular Biology
+    <footer class="bg-white border-t border-slate-200 py-12 text-center">
+        <div class="text-[10px] text-slate-300 uppercase tracking-widest">
+            &copy; 2024 Precision Peptides. Built for Science.
+        </div>
     </footer>
 
 </body>
