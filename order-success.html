@@ -3,7 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Order Confirmed | Precision Peptides</title>
+    <title>Order Confirmed | Precision Labs</title>
+    
+    <meta name="description" content="Precision Labs Order Confirmation. Your research requisition has been successfully logged.">
+    <meta name="author" content="Precision Labs">
+    <meta name="theme-color" content="#10b981"> <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚛️</text></svg>">
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
@@ -13,40 +18,50 @@
             100% { transform: scale(1); opacity: 1; }
         }
         .check-anim { animation: pop 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards; }
+        * { -webkit-tap-highlight-color: transparent; }
     </style>
 </head>
-<body class="bg-slate-50 font-sans antialiased text-slate-900 h-screen flex items-center justify-center">
+<body class="bg-slate-50 font-sans antialiased text-slate-900 h-screen flex items-center justify-center p-6">
 
-    <div class="max-w-md w-full bg-white p-12 rounded-[2rem] border border-slate-200 shadow-xl text-center">
+    <div class="max-w-md w-full bg-white p-10 md:p-12 rounded-[3rem] border border-slate-200 shadow-2xl text-center relative overflow-hidden">
         
-        <div class="w-20 h-20 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-6 check-anim text-emerald-600 text-3xl">
+        <div class="absolute -top-10 -right-10 w-32 h-32 bg-emerald-50 rounded-full blur-3xl opacity-50"></div>
+
+        <div class="w-20 h-20 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-8 check-anim text-emerald-600 text-3xl">
             <i class="fas fa-check"></i>
         </div>
 
-        <h1 class="text-2xl font-black italic text-slate-900 uppercase tracking-tight mb-2">Order Confirmed</h1>
-        <p class="text-slate-500 text-sm mb-8">Thank you for your research contribution. Your requisition has been queued for dispatch.</p>
+        <h1 class="text-3xl font-black italic text-slate-900 uppercase tracking-tighter mb-3">Order Confirmed</h1>
+        <p class="text-slate-500 text-sm leading-relaxed mb-8">
+            Thank you for your research contribution. Your requisition has been logged and queued for cold-chain dispatch.
+        </p>
 
-        <div class="bg-slate-50 rounded-xl p-4 mb-8 border border-slate-100 text-left">
-            <div class="flex justify-between text-xs mb-2">
-                <span class="text-slate-400 font-bold uppercase">Order ID</span>
-                <span class="text-slate-900 font-mono font-bold">#PP-8824-X</span>
+        <div class="bg-slate-50 rounded-2xl p-6 mb-8 border border-slate-100 text-left">
+            <div class="flex justify-between items-center text-xs mb-3">
+                <span class="text-slate-400 font-bold uppercase tracking-widest">Manifest ID</span>
+                <span class="text-slate-900 font-mono font-bold bg-white px-2 py-1 rounded border border-slate-200">#PL-8824-X</span>
             </div>
-            <div class="flex justify-between text-xs">
-                <span class="text-slate-400 font-bold uppercase">Est. Delivery</span>
-                <span class="text-slate-900 font-bold">24-48 Hours</span>
+            <div class="flex justify-between items-center text-xs">
+                <span class="text-slate-400 font-bold uppercase tracking-widest">Est. Dispatch</span>
+                <span class="text-slate-900 font-bold">24-48 Business Hours</span>
             </div>
         </div>
 
         <div class="space-y-3">
-            <a href="portal.html" class="block w-full bg-slate-900 text-white py-4 rounded-xl font-bold uppercase tracking-widest text-[10px] hover:bg-blue-600 transition-colors">
-                Track in Portal
+            <a href="dashboard.html" class="block w-full bg-slate-900 text-white py-5 rounded-2xl font-black uppercase tracking-widest text-[10px] hover:bg-blue-600 transition-all shadow-xl shadow-slate-200">
+                Access Investigator Hub
             </a>
-            <a href="index.html" class="block w-full text-slate-400 font-bold uppercase tracking-widest text-[10px] hover:text-slate-900 transition-colors">
-                Return Home
+            <a href="index.html" class="block w-full text-slate-400 font-bold uppercase tracking-widest text-[10px] hover:text-blue-600 transition-colors pt-2">
+                Return to Home Page
             </a>
         </div>
 
     </div>
+
+    <script>
+        // CLEANUP: Wipe the cart now that the order is complete
+        localStorage.removeItem('precisionCart');
+    </script>
 
 </body>
 </html>
