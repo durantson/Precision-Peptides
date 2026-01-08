@@ -3,121 +3,213 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shipping & Logistics | Precision Peptides</title>
+    <title>Logistics & Cold Chain | Precision Peptides</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
-    <style>body { font-family: 'Inter', sans-serif; }</style>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .layer-card { transition: transform 0.3s ease; }
+        .layer-card:hover { transform: translateX(10px); }
+        
+        @keyframes pulse-ring {
+            0% { transform: scale(0.8); opacity: 0.5; }
+            100% { transform: scale(2); opacity: 0; }
+        }
+        .ping-circle { animation: pulse-ring 2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite; }
+    </style>
 </head>
-<body class="bg-gray-50 text-slate-900">
+<body class="bg-slate-50 font-sans antialiased text-slate-900">
 
-    <nav class="bg-white border-b border-slate-200 h-20 flex items-center px-6">
-        <div class="max-w-7xl mx-auto w-full flex justify-between items-center text-2xl font-black italic uppercase">
-            <a href="index.html">Precision<span class="text-sky-500">Peptides</span></a>
+    <nav class="bg-white border-b border-slate-200 h-16 flex items-center px-6 justify-between sticky top-0 z-50">
+        <div class="flex items-center gap-2">
+            <div class="w-8 h-8 bg-blue-600 rounded flex items-center justify-center text-white"><i class="fas fa-atom text-xs"></i></div>
+            <span class="font-bold text-lg tracking-tighter uppercase italic text-slate-900">Precision<span class="text-blue-600">Labs</span></span>
+        </div>
+        <div class="flex gap-6 text-[10px] font-black uppercase tracking-widest text-slate-400">
+            <a href="index.html" class="hover:text-blue-600 transition-colors">Home</a>
+            <a href="catalog.html" class="hover:text-blue-600 transition-colors">Catalog</a>
+            <a href="portal.html" class="hover:text-blue-600 transition-colors">Portal</a>
         </div>
     </nav>
 
-    <header class="bg-slate-900 py-20 px-6 text-white text-center">
-        <div class="max-w-4xl mx-auto">
-            <h1 class="text-4xl font-extrabold mb-4 uppercase tracking-tight">Global Research Logistics</h1>
-            <p class="text-lg text-slate-400">Ensuring molecular integrity through advanced Cold Chain protocols.</p>
-        </div>
-    </header>
-
-    <main class="max-w-6xl mx-auto py-16 px-6">
+    <main class="max-w-7xl mx-auto px-6 py-12">
         
-        <div class="grid md:grid-cols-3 gap-8 mb-16">
-            <div class="bg-white p-8 rounded-2xl border border-slate-200">
-                <div class="text-sky-500 mb-4">
-                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
+        <div class="mb-16 border-b border-slate-200 pb-12">
+            <div class="flex items-center gap-2 text-blue-600 mb-4">
+                <div class="relative w-3 h-3">
+                    <div class="absolute w-full h-full bg-blue-500 rounded-full ping-circle"></div>
+                    <div class="absolute w-full h-full bg-blue-600 rounded-full"></div>
                 </div>
-                <h3 class="font-bold uppercase text-sm mb-2">Lyophilized Stability</h3>
-                <p class="text-xs text-slate-500 leading-relaxed">Our peptides are freeze-dried into a stable crystalline "cake," allowing for ambient temperature transit without structural degradation.</p>
+                <span class="text-xs font-bold uppercase tracking-widest">Fulfillment Center: Active</span>
             </div>
-
-            <div class="bg-white p-8 rounded-2xl border border-slate-200">
-                <div class="text-sky-500 mb-4">
-                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                </div>
-                <h3 class="font-bold uppercase text-sm mb-2">Discreet Protection</h3>
-                <p class="text-xs text-slate-500 leading-relaxed">All shipments are vacuum-sealed and padded with thermal-insulating layers to protect against UV exposure and physical impact.</p>
-            </div>
-
-            <div class="bg-white p-8 rounded-2xl border border-slate-200">
-                <div class="text-sky-500 mb-4">
-                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 002 2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                </div>
-                <h3 class="font-bold uppercase text-sm mb-2">International Clearance</h3>
-                <p class="text-xs text-slate-500 leading-relaxed">We provide all necessary Harmonized System (HS) codes and commercial invoices to ensure rapid customs processing.</p>
-            </div>
+            <h1 class="text-5xl md:text-6xl font-black italic uppercase tracking-tighter text-slate-900 mb-6">
+                Logistics & <br><span class="text-blue-600">Cold Chain</span> Protocols
+            </h1>
+            <p class="text-lg text-slate-500 max-w-2xl leading-relaxed">
+                We understand that peptide stability is paramount. Precision Peptides utilizes a proprietary thermal packaging system to ensure reagent integrity during transit, even in summer months.
+            </p>
         </div>
 
-        <div class="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-sm">
-            <div class="p-8 border-b border-slate-100 bg-slate-50">
-                <h2 class="font-bold uppercase text-sm tracking-widest">Transit Modalities</h2>
-            </div>
-            <table class="w-full text-left">
-                <thead class="bg-slate-50 text-[10px] font-bold uppercase text-slate-400 border-b border-slate-100">
-                    <tr>
-                        <th class="p-6">Region</th>
-                        <th class="p-6">Carrier</th>
-                        <th class="p-6">Est. Delivery</th>
-                        <th class="p-6">Handling</th>
-                    </tr>
-                </thead>
-                <tbody class="text-sm divide-y divide-slate-100">
-                    <tr>
-                        <td class="p-6 font-bold">Domestic (US/CAN)</td>
-                        <td class="p-6">FedEx Priority / UPS Next Day</td>
-                        <td class="p-6">1-3 Business Days</td>
-                        <td class="p-6"><span class="bg-emerald-100 text-emerald-700 px-2 py-1 rounded text-[10px] font-bold uppercase">Priority Cold Chain</span></td>
-                    </tr>
-                    <tr>
-                        <td class="p-6 font-bold">European Union</td>
-                        <td class="p-6">DHL Express</td>
-                        <td class="p-6">3-5 Business Days</td>
-                        <td class="p-6"><span class="bg-blue-100 text-blue-700 px-2 py-1 rounded text-[10px] font-bold uppercase">International Air</span></td>
-                    </tr>
-                    <tr>
-                        <td class="p-6 font-bold">Rest of World</td>
-                        <td class="p-6">DHL / FedEx</td>
-                        <td class="p-6">5-9 Business Days</td>
-                        <td class="p-6"><span class="bg-slate-100 text-slate-700 px-2 py-1 rounded text-[10px] font-bold uppercase">Customs Expedited</span></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 mb-24">
+            
+            <div class="space-y-8">
+                <div class="bg-slate-900 text-white p-8 rounded-[2rem] shadow-xl relative overflow-hidden">
+                    <div class="relative z-10">
+                        <h3 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2">Same-Day Cutoff</h3>
+                        <div class="text-4xl font-mono font-bold tracking-tight mb-4" id="cutoff-timer">04:12:35</div>
+                        <p class="text-sm text-slate-400 leading-relaxed">
+                            Orders placed before <strong>2:00 PM EST (Mon-Fri)</strong> are processed and dispatched the same day. Tracking numbers are generated automatically upon label creation.
+                        </p>
+                    </div>
+                    <i class="fas fa-shipping-fast absolute -bottom-4 -right-4 text-9xl text-white/5 rotate-12"></i>
+                </div>
 
-        <div class="mt-16 grid lg:grid-cols-2 gap-12 items-center">
+                <div class="bg-white border border-slate-200 rounded-[2rem] overflow-hidden">
+                    <table class="w-full text-sm text-left">
+                        <thead class="bg-slate-50 text-[10px] uppercase font-black tracking-widest text-slate-400">
+                            <tr>
+                                <th class="p-6">Carrier Protocol</th>
+                                <th class="p-6">Est. Time</th>
+                                <th class="p-6 text-right">Cost</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-100 font-medium text-slate-600">
+                            <tr class="group hover:bg-blue-50 transition-colors">
+                                <td class="p-6">
+                                    <div class="flex items-center gap-3">
+                                        <i class="fas fa-plane text-blue-600"></i>
+                                        <span class="font-bold text-slate-900">FedEx Priority Overnight</span>
+                                    </div>
+                                </td>
+                                <td class="p-6">Next Day (by 10:30am)</td>
+                                <td class="p-6 text-right font-mono">$35.00</td>
+                            </tr>
+                            <tr class="group hover:bg-blue-50 transition-colors">
+                                <td class="p-6">
+                                    <div class="flex items-center gap-3">
+                                        <i class="fas fa-truck-fast text-slate-400"></i>
+                                        <span class="font-bold text-slate-900">FedEx 2-Day Air</span>
+                                    </div>
+                                </td>
+                                <td class="p-6">2 Business Days</td>
+                                <td class="p-6 text-right font-mono">$15.00</td>
+                            </tr>
+                            <tr class="group hover:bg-blue-50 transition-colors">
+                                <td class="p-6">
+                                    <div class="flex items-center gap-3">
+                                        <i class="fas fa-box text-slate-400"></i>
+                                        <span class="font-bold text-slate-900">USPS Priority</span>
+                                    </div>
+                                </td>
+                                <td class="p-6">3-5 Business Days</td>
+                                <td class="p-6 text-right font-mono text-emerald-600">Free ($150+)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
             <div>
-                <h2 class="text-2xl font-bold mb-6 uppercase tracking-tight">Post-Arrival Protocol</h2>
-                <p class="text-slate-600 text-sm leading-relaxed mb-6">
-                    To maintain the long-term stability of your reagents, it is vital to follow standardized laboratory storage protocols immediately upon delivery. Ambient temperatures are acceptable for short-term transit, but long-term preservation requires thermal stabilization.
-                </p>
-                <ul class="space-y-4 text-sm font-medium">
-                    <li class="flex items-center gap-3">
-                        <span class="w-2 h-2 bg-sky-500 rounded-full"></span> 
-                        <span>Lyophilized (Dry): Store at -20°C for up to 24 months.</span>
-                    </li>
-                    <li class="flex items-center gap-3">
-                        <span class="w-2 h-2 bg-sky-500 rounded-full"></span> 
-                        <span>Reconstituted (Liquid): Store at 4°C for up to 21 days.</span>
-                    </li>
-                    <li class="flex items-center gap-3 text-red-600 font-bold uppercase text-xs">
-                        <span class="w-2 h-2 bg-red-600 rounded-full"></span> 
-                        <span>Avoid direct UV exposure and repeated freeze-thaw cycles.</span>
-                    </li>
-                </ul>
-            </div>
-            <div class="bg-slate-900 rounded-3xl p-8 text-white">
+                <h3 class="text-xs font-black uppercase tracking-widest text-slate-400 mb-8">Thermal Protection System</h3>
                 
-                <p class="mt-4 text-[10px] text-slate-400 uppercase tracking-widest text-center">Standardized Cold-Chain Packaging Visualization</p>
+                <div class="space-y-4">
+                    <div class="layer-card bg-white p-6 rounded-2xl border border-slate-200 flex items-center gap-6 shadow-sm">
+                        <div class="w-12 h-12 bg-slate-100 rounded-xl flex items-center justify-center text-slate-900 text-xl font-bold">1</div>
+                        <div>
+                            <h4 class="font-bold text-slate-900 text-sm uppercase">Corrugated Exterior</h4>
+                            <p class="text-xs text-slate-500 mt-1">Double-walled, crush-resistant exterior box. Plain labeling for discretion.</p>
+                        </div>
+                    </div>
+
+                    <div class="layer-card bg-white p-6 rounded-2xl border border-slate-200 flex items-center gap-6 shadow-sm ml-4 border-l-4 border-l-blue-600">
+                        <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-blue-600 text-xl font-bold"><i class="fas fa-snowflake"></i></div>
+                        <div>
+                            <h4 class="font-bold text-slate-900 text-sm uppercase">Thermal Insulation</h4>
+                            <p class="text-xs text-slate-500 mt-1">Reflective Mylar bubble lining to reflect radiant heat and maintain core temperature.</p>
+                        </div>
+                    </div>
+
+                    <div class="layer-card bg-white p-6 rounded-2xl border border-slate-200 flex items-center gap-6 shadow-sm ml-8">
+                        <div class="w-12 h-12 bg-cyan-50 rounded-xl flex items-center justify-center text-cyan-600 text-xl font-bold"><i class="fas fa-icicles"></i></div>
+                        <div>
+                            <h4 class="font-bold text-slate-900 text-sm uppercase">Phase Change Material</h4>
+                            <p class="text-xs text-slate-500 mt-1">Reusable gel packs conditioned at -20°C prior to packing.</p>
+                        </div>
+                    </div>
+
+                    <div class="layer-card bg-slate-900 p-6 rounded-2xl border border-slate-900 flex items-center gap-6 shadow-xl ml-12 text-white">
+                        <div class="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center text-white text-xl font-bold"><i class="fas fa-vial"></i></div>
+                        <div>
+                            <h4 class="font-bold text-white text-sm uppercase">Lyophilized Reagent</h4>
+                            <p class="text-xs text-slate-400 mt-1">Vacuum-sealed vial. Stable at room temp for 60 days, but kept cool for longevity.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="bg-slate-50 border-t border-slate-200 pt-16">
+            <h2 class="text-3xl font-black italic text-slate-900 uppercase tracking-tight mb-12">Logistics FAQ</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-8">
+                
+                <div>
+                    <h4 class="font-bold text-slate-900 text-sm mb-2"><i class="fas fa-question-circle text-blue-600 mr-2"></i> Do you ship internationally?</h4>
+                    <p class="text-xs text-slate-500 leading-relaxed">Yes. We ship to most countries via DHL Express. All parcels are labeled as "Chemical Reagents" with appropriate Harmonized System (HS) codes for customs clearance. However, the buyer is responsible for local import laws.</p>
+                </div>
+
+                <div>
+                    <h4 class="font-bold text-slate-900 text-sm mb-2"><i class="fas fa-question-circle text-blue-600 mr-2"></i> What if my item arrives warm?</h4>
+                    <p class="text-xs text-slate-500 leading-relaxed">Our peptides are lyophilized (freeze-dried), which makes them stable at room temperature for up to 8 weeks. The ice packs are a precaution to prevent extreme heat spikes. If the ice has melted, the product is still 100% effective.</p>
+                </div>
+
+                <div>
+                    <h4 class="font-bold text-slate-900 text-sm mb-2"><i class="fas fa-question-circle text-blue-600 mr-2"></i> Is the packaging discreet?</h4>
+                    <p class="text-xs text-slate-500 leading-relaxed">Absolutely. The shipping label identifies the sender as "PL Fulfillment". There are no references to peptides, research chemicals, or medical supplies on the exterior box.</p>
+                </div>
+
+                <div>
+                    <h4 class="font-bold text-slate-900 text-sm mb-2"><i class="fas fa-question-circle text-blue-600 mr-2"></i> My package is lost.</h4>
+                    <p class="text-xs text-slate-500 leading-relaxed">We offer "Route" shipping insurance at checkout. If purchased, we will reship any lost or seized package immediately. Without insurance, we review cases on an individual basis.</p>
+                </div>
+
             </div>
         </div>
+
     </main>
 
-    <footer class="py-12 text-center text-[10px] text-slate-400 uppercase tracking-widest">
-        © 2026 Precision Peptides Logistics | Global Reagent Supply
+    <footer class="bg-white border-t border-slate-200 py-12 text-center mt-12">
+        <div class="text-[10px] text-slate-300 uppercase tracking-widest">
+            &copy; 2024 Precision Peptides. Verified Science.
+        </div>
     </footer>
+
+    <script>
+        function updateTimer() {
+            const now = new Date();
+            const estTime = new Date(now.toLocaleString("en-US", {timeZone: "America/New_York"}));
+            const cutoff = new Date(estTime);
+            
+            cutoff.setHours(14, 0, 0, 0); // 2:00 PM EST
+
+            // If past 2pm, set for tomorrow
+            if (estTime > cutoff) {
+                cutoff.setDate(cutoff.getDate() + 1);
+            }
+            // Skip weekends logic can be added here
+
+            const diff = cutoff - estTime;
+            
+            const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+            const minutes = Math.floor((diff / (1000 * 60)) % 60);
+            const seconds = Math.floor((diff / 1000) % 60);
+
+            document.getElementById('cutoff-timer').innerText = 
+                `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+        }
+
+        setInterval(updateTimer, 1000);
+        updateTimer();
+    </script>
 
 </body>
 </html>
