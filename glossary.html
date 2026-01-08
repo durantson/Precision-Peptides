@@ -3,79 +3,118 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Technical Glossary | Precision Peptides</title>
+    <title>Technical Glossary | Precision Labs</title>
+    
+    <meta name="description" content="Precision Labs Molecular Glossary. Defining the nomenclature and analytical standards of synthetic peptide chemistry.">
+    <meta name="keywords" content="peptide glossary, lyophilization, HPLC, SPPS, bacteriostatic water, research terminology">
+    <meta name="author" content="Precision Labs">
+    <meta name="theme-color" content="#2563eb"> 
+
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Precision Labs | Technical Glossary">
+    <meta property="og:description" content="Defining the nomenclature and analytical standards of synthetic peptide chemistry.">
+    <meta property="og:image" content="images/social-preview.jpg"> 
+    <meta property="og:url" content="https://www.your-website.com/glossary.html">
+
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚛️</text></svg>">
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=JetBrains+Mono&display=swap" rel="stylesheet">
-    <style>body { font-family: 'Inter', sans-serif; } .mono { font-family: 'JetBrains Mono', monospace; }</style>
+    <style>
+        body { font-family: 'Inter', sans-serif; } 
+        .mono { font-family: 'JetBrains Mono', monospace; }
+        * { -webkit-tap-highlight-color: transparent; }
+    </style>
 </head>
-<body class="bg-gray-50 text-slate-900 leading-relaxed">
+<body class="bg-slate-50 text-slate-900 leading-relaxed flex flex-col min-h-screen">
 
-    <nav class="bg-white border-b border-slate-200 h-20 flex items-center px-6">
-        <a href="index.html" class="flex items-center gap-2 hover:opacity-75 transition-opacity">
-    <div class="w-8 h-8 bg-blue-600 rounded flex items-center justify-center text-white"><i class="fas fa-atom text-xs"></i></div>
-    <span class="font-bold text-lg tracking-tighter uppercase italic text-slate-900">Precision<span class="text-blue-600">Labs</span></span>
-</a>
+    <nav class="bg-white border-b border-slate-200 h-16 flex items-center px-6 justify-between sticky top-0 z-50">
+        <a href="index.html" class="flex items-center gap-2 hover:opacity-80 transition-opacity">
+            <div class="w-8 h-8 bg-blue-600 rounded flex items-center justify-center text-white">
+                <i class="fas fa-atom text-xs"></i>
+            </div>
+            <span class="font-bold text-lg tracking-tighter uppercase italic text-slate-900">
+                Precision<span class="text-blue-600">Labs</span>
+            </span>
+        </a>
+        <div class="flex gap-6">
+            <a href="catalog.html" class="text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-blue-600 transition-colors">Catalog</a>
+            <a href="login.html" class="text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-blue-600 transition-colors">Portal</a>
+        </div>
     </nav>
 
-    <header class="bg-slate-900 py-16 px-6 text-white text-center">
-        <div class="max-w-4xl mx-auto">
-            <h1 class="text-4xl font-extrabold mb-4 uppercase tracking-tight">Molecular Glossary</h1>
+    <header class="bg-slate-900 py-16 px-6 text-white text-center relative overflow-hidden">
+        <div class="max-w-4xl mx-auto relative z-10">
+            <h1 class="text-4xl font-extrabold mb-4 uppercase tracking-tight italic">Molecular Glossary</h1>
             <p class="text-lg text-slate-400">Defining the nomenclature and analytical standards of synthetic peptide chemistry.</p>
         </div>
+        <div class="absolute top-0 right-0 w-64 h-64 bg-blue-600 rounded-full blur-[100px] opacity-20 pointer-events-none"></div>
     </header>
 
-    <main class="max-w-5xl mx-auto py-16 px-6">
+    <main class="flex-1 max-w-5xl mx-auto py-16 px-6 w-full">
         
-        <div class="mb-12">
+        <div class="mb-12 relative">
             <input type="text" id="glossarySearch" placeholder="Search terms (e.g., Lyophilization, SPPS)..." 
-                   class="w-full p-4 rounded-xl border border-slate-200 outline-none focus:ring-2 focus:ring-sky-500">
+                   class="w-full p-5 pl-12 rounded-2xl border border-slate-200 outline-none focus:ring-2 focus:ring-blue-600 shadow-sm transition-all">
+            <i class="fas fa-search absolute left-5 top-1/2 -translate-y-1/2 text-slate-400"></i>
         </div>
 
-        <div class="space-y-8" id="glossaryList">
+        <div class="space-y-6" id="glossaryList">
             
-            <div class="bg-white p-8 rounded-2xl border border-slate-200 term-item">
-                <h3 class="text-xl font-bold text-sky-600 mb-2 uppercase tracking-tight">Acetate Salt</h3>
+            <div class="bg-white p-8 rounded-2xl border border-slate-200 term-item shadow-sm hover:shadow-md transition-all">
+                <h3 class="text-xl font-bold text-blue-600 mb-2 uppercase tracking-tight">Acetate Salt</h3>
                 <p class="text-sm text-slate-600 leading-relaxed">
                     The most common counter-ion used in peptide synthesis to stabilize the molecule. Acetate salts are generally preferred in cell culture research over TFA (Trifluoroacetate) salts due to their lower cytotoxicity.
                 </p>
             </div>
 
-            <div class="bg-white p-8 rounded-2xl border border-slate-200 term-item">
-                <h3 class="text-xl font-bold text-sky-600 mb-2 uppercase tracking-tight">Amidation (C-Terminus)</h3>
+            <div class="bg-white p-8 rounded-2xl border border-slate-200 term-item shadow-sm hover:shadow-md transition-all">
+                <h3 class="text-xl font-bold text-blue-600 mb-2 uppercase tracking-tight">Amidation (C-Terminus)</h3>
                 <p class="text-sm text-slate-600 leading-relaxed">
                     A modification where the C-terminal carboxyl group is replaced with an amide group. This mimics the natural state of many hormones and increases the peptide's resistance to carboxypeptidase degradation.
                 </p>
             </div>
 
-            <div class="bg-white p-8 rounded-2xl border border-slate-200 term-item">
-                <h3 class="text-xl font-bold text-sky-600 mb-2 uppercase tracking-tight">Bacteriostatic Water</h3>
+            <div class="bg-white p-8 rounded-2xl border border-slate-200 term-item shadow-sm hover:shadow-md transition-all">
+                <h3 class="text-xl font-bold text-blue-600 mb-2 uppercase tracking-tight">Bacteriostatic Water</h3>
                 <p class="text-sm text-slate-600 leading-relaxed">
                     Sterile water containing 0.9% benzyl alcohol, used as a preservative to inhibit the growth of bacteria. Essential for the reconstitution of multi-dose research vials.
                 </p>
             </div>
 
-            <div class="bg-white p-8 rounded-2xl border border-slate-200 term-item">
-                <h3 class="text-xl font-bold text-sky-600 mb-2 uppercase tracking-tight">HPLC (High-Performance Liquid Chromatography)</h3>
+            <div class="bg-white p-8 rounded-2xl border border-slate-200 term-item shadow-sm hover:shadow-md transition-all">
+                <h3 class="text-xl font-bold text-blue-600 mb-2 uppercase tracking-tight">HPLC</h3>
                 <p class="text-sm text-slate-600 leading-relaxed">
-                    The analytical "gold standard" used to determine the chemical purity of a peptide. It separates the target peptide from impurities based on their interaction with a stationary phase and a mobile phase.
+                    <strong>High-Performance Liquid Chromatography.</strong> The analytical "gold standard" used to determine the chemical purity of a peptide. It separates the target peptide from impurities based on their interaction with a stationary phase and a mobile phase.
                 </p>
-                
             </div>
 
-            <div class="bg-white p-8 rounded-2xl border border-slate-200 term-item">
-                <h3 class="text-xl font-bold text-sky-600 mb-2 uppercase tracking-tight">Lyophilization</h3>
+            <div class="bg-white p-8 rounded-2xl border border-slate-200 term-item shadow-sm hover:shadow-md transition-all">
+                <h3 class="text-xl font-bold text-blue-600 mb-2 uppercase tracking-tight">Lyophilization</h3>
                 <p class="text-sm text-slate-600 leading-relaxed">
                     The process of freeze-drying a peptide to remove solvent. This results in a stable "cake" or powder that can be stored and transported at room temperature without immediate degradation.
                 </p>
-                
             </div>
 
-            <div class="bg-white p-8 rounded-2xl border border-slate-200 term-item">
-                <h3 class="text-xl font-bold text-sky-600 mb-2 uppercase tracking-tight">SPPS (Solid Phase Peptide Synthesis)</h3>
+            <div class="bg-white p-8 rounded-2xl border border-slate-200 term-item shadow-sm hover:shadow-md transition-all">
+                <h3 class="text-xl font-bold text-blue-600 mb-2 uppercase tracking-tight">Mass Spectrometry (MS)</h3>
                 <p class="text-sm text-slate-600 leading-relaxed">
-                    A method of synthesizing peptides by adding amino acids step-by-step to a solid resin support. Invented by Robert Bruce Merrifield, it allows for the precise creation of complex sequences.
+                    An analytical technique that measures the mass-to-charge ratio of ions. It is used to verify the exact molecular weight of a synthesized peptide, ensuring the sequence of amino acids is correct.
                 </p>
-                
+            </div>
+
+            <div class="bg-white p-8 rounded-2xl border border-slate-200 term-item shadow-sm hover:shadow-md transition-all">
+                <h3 class="text-xl font-bold text-blue-600 mb-2 uppercase tracking-tight">Reconstitution</h3>
+                <p class="text-sm text-slate-600 leading-relaxed">
+                    The process of adding a liquid solvent (diluent) to a lyophilized (powdered) reagent to return it to a liquid state for research application.
+                </p>
+            </div>
+
+            <div class="bg-white p-8 rounded-2xl border border-slate-200 term-item shadow-sm hover:shadow-md transition-all">
+                <h3 class="text-xl font-bold text-blue-600 mb-2 uppercase tracking-tight">SPPS</h3>
+                <p class="text-sm text-slate-600 leading-relaxed">
+                    <strong>Solid Phase Peptide Synthesis.</strong> A method of synthesizing peptides by adding amino acids step-by-step to a solid resin support. Invented by Robert Bruce Merrifield, it allows for the precise creation of complex sequences.
+                </p>
             </div>
 
         </div>
@@ -93,10 +132,51 @@
         });
     </script>
 
-    <footer class="py-12 text-center text-[10px] text-slate-400 uppercase tracking-widest">
-        © 2026 Precision Peptides | Technical Nomenclature Division
+    <footer class="bg-white border-t border-slate-200 py-16">
+        <div class="max-w-7xl mx-auto px-6 md:px-12">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+                <div class="col-span-1 md:col-span-2">
+                    <div class="flex items-center gap-2 mb-6">
+                        <div class="w-8 h-8 bg-slate-900 rounded flex items-center justify-center text-white"><i class="fas fa-atom text-xs"></i></div>
+                        <span class="font-black text-lg italic uppercase tracking-tighter text-slate-900">Precision<span class="text-blue-600">Labs</span></span>
+                    </div>
+                    <p class="text-slate-400 text-xs leading-loose max-w-sm">
+                        Precision Labs is a specialized supplier serving academic institutions and private laboratories.
+                    </p>
+                </div>
+                <div>
+                    <h4 class="font-bold text-slate-900 uppercase tracking-widest text-xs mb-6">Catalog</h4>
+                    <ul class="space-y-4 text-xs font-medium text-slate-500">
+                        <li><a href="catalog.html" class="hover:text-blue-600 transition-colors">Metabolic</a></li>
+                        <li><a href="catalog.html" class="hover:text-blue-600 transition-colors">Regenerative</a></li>
+                        <li><a href="catalog.html" class="hover:text-blue-600 transition-colors">Nootropics</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-slate-900 uppercase tracking-widest text-xs mb-6">Resources</h4>
+                    <ul class="space-y-4 text-xs font-medium text-slate-500">
+                        <li><a href="login.html" class="hover:text-blue-600 transition-colors">Researcher Portal</a></li>
+                        <li><a href="batch-verification.html" class="hover:text-blue-600 transition-colors">Batch Verification</a></li>
+                        <li><a href="support.html" class="hover:text-blue-600 transition-colors">Help Center</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-slate-100 pt-8 mt-8">
+                <div class="bg-red-50 border border-red-100 p-6 rounded-2xl text-center">
+                    <p class="text-[10px] text-red-600/70 font-bold uppercase tracking-widest mb-2">Research Use Only</p>
+                    <p class="text-[10px] text-red-800/60 leading-relaxed max-w-4xl mx-auto uppercase">
+                        Strictly for in-vitro laboratory research purposes only. Not for human consumption.
+                    </p>
+                </div>
+                <div class="text-center mt-8 text-[10px] text-slate-300 uppercase tracking-widest">
+                    &copy; 2026 Precision Labs. All rights reserved.
+                </div>
+            </div>
+        </div>
     </footer>
 
-</body>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 
+</body>
 </html>
