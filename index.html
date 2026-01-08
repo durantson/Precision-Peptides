@@ -27,30 +27,15 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         html { scroll-behavior: smooth; }
-        
-        .molecule-bg {
-            background-color: #ffffff;
-            background-image: radial-gradient(#e2e8f0 1px, transparent 1px);
-            background-size: 30px 30px;
-        }
-        
-        @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
-            100% { transform: translateY(0px); }
-        }
+        .molecule-bg { background-color: #ffffff; background-image: radial-gradient(#e2e8f0 1px, transparent 1px); background-size: 30px 30px; }
+        @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-20px); } 100% { transform: translateY(0px); } }
         .float-anim { animation: float 6s ease-in-out infinite; }
         .float-anim-delay { animation: float 6s ease-in-out infinite; animation-delay: 2s; }
-
         .feature-card { transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
         .feature-card:hover { transform: translateY(-10px); box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1); }
-
-        /* Ticker Animation */
-        @keyframes scroll {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-        }
+        @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
         .ticker-scroll { display: flex; animation: scroll 40s linear infinite; }
+        * { -webkit-tap-highlight-color: transparent; }
     </style>
 </head>
 <body class="bg-white font-sans antialiased text-slate-900">
@@ -87,7 +72,6 @@
 
     <header class="relative overflow-hidden min-h-[85vh] flex items-center molecule-bg">
         <div class="max-w-7xl mx-auto px-6 md:px-12 w-full grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            
             <div class="relative z-10 space-y-8">
                 <div class="inline-flex items-center gap-2 bg-blue-50 border border-blue-100 px-4 py-2 rounded-full text-blue-600 font-bold text-[10px] uppercase tracking-widest">
                     <span class="w-2 h-2 rounded-full bg-blue-600 animate-pulse"></span>
@@ -101,30 +85,15 @@
                     High-performance lyophilized reagents for institutional research. HPLC verified >99% purity. Synthesized for precision.
                 </p>
                 <div class="flex flex-col sm:flex-row gap-4 pt-4">
-                    <a href="catalog.html" class="px-8 py-5 bg-blue-600 text-white rounded-2xl font-black uppercase tracking-widest text-xs hover:bg-slate-900 transition-all shadow-xl shadow-blue-600/30 text-center">
-                        Browse Catalog
-                    </a>
-                    <a href="login.html" class="px-8 py-5 bg-white border-2 border-slate-100 text-slate-900 rounded-2xl font-black uppercase tracking-widest text-xs hover:border-slate-900 transition-all text-center">
-                        Research Portal
-                    </a>
+                    <a href="catalog.html" class="px-8 py-5 bg-blue-600 text-white rounded-2xl font-black uppercase tracking-widest text-xs hover:bg-slate-900 transition-all shadow-xl shadow-blue-600/30 text-center">Browse Catalog</a>
+                    <a href="login.html" class="px-8 py-5 bg-white border-2 border-slate-100 text-slate-900 rounded-2xl font-black uppercase tracking-widest text-xs hover:border-slate-900 transition-all text-center">Research Portal</a>
                 </div>
-                
                 <div class="flex gap-8 pt-8 opacity-60 grayscale hover:grayscale-0 transition-all duration-500">
-                    <div class="flex items-center gap-2">
-                        <i class="fas fa-check-circle text-emerald-500 text-xl"></i>
-                        <span class="text-xs font-bold uppercase text-slate-400">HPLC Verified</span>
-                    </div>
-                    <div class="flex items-center gap-2">
-                        <i class="fas fa-shield-alt text-blue-500 text-xl"></i>
-                        <span class="text-xs font-bold uppercase text-slate-400">Janoshik Tested</span>
-                    </div>
-                    <div class="flex items-center gap-2">
-                        <i class="fas fa-shipping-fast text-slate-900 text-xl"></i>
-                        <span class="text-xs font-bold uppercase text-slate-400">24h Dispatch</span>
-                    </div>
+                    <div class="flex items-center gap-2"><i class="fas fa-check-circle text-emerald-500 text-xl"></i><span class="text-xs font-bold uppercase text-slate-400">HPLC Verified</span></div>
+                    <div class="flex items-center gap-2"><i class="fas fa-shield-alt text-blue-500 text-xl"></i><span class="text-xs font-bold uppercase text-slate-400">Janoshik Tested</span></div>
+                    <div class="flex items-center gap-2"><i class="fas fa-shipping-fast text-slate-900 text-xl"></i><span class="text-xs font-bold uppercase text-slate-400">24h Dispatch</span></div>
                 </div>
             </div>
-
             <div class="relative hidden lg:block h-full min-h-[600px]">
                 <div class="absolute top-10 right-10 bg-white p-6 rounded-[2rem] shadow-2xl border border-slate-100 float-anim w-72">
                     <div class="flex justify-between items-start mb-4">
@@ -133,15 +102,10 @@
                     </div>
                     <h3 class="font-black text-2xl text-slate-900 italic">99.9%</h3>
                     <p class="text-xs text-slate-400 font-mono uppercase mt-1">Chromatography Purity</p>
-                    <div class="w-full bg-slate-100 h-1 mt-4 rounded-full overflow-hidden">
-                        <div class="bg-emerald-500 w-[99.9%] h-full"></div>
-                    </div>
+                    <div class="w-full bg-slate-100 h-1 mt-4 rounded-full overflow-hidden"><div class="bg-emerald-500 w-[99.9%] h-full"></div></div>
                 </div>
-
                 <div class="absolute top-64 right-64 bg-slate-900 p-6 rounded-[2rem] shadow-2xl float-anim-delay w-64 z-20">
-                    <div class="flex justify-between items-start mb-4">
-                        <div class="w-12 h-12 bg-white/10 rounded-2xl flex items-center justify-center text-white"><i class="fas fa-box"></i></div>
-                    </div>
+                    <div class="flex justify-between items-start mb-4"><div class="w-12 h-12 bg-white/10 rounded-2xl flex items-center justify-center text-white"><i class="fas fa-box"></i></div></div>
                     <h3 class="font-black text-lg text-white italic">Priority Shipping</h3>
                     <p class="text-xs text-slate-400 mt-2 leading-relaxed">Cold-chain insulated packaging for peptide stability.</p>
                 </div>
@@ -169,7 +133,6 @@
                 </div>
                 <a href="catalog.html" class="hidden md:block text-blue-600 font-bold text-xs uppercase tracking-widest hover:text-slate-900 transition-colors">View All Reagents <i class="fas fa-arrow-right ml-2"></i></a>
             </div>
-
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <a href="catalog.html" class="feature-card bg-white p-8 rounded-[2.5rem] border border-slate-100 relative overflow-hidden group">
                     <div class="absolute -right-10 -top-10 w-40 h-40 bg-blue-50 rounded-full group-hover:scale-150 transition-transform duration-700"></div>
@@ -202,7 +165,6 @@
                     From molecular design to cold-chain dispatch—transparency at every stage of the synthesis.
                 </p>
             </div>
-
             <div class="grid grid-cols-1 md:grid-cols-4 gap-4 md:gap-0 relative">
                 <div class="relative p-8 md:p-12 group">
                     <div class="hidden md:block absolute top-1/2 right-0 w-full h-[1px] bg-slate-200 z-0"></div>
@@ -213,7 +175,6 @@
                         <p class="text-xs text-slate-500 leading-relaxed">Precision-engineered amino acid assembly ensuring zero-deletion sequences.</p>
                     </div>
                 </div>
-
                 <div class="relative p-8 md:p-12 group">
                     <div class="hidden md:block absolute top-1/2 right-0 w-full h-[1px] bg-slate-200 z-0"></div>
                     <div class="relative z-10 text-center md:text-left">
@@ -223,7 +184,6 @@
                         <p class="text-xs text-slate-500 leading-relaxed">Water removal at -50°C to lock the molecular structure for long-term stability.</p>
                     </div>
                 </div>
-
                 <div class="relative p-8 md:p-12 group">
                     <div class="hidden md:block absolute top-1/2 right-0 w-full h-[1px] bg-slate-200 z-0"></div>
                     <div class="relative z-10 text-center md:text-left">
@@ -233,7 +193,6 @@
                         <p class="text-xs text-slate-500 leading-relaxed">Rigorous third-party testing to verify exact molecular weight and purity.</p>
                     </div>
                 </div>
-
                 <div class="relative p-8 md:p-12 group">
                     <div class="relative z-10 text-center md:text-left">
                         <div class="w-12 h-12 bg-slate-900 text-white rounded-xl flex items-center justify-center font-black italic mb-6 mx-auto md:mx-0 group-hover:bg-emerald-500 transition-all duration-500 shadow-xl">04</div>
@@ -250,33 +209,22 @@
         <div class="text-center mb-16">
             <h2 class="text-[10px] font-black uppercase tracking-[0.4em] text-blue-600 mb-4">Quality & Ethics</h2>
             <h3 class="text-4xl md:text-5xl font-black text-slate-900 italic uppercase tracking-tighter mb-6">Institutional Commitment</h3>
-            <p class="text-slate-500 max-w-2xl mx-auto text-sm md:text-base leading-relaxed font-medium">
-                Precision Labs operates at the intersection of rigorous analytical chemistry and logistical excellence.
-            </p>
+            <p class="text-slate-500 max-w-2xl mx-auto text-sm md:text-base leading-relaxed font-medium">Precision Labs operates at the intersection of rigorous analytical chemistry and logistical excellence.</p>
         </div>
-
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div class="bg-white border border-slate-200 rounded-[2.5rem] p-10 hover:shadow-2xl transition-all group">
-                <div class="w-14 h-14 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center mb-8 text-2xl group-hover:bg-blue-600 group-hover:text-white transition-all">
-                    <i class="fas fa-shield-vial"></i>
-                </div>
+                <div class="w-14 h-14 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center mb-8 text-2xl group-hover:bg-blue-600 group-hover:text-white transition-all"><i class="fas fa-shield-vial"></i></div>
                 <h4 class="text-xl font-black italic uppercase tracking-tighter mb-4">Verified Purity</h4>
                 <p class="text-xs text-slate-500 leading-relaxed mb-6">Every lot is sequestered and tested by independent labs via HPLC and MS to confirm purity exceeds 99%.</p>
                 <a href="batch-verification.html" class="text-[10px] font-black uppercase tracking-widest text-blue-600 hover:text-slate-900 transition-colors">View Lab Reports <i class="fas fa-arrow-right ml-2"></i></a>
             </div>
-
             <div class="bg-white border border-slate-200 rounded-[2.5rem] p-10 hover:shadow-2xl transition-all group">
-                <div class="w-14 h-14 bg-emerald-50 text-emerald-600 rounded-2xl flex items-center justify-center mb-8 text-2xl group-hover:bg-emerald-600 group-hover:text-white transition-all">
-                    <i class="fas fa-snowflake"></i>
-                </div>
+                <div class="w-14 h-14 bg-emerald-50 text-emerald-600 rounded-2xl flex items-center justify-center mb-8 text-2xl group-hover:bg-emerald-600 group-hover:text-white transition-all"><i class="fas fa-snowflake"></i></div>
                 <h4 class="text-xl font-black italic uppercase tracking-tighter mb-4">Cold-Chain Protocol</h4>
                 <p class="text-xs text-slate-500 leading-relaxed mb-6">We utilize climate-controlled storage and insulated shipping to prevent thermal degradation of molecular integrity.</p>
             </div>
-
             <div class="bg-white border border-slate-200 rounded-[2.5rem] p-10 hover:shadow-2xl transition-all group">
-                <div class="w-14 h-14 bg-slate-900 text-white rounded-2xl flex items-center justify-center mb-8 text-2xl group-hover:bg-blue-600 transition-all">
-                    <i class="fas fa-microscope"></i>
-                </div>
+                <div class="w-14 h-14 bg-slate-900 text-white rounded-2xl flex items-center justify-center mb-8 text-2xl group-hover:bg-blue-600 transition-all"><i class="fas fa-microscope"></i></div>
                 <h4 class="text-xl font-black italic uppercase tracking-tighter mb-4">Ethical Compliance</h4>
                 <p class="text-xs text-slate-500 leading-relaxed mb-6">Precision Labs is strictly dedicated to in-vitro laboratory research. We maintain full regulatory compliance.</p>
             </div>
@@ -291,9 +239,7 @@
                         <div class="w-8 h-8 bg-slate-900 rounded flex items-center justify-center text-white"><i class="fas fa-atom text-xs"></i></div>
                         <span class="font-black text-lg italic uppercase tracking-tighter text-slate-900">Precision<span class="text-blue-600">Labs</span></span>
                     </div>
-                    <p class="text-slate-400 text-xs leading-loose max-w-sm">
-                        Precision Labs is a specialized supplier serving academic institutions and private laboratories.
-                    </p>
+                    <p class="text-slate-400 text-xs leading-loose max-w-sm">Precision Labs is a specialized supplier serving academic institutions and private laboratories.</p>
                 </div>
                 <div>
                     <h4 class="font-bold text-slate-900 uppercase tracking-widest text-xs mb-6">Catalog</h4>
@@ -312,17 +258,12 @@
                     </ul>
                 </div>
             </div>
-            
             <div class="border-t border-slate-100 pt-8 mt-8">
                 <div class="bg-red-50 border border-red-100 p-6 rounded-2xl text-center">
                     <p class="text-[10px] text-red-600/70 font-bold uppercase tracking-widest mb-2">Research Use Only</p>
-                    <p class="text-[10px] text-red-800/60 leading-relaxed max-w-4xl mx-auto uppercase">
-                        Strictly for in-vitro laboratory research purposes only. Not for human consumption.
-                    </p>
+                    <p class="text-[10px] text-red-800/60 leading-relaxed max-w-4xl mx-auto uppercase">Strictly for in-vitro laboratory research purposes only. Not for human consumption.</p>
                 </div>
-                <div class="text-center mt-8 text-[10px] text-slate-300 uppercase tracking-widest">
-                    &copy; 2026 Precision Labs. All rights reserved.
-                </div>
+                <div class="text-center mt-8 text-[10px] text-slate-300 uppercase tracking-widest">&copy; 2026 Precision Labs. All rights reserved.</div>
             </div>
         </div>
     </footer>
