@@ -1,6 +1,6 @@
 /**
  * PRECISION LABS - AI RESEARCH ASSISTANT (Dr. Alara)
- * version: 2.4.0 (Stable)
+ * version: 3.0.0 (Advanced Logic)
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -10,60 +10,117 @@ document.addEventListener('DOMContentLoaded', () => {
 // --- CONFIGURATION ---
 const CONFIG = {
     botName: "Dr. Alara",
-    typingSpeed: 30, // ms per character calculation
-    minDelay: 1000,  // minimum wait time for realism
-    maxHistory: 50   // keep DOM light
+    typingSpeed: 25, // ms per char
+    minDelay: 800,   // minimum "thinking" time
 };
 
-// --- KNOWLEDGE BASE ---
-const KNOWLEDGE = {
-    // 1. Compliance & Safety (Highest Priority)
-    compliance: {
-        triggers: ['human', 'inject', 'dosage', 'dose', 'take', 'consumption', 'body', 'muscle', 'fat loss', 'symptom'],
-        response: `<div class="border-l-4 border-red-500 pl-4 py-2 bg-red-50 rounded-r-lg">
-            <strong class="text-red-700 uppercase text-[10px] tracking-widest block mb-1"><i class="fas fa-exclamation-triangle"></i> Compliance Alert</strong>
-            <p class="text-red-800/80">Precision Peptides supplies reagents strictly for <strong>in-vitro laboratory research</strong> and non-clinical applications. We are unable to provide instructions regarding administration, dosage, or therapeutic use.</p>
-        </div>`
+// --- STATE MANAGEMENT ---
+let sessionState = {
+    hasGreeted: false,
+    lastTopic: null,
+    messageCount: 0
+};
+
+// --- INTELLIGENT KNOWLEDGE BASE ---
+// The AI picks a RANDOM response from the array to sound natural.
+const KNOWLEDGE_BASE = {
+    
+    // 1. GREETINGS
+    greetings: {
+        triggers: ['hello', 'hi', 'hey', 'greetings', 'start', 'good morning', 'good afternoon'],
+        responses: [
+            "Greetings. I am Dr. Alara. How can I assist with your research protocols today?",
+            "Hello. I am ready to access the Precision Peptides database. What requires verification?",
+            "System online. Please state your inquiry regarding our reagent catalog.",
+            "Welcome back to the portal. I am standing by for your query."
+        ]
     },
 
-    // 2. Logistics
+    // 2. SHIPPING & LOGISTICS
     shipping: {
-        triggers: ['ship', 'delivery', 'track', 'fedex', 'time', 'long', 'arrive'],
-        response: `<strong>Logistics Data:</strong><br>
-        <ul class="list-disc ml-4 mt-2 space-y-1 text-slate-500">
-            <li><strong>Domestic:</strong> FedEx Priority Overnight (1-2 Business Days).</li>
-            <li><strong>International:</strong> DHL Express (3-5 Business Days).</li>
-            <li><strong>Cutoff:</strong> Orders placed before 14:00 EST ship same-day.</li>
-        </ul>`
+        triggers: ['ship', 'track', 'delivery', 'arrive', 'long', 'time', 'fedex', 'ups', 'where is'],
+        responses: [
+            "We utilize <strong>FedEx Priority Overnight</strong> for domestic reagents. Orders placed before 14:00 EST dispatch the same day.",
+            "Logistics data indicates a 24-48 hour transit time for most US locations. We use insulated cold-chain packaging.",
+            "Tracking numbers are automatically generated upon label creation. You should receive yours via email by 5:00 PM EST.",
+            "We ship strictly via Priority Air to maintain peptide stability. Do you have a specific Order ID you wish to trace?"
+        ]
     },
 
-    // 3. Quality Control
-    quality: {
-        triggers: ['purity', 'test', 'hplc', 'coa', 'lab', 'verify', 'janoshik'],
-        response: `<strong>Quality Assurance Protocols:</strong><br>
-        All batches are subjected to third-party verification via Janoshik or MZ Biolabs.
-        <br><br>
-        We guarantee a purity standard of <strong>&ge;99.0%</strong>. Every vial includes a QR code linking directly to the mass spectrometry raw data.`
+    // 3. STORAGE & HANDLING
+    storage: {
+        triggers: ['store', 'keep', 'fridge', 'freezer', 'temperature', 'shelf life', 'expire', 'stable'],
+        responses: [
+            "For long-term preservation, all lyophilized reagents should be stored at <strong>-20°C</strong> (Freezer).",
+            "Once reconstituted with bacteriostatic water, the solution must be refrigerated at 4°C and used within 30 days.",
+            "Lyophilized powder is stable at room temperature for up to 8 weeks, but we recommend immediate cold storage upon receipt.",
+            "Avoid repeated freeze-thaw cycles. We recommend aliquoting your solution if you do not plan to use the full vial immediately."
+        ]
     },
 
-    // 4. Product Specific Intelligence
+    // 4. PURITY & TESTING
+    purity: {
+        triggers: ['purity', 'test', 'hplc', 'coa', 'lab', 'janoshik', 'mz', 'quality', 'verified'],
+        responses: [
+            "Our purity standard is strict: <strong>&ge;99.0%</strong>. Any batch testing lower is rejected.",
+            "We verify every batch through Janoshik Analytics or MZ Biolabs. You can find the raw HPLC data on the 'Batch Verification' page.",
+            "We test for both identity (Mass Spec) and purity (HPLC). We do not sell unverified raw powder.",
+            "Transparency is key. If you have a specific Batch ID, I can pull the chromatogram for you immediately."
+        ]
+    },
+
+    // 5. PAYMENT
+    payment: {
+        triggers: ['pay', 'card', 'credit', 'bitcoin', 'crypto', 'payment', 'money', 'cost'],
+        responses: [
+            "We accept all major credit cards (Visa, Mastercard, Amex) via a secure, 256-bit encrypted gateway.",
+            "Institutional clients may request net-30 terms. For individual researchers, we accept Credit Card and Bitcoin.",
+            "All transactions are discreetly billed. We do not store payment data on our servers."
+        ]
+    },
+
+    // 6. COMPLIANCE (Hard Guardrail)
+    compliance: {
+        triggers: ['human', 'inject', 'dose', 'dosage', 'body', 'muscle', 'fat loss', 'take', 'consumption', 'oral'],
+        responses: [
+            `<div class="border-l-4 border-red-500 pl-4 py-2 bg-red-50 text-red-900">
+                <strong><i class="fas fa-exclamation-triangle"></i> Compliance Alert</strong><br>
+                I must remind you that all Precision Peptides reagents are for <strong>in-vitro laboratory research only</strong>. 
+                I cannot provide instructions for human administration or therapeutic dosage.
+            </div>`
+        ]
+    },
+
+    // 7. PRODUCT SPECIFICS
     products: {
-        'tirzepatide': 'Tirzepatide is a dual GIP/GLP-1 receptor agonist. Stock is currently available in 10mg aliquots. Requires -20°C storage.',
-        'semaglutide': 'Semaglutide (GLP-1 Analogue) features the C18 fatty diacid modification for albumin binding studies. Available in 5mg.',
-        'retatrutide': 'Retatrutide is the triple agonist (GCGR/GIP/GLP-1). It is our newest metabolic reagent.',
-        'bpc': 'BPC-157 is available as the stable Arginine Salt form, designed for gastric pH resistance in research models.',
-        'tb-500': 'TB-500 (Thymosin Beta-4) is a synthetic 43-amino acid peptide involved in actin sequestration.',
-        'semax': 'We carry both Standard Semax (Heptapeptide) and NA-Semax Amidate (Acetyl/Amide modified) for neurological research.',
-        'ghk': 'GHK-Cu appears as a deep blue crystal due to the Copper(II) complex. It is highly hygroscopic.',
-        'tesamorelin': 'Tesamorelin features the trans-3-hexenoic acid modification at the N-terminus.'
+        'tirzepatide': "Tirzepatide is a dual GIP/GLP-1 agonist. We stock it in 5mg, 10mg, and 15mg aliquots.",
+        'semaglutide': "Semaglutide is our most popular GLP-1 analogue. It features a C18 fatty acid chain for extended research half-life.",
+        'bpc': "BPC-157 is available in the stable Arginine Salt form, which is more resistant to pH variations than the Acetate form.",
+        'retatrutide': "Retatrutide is the triple agonist (GCGR/GIP/GLP-1). It is currently the most potent metabolic agent in our catalog.",
+        'tesamorelin': "Tesamorelin is a GHRH analogue. Note that it is highly fragile once reconstituted and should be handled gently."
     }
 };
+
+const FALLBACKS = [
+    "I am analyzing your query. Could you rephrase that using specific chemical or logistical terminology?",
+    "I do not have a protocol for that specific inquiry. Are you asking about shipping, purity, or a specific compound?",
+    "My database is limited to technical specifications and logistics. Please clarify your request.",
+    "I am unable to parse that input. Would you like to open a ticket with a human specialist?"
+];
 
 // --- SYSTEM LOGIC ---
 
 function initChatSystem() {
     const form = document.getElementById('chat-form');
     if (!form) return;
+
+    // Greeting on load (only once)
+    if (!sessionState.hasGreeted) {
+        setTimeout(() => {
+            addMessageToUI('bot', KNOWLEDGE_BASE.greetings.responses[0]);
+            sessionState.hasGreeted = true;
+        }, 1000);
+    }
 
     form.addEventListener('submit', (e) => {
         e.preventDefault();
@@ -75,27 +132,21 @@ function initChatSystem() {
             input.value = '';
         }
     });
-
-    // Initialize "Enter" key override if needed
-    document.getElementById('user-input').addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') {
-            // default form submit handles this
-        }
-    });
 }
 
 function processUserMessage(text) {
-    // 1. Render User Message
+    // 1. Add User Message
     addMessageToUI('user', text);
+    sessionState.messageCount++;
 
-    // 2. Show Typing Indicator
+    // 2. Show Typing
     showTypingIndicator();
 
-    // 3. Analyze & Generate Response
+    // 3. Think & Respond
     const responseData = analyzeInput(text);
     
-    // 4. Calculate "AI Thinking Time" (Simulated realism)
-    const delay = Math.max(CONFIG.minDelay, (responseData.length * CONFIG.typingSpeed) / 5);
+    // Calculated delay based on response length to feel "human"
+    const delay = Math.max(CONFIG.minDelay, (responseData.length * CONFIG.typingSpeed) / 4);
 
     setTimeout(() => {
         removeTypingIndicator();
@@ -106,69 +157,62 @@ function processUserMessage(text) {
 function analyzeInput(input) {
     const lower = input.toLowerCase();
 
-    // Check Compliance First (Guardrail)
-    if (KNOWLEDGE.compliance.triggers.some(t => lower.includes(t))) {
-        return KNOWLEDGE.compliance.response;
-    }
-
-    // Check Product Specifics
-    for (const [key, value] of Object.entries(KNOWLEDGE.products)) {
+    // 1. PRODUCT SPECIFIC CHECK (Priority)
+    for (const [key, value] of Object.entries(KNOWLEDGE_BASE.products)) {
         if (lower.includes(key)) {
-            return `<strong>Reagent Identification:</strong><br>${value}<br><br>Would you like the HPLC report for this compound?`;
+            return `<strong>Reagent Identified:</strong><br>${value}<br><br>Would you like to view the COA for this compound?`;
         }
     }
 
-    // Check Categories
-    if (KNOWLEDGE.shipping.triggers.some(t => lower.includes(t))) return KNOWLEDGE.shipping.response;
-    if (KNOWLEDGE.quality.triggers.some(t => lower.includes(t))) return KNOWLEDGE.quality.response;
-
-    // Bulk/Wholesale
-    if (lower.includes('bulk') || lower.includes('price') || lower.includes('discount')) {
-        return `We offer institutional pricing tiers:
-        <ul class="list-disc ml-4 mt-2 mb-2 text-slate-500">
-            <li>10+ Vials: 15% Off</li>
-            <li>50+ Vials: 25% Off</li>
-        </ul>
-        Contact <strong>wholesale@precisionpeptides.com</strong> for bulk manifests.`;
+    // 2. CATEGORY SCANNING
+    // We shuffle the response array to ensure variety
+    if (matchTrigger(lower, KNOWLEDGE_BASE.compliance.triggers)) return getRandom(KNOWLEDGE_BASE.compliance.responses);
+    if (matchTrigger(lower, KNOWLEDGE_BASE.shipping.triggers)) return getRandom(KNOWLEDGE_BASE.shipping.responses);
+    if (matchTrigger(lower, KNOWLEDGE_BASE.storage.triggers)) return getRandom(KNOWLEDGE_BASE.storage.responses);
+    if (matchTrigger(lower, KNOWLEDGE_BASE.purity.triggers)) return getRandom(KNOWLEDGE_BASE.purity.responses);
+    if (matchTrigger(lower, KNOWLEDGE_BASE.payment.triggers)) return getRandom(KNOWLEDGE_BASE.payment.responses);
+    if (matchTrigger(lower, KNOWLEDGE_BASE.greetings.triggers)) {
+        if (sessionState.messageCount > 1) return "We are already in an active session. Please state your inquiry.";
+        return getRandom(KNOWLEDGE_BASE.greetings.responses);
     }
 
-    // Fallback / Greetings
-    if (lower.includes('hello') || lower.includes('hi ') || lower === 'hi') {
-        return `Greetings. I am ready to assist with your research inquiries. You can ask about product specs, shipping, or purity verification.`;
-    }
-
-    return `I am analyzing your query regarding "<em>${input}</em>".<br><br>
-    My database does not have a direct match for this specific phrasing. Could you specify if you are looking for a CAS number, a shipping update, or a chemical specification?`;
+    // 3. FALLBACK
+    return getRandom(FALLBACKS);
 }
 
-// --- UI RENDERING ---
+// Helper: Check if input contains any trigger word
+function matchTrigger(input, triggers) {
+    return triggers.some(trigger => input.includes(trigger));
+}
+
+// Helper: Get random item from array
+function getRandom(array) {
+    return array[Math.floor(Math.random() * array.length)];
+}
+
+// --- UI RENDERING (Identical to previous, ensures visual consistency) ---
 
 function addMessageToUI(sender, htmlContent) {
     const container = document.getElementById('chat-container');
     const div = document.createElement('div');
-    
     const isUser = sender === 'user';
+    
     div.className = `flex gap-4 message-bubble ${isUser ? 'flex-row-reverse' : ''}`;
     
     const avatar = isUser 
-        ? `<div class="w-8 h-8 rounded-full bg-blue-600 flex-shrink-0 flex items-center justify-center text-white text-xs shadow-lg shadow-blue-600/30"><i class="fas fa-user"></i></div>`
+        ? `<div class="w-8 h-8 rounded-full bg-blue-600 flex-shrink-0 flex items-center justify-center text-white text-xs shadow-lg"><i class="fas fa-user"></i></div>`
         : `<div class="w-8 h-8 rounded-full bg-slate-900 flex-shrink-0 flex items-center justify-center text-white text-xs shadow-lg"><i class="fas fa-robot"></i></div>`;
 
-    const name = isUser ? 'You' : CONFIG.botName;
     const bubbleStyle = isUser 
         ? 'bg-blue-600 text-white rounded-tr-none shadow-blue-600/20' 
         : 'bg-white border border-slate-200 text-slate-600 rounded-tl-none';
-
-    // Timestamp
-    const now = new Date();
-    const timeString = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
     div.innerHTML = `
         ${avatar}
         <div class="max-w-2xl animate-fade-in-up">
             <div class="flex items-center gap-2 mb-1 ${isUser ? 'justify-end' : ''}">
-                <span class="text-[10px] font-bold uppercase tracking-wider ${isUser ? 'text-slate-500' : 'text-slate-900'}">${name}</span>
-                <span class="text-[10px] text-slate-300">${timeString}</span>
+                <span class="text-[10px] font-bold uppercase tracking-wider ${isUser ? 'text-slate-500' : 'text-slate-900'}">${isUser ? 'You' : CONFIG.botName}</span>
+                <span class="text-[10px] text-slate-300">${new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
             </div>
             <div class="${bubbleStyle} p-4 rounded-2xl shadow-sm text-sm leading-relaxed">
                 ${htmlContent}
@@ -207,11 +251,9 @@ function scrollToBottom() {
     container.scrollTop = container.scrollHeight;
 }
 
-// Global exposure for the "Quick Reply" buttons in the sidebar
+// Global scope for Quick Reply buttons in the HTML
 window.sendQuickReply = function(text) {
     const input = document.getElementById('user-input');
     input.value = text;
-    // Programmatically trigger submit
-    const event = new Event('submit');
-    document.getElementById('chat-form').dispatchEvent(event);
+    document.getElementById('chat-form').dispatchEvent(new Event('submit'));
 };
