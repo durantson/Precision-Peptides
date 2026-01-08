@@ -7,15 +7,16 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        .study-link:hover { color: #2563eb; background-color: #eff6ff; }
+        .study-row:hover { background-color: #f8fafc; }
         .sidebar-item.active { background-color: #f1f5f9; color: #2563eb; border-right: 4px solid #2563eb; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
         * { -webkit-tap-highlight-color: transparent; }
     </style>
 </head>
 <body class="bg-slate-50 font-sans antialiased text-slate-900 min-h-screen">
 
     <script>
-        // Security Guard
+        // Security Guard: Check for Authorization
         if (localStorage.getItem('portalAuthorized') !== 'true') {
             window.location.href = 'login.html';
         }
@@ -59,7 +60,7 @@
             </div>
         </aside>
 
-        <main class="flex-1 p-6 md:p-12">
+        <main class="flex-1 p-6 md:p-12 overflow-y-auto">
             
             <section id="module-protocols" class="module-section space-y-8">
                 <header>
@@ -71,51 +72,37 @@
                     <div class="bg-white border border-slate-200 rounded-3xl p-6 shadow-sm">
                         <div class="w-10 h-10 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center mb-4"><i class="fas fa-snowflake"></i></div>
                         <h4 class="font-black uppercase italic tracking-tight mb-2">Cold Chain Integrity</h4>
-                        <p class="text-xs text-slate-500 leading-relaxed">Lyophilized peptides should be stored at -20°C for long-term stability. For active research phases, 2°C – 8°C is sufficient for up to 24 months in powder form.</p>
+                        <p class="text-xs text-slate-500 leading-relaxed">Lyophilized peptides should be stored at -20°C for long-term stability. Avoid refrigerator door storage due to heat spikes.</p>
                     </div>
                     <div class="bg-white border border-slate-200 rounded-3xl p-6 shadow-sm">
                         <div class="w-10 h-10 bg-emerald-50 text-emerald-600 rounded-full flex items-center justify-center mb-4"><i class="fas fa-tint"></i></div>
                         <h4 class="font-black uppercase italic tracking-tight mb-2">Reconstitution Best Practices</h4>
-                        <p class="text-xs text-slate-500 leading-relaxed">Utilize Bacteriostatic Water (0.9% Benzyl Alcohol) for multi-use vials. Avoid mechanical agitation; use gentle swirling to maintain molecular structure.</p>
+                        <p class="text-xs text-slate-500 leading-relaxed">Always use Bacteriostatic Water (0.9% Benzyl Alcohol) for multi-use research vials to prevent microbial growth.</p>
                     </div>
                 </div>
             </section>
 
             <section id="module-studies" class="module-section hidden space-y-8">
                 <header>
-                    <h1 class="text-3xl font-black italic uppercase tracking-tighter">Clinical Study Database</h1>
-                    <p class="text-slate-500 text-sm italic">Verified research papers and clinical trial results.</p>
+                    <h1 class="text-3xl font-black italic uppercase tracking-tighter">Clinical Reference Library</h1>
+                    <p class="text-slate-500 text-sm italic">Verified research papers and trials from PubMed and NEJM.</p>
                 </header>
 
                 <div class="bg-white border border-slate-200 rounded-3xl overflow-hidden shadow-sm">
-                    <table class="w-full text-left">
-                        <thead class="bg-slate-50 border-b border-slate-200">
-                            <tr>
-                                <th class="p-4 text-[10px] font-black uppercase tracking-widest text-slate-400">Compound</th>
-                                <th class="p-4 text-[10px] font-black uppercase tracking-widest text-slate-400">Study Focus</th>
-                                <th class="p-4 text-[10px] font-black uppercase tracking-widest text-slate-400">Source</th>
-                            </tr>
-                        </thead>
-                        <tbody class="text-xs">
-                            <tr class="border-b border-slate-50">
-                                <td class="p-4 font-bold">Tirzepatide</td>
-                                <td class="p-4 text-slate-500">SURMOUNT-1 Clinical Trial (Weight Management)</td>
-                                <td class="p-4"><a href="https://pubmed.ncbi.nlm.nih.gov/35658024/" target="_blank" class="text-blue-600 font-bold hover:underline">PubMed <i class="fas fa-external-link-alt ml-1 text-[9px]"></i></a></td>
-                            </tr>
-                            <tr class="border-b border-slate-50">
-                                <td class="p-4 font-bold">BPC-157</td>
-                                <td class="p-4 text-slate-500">Gastric juice peptide BPC 157 and tendon repair</td>
-                                <td class="p-4"><a href="https://pubmed.ncbi.nlm.nih.gov/21030671/" target="_blank" class="text-blue-600 font-bold hover:underline">PubMed <i class="fas fa-external-link-alt ml-1 text-[9px]"></i></a></td>
-                            </tr>
-                            <tr>
-                                <td class="p-4 font-bold">Retatrutide</td>
-                                <td class="p-4 text-slate-500">Triple–Hormone-Receptor Agonist for Obesity</td>
-                                <td class="p-4"><a href="https://www.nejm.org/doi/full/10.1056/NEJMoa2301972" target="_blank" class="text-blue-600 font-bold hover:underline">NEJM <i class="fas fa-external-link-alt ml-1 text-[9px]"></i></a></td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse">
+                            <thead class="bg-slate-50 border-b border-slate-200">
+                                <tr>
+                                    <th class="p-4 text-[9px] font-black uppercase tracking-widest text-slate-400">Reagent</th>
+                                    <th class="p-4 text-[9px] font-black uppercase tracking-widest text-slate-400">Research Focus</th>
+                                    <th class="p-4 text-[9px] font-black uppercase tracking-widest text-slate-400">Database Link</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-[11px] font-medium" id="studies-table-body">
+                                </tbody>
+                        </table>
+                    </div>
                 </div>
-                <p class="text-[9px] text-slate-400 uppercase tracking-widest text-center">More studies added weekly. Contact lab for specific requests.</p>
             </section>
 
             <section id="module-calculators" class="module-section hidden space-y-8">
@@ -144,21 +131,64 @@
                     </div>
                 </div>
             </section>
-
         </main>
     </div>
 
     <script>
+        // MASTER DATABASE OF CLINICAL STUDIES
+        const studyData = [
+            { name: "Tirzepatide", focus: "SURMOUNT-1 Phase 3 Clinical Trial", link: "https://pubmed.ncbi.nlm.nih.gov/35658024/" },
+            { name: "Retatrutide", focus: "Triple-Hormone-Receptor Agonist for Obesity", link: "https://www.nejm.org/doi/full/10.1056/NEJMoa2301972" },
+            { name: "Semaglutide", focus: "Glucagon-Like Peptide-1 (STEP trials)", link: "https://pubmed.ncbi.nlm.nih.gov/33567185/" },
+            { name: "AOD-9604", focus: "Lipolytic effect of hGH 177-191 fragment", link: "https://pubmed.ncbi.nlm.nih.gov/11713213/" },
+            { name: "Cardarine", focus: "PPAR-delta agonist and oxidative capacity", link: "https://pubmed.ncbi.nlm.nih.gov/12604604/" },
+            { name: "Tesamorelin", focus: "GHRH analogue for visceral fat reduction", link: "https://pubmed.ncbi.nlm.nih.gov/17166885/" },
+            { name: "BPC-157", focus: "Gastric peptide and tendon-to-bone healing", link: "https://pubmed.ncbi.nlm.nih.gov/21030671/" },
+            { name: "TB-500", focus: "Thymosin Beta-4 and dermal wound healing", link: "https://pubmed.ncbi.nlm.nih.gov/20536454/" },
+            { name: "GHK-Cu", focus: "Copper-peptide and collagen synthesis", link: "https://pubmed.ncbi.nlm.nih.gov/26318444/" },
+            { name: "IGF-1 LR3", focus: "Long R3 IGF-1 protein synthesis", link: "https://pubmed.ncbi.nlm.nih.gov/2164476/" },
+            { name: "Semax", focus: "BDNF expression and neuroprotection", link: "https://pubmed.ncbi.nlm.nih.gov/21323136/" },
+            { name: "NA-Semax Amidate", focus: "Cognitive effects of modified ACTH fragments", link: "https://pubmed.ncbi.nlm.nih.gov/21323136/" },
+            { name: "Selank", focus: "Anxiolytic and Th1/Th2 cytokine balance", link: "https://pubmed.ncbi.nlm.nih.gov/19093355/" },
+            { name: "NA-Selank Amidate", focus: "N-acetylated Tuftsin analogues", link: "https://pubmed.ncbi.nlm.nih.gov/19093355/" },
+            { name: "NAD+", focus: "NAD+ and sirtuin-mediated metabolic control", link: "https://pubmed.ncbi.nlm.nih.gov/29466644/" },
+            { name: "Epitalon", focus: "Telomerase activation and life extension", link: "https://pubmed.ncbi.nlm.nih.gov/12707640/" },
+            { name: "MOTS-c", focus: "Mitochondrial-derived peptide and metabolism", link: "https://pubmed.ncbi.nlm.nih.gov/25738892/" },
+            { name: "FOXO4-DRI", focus: "Targeting senescent cells via p53-FOXO4", link: "https://pubmed.ncbi.nlm.nih.gov/28334579/" },
+            { name: "LL-37", focus: "Antimicrobial peptide and host defense", link: "https://pubmed.ncbi.nlm.nih.gov/12595604/" },
+            { name: "Thymosin Alpha-1", focus: "T-cell regulation and immune modulation", link: "https://pubmed.ncbi.nlm.nih.gov/10464919/" },
+            { name: "DSIP", focus: "Delta sleep-inducing peptide and circadian rhythm", link: "https://pubmed.ncbi.nlm.nih.gov/6140134/" },
+            { name: "Melanotan 2", focus: "Alpha-MSH analog for melanogenesis", link: "https://pubmed.ncbi.nlm.nih.gov/9683056/" },
+            { name: "CJC-1295", focus: "Half-life of Growth Hormone-Releasing Factor", link: "https://pubmed.ncbi.nlm.nih.gov/16352683/" },
+            { name: "Ipamorelin", focus: "Selectivity of GH-releasing secretagogue", link: "https://pubmed.ncbi.nlm.nih.gov/9811365/" },
+            { name: "KPV", focus: "Anti-inflammatory tripeptide (Alpha-MSH 11-13)", link: "https://pubmed.ncbi.nlm.nih.gov/12850389/" },
+            { name: "AICAR", focus: "AMPK activation and exercise mimetics", link: "https://pubmed.ncbi.nlm.nih.gov/11485901/" },
+            { name: "PT-141", focus: "Melanocortin agonist and sexual dysfunction", link: "https://pubmed.ncbi.nlm.nih.gov/12851303/" }
+        ];
+
+        function populateStudies() {
+            const tbody = document.getElementById('studies-table-body');
+            tbody.innerHTML = studyData.map(s => `
+                <tr class="study-row border-b border-slate-50 transition-colors">
+                    <td class="p-4 font-black italic uppercase tracking-tighter text-slate-900">${s.name}</td>
+                    <td class="p-4 text-slate-500">${s.focus}</td>
+                    <td class="p-4">
+                        <a href="${s.link}" target="_blank" class="bg-blue-50 text-blue-600 px-4 py-1.5 rounded-full font-black uppercase text-[8px] tracking-widest hover:bg-blue-600 hover:text-white transition-all">
+                            Access Data <i class="fas fa-external-link-alt ml-1"></i>
+                        </a>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
         function showModule(id) {
-            // Update Sidebar UI
             document.querySelectorAll('.sidebar-item').forEach(btn => {
                 btn.classList.remove('active');
                 if (btn.getAttribute('onclick').includes(id)) btn.classList.add('active');
             });
-
-            // Update Sections
             document.querySelectorAll('.module-section').forEach(sec => sec.classList.add('hidden'));
             document.getElementById('module-' + id).classList.remove('hidden');
+            if(id === 'studies') populateStudies();
         }
 
         function runCalc() {
@@ -167,7 +197,6 @@
             const resText = document.getElementById('result-text');
             const resUnits = document.getElementById('result-units');
             const resDiv = document.getElementById('calc-result');
-
             if(mg && ml) {
                 const conc = mg / ml;
                 resText.innerText = conc.toFixed(2) + " mg / mL";
