@@ -3,124 +3,257 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Investigator Portal | Precision Peptides</title>
+    <title>Researcher Portal | Precision Peptides</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        /* Custom Scrollbar for the Chat Window */
+        .chat-scroll::-webkit-scrollbar { width: 6px; }
+        .chat-scroll::-webkit-scrollbar-track { background: #f1f5f9; }
+        .chat-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        .chat-scroll::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        
+        /* Message Animation */
+        @keyframes message-pop {
+            0% { opacity: 0; transform: translateY(10px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        .message-bubble { animation: message-pop 0.3s ease-out forwards; }
+        
+        /* Typing Indicator Bounce */
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+        .typing-dot { animation: bounce 1s infinite; }
+        .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+        .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+    </style>
 </head>
-<body class="bg-[#0f172a] text-slate-200 font-sans antialiased min-h-screen">
+<body class="bg-slate-50 font-sans antialiased text-slate-900 h-screen flex flex-col overflow-hidden">
 
-    <nav class="bg-[#1e293b] border-b border-slate-700 h-16 flex items-center px-6 justify-between sticky top-0 z-50">
-        <div class="flex items-center gap-3">
-            <div class="w-8 h-8 bg-blue-600 rounded flex items-center justify-center text-white shadow-lg shadow-blue-900/20">
-                <i class="fas fa-microscope"></i>
-            </div>
-            <span class="font-bold text-lg tracking-tight text-white italic uppercase">Precision<span class="text-blue-500 underline decoration-2 underline-offset-4">Portal</span></span>
+    <nav class="bg-white border-b border-slate-200 h-16 flex items-center px-6 justify-between flex-shrink-0 z-50">
+        <div class="flex items-center gap-2">
+            <div class="w-8 h-8 bg-blue-600 rounded flex items-center justify-center text-white"><i class="fas fa-atom text-xs"></i></div>
+            <span class="font-bold text-lg tracking-tighter uppercase italic text-slate-900">Precision<span class="text-blue-600">Labs</span></span>
         </div>
-        <div class="flex items-center gap-6">
-            <div class="hidden md:flex gap-4 text-xs font-bold uppercase tracking-widest text-slate-400">
-                <a href="index.html" class="hover:text-white transition-colors">Exit Terminal</a>
-                <a href="catalog.html" class="hover:text-white transition-colors">Catalog</a>
-            </div>
-            <div class="h-8 w-[1px] bg-slate-700 mx-2"></div>
-            <div class="flex items-center gap-3">
-                <span class="text-[10px] font-bold text-emerald-500 bg-emerald-500/10 px-2 py-1 rounded border border-emerald-500/20">ENCRYPTED</span>
-                <div class="w-8 h-8 rounded-full bg-slate-700 border border-slate-600 flex items-center justify-center text-xs font-bold text-white">ID</div>
-            </div>
+        <div class="flex gap-6 text-[10px] font-black uppercase tracking-widest text-slate-400">
+            <a href="catalog.html" class="hover:text-blue-600 transition-colors">Catalog</a>
+            <a href="index.html" class="hover:text-blue-600 transition-colors">Logout</a>
         </div>
     </nav>
 
-    <div class="flex">
-        <aside class="w-64 bg-[#0f172a] hidden lg:block border-r border-slate-800 p-6 space-y-8">
-            <div>
-                <p class="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] mb-4">Main Menu</p>
-                <nav class="space-y-1">
-                    <a href="portal.html" class="flex items-center gap-3 p-3 bg-blue-600/10 text-blue-400 rounded-xl border border-blue-600/20 font-bold text-sm">
-                        <i class="fas fa-th-large w-5 text-center"></i> Dashboard
-                    </a>
-                    <a href="catalog.html" class="flex items-center gap-3 p-3 text-slate-400 hover:text-white hover:bg-slate-800 rounded-xl transition-all text-sm font-medium">
-                        <i class="fas fa-dna w-5 text-center"></i> Master Catalog
-                    </a>
-                </nav>
+    <div class="flex flex-1 overflow-hidden">
+        
+        <aside class="w-80 bg-white border-r border-slate-200 hidden md:flex flex-col">
+            <div class="p-6 border-b border-slate-100">
+                <h2 class="text-xs font-black uppercase tracking-widest text-slate-400 mb-4">Active Session</h2>
+                <div class="flex items-center gap-3">
+                    <div class="relative">
+                        <div class="w-10 h-10 rounded-full bg-slate-900 flex items-center justify-center text-white"><i class="fas fa-robot"></i></div>
+                        <div class="absolute bottom-0 right-0 w-3 h-3 bg-emerald-500 border-2 border-white rounded-full"></div>
+                    </div>
+                    <div>
+                        <div class="font-bold text-sm text-slate-900">Dr. Alara</div>
+                        <div class="text-[10px] font-mono text-emerald-600 uppercase">Online • AI Support</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="p-6 space-y-2 overflow-y-auto flex-1">
+                <h2 class="text-xs font-black uppercase tracking-widest text-slate-400 mb-4">Quick Inquiries</h2>
+                <button onclick="sendQuickReply('What is the purity standard?')" class="w-full text-left p-4 rounded-xl border border-slate-100 hover:border-blue-500 hover:bg-blue-50 transition-all group">
+                    <div class="text-xs font-bold text-slate-700 group-hover:text-blue-700">HPLC Purity Standards</div>
+                    <div class="text-[10px] text-slate-400 mt-1">Ask about verification...</div>
+                </button>
+                <button onclick="sendQuickReply('Where do you ship from?')" class="w-full text-left p-4 rounded-xl border border-slate-100 hover:border-blue-500 hover:bg-blue-50 transition-all group">
+                    <div class="text-xs font-bold text-slate-700 group-hover:text-blue-700">Shipping Logistics</div>
+                    <div class="text-[10px] text-slate-400 mt-1">Lead times & origin...</div>
+                </button>
+                <button onclick="sendQuickReply('Do you offer bulk wholesale?')" class="w-full text-left p-4 rounded-xl border border-slate-100 hover:border-blue-500 hover:bg-blue-50 transition-all group">
+                    <div class="text-xs font-bold text-slate-700 group-hover:text-blue-700">Institutional Wholesale</div>
+                    <div class="text-[10px] text-slate-400 mt-1">Lab partnerships...</div>
+                </button>
             </div>
 
-            <div>
-                <p class="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] mb-4">Laboratory Tools</p>
-                <nav class="space-y-1">
-                    <a href="calculator.html" class="flex items-center gap-3 p-3 text-slate-400 hover:text-white hover:bg-slate-800 rounded-xl transition-all text-sm font-medium">
-                        <i class="fas fa-calculator w-5 text-center"></i> Reconstitution
-                    </a>
-                    <a href="batch-verification.html" class="flex items-center gap-3 p-3 text-slate-400 hover:text-white hover:bg-slate-800 rounded-xl transition-all text-sm font-medium">
-                        <i class="fas fa-search w-5 text-center"></i> Batch Analysis
-                    </a>
-                </nav>
-            </div>
-
-            <div class="pt-10">
-                <div class="p-4 bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl border border-slate-700">
-                    <p class="text-xs font-bold text-blue-400 mb-2">Technical Support</p>
-                    <p class="text-[10px] text-slate-500 leading-relaxed">Direct line to senior synthesis technicians for bulk inquiry.</p>
+            <div class="p-6 bg-slate-50 border-t border-slate-200">
+                <div class="text-[10px] text-slate-400 leading-relaxed text-center">
+                    <i class="fas fa-lock mb-1"></i><br>
+                    End-to-End Encrypted.<br>Research purposes only.
                 </div>
             </div>
         </aside>
 
-        <main class="flex-1 p-6 md:p-10">
+        <main class="flex-1 flex flex-col bg-slate-50 relative">
             
-            <div class="mb-10">
-                <h1 class="text-3xl font-black text-white italic mb-2 tracking-tight uppercase">Researcher Dashboard</h1>
-                <p class="text-slate-500 text-sm font-medium tracking-wide">Institutional Login: <span class="text-slate-300">ADMIN_GEN_026</span> | <span class="text-blue-500">View System Logs</span></p>
+            <div id="chat-container" class="flex-1 overflow-y-auto p-6 space-y-6 chat-scroll pb-32">
+                
+                <div class="flex gap-4 message-bubble">
+                    <div class="w-8 h-8 rounded-full bg-slate-900 flex-shrink-0 flex items-center justify-center text-white text-xs"><i class="fas fa-robot"></i></div>
+                    <div class="max-w-2xl">
+                        <div class="flex items-center gap-2 mb-1">
+                            <span class="text-xs font-bold text-slate-900">Dr. Alara</span>
+                            <span class="text-[10px] text-slate-400">Now</span>
+                        </div>
+                        <div class="bg-white p-4 rounded-2xl rounded-tl-none border border-slate-200 shadow-sm text-sm text-slate-600 leading-relaxed">
+                            <p>Welcome to the Precision Peptides secure portal. I am Alara, your technical research assistant.</p>
+                            <p class="mt-2">I can assist with HPLC data retrieval, chemical specifications, or synthesis inquiries. How can I help your lab today?</p>
+                        </div>
+                    </div>
+                </div>
+
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
-                <div class="bg-slate-800/40 border border-slate-700 p-6 rounded-3xl backdrop-blur-sm">
-                    <p class="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-2">Verified Purity Avg</p>
-                    <div class="text-3xl font-black text-white tracking-tighter italic">99.9% <span class="text-xs text-emerald-500 ml-2 font-mono">HPLC PASS</span></div>
-                </div>
-                <div class="bg-slate-800/40 border border-slate-700 p-6 rounded-3xl backdrop-blur-sm">
-                    <p class="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-2">Active Batch Logs</p>
-                    <div class="text-3xl font-black text-white tracking-tighter italic">412 <span class="text-xs text-blue-500 ml-2 font-mono">REPORTS</span></div>
-                </div>
-                <div class="bg-slate-800/40 border border-slate-700 p-6 rounded-3xl backdrop-blur-sm">
-                    <p class="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-2">Synthesis Capacity</p>
-                    <div class="text-3xl font-black text-white tracking-tighter italic">OPTIMAL <span class="text-xs text-emerald-500 ml-2 font-mono">READY</span></div>
-                </div>
-            </div>
-
-            <h2 class="text-sm font-black text-slate-500 uppercase tracking-[0.3em] mb-6">Investigator Toolkit</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <a href="calculator.html" class="group bg-slate-800/40 p-6 rounded-3xl border border-slate-700 hover:border-blue-500 transition-all hover:shadow-2xl hover:shadow-blue-900/20">
-                    <div class="w-12 h-12 bg-blue-600/10 rounded-2xl flex items-center justify-center text-blue-500 mb-4 group-hover:scale-110 transition-transform">
-                        <i class="fas fa-calculator text-xl"></i>
+            <div class="absolute bottom-0 left-0 right-0 bg-white border-t border-slate-200 p-6">
+                <div class="max-w-4xl mx-auto relative">
+                    <form id="chat-form" onsubmit="handleChatSubmit(event)" class="flex gap-4">
+                        <button type="button" class="w-12 h-12 rounded-xl border border-slate-200 text-slate-400 hover:text-blue-600 hover:border-blue-600 transition-colors flex items-center justify-center">
+                            <i class="fas fa-paperclip"></i>
+                        </button>
+                        <input type="text" id="user-input" class="flex-1 bg-slate-50 border border-slate-200 rounded-xl px-4 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-blue-600 focus:bg-white transition-all" placeholder="Type your inquiry here..." autocomplete="off">
+                        <button type="submit" class="bg-blue-600 text-white px-8 rounded-xl font-bold text-xs uppercase tracking-widest hover:bg-slate-900 transition-colors shadow-lg shadow-blue-600/20">
+                            Send
+                        </button>
+                    </form>
+                    <div class="text-center mt-2">
+                        <span class="text-[10px] text-slate-300 uppercase tracking-widest">System Operational</span>
                     </div>
-                    <h4 class="font-bold text-white mb-1">Reconstitution</h4>
-                    <p class="text-[10px] text-slate-500 uppercase font-bold tracking-wider">Volume Adjuster</p>
-                </a>
-
-                <a href="batch-verification.html" class="group bg-slate-800/40 p-6 rounded-3xl border border-slate-700 hover:border-emerald-500 transition-all hover:shadow-2xl hover:shadow-emerald-900/20">
-                    <div class="w-12 h-12 bg-emerald-500/10 rounded-2xl flex items-center justify-center text-emerald-500 mb-4 group-hover:scale-110 transition-transform">
-                        <i class="fas fa-file-signature text-xl"></i>
-                    </div>
-                    <h4 class="font-bold text-white mb-1">Lot Verification</h4>
-                    <p class="text-[10px] text-slate-500 uppercase font-bold tracking-wider">COA Database</p>
-                </a>
-
-                <a href="catalog.html" class="group bg-slate-800/40 p-6 rounded-3xl border border-slate-700 hover:border-purple-500 transition-all hover:shadow-2xl hover:shadow-purple-900/20">
-                    <div class="w-12 h-12 bg-purple-500/10 rounded-2xl flex items-center justify-center text-purple-500 mb-4 group-hover:scale-110 transition-transform">
-                        <i class="fas fa-flask text-xl"></i>
-                    </div>
-                    <h4 class="font-bold text-white mb-1">Compound Index</h4>
-                    <p class="text-[10px] text-slate-500 uppercase font-bold tracking-wider">Full Library</p>
-                </a>
-
-                <div class="bg-slate-900/50 p-6 rounded-3xl border border-slate-800 opacity-60">
-                    <div class="w-12 h-12 bg-slate-800 rounded-2xl flex items-center justify-center text-slate-600 mb-4">
-                        <i class="fas fa-lock text-xl"></i>
-                    </div>
-                    <h4 class="font-bold text-slate-500 mb-1">Cloud Notes</h4>
-                    <p class="text-[10px] text-slate-600 uppercase font-bold tracking-wider">Storage v2.0</p>
                 </div>
             </div>
+
         </main>
     </div>
 
+    <script>
+        const chatContainer = document.getElementById('chat-container');
+        const userInput = document.getElementById('user-input');
+
+        function sendQuickReply(text) {
+            userInput.value = text;
+            handleChatSubmit(new Event('submit'));
+        }
+
+        function handleChatSubmit(e) {
+            e.preventDefault();
+            const text = userInput.value.trim();
+            if (!text) return;
+
+            // 1. Add User Message
+            addMessage('user', text);
+            userInput.value = '';
+
+            // 2. Show Typing Indicator
+            showTypingIndicator();
+
+            // 3. Process Bot Response (Simulated Delay)
+            setTimeout(() => {
+                removeTypingIndicator();
+                const response = generateResponse(text);
+                addMessage('bot', response);
+            }, 1500);
+        }
+
+        function addMessage(sender, htmlContent) {
+            const div = document.createElement('div');
+            div.className = `flex gap-4 message-bubble ${sender === 'user' ? 'flex-row-reverse' : ''}`;
+            
+            const avatar = sender === 'user' 
+                ? `<div class="w-8 h-8 rounded-full bg-blue-600 flex-shrink-0 flex items-center justify-center text-white text-xs"><i class="fas fa-user"></i></div>`
+                : `<div class="w-8 h-8 rounded-full bg-slate-900 flex-shrink-0 flex items-center justify-center text-white text-xs"><i class="fas fa-robot"></i></div>`;
+
+            const name = sender === 'user' ? 'You' : 'Dr. Alara';
+            const bubbleColor = sender === 'user' 
+                ? 'bg-blue-600 text-white rounded-tr-none' 
+                : 'bg-white border border-slate-200 text-slate-600 rounded-tl-none';
+
+            div.innerHTML = `
+                ${avatar}
+                <div class="max-w-2xl">
+                    <div class="flex items-center gap-2 mb-1 ${sender === 'user' ? 'justify-end' : ''}">
+                        <span class="text-xs font-bold ${sender === 'user' ? 'text-slate-900' : 'text-slate-900'}">${name}</span>
+                        <span class="text-[10px] text-slate-400">Just now</span>
+                    </div>
+                    <div class="${bubbleColor} p-4 rounded-2xl shadow-sm text-sm leading-relaxed">
+                        ${htmlContent}
+                    </div>
+                </div>
+            `;
+            
+            chatContainer.appendChild(div);
+            scrollToBottom();
+        }
+
+        function showTypingIndicator() {
+            const div = document.createElement('div');
+            div.id = 'typing-indicator';
+            div.className = 'flex gap-4 message-bubble';
+            div.innerHTML = `
+                <div class="w-8 h-8 rounded-full bg-slate-900 flex-shrink-0 flex items-center justify-center text-white text-xs"><i class="fas fa-robot"></i></div>
+                <div class="bg-white border border-slate-200 p-4 rounded-2xl rounded-tl-none shadow-sm flex items-center gap-1 h-[52px]">
+                    <div class="w-2 h-2 bg-slate-400 rounded-full typing-dot"></div>
+                    <div class="w-2 h-2 bg-slate-400 rounded-full typing-dot"></div>
+                    <div class="w-2 h-2 bg-slate-400 rounded-full typing-dot"></div>
+                </div>
+            `;
+            chatContainer.appendChild(div);
+            scrollToBottom();
+        }
+
+        function removeTypingIndicator() {
+            const el = document.getElementById('typing-indicator');
+            if (el) el.remove();
+        }
+
+        function scrollToBottom() {
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+
+        // --- INTELLIGENT RESPONSE SYSTEM ---
+        function generateResponse(input) {
+            const lower = input.toLowerCase();
+
+            // Safety Guardrail (Crucial for Peptides)
+            if (lower.includes('human') || lower.includes('inject') || lower.includes('dosage') || lower.includes('take') || lower.includes('dose')) {
+                return `<div class="border-l-4 border-red-500 pl-4 py-1">
+                            <strong class="text-red-600 uppercase text-xs tracking-widest block mb-1">Compliance Warning</strong>
+                            All products listed in our catalog are strictly for <strong>in-vitro laboratory research only</strong>. 
+                            We cannot provide instructions for administration, dosage, or human consumption. 
+                            Any indication of intended human use will result in the permanent termination of your account.
+                        </div>`;
+            }
+
+            // Shipping
+            if (lower.includes('ship') || lower.includes('track') || lower.includes('delivery')) {
+                return `We ship primarily via <strong>FedEx Priority</strong> (1-2 days domestic) and DHL Express for international orders. 
+                        Orders placed before 2:00 PM EST are processed the same day. Tracking numbers are automatically emailed upon label generation.`;
+            }
+
+            // Purity / Quality
+            if (lower.includes('pure') || lower.includes('purity') || lower.includes('test') || lower.includes('hplc') || lower.includes('coa')) {
+                return `Our purity standard is strict. We reject any batch testing below <strong>99.0% purity</strong>. 
+                        Every vial includes a scannable QR code linking directly to its specific mass spectrometry and HPLC reports from our third-party testing facility (Janoshik or similar).`;
+            }
+
+            // Wholesale
+            if (lower.includes('bulk') || lower.includes('whole') || lower.includes('discount')) {
+                return `We offer tiered pricing for institutional research facilities. 
+                        <ul class="list-disc ml-4 mt-2 space-y-1">
+                            <li>10+ Vials: 15% Off</li>
+                            <li>50+ Vials: 25% Off</li>
+                            <li>100+ Vials: Contact strict wholesale department.</li>
+                        </ul>
+                        Would you like me to open a wholesale ticket for you?`;
+            }
+
+            // Specific Product Checks
+            if (lower.includes('tirzepatide')) return `Tirzepatide is available in 10mg aliquots. It is a dual GIP/GLP-1 agonist. Please note this reagent requires storage at -20°C.`;
+            if (lower.includes('semaglutide')) return `Semaglutide is in stock (5mg). It features the C18 fatty acid chain modification for albumin binding research.`;
+            if (lower.includes('bpc')) return `BPC-157 is our most popular regenerative compound. We stock the stable Arginine Salt form, which is resistant to gastric pH variations in research settings.`;
+            
+            // Default
+            return `I have logged your query regarding "<em>${input}</em>". 
+                    While I scan our technical database, could you clarify if you are looking for a specific CAS number or chemical specification?`;
+        }
+    </script>
 </body>
 </html>
