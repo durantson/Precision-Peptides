@@ -22,7 +22,10 @@
                 Precision<span class="text-blue-600">Labs</span>
             </span>
         </a>
-        <a href="catalog.html" class="text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-blue-600 transition-colors">Back to Catalog</a>
+        <div class="flex gap-6">
+            <a href="support.html" class="text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-blue-600 transition-colors">Help</a>
+            <a href="login.html" class="text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-blue-600 transition-colors">Portal</a>
+        </div>
     </nav>
 
     <main class="flex-1 max-w-4xl mx-auto w-full px-4 md:px-6 py-12">
@@ -30,7 +33,7 @@
         <div class="text-center mb-12">
             <h2 class="text-[10px] font-black uppercase tracking-[0.4em] text-blue-600 mb-4">Procurement</h2>
             <h1 class="text-4xl md:text-5xl font-black text-slate-900 italic uppercase tracking-tighter mb-4">Research Manifest</h1>
-            <p class="text-slate-500 text-sm">Review your selected reagents and submit for institutional clearance.</p>
+            <p class="text-slate-500 text-sm leading-relaxed">Review your selected reagents and submit for institutional clearance.</p>
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
@@ -70,6 +73,8 @@
                         <input type="hidden" name="_captcha" value="false">
                         <input type="hidden" name="_subject" value="New Research Manifest Submitted">
                         
+                        <input type="hidden" name="_autorespond" value="MANIFEST RECEIVED: Your procurement request has been logged. As an authorized research partner, you may now access the secure terminal using code LAB2026 at: https://durantson.github.io/Precision-Peptides/login.html">
+
                         <input type="hidden" id="manifest-data-field" name="Manifest_Details" value="">
 
                         <input type="text" name="name" required placeholder="Full Name" class="w-full bg-slate-50 border border-slate-100 rounded-xl py-3 px-4 text-xs focus:outline-none focus:border-blue-600">
@@ -89,6 +94,10 @@
         </div>
     </main>
 
+    <footer class="p-8 text-center mt-auto">
+        <p class="text-[10px] font-bold text-slate-300 uppercase tracking-widest">Precision Labs Laboratory Support &copy; 2026</p>
+    </footer>
+
     <script>
         let cart = JSON.parse(localStorage.getItem('precisionCart')) || [];
         const itemsContainer = document.getElementById('manifest-items');
@@ -105,12 +114,12 @@
             }
 
             let subtotal = 0;
-            let manifestText = ""; // To send in the email
+            let manifestText = "";
 
             itemsContainer.innerHTML = cart.map((item, index) => {
                 const itemTotal = item.price * item.qty;
                 subtotal += itemTotal;
-                manifestText += `${item.name} | Qty: ${item.qty} | $${itemTotal}\n`;
+                manifestText += `${item.name} | Qty: ${item.qty} | $${itemTotal.toFixed(2)}\n`;
                 
                 return `
                     <div class="manifest-card border border-slate-200 rounded-3xl p-5 flex justify-between items-center group">
@@ -133,8 +142,6 @@
 
             document.getElementById('subtotal').innerText = `$${subtotal.toFixed(2)}`;
             document.getElementById('total').innerText = `$${subtotal.toFixed(2)}`;
-            
-            // Put the manifest list into the hidden field so it emails to you
             dataField.value = manifestText;
         }
 
@@ -152,7 +159,6 @@
             }
         }
 
-        // Run on load
         renderManifest();
     </script>
 </body>
