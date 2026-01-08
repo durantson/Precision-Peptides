@@ -3,46 +3,113 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FoxO4-DRI Technical Data | Precision Peptides</title>
+    <title>FOXO4-DRI Technical Data | Precision Peptides</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=JetBrains+Mono&display=swap" rel="stylesheet">
-    <style>body { font-family: 'Inter', sans-serif; } .mono { font-family: 'JetBrains Mono', monospace; }</style>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
-<body class="bg-gray-50 text-slate-900">
-    <nav class="bg-white border-b border-slate-200 h-20 flex items-center px-6">
-        <div class="max-w-7xl mx-auto w-full flex justify-between items-center text-2xl font-black italic uppercase">
-            <a href="index.html">Precision<span class="text-sky-500">Peptides</span></a>
+<body class="bg-white font-sans antialiased text-slate-900">
+
+    <nav class="bg-white border-b border-slate-100 h-16 flex items-center px-6 justify-between sticky top-0 z-50">
+        <div class="flex items-center gap-2">
+            <div class="w-8 h-8 bg-blue-600 rounded flex items-center justify-center text-white"><i class="fas fa-atom text-xs"></i></div>
+            <span class="font-bold text-lg tracking-tighter uppercase italic text-slate-900">Precision<span class="text-blue-600">Labs</span></span>
+        </div>
+        <div class="flex gap-6 text-[10px] font-black uppercase tracking-widest text-slate-400">
+            <a href="catalog.html" class="hover:text-blue-600 transition-colors">Catalog</a>
+            <a href="portal.html" class="hover:text-blue-600 transition-colors">Portal</a>
         </div>
     </nav>
 
-    <main class="max-w-6xl mx-auto py-12 px-6">
-        <div class="grid lg:grid-cols-2 gap-16">
-            <div>
-                <h1 class="text-4xl font-extrabold mb-2 uppercase tracking-tight">FoxO4-DRI</h1>
-                <p class="text-sm font-bold text-orange-500 uppercase tracking-widest mb-8">Senolytic D-Amino Acid Peptide</p>
+    <main class="max-w-7xl mx-auto px-6 py-12">
+        
+        <div class="flex items-center gap-2 text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em] mb-8">
+            <a href="catalog.html">Catalog</a>
+            <i class="fas fa-chevron-right text-[8px]"></i>
+            <span class="text-blue-600">Technical Data Sheet</span>
+        </div>
 
-                <div class="bg-white rounded-2xl border border-slate-200 p-8 space-y-6 shadow-sm">
-                    <div class="grid grid-cols-2 gap-6 text-sm">
-                        <div><div class="text-[10px] font-bold text-slate-400 uppercase">Peptide Type</div><div class="mono">Retro-Inverso D-Peptide</div></div>
-                        <div><div class="text-[10px] font-bold text-slate-400 uppercase">Molecular Weight</div><div class="mono">~5348 g/mol</div></div>
-                        <div><div class="text-[10px] font-bold text-slate-400 uppercase">Target Pathway</div><div class="mono">p53/FOXO4 Interaction</div></div>
-                        <div><div class="text-[10px] font-bold text-slate-400 uppercase">Storage</div><div class="mono">-80°C (Long Term)</div></div>
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+            
+            <div class="lg:col-span-5 space-y-8">
+                <div class="bg-slate-50 rounded-[3rem] p-8 border border-slate-100 overflow-hidden group">
+                    <img src="images/vial-foxo4dri.jpg" class="w-full aspect-square object-contain mix-blend-multiply group-hover:scale-110 transition-transform duration-700" alt="FOXO4-DRI Reagent Vial">
+                </div>
+
+                <div class="bg-white border border-slate-200 rounded-[2rem] overflow-hidden">
+                    <div class="bg-slate-900 p-4">
+                        <h3 class="text-white text-[10px] font-black uppercase tracking-widest">Chemical Specifications</h3>
                     </div>
+                    <table class="w-full text-sm">
+                        <tr class="border-b border-slate-100">
+                            <td class="p-4 font-bold text-slate-500 uppercase text-[10px]">Peptide Type</td>
+                            <td class="p-4 font-mono text-right text-xs">Retro-Inverso D-Peptide</td>
+                        </tr>
+                        <tr class="border-b border-slate-100">
+                            <td class="p-4 font-bold text-slate-500 uppercase text-[10px]">Molecular Formula</td>
+                            <td class="p-4 font-mono text-right text-xs">C<sub>226</sub>H<sub>371</sub>N<sub>65</sub>O<sub>64</sub></td>
+                        </tr>
+                        <tr class="border-b border-slate-100">
+                            <td class="p-4 font-bold text-slate-500 uppercase text-[10px]">Molar Mass</td>
+                            <td class="p-4 font-mono text-right text-xs">5351.13 g/mol</td>
+                        </tr>
+                        <tr>
+                            <td class="p-4 font-bold text-slate-500 uppercase text-[10px]">Purity Level</td>
+                            <td class="p-4 font-bold text-emerald-600 text-right">&ge;99.0%</td>
+                        </tr>
+                    </table>
                 </div>
             </div>
 
-            <div class="bg-slate-900 rounded-3xl p-10 text-white flex flex-col justify-center">
-                <h3 class="text-xl font-bold mb-4 uppercase">Cellular Senescence Research</h3>
-                <p class="text-slate-500 text-sm leading-relaxed mb-6">
-                    FoxO4-DRI is an interference peptide that selectively triggers apoptosis in senescent cells by competing with endogenous FOXO4 for p53 binding. This enables p53 to translocate to the mitochondria and initiate the apoptotic cascade.
-                </p>
-                
-                <div class="mt-6 flex justify-between text-xs font-bold uppercase border-t border-white/10 pt-6">
-                    <span class="text-slate-500">Unit Size</span><span>10mg Unit</span>
+            <div class="lg:col-span-7">
+                <h1 class="text-6xl font-black text-slate-900 italic uppercase tracking-tighter mb-4">FOXO4-DRI <span class="text-blue-600 text-3xl block">10.0 mg</span></h1>
+                <p class="text-xl text-slate-500 font-medium leading-relaxed mb-8">Targeted Senolytic Peptide. A cell-permeable D-amino acid peptide that antagonizes the FOXO4-p53 interaction.</p>
+
+                <div class="space-y-10">
+                    
+                    <section>
+                        <h2 class="text-xs font-black uppercase tracking-[0.3em] text-blue-600 mb-4 flex items-center gap-3">
+                            <span class="w-8 h-[2px] bg-blue-600"></span> Primary Research Data
+                        </h2>
+                        <div class="prose prose-slate max-w-none text-slate-600 leading-loose">
+                            FOXO4-DRI (D-Retro-Inverso) is designed to selectively induce apoptosis in senescent cells by competing with endogenous FOXO4 for p53 binding. In <i>in-vitro</i> research, senescent cells exhibit high levels of FOXO4, which sequesters p53 in the nucleus, preventing it from inducing cell death. By introducing FOXO4-DRI, the p53 is released to the mitochondria, triggering the apoptotic cascade. Because it is a Retro-Inverso peptide, it utilizes D-amino acids in a reversed sequence, providing significantly higher stability against proteolytic degradation compared to its L-isomer counterpart.
+                        </div>
+                    </section>
+                    
+                    
+
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="bg-slate-50 p-6 rounded-3xl border border-slate-100">
+                            <i class="fas fa-snowflake text-blue-500 mb-2"></i>
+                            <h4 class="font-bold text-sm uppercase italic">Storage</h4>
+                            <p class="text-xs text-slate-500">$-20°C$ (Lyophilized). Protect from moisture.</p>
+                        </div>
+                        <div class="bg-slate-50 p-6 rounded-3xl border border-slate-100">
+                            <i class="fas fa-shield-virus text-blue-500 mb-2"></i>
+                            <h4 class="font-bold text-sm uppercase italic">Stability</h4>
+                            <p class="text-xs text-slate-500">High enzymatic resistance due to D-isomer configuration.</p>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-4">
+                        <a href="batch-verification.html" class="flex-1 bg-slate-900 text-white text-center py-4 rounded-2xl font-black uppercase tracking-widest text-[10px] hover:bg-blue-600 transition-all shadow-lg">
+                            View HPLC Report
+                        </a>
+                        <button class="flex-1 border-2 border-slate-900 text-slate-900 py-4 rounded-2xl font-black uppercase tracking-widest text-[10px] hover:bg-slate-50 transition-all">
+                            Download SDS (PDF)
+                        </button>
+                    </div>
+
                 </div>
-                <button class="mt-8 w-full bg-orange-600 text-white py-4 rounded-full font-bold uppercase text-[10px] tracking-widest hover:bg-orange-500">Request Technical Dossier</button>
             </div>
         </div>
+
+        <div class="mt-20 p-8 rounded-[3rem] bg-red-50 border border-red-100 text-center">
+            <h3 class="text-red-600 font-black uppercase tracking-widest text-xs mb-2">Institutional Research Disclaimer</h3>
+            <p class="text-red-700/70 text-sm max-w-3xl mx-auto leading-relaxed">
+                This material is synthesized for <strong>in-vitro laboratory research purposes only</strong>. It is not for human or veterinary diagnostic or therapeutic use. All research must be conducted by qualified professionals using appropriate biosafety protocols.
+            </p>
+        </div>
     </main>
+
 </body>
 </html>
