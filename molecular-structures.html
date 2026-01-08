@@ -104,16 +104,17 @@
     </main>
 
     <script>
+        // Updated List (Note: Retatrutide is very new, likely 2D only)
         const featured = [
             { name: "Tirzepatide", cid: "16235086" },
+            { name: "Retatrutide", cid: "16761502" },
             { name: "Semaglutide", cid: "56843331" },
             { name: "BPC-157", cid: "10182582" },
             { name: "Oxytocin", cid: "439302" },
             { name: "Vasopressin", cid: "108162" },
             { name: "Gonadorelin", cid: "439155" },
             { name: "Sermorelin", cid: "16133171" },
-            { name: "Ipamorelin", cid: "9811365" },
-            { name: "Hexarelin", cid: "6918296" }
+            { name: "Ipamorelin", cid: "9811365" }
         ];
 
         // UI MODE SWITCHER
@@ -134,7 +135,7 @@
                     <div id="${idPrefix}-${m.cid}" class="mol-container">
                         <div class="absolute inset-0 flex flex-col items-center justify-center">
                             <button onclick="initViewer('${idPrefix}-${m.cid}', '${m.cid}')" class="bg-blue-600 text-white px-8 py-4 rounded-2xl font-black uppercase tracking-widest text-[10px] shadow-xl shadow-blue-600/30 hover:scale-105 transition-transform">
-                                Initialize 3D Structure
+                                Initialize Structure
                             </button>
                         </div>
                     </div>
@@ -151,7 +152,6 @@
 
         async function fetchCompoundData(name, suffix) {
             const containerId = suffix === 'search' ? `search-${name}` : `compare-view-${suffix}`;
-            const el = document.getElementById(containerId);
             
             try {
                 const cidRes = await fetch(`https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/name/${name}/cids/JSON`);
@@ -168,29 +168,48 @@
 
                 initViewer(containerId, cid);
             } catch (e) {
-                alert(`Compound "${name}" not found.`);
+                alert(`Compound "${name}" not found in NIH Database.`);
             }
         }
 
-        function initViewer(id, cid) {
+        // --- THE FIXED VIEWER FUNCTION ---
+        async function initViewer(id, cid) {
             const el = document.getElementById(id);
+            // 1. Show Loading Pulse
             el.innerHTML = `<div class="absolute inset-0 flex items-center justify-center text-blue-500 font-black text-[10px] uppercase tracking-widest loading-pulse">Fetching SDF Data...</div>`;
             
             const viewer = $3Dmol.createViewer(id, { backgroundColor: 'transparent' });
-            fetch(`https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/${cid}/record/SDF/?record_type=3d`)
-                .then(r => r.text())
-                .then(data => {
-                    const pulse = el.querySelector('.loading-pulse');
-                    if(pulse) pulse.remove();
-                    viewer.addModel(data, "sdf");
-                    viewer.setStyle({}, { stick: {radius: 0.15}, sphere: {scale: 0.25} });
-                    viewer.zoomTo();
-                    viewer.render();
-                    viewer.animate({loop: "backAndForth", step: 0.5});
-                })
-                .catch(() => {
-                    el.innerHTML = `<div class="p-10 text-center text-slate-500 text-[10px] font-bold uppercase">3D Render unavailable for this specific sequence.</div>`;
-                });
+            
+            try {
+                // 2. Try Fetching 3D Data
+                const response = await fetch(`https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/${cid}/record/SDF/?record_type=3d`);
+                
+                if (!response.ok) throw new Error("No 3D Data"); // Trigger fallback if 404
+                const data = await response.text();
+                
+                // 3. Render 3D if successful
+                const pulse = el.querySelector('.loading-pulse');
+                if(pulse) pulse.remove();
+                
+                viewer.addModel(data, "sdf");
+                viewer.setStyle({}, { stick: {radius: 0.15}, sphere: {scale: 0.25} });
+                viewer.zoomTo();
+                viewer.render();
+                viewer.animate({loop: "backAndForth", step: 0.5});
+
+            } catch (error) {
+                // 4. FALLBACK: Render 2D Image if 3D fails
+                viewer.clear();
+                el.innerHTML = `
+                    <div class="absolute inset-0 flex flex-col items-center justify-center bg-white/5 p-6">
+                        <img src="https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/${cid}/PNG?record_type=2d&image_size=300x300" 
+                             class="w-full h-full object-contain opacity-80" alt="2D Structure">
+                        <div class="absolute bottom-4 bg-slate-900/80 text-white px-3 py-1 rounded-full text-[9px] font-bold uppercase tracking-widest border border-white/10">
+                            3D Model Unavailable • Showing 2D Schematic
+                        </div>
+                    </div>
+                `;
+            }
         }
 
         async function searchPubChem() {
