@@ -13,6 +13,8 @@
         .no-scrollbar::-webkit-scrollbar { display: none; }
         @keyframes pulse-blue { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
         .loading-pulse { animation: pulse-blue 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+        .mode-btn.active { background-color: #2563eb; color: white; border-color: #2563eb; }
+        * { -webkit-tap-highlight-color: transparent; }
     </style>
 </head>
 <body class="bg-slate-50 font-sans antialiased text-slate-900 min-h-screen">
@@ -26,10 +28,13 @@
             <div class="w-8 h-8 bg-blue-600 rounded flex items-center justify-center text-white"><i class="fas fa-atom text-xs"></i></div>
             <span class="font-bold text-lg tracking-tighter uppercase italic">Precision<span class="text-blue-600">Intelligence</span></span>
         </div>
-        <a href="portal.html" class="text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-blue-600 transition-colors">Back to Terminal</a>
+        <div class="flex gap-4">
+            <button onclick="switchMode('discovery')" id="btn-discovery" class="mode-btn active px-4 py-2 rounded-xl border border-slate-200 text-[10px] font-black uppercase tracking-widest transition-all">Discovery</button>
+            <button onclick="switchMode('comparison')" id="btn-comparison" class="mode-btn px-4 py-2 rounded-xl border border-slate-200 text-[10px] font-black uppercase tracking-widest transition-all">Comparison Lab</button>
+        </div>
     </nav>
 
-    <header class="bg-slate-900 py-16 px-6 relative overflow-hidden">
+    <header id="discovery-header" class="bg-slate-900 py-16 px-6 relative overflow-hidden">
         <div class="max-w-4xl mx-auto relative z-10 text-center">
             <h2 class="text-[10px] font-black uppercase tracking-[0.4em] text-blue-500 mb-4">NIH-Linked Discovery Engine</h2>
             <h1 class="text-4xl md:text-6xl font-black text-white italic uppercase tracking-tighter mb-8">Global Peptide Database</h1>
@@ -41,27 +46,64 @@
                     <i class="fas fa-search"></i>
                 </button>
             </div>
-            <p class="mt-6 text-slate-400 text-xs font-bold uppercase tracking-widest">Accessing 100M+ Compounds via PubChem REST API</p>
         </div>
         <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(#2563eb 1px, transparent 1px); background-size: 30px 30px;"></div>
     </header>
 
+    <header id="comparison-header" class="hidden bg-white border-b border-slate-200 py-10 px-6">
+        <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8">
+            <div class="text-center md:text-left">
+                <h2 class="text-[10px] font-black uppercase tracking-[0.4em] text-blue-600 mb-2">Side-by-Side Analysis</h2>
+                <h1 class="text-3xl font-black italic uppercase tracking-tighter">Comparison Lab</h1>
+            </div>
+            <div class="flex flex-col sm:flex-row gap-4 w-full max-w-2xl">
+                <input type="text" id="compA" placeholder="Compound A" class="flex-1 bg-slate-100 border-none rounded-xl py-4 px-6 text-sm focus:ring-2 focus:ring-blue-600">
+                <input type="text" id="compB" placeholder="Compound B" class="flex-1 bg-slate-100 border-none rounded-xl py-4 px-6 text-sm focus:ring-2 focus:ring-blue-600">
+                <button onclick="runComparison()" class="bg-blue-600 text-white px-8 py-4 rounded-xl font-black uppercase tracking-widest text-[10px] hover:bg-slate-900 transition-all">Analyze</button>
+            </div>
+        </div>
+    </header>
+
     <main class="max-w-7xl mx-auto px-6 py-12">
         
-        <div id="search-results-area" class="mb-20 hidden">
-            <h3 class="text-[10px] font-black uppercase tracking-widest text-blue-600 mb-8 border-b border-blue-100 pb-4">Discovery Result</h3>
-            <div id="search-card-container"></div>
+        <div id="view-discovery">
+            <div id="search-results-area" class="mb-20 hidden">
+                <h3 class="text-[10px] font-black uppercase tracking-widest text-blue-600 mb-8 border-b border-blue-100 pb-4">Discovery Result</h3>
+                <div id="search-card-container"></div>
+            </div>
+
+            <div class="mb-12">
+                <h3 class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-8 border-b border-slate-200 pb-4">Featured Research Compounds</h3>
+                <div id="featured-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
+            </div>
         </div>
 
-        <div class="mb-12">
-            <h3 class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-8 border-b border-slate-200 pb-4">Featured Research Compounds</h3>
-            <div id="featured-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div id="view-comparison" class="hidden">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="space-y-4">
+                    <div id="compare-view-A" class="mol-container shadow-2xl">
+                        <div class="absolute inset-0 flex items-center justify-center text-slate-700 font-bold uppercase text-[9px] tracking-widest">Awaiting Input A</div>
+                    </div>
+                    <div id="data-A" class="hidden p-6 bg-white border border-slate-200 rounded-3xl">
+                        <h4 id="title-A" class="font-black italic text-xl uppercase mb-2 text-blue-600">---</h4>
+                        <p id="mw-A" class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">---</p>
+                    </div>
                 </div>
+                <div class="space-y-4">
+                    <div id="compare-view-B" class="mol-container shadow-2xl">
+                        <div class="absolute inset-0 flex items-center justify-center text-slate-700 font-bold uppercase text-[9px] tracking-widest">Awaiting Input B</div>
+                    </div>
+                    <div id="data-B" class="hidden p-6 bg-white border border-slate-200 rounded-3xl">
+                        <h4 id="title-B" class="font-black italic text-xl uppercase mb-2 text-blue-600">---</h4>
+                        <p id="mw-B" class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">---</p>
+                    </div>
+                </div>
+            </div>
         </div>
+
     </main>
 
     <script>
-        // Featured list (your core products + expansion)
         const featured = [
             { name: "Tirzepatide", cid: "16235086" },
             { name: "Semaglutide", cid: "56843331" },
@@ -74,7 +116,18 @@
             { name: "Hexarelin", cid: "6918296" }
         ];
 
-        // RENDER CARDS
+        // UI MODE SWITCHER
+        function switchMode(mode) {
+            const isDisc = mode === 'discovery';
+            document.getElementById('discovery-header').classList.toggle('hidden', !isDisc);
+            document.getElementById('view-discovery').classList.toggle('hidden', !isDisc);
+            document.getElementById('btn-discovery').classList.toggle('active', isDisc);
+            
+            document.getElementById('comparison-header').classList.toggle('hidden', isDisc);
+            document.getElementById('view-comparison').classList.toggle('hidden', isDisc);
+            document.getElementById('btn-comparison').classList.toggle('active', !isDisc);
+        }
+
         function createCard(m, idPrefix) {
             return `
                 <div class="glass-card rounded-[2.5rem] overflow-hidden shadow-sm hover:shadow-2xl transition-all">
@@ -96,7 +149,29 @@
             `;
         }
 
-        // INIT 3D VIEWER
+        async function fetchCompoundData(name, suffix) {
+            const containerId = suffix === 'search' ? `search-${name}` : `compare-view-${suffix}`;
+            const el = document.getElementById(containerId);
+            
+            try {
+                const cidRes = await fetch(`https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/name/${name}/cids/JSON`);
+                const cidData = await cidRes.json();
+                const cid = cidData.IdentifierList.CID[0];
+
+                if (suffix === 'A' || suffix === 'B') {
+                    const propRes = await fetch(`https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/${cid}/property/MolecularWeight/JSON`);
+                    const propData = await propRes.json();
+                    document.getElementById(`data-${suffix}`).classList.remove('hidden');
+                    document.getElementById(`title-${suffix}`).innerText = name;
+                    document.getElementById(`mw-${suffix}`).innerText = "Mol Weight: " + propData.PropertyTable.Properties[0].MolecularWeight + " g/mol";
+                }
+
+                initViewer(containerId, cid);
+            } catch (e) {
+                alert(`Compound "${name}" not found.`);
+            }
+        }
+
         function initViewer(id, cid) {
             const el = document.getElementById(id);
             el.innerHTML = `<div class="absolute inset-0 flex items-center justify-center text-blue-500 font-black text-[10px] uppercase tracking-widest loading-pulse">Fetching SDF Data...</div>`;
@@ -105,7 +180,8 @@
             fetch(`https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/${cid}/record/SDF/?record_type=3d`)
                 .then(r => r.text())
                 .then(data => {
-                    el.querySelector('.loading-pulse').remove();
+                    const pulse = el.querySelector('.loading-pulse');
+                    if(pulse) pulse.remove();
                     viewer.addModel(data, "sdf");
                     viewer.setStyle({}, { stick: {radius: 0.15}, sphere: {scale: 0.25} });
                     viewer.zoomTo();
@@ -117,33 +193,33 @@
                 });
         }
 
-        // GLOBAL PUBCHEM SEARCH
         async function searchPubChem() {
             const query = document.getElementById('globalSearch').value;
             if(!query) return;
-
-            const resultsArea = document.getElementById('search-results-area');
+            const resArea = document.getElementById('search-results-area');
             const container = document.getElementById('search-card-container');
-            
-            resultsArea.classList.remove('hidden');
+            resArea.classList.remove('hidden');
             container.innerHTML = `<div class="text-slate-400 font-bold uppercase text-[10px] tracking-widest animate-pulse">Querying NIH Database...</div>`;
-
+            
             try {
-                // Get CID from Name
                 const res = await fetch(`https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/name/${query}/cids/JSON`);
                 const data = await res.json();
                 const cid = data.IdentifierList.CID[0];
-
                 container.innerHTML = createCard({ name: query, cid: cid }, 'search');
             } catch (e) {
-                container.innerHTML = `<div class="text-red-500 font-bold uppercase text-[10px] tracking-widest">Compound not found in active research registry.</div>`;
+                container.innerHTML = `<div class="text-red-500 font-bold uppercase text-[10px] tracking-widest">Compound not found.</div>`;
             }
+        }
+
+        function runComparison() {
+            const a = document.getElementById('compA').value;
+            const b = document.getElementById('compB').value;
+            if(a) fetchCompoundData(a, 'A');
+            if(b) fetchCompoundData(b, 'B');
         }
 
         // Initial Load
         document.getElementById('featured-grid').innerHTML = featured.map(m => createCard(m, 'feat')).join('');
-
-        // Enter Key Search
         document.getElementById('globalSearch').addEventListener('keypress', e => { if(e.key === 'Enter') searchPubChem(); });
     </script>
 </body>
