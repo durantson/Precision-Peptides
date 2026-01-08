@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Researcher Dashboard | Precision Peptides</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body class="bg-slate-900 text-slate-100 font-sans antialiased">
+
+    <div class="flex min-h-screen">
+        <aside class="w-64 bg-slate-800 border-r border-slate-700 hidden md:block p-6">
+            <div class="flex items-center gap-2 mb-10">
+                <div class="w-8 h-8 bg-blue-500 rounded flex items-center justify-center">
+                    <i class="fas fa-microscope text-white text-sm"></i>
+                </div>
+                <span class="text-lg font-bold tracking-tight">LAB<span class="text-blue-400">PORTAL</span></span>
+            </div>
+            
+            <nav class="space-y-2">
+                <a href="portal.html" class="flex items-center gap-3 p-3 bg-blue-600 rounded-lg text-white font-medium">
+                    <i class="fas fa-chart-line w-5"></i> Dashboard
+                </a>
+                <a href="catalog.html" class="flex items-center gap-3 p-3 hover:bg-slate-700 rounded-lg transition-colors">
+                    <i class="fas fa-dna w-5"></i> Catalog
+                </a>
+                <a href="calculator.html" class="flex items-center gap-3 p-3 hover:bg-slate-700 rounded-lg transition-colors">
+                    <i class="fas fa-calculator w-5"></i> Reconstitution
+                </a>
+                <a href="batch-verification.html" class="flex items-center gap-3 p-3 hover:bg-slate-700 rounded-lg transition-colors">
+                    <i class="fas fa-shield-check w-5"></i> Batch Auth
+                </a>
+            </nav>
+        </aside>
+
+        <main class="flex-1 p-8">
+            <header class="flex justify-between items-center mb-10">
+                <div>
+                    <h1 class="text-3xl font-bold">Welcome, Investigator</h1>
+                    <p class="text-slate-400">Institutional Access Level: <strong>Verified</strong></p>
+                </div>
+                <div class="flex gap-4">
+                    <button class="bg-slate-800 p-2 rounded-full border border-slate-700 hover:text-blue-400">
+                        <i class="fas fa-bell"></i>
+                    </button>
+                    <div class="w-10 h-10 bg-gradient-to-tr from-blue-600 to-indigo-600 rounded-full border-2 border-slate-700"></div>
+                </div>
+            </header>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+                <div class="bg-slate-800 p-6 rounded-2xl border border-slate-700">
+                    <h3 class="text-slate-400 text-sm font-semibold uppercase mb-2">Active Research</h3>
+                    <div class="text-3xl font-bold">14 Projects</div>
+                    <div class="text-emerald-400 text-sm mt-2"><i class="fas fa-arrow-up"></i> 2 New this week</div>
+                </div>
+                <div class="bg-slate-800 p-6 rounded-2xl border border-slate-700">
+                    <h3 class="text-slate-400 text-sm font-semibold uppercase mb-2">Verified Purity</h3>
+                    <div class="text-3xl font-bold">99.98%</div>
+                    <div class="text-slate-400 text-sm mt-2 italic text-xs">Avg across all synthesis lots</div>
+                </div>
+                <div class="bg-slate-800 p-6 rounded-2xl border border-slate-700">
+                    <h3 class="text-slate-400 text-sm font-semibold uppercase mb-2">Server Status</h3>
+                    <div class="text-3xl font-bold text-blue-400 uppercase">Online</div>
+                    <div class="text-slate-400 text-sm mt-2">Precision API Connected</div>
+                </div>
+            </div>
+
+            <h2 class="text-xl font-bold mb-6">Investigator Toolkit</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <a href="calculator.html" class="bg-slate-800 p-6 rounded-2xl border border-slate-700 hover:border-blue-500 transition-all group">
+                    <i class="fas fa-calculator text-blue-500 text-2xl mb-4"></i>
+                    <h4 class="font-bold">Recon Calc</h4>
+                    <p class="text-xs text-slate-500 mt-1">Precise molarity adjustment tools.</p>
+                </a>
+                <a href="batch-verification.html" class="bg-slate-800 p-6 rounded-2xl border border-slate-700 hover:border-emerald-500 transition-all group">
+                    <i class="fas fa-file-contract text-emerald-500 text-2xl mb-4"></i>
+                    <h4 class="font-bold">COA Database</h4>
+                    <p class="text-xs text-slate-500 mt-1">Download HPLC/Mass Spec reports.</p>
+                </a>
+                <a href="catalog.html" class="bg-slate-800 p-6 rounded-2xl border border-slate-700 hover:border-purple-500 transition-all group">
+                    <i class="fas fa-microscope text-purple-500 text-2xl mb-4"></i>
+                    <h4 class="font-bold">Inventory</h4>
+                    <p class="text-xs text-slate-500 mt-1">Review synthetic peptide sequences.</p>
+                </a>
+                <div class="bg-slate-800 p-6 rounded-2xl border border-slate-700 opacity-50 cursor-not-allowed">
+                    <i class="fas fa-lock text-slate-500 text-2xl mb-4"></i>
+                    <h4 class="font-bold">Lab Notes</h4>
+                    <p class="text-xs text-slate-500 mt-1">Cloud sync coming soon.</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="portal-ai.js"></script>
+</body>
+</html>
