@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grant Resources | Precision Peptides</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=JetBrains+Mono&display=swap" rel="stylesheet">
+    <style>body { font-family: 'Inter', sans-serif; } .mono { font-family: 'JetBrains Mono', monospace; }</style>
+</head>
+<body class="bg-gray-50 text-slate-900 leading-relaxed">
+
+    <nav class="bg-white border-b border-slate-200 h-20 flex items-center px-6">
+        <div class="max-w-7xl mx-auto w-full flex justify-between items-center text-2xl font-black italic uppercase">
+            <a href="index.html">Precision<span class="text-sky-500">Peptides</span></a>
+        </div>
+    </nav>
+
+    <header class="bg-slate-900 py-16 px-6 text-white">
+        <div class="max-w-4xl mx-auto">
+            <h1 class="text-4xl font-extrabold mb-4 uppercase tracking-tight">Investigator Support Hub</h1>
+            <p class="text-lg text-slate-400">Technical documentation and "Materials & Methods" assets for NIH/NSF grant submissions.</p>
+        </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto py-16 px-6">
+        
+        <div class="grid lg:grid-cols-3 gap-12">
+            
+            <div class="lg:col-span-1 space-y-4">
+                <div class="p-6 bg-white rounded-2xl border border-slate-200">
+                    <h3 class="font-bold uppercase text-xs text-sky-600 mb-4">Resource Categories</h3>
+                    <ul class="space-y-3 text-sm font-medium">
+                        <li><a href="#methods" class="hover:text-sky-500 transition">Materials & Methods Blurbs</a></li>
+                        <li><a href="#purity" class="hover:text-sky-500 transition">Purity Standards (GLP)</a></li>
+                        <li><a href="#synthesis" class="hover:text-sky-500 transition">Synthesis Documentation</a></li>
+                        <li><a href="#support" class="hover:text-sky-500 transition">Letter of Support Requests</a></li>
+                    </ul>
+                </div>
+                
+            </div>
+
+            <div class="lg:col-span-2 space-y-16">
+                
+                <section id="methods">
+                    <h2 class="text-2xl font-bold mb-6 uppercase tracking-tight">Standardized Methods Language</h2>
+                    <p class="text-slate-600 text-sm mb-6">Researchers may utilize the following technical description for their "Reagents and Materials" sections:</p>
+                    
+                    <div class="bg-slate-100 p-6 rounded-xl border border-slate-200 relative group">
+                        <span class="absolute top-4 right-4 text-[10px] font-bold text-slate-400 uppercase">Copy-Paste Snippet</span>
+                        <p class="text-xs font-mono text-slate-700 leading-relaxed">
+                            "Synthetic peptides were sourced from Precision Peptides (Drayton Valley, AB). Reagents were synthesized via FMOC solid-phase peptide synthesis (SPPS), purified by reverse-phase high-performance liquid chromatography (RP-HPLC) to &ge;99% purity, and identity-verified by electrospray ionization mass spectrometry (ESI-MS). Peptides were provided as lyophilized trifluoroacetate (TFA) salts and stored at -80&deg;C prior to reconstitution."
+                        </p>
+                    </div>
+                </section>
+
+                <section id="purity">
+                    <h2 class="text-2xl font-bold mb-6 uppercase tracking-tight">Analytical Validation</h2>
+                    <p class="text-slate-600 text-sm mb-6">Reviewing committees prioritize reproducibility. Precision Peptides ensures all reagents meet the following benchmarks:</p>
+                    
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div class="p-4 bg-white rounded-lg border border-slate-100">
+                            <h4 class="font-bold text-xs uppercase mb-1">Lot-to-Lot Consistency</h4>
+                            <p class="text-[11px] text-slate-500">Intra-assay coefficient of variation (CV) &lt; 5% across multiple synthesis runs.</p>
+                        </div>
+                        <div class="p-4 bg-white rounded-lg border border-slate-100">
+                            <h4 class="font-bold text-xs uppercase mb-1">Counter-Ion Content</h4>
+                            <p class="text-[11px] text-slate-500">Residual TFA content minimized to &lt; 1% to prevent cellular toxicity in sensitive assays.</p>
+                        </div>
+                    </div>
+                    
+                </section>
+
+                <section id="support" class="bg-sky-900 p-8 rounded-3xl text-white">
+                    <h2 class="text-xl font-bold mb-4 uppercase">Institutional Letters of Support</h2>
+                    <p class="text-sky-200 text-sm mb-6">If your grant requires a formal Letter of Support (LOS) from your reagent supplier confirming availability, purity standards, and technical cooperation, please contact our Liaison.</p>
+                    <a href="contact.html" class="inline-block bg-white text-sky-900 px-8 py-3 rounded-full font-bold text-xs uppercase tracking-widest hover:bg-sky-400 hover:text-white transition">Request LOS Template</a>
+                </section>
+
+            </div>
+        </div>
+    </main>
+
+    <footer class="py-12 text-center text-[10px] text-slate-400 uppercase tracking-widest">
+        © 2026 Precision Peptides | Institutional Research Support
+    </footer>
+
+</body>
+</html>

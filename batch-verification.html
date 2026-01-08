@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Batch Verification | Precision Peptides</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=JetBrains+Mono&display=swap" rel="stylesheet">
+    <style>body { font-family: 'Inter', sans-serif; } .mono { font-family: 'JetBrains Mono', monospace; }</style>
+</head>
+<body class="bg-slate-50 text-slate-900 leading-relaxed">
+
+    <nav class="bg-white border-b border-slate-200 h-20 flex items-center px-6">
+        <div class="max-w-7xl mx-auto w-full flex justify-between items-center text-2xl font-black italic uppercase">
+            <a href="index.html">Precision<span class="text-sky-500">Peptides</span></a>
+        </div>
+    </nav>
+
+    <main class="max-w-4xl mx-auto py-16 px-6">
+        <div class="text-center mb-16">
+            <h1 class="text-4xl font-extrabold mb-4 uppercase tracking-tight">Batch Verification Hub</h1>
+            <p class="text-slate-500 max-w-xl mx-auto text-sm">Enter the Lot ID found on your vial label or packing slip to access the specific analytical validation reports for your reagent.</p>
+        </div>
+
+        <div class="bg-white p-8 rounded-3xl border border-slate-200 shadow-xl mb-12">
+            <div class="flex flex-col md:flex-row gap-4">
+                <input type="text" id="lotInput" placeholder="Enter Lot ID (e.g. BPC-8821)" 
+                       class="flex-1 bg-slate-50 border border-slate-200 p-4 rounded-xl outline-none focus:ring-2 focus:ring-sky-500 font-bold uppercase tracking-widest">
+                <button onclick="verifyBatch()" class="bg-slate-900 text-white px-10 py-4 rounded-xl font-bold uppercase text-xs tracking-widest hover:bg-sky-600 transition">
+                    Verify Reagent
+                </button>
+            </div>
+            <p class="mt-4 text-[10px] text-slate-400 uppercase text-center font-bold tracking-widest">Format: [Product Code]-[Lot Number]</p>
+        </div>
+
+        <div id="resultArea" class="hidden animate-in fade-in duration-500">
+            <div class="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-sm">
+                <div class="bg-emerald-500 p-4 text-white text-center font-bold text-xs uppercase tracking-widest">
+                    Authentication Successful: Laboratory Grade Reagent Verified
+                </div>
+                <div class="p-8">
+                    <div class="grid md:grid-cols-2 gap-8 mb-8">
+                        <div>
+                            <h3 id="resName" class="text-2xl font-black uppercase text-slate-900 mb-1">---</h3>
+                            <p id="resLot" class="mono text-xs text-sky-600 font-bold mb-4">---</p>
+                            <div class="space-y-2 text-sm">
+                                <div class="flex justify-between border-b border-slate-100 py-1"><span class="text-slate-400">Purity (HPLC)</span><span id="resPurity" class="font-bold font-mono text-emerald-600">--%</span></div>
+                                <div class="flex justify-between border-b border-slate-100 py-1"><span class="text-slate-400">Synthesis Date</span><span id="resDate" class="font-bold">--/--/--</span></div>
+                                <div class="flex justify-between border-b border-slate-100 py-1"><span class="text-slate-400">Molecular Mass</span><span id="resMass" class="font-bold">-- g/mol</span></div>
+                            </div>
+                        </div>
+                        <div class="bg-slate-50 rounded-2xl p-6 border border-slate-100 flex flex-col justify-center items-center text-center">
+                            <svg class="w-12 h-12 text-slate-300 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                            <p class="text-[10px] font-bold uppercase text-slate-400 mb-4">Full PDF Analytical Report</p>
+                            <button class="bg-slate-900 text-white px-6 py-2 rounded-full text-[10px] font-bold uppercase tracking-widest hover:bg-sky-500 transition">
+                                Download COA
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="errorArea" class="hidden text-center py-10">
+            <p class="text-red-500 font-bold text-sm uppercase tracking-widest">Invalid Lot Identifier</p>
+            <p class="text-slate-400 text-xs">Please verify the code on your vial or contact the Liaison for assistance.</p>
+        </div>
+    </main>
+
+    <script>
+        const batchDatabase = {
+            "BPC-8821": {
+                name: "BPC-157",
+                purity: "99.41%",
+                date: "Jan 2026",
+                mass: "1419.5"
+            },
+            "SEM-9902": {
+                name: "Semaglutide",
+                purity: "99.82%",
+                date: "Nov 2025",
+                mass: "4113.6"
+            },
+            "TIR-4431": {
+                name: "Tirzepatide",
+                purity: "99.55%",
+                date: "Dec 2025",
+                mass: "4813.5"
+            }
+        };
+
+        function verifyBatch() {
+            const input = document.getElementById('lotInput').value.trim().toUpperCase();
+            const resultArea = document.getElementById('resultArea');
+            const errorArea = document.getElementById('errorArea');
+
+            if (batchDatabase[input]) {
+                const data = batchDatabase[input];
+                document.getElementById('resName').innerText = data.name;
+                document.getElementById('resLot').innerText = `Batch Identification: #${input}`;
+                document.getElementById('resPurity').innerText = data.purity;
+                document.getElementById('resDate').innerText = data.date;
+                document.getElementById('resMass').innerText = data.mass;
+
+                resultArea.classList.remove('hidden');
+                errorArea.classList.add('hidden');
+            } else {
+                resultArea.classList.add('hidden');
+                errorArea.classList.remove('hidden');
+            }
+        }
+    </script>
+
+</body>
+</html>

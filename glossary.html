@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Technical Glossary | Precision Peptides</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=JetBrains+Mono&display=swap" rel="stylesheet">
+    <style>body { font-family: 'Inter', sans-serif; } .mono { font-family: 'JetBrains Mono', monospace; }</style>
+</head>
+<body class="bg-gray-50 text-slate-900 leading-relaxed">
+
+    <nav class="bg-white border-b border-slate-200 h-20 flex items-center px-6">
+        <div class="max-w-7xl mx-auto w-full flex justify-between items-center text-2xl font-black italic uppercase">
+            <a href="index.html">Precision<span class="text-sky-500">Peptides</span></a>
+        </div>
+    </nav>
+
+    <header class="bg-slate-900 py-16 px-6 text-white text-center">
+        <div class="max-w-4xl mx-auto">
+            <h1 class="text-4xl font-extrabold mb-4 uppercase tracking-tight">Molecular Glossary</h1>
+            <p class="text-lg text-slate-400">Defining the nomenclature and analytical standards of synthetic peptide chemistry.</p>
+        </div>
+    </header>
+
+    <main class="max-w-5xl mx-auto py-16 px-6">
+        
+        <div class="mb-12">
+            <input type="text" id="glossarySearch" placeholder="Search terms (e.g., Lyophilization, SPPS)..." 
+                   class="w-full p-4 rounded-xl border border-slate-200 outline-none focus:ring-2 focus:ring-sky-500">
+        </div>
+
+        <div class="space-y-8" id="glossaryList">
+            
+            <div class="bg-white p-8 rounded-2xl border border-slate-200 term-item">
+                <h3 class="text-xl font-bold text-sky-600 mb-2 uppercase tracking-tight">Acetate Salt</h3>
+                <p class="text-sm text-slate-600 leading-relaxed">
+                    The most common counter-ion used in peptide synthesis to stabilize the molecule. Acetate salts are generally preferred in cell culture research over TFA (Trifluoroacetate) salts due to their lower cytotoxicity.
+                </p>
+            </div>
+
+            <div class="bg-white p-8 rounded-2xl border border-slate-200 term-item">
+                <h3 class="text-xl font-bold text-sky-600 mb-2 uppercase tracking-tight">Amidation (C-Terminus)</h3>
+                <p class="text-sm text-slate-600 leading-relaxed">
+                    A modification where the C-terminal carboxyl group is replaced with an amide group. This mimics the natural state of many hormones and increases the peptide's resistance to carboxypeptidase degradation.
+                </p>
+            </div>
+
+            <div class="bg-white p-8 rounded-2xl border border-slate-200 term-item">
+                <h3 class="text-xl font-bold text-sky-600 mb-2 uppercase tracking-tight">Bacteriostatic Water</h3>
+                <p class="text-sm text-slate-600 leading-relaxed">
+                    Sterile water containing 0.9% benzyl alcohol, used as a preservative to inhibit the growth of bacteria. Essential for the reconstitution of multi-dose research vials.
+                </p>
+            </div>
+
+            <div class="bg-white p-8 rounded-2xl border border-slate-200 term-item">
+                <h3 class="text-xl font-bold text-sky-600 mb-2 uppercase tracking-tight">HPLC (High-Performance Liquid Chromatography)</h3>
+                <p class="text-sm text-slate-600 leading-relaxed">
+                    The analytical "gold standard" used to determine the chemical purity of a peptide. It separates the target peptide from impurities based on their interaction with a stationary phase and a mobile phase.
+                </p>
+                
+            </div>
+
+            <div class="bg-white p-8 rounded-2xl border border-slate-200 term-item">
+                <h3 class="text-xl font-bold text-sky-600 mb-2 uppercase tracking-tight">Lyophilization</h3>
+                <p class="text-sm text-slate-600 leading-relaxed">
+                    The process of freeze-drying a peptide to remove solvent. This results in a stable "cake" or powder that can be stored and transported at room temperature without immediate degradation.
+                </p>
+                
+            </div>
+
+            <div class="bg-white p-8 rounded-2xl border border-slate-200 term-item">
+                <h3 class="text-xl font-bold text-sky-600 mb-2 uppercase tracking-tight">SPPS (Solid Phase Peptide Synthesis)</h3>
+                <p class="text-sm text-slate-600 leading-relaxed">
+                    A method of synthesizing peptides by adding amino acids step-by-step to a solid resin support. Invented by Robert Bruce Merrifield, it allows for the precise creation of complex sequences.
+                </p>
+                
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+        document.getElementById('glossarySearch').addEventListener('input', function(e) {
+            const term = e.target.value.toLowerCase();
+            const items = document.querySelectorAll('.term-item');
+            
+            items.forEach(item => {
+                const text = item.innerText.toLowerCase();
+                item.style.display = text.includes(term) ? 'block' : 'none';
+            });
+        });
+    </script>
+
+    <footer class="py-12 text-center text-[10px] text-slate-400 uppercase tracking-widest">
+        © 2026 Precision Peptides | Technical Nomenclature Division
+    </footer>
+
+</body>
+</html>
