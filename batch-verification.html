@@ -3,113 +3,121 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Batch Verification | Precision Peptides</title>
+    <title>Batch Authentication & COA | Precision Peptides</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=JetBrains+Mono&display=swap" rel="stylesheet">
-    <style>body { font-family: 'Inter', sans-serif; } .mono { font-family: 'JetBrains Mono', monospace; }</style>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .verified-glow { box-shadow: 0 0 20px rgba(16, 185, 129, 0.2); }
+        .scanning-line {
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #3b82f6, transparent);
+            animation: scan 2s linear infinite;
+        }
+        @keyframes scan { 0% { transform: translateY(-10px); } 100% { transform: translateY(200px); } }
+    </style>
 </head>
-<body class="bg-slate-50 text-slate-900 leading-relaxed">
+<body class="bg-slate-50 font-sans antialiased">
 
-    <nav class="bg-white border-b border-slate-200 h-20 flex items-center px-6">
-        <div class="max-w-7xl mx-auto w-full flex justify-between items-center text-2xl font-black italic uppercase">
-            <a href="index.html">Precision<span class="text-sky-500">Peptides</span></a>
+    <nav class="bg-white border-b border-slate-200 h-16 flex items-center px-4 justify-between sticky top-0 z-50">
+        <div class="flex items-center gap-2">
+            <div class="w-8 h-8 bg-blue-600 rounded flex items-center justify-center text-white"><i class="fas fa-shield-check"></i></div>
+            <span class="font-bold text-lg italic uppercase tracking-tighter">Precision<span class="text-blue-600">Peptides</span></span>
+        </div>
+        <div class="flex gap-6 text-[10px] font-black uppercase tracking-widest text-slate-500">
+            <a href="index.html" class="hover:text-blue-600">Home</a>
+            <a href="portal.html" class="hover:text-blue-600">Portal</a>
+            <a href="catalog.html" class="hover:text-blue-600">Catalog</a>
         </div>
     </nav>
 
-    <main class="max-w-4xl mx-auto py-16 px-6">
+    <main class="max-w-5xl mx-auto p-6 md:p-16">
+        
         <div class="text-center mb-16">
-            <h1 class="text-4xl font-extrabold mb-4 uppercase tracking-tight">Batch Verification Hub</h1>
-            <p class="text-slate-500 max-w-xl mx-auto text-sm">Enter the Lot ID found on your vial label or packing slip to access the specific analytical validation reports for your reagent.</p>
+            <div class="inline-block px-4 py-1.5 bg-blue-50 text-blue-600 rounded-full text-[10px] font-black uppercase tracking-[0.2em] mb-4 border border-blue-100">
+                Quality Assurance Protocols
+            </div>
+            <h1 class="text-5xl font-black text-slate-900 italic uppercase tracking-tight mb-4">Batch Authentication</h1>
+            <p class="text-slate-500 max-w-2xl mx-auto font-medium">
+                Enter your unique Reagent Lot ID to retrieve high-resolution HPLC-MS chromatography data and purity certification.
+            </p>
         </div>
 
-        <div class="bg-white p-8 rounded-3xl border border-slate-200 shadow-xl mb-12">
-            <div class="flex flex-col md:flex-row gap-4">
-                <input type="text" id="lotInput" placeholder="Enter Lot ID (e.g. BPC-8821)" 
-                       class="flex-1 bg-slate-50 border border-slate-200 p-4 rounded-xl outline-none focus:ring-2 focus:ring-sky-500 font-bold uppercase tracking-widest">
-                <button onclick="verifyBatch()" class="bg-slate-900 text-white px-10 py-4 rounded-xl font-bold uppercase text-xs tracking-widest hover:bg-sky-600 transition">
-                    Verify Reagent
+        <div class="max-w-2xl mx-auto mb-12">
+            <div class="bg-white p-2 rounded-[2.5rem] shadow-2xl border border-slate-100 flex items-center">
+                <input type="text" id="batchInput" placeholder="Enter Lot ID (e.g., PP-TIR-026)" class="flex-1 bg-transparent px-8 py-4 outline-none font-bold text-lg placeholder:text-slate-300">
+                <button onclick="verifyBatch()" class="bg-blue-600 text-white px-10 py-4 rounded-[2rem] font-black uppercase tracking-widest hover:bg-slate-900 transition-all shadow-lg shadow-blue-200">
+                    Verify
                 </button>
             </div>
-            <p class="mt-4 text-[10px] text-slate-400 uppercase text-center font-bold tracking-widest">Format: [Product Code]-[Lot Number]</p>
+            <p class="text-center mt-6 text-[10px] text-slate-400 font-bold uppercase tracking-widest">
+                <i class="fas fa-lock mr-2"></i> Encrypted Secure Access to Analytical Database
+            </p>
         </div>
 
-        <div id="resultArea" class="hidden animate-in fade-in duration-500">
-            <div class="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-sm">
-                <div class="bg-emerald-500 p-4 text-white text-center font-bold text-xs uppercase tracking-widest">
-                    Authentication Successful: Laboratory Grade Reagent Verified
+        <div id="resultsArea" class="hidden space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
+            
+            <div class="bg-emerald-500 p-8 rounded-[2.5rem] text-white flex flex-col md:flex-row items-center justify-between verified-glow">
+                <div class="flex items-center gap-6 mb-6 md:mb-0">
+                    <div class="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center text-3xl">
+                        <i class="fas fa-check-double"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl font-black italic uppercase tracking-tight">Purity Authenticated</h2>
+                        <p class="text-emerald-100 text-sm font-medium">Lot ID: <span id="displayLot" class="font-mono">---</span> | Status: <span class="uppercase">Validated</span></p>
+                    </div>
                 </div>
-                <div class="p-8">
-                    <div class="grid md:grid-cols-2 gap-8 mb-8">
-                        <div>
-                            <h3 id="resName" class="text-2xl font-black uppercase text-slate-900 mb-1">---</h3>
-                            <p id="resLot" class="mono text-xs text-sky-600 font-bold mb-4">---</p>
-                            <div class="space-y-2 text-sm">
-                                <div class="flex justify-between border-b border-slate-100 py-1"><span class="text-slate-400">Purity (HPLC)</span><span id="resPurity" class="font-bold font-mono text-emerald-600">--%</span></div>
-                                <div class="flex justify-between border-b border-slate-100 py-1"><span class="text-slate-400">Synthesis Date</span><span id="resDate" class="font-bold">--/--/--</span></div>
-                                <div class="flex justify-between border-b border-slate-100 py-1"><span class="text-slate-400">Molecular Mass</span><span id="resMass" class="font-bold">-- g/mol</span></div>
-                            </div>
-                        </div>
-                        <div class="bg-slate-50 rounded-2xl p-6 border border-slate-100 flex flex-col justify-center items-center text-center">
-                            <svg class="w-12 h-12 text-slate-300 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
-                            <p class="text-[10px] font-bold uppercase text-slate-400 mb-4">Full PDF Analytical Report</p>
-                            <button class="bg-slate-900 text-white px-6 py-2 rounded-full text-[10px] font-bold uppercase tracking-widest hover:bg-sky-500 transition">
-                                Download COA
+                <div class="text-center px-8 border-l border-emerald-400/30">
+                    <div class="text-4xl font-black tracking-tighter italic">99.98%</div>
+                    <p class="text-[10px] font-bold uppercase opacity-80 tracking-widest">Assay Purity</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="md:col-span-2 bg-white p-8 rounded-[2.5rem] border border-slate-200 shadow-sm relative overflow-hidden">
+                    <div class="scanning-line absolute w-full left-0 opacity-20"></div>
+                    <h3 class="text-xs font-black uppercase tracking-widest text-slate-400 mb-6">HPLC Chromatography Preview</h3>
+                    <div class="aspect-video bg-slate-50 rounded-2xl flex items-center justify-center border border-dashed border-slate-200">
+                        <i class="fas fa-chart-line text-4xl text-slate-200"></i>
+                        <span class="ml-4 text-slate-400 font-mono text-xs italic tracking-widest">DATA_VISUAL_026.RAW</span>
+                    </div>
+                </div>
+
+                <div class="space-y-6">
+                    <div class="bg-slate-900 p-8 rounded-[2.5rem] text-white">
+                        <h3 class="text-xs font-black uppercase tracking-widest opacity-50 mb-6">Documentation</h3>
+                        <div class="space-y-4">
+                            <button class="w-full flex items-center justify-between p-4 bg-white/10 rounded-2xl hover:bg-white/20 transition-all group">
+                                <span class="text-xs font-bold uppercase">Download COA</span>
+                                <i class="fas fa-file-pdf group-hover:text-red-400 transition-colors"></i>
+                            </button>
+                            <button class="w-full flex items-center justify-between p-4 bg-white/10 rounded-2xl hover:bg-white/20 transition-all group">
+                                <span class="text-xs font-bold uppercase">Mass Spec Log</span>
+                                <i class="fas fa-file-waveform group-hover:text-blue-400 transition-colors"></i>
                             </button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
-        <div id="errorArea" class="hidden text-center py-10">
-            <p class="text-red-500 font-bold text-sm uppercase tracking-widest">Invalid Lot Identifier</p>
-            <p class="text-slate-400 text-xs">Please verify the code on your vial or contact the Liaison for assistance.</p>
-        </div>
     </main>
 
     <script>
-        const batchDatabase = {
-            "BPC-8821": {
-                name: "BPC-157",
-                purity: "99.41%",
-                date: "Jan 2026",
-                mass: "1419.5"
-            },
-            "SEM-9902": {
-                name: "Semaglutide",
-                purity: "99.82%",
-                date: "Nov 2025",
-                mass: "4113.6"
-            },
-            "TIR-4431": {
-                name: "Tirzepatide",
-                purity: "99.55%",
-                date: "Dec 2025",
-                mass: "4813.5"
-            }
-        };
-
         function verifyBatch() {
-            const input = document.getElementById('lotInput').value.trim().toUpperCase();
-            const resultArea = document.getElementById('resultArea');
-            const errorArea = document.getElementById('errorArea');
+            const input = document.getElementById('batchInput').value;
+            const results = document.getElementById('resultsArea');
+            const displayLot = document.getElementById('displayLot');
 
-            if (batchDatabase[input]) {
-                const data = batchDatabase[input];
-                document.getElementById('resName').innerText = data.name;
-                document.getElementById('resLot').innerText = `Batch Identification: #${input}`;
-                document.getElementById('resPurity').innerText = data.purity;
-                document.getElementById('resDate').innerText = data.date;
-                document.getElementById('resMass').innerText = data.mass;
-
-                resultArea.classList.remove('hidden');
-                errorArea.classList.add('hidden');
+            if (input.length > 2) {
+                // Simulate a loading delay for effect
+                displayLot.innerText = input.toUpperCase();
+                results.classList.remove('hidden');
+                
+                // Scroll into view
+                results.scrollIntoView({ behavior: 'smooth', block: 'center' });
             } else {
-                resultArea.classList.add('hidden');
-                errorArea.classList.remove('hidden');
+                alert('Please enter a valid Lot ID');
             }
         }
     </script>
-
 </body>
 </html>
