@@ -1,6 +1,6 @@
 /**
  * PRECISION LABS - AI RESEARCH ASSISTANT (Dr. Alara)
- * version: 3.0.0 (Advanced Logic)
+ * version: 4.0.0 (Expert Knowledge Base)
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -10,8 +10,8 @@ document.addEventListener('DOMContentLoaded', () => {
 // --- CONFIGURATION ---
 const CONFIG = {
     botName: "Dr. Alara",
-    typingSpeed: 25, // ms per char
-    minDelay: 800,   // minimum "thinking" time
+    typingSpeed: 20, 
+    minDelay: 600,   
 };
 
 // --- STATE MANAGEMENT ---
@@ -22,90 +22,160 @@ let sessionState = {
 };
 
 // --- INTELLIGENT KNOWLEDGE BASE ---
-// The AI picks a RANDOM response from the array to sound natural.
 const KNOWLEDGE_BASE = {
     
-    // 1. GREETINGS
-    greetings: {
-        triggers: ['hello', 'hi', 'hey', 'greetings', 'start', 'good morning', 'good afternoon'],
+    // 1. RECONSTITUTION (Mixing)
+    reconstitution: {
+        triggers: ['mix', 'water', 'bac', 'bacteriostatic', 'reconstitute', 'liquid', 'dilute', 'dilution', 'add', 'syringe', 'ratio', 'prep'],
         responses: [
-            "Greetings. I am Dr. Alara. How can I assist with your research protocols today?",
-            "Hello. I am ready to access the Precision Peptides database. What requires verification?",
-            "System online. Please state your inquiry regarding our reagent catalog.",
-            "Welcome back to the portal. I am standing by for your query."
+            `<strong>Standard Reconstitution Protocol:</strong><br>
+             1. Swab the vial stopper with 70% alcohol.<br>
+             2. Inject 1ml, 2ml, or 3ml of <strong>Bacteriostatic Water</strong> slowly down the side of the glass.<br>
+             3. Do not spray directly on the lyophilized cake.<br>
+             4. Gently swirl (do not shake) until fully dissolved.`,
+             
+            `Most researchers prefer a concentration that makes math simple. For a <strong>5mg vial</strong>, adding <strong>2ml of water</strong> creates a concentration of <strong>2.5mg/ml</strong>.`,
+            
+            `Use <strong>Bacteriostatic Water</strong> (containing 0.9% Benzyl Alcohol) if you plan to store the vial after opening. Sterile water is only suitable for immediate, single-use applications as it inhibits bacterial growth for only a few hours.`
         ]
     },
 
-    // 2. SHIPPING & LOGISTICS
+    // 2. STORAGE (The Smart Logic)
+    storage_powder: {
+        triggers: ['store powder', 'store dry', 'unmixed', 'arrive', 'keep', 'shelf life', 'storage'],
+        responses: [
+            `<strong>Lyophilized (Dry) Storage:</strong><br>
+             Store at <strong>-20°C (Freezer)</strong>. In this state, peptides are stable for 24+ months. At room temperature, they remain stable for approximately 8 weeks.`,
+             
+            `Keep vials away from direct light. UV radiation can degrade peptide bonds. If storing for >1 month, the freezer is mandatory.`
+        ]
+    },
+
+    storage_liquid: {
+        triggers: ['store mixed', 'store liquid', 'after mixing', 'reconstituted', 'fridge', 'freezer', 'frozen', 'refreeze'],
+        responses: [
+            `<strong>Reconstituted (Liquid) Storage:</strong><br>
+             Once mixed, store at <strong>4°C (Refrigerator)</strong>. Do <strong>NOT</strong> refreeze, as ice crystal formation can shear the peptide structure.`,
+             
+            `Use reconstituted peptides within <strong>30 days</strong>. If the solution becomes cloudy or discolored, discard immediately.`
+        ]
+    },
+
+    // 3. SHIPPING & LOGISTICS (US Only)
     shipping: {
-        triggers: ['ship', 'track', 'delivery', 'arrive', 'long', 'time', 'fedex', 'ups', 'where is'],
+        triggers: ['ship', 'track', 'delivery', 'arrive', 'fedex', 'ups', 'usps', 'time', 'long', 'where'],
         responses: [
-            "We utilize <strong>FedEx Priority Overnight</strong> for domestic reagents. Orders placed before 14:00 EST dispatch the same day.",
-            "Logistics data indicates a 24-48 hour transit time for most US locations. We use insulated cold-chain packaging.",
-            "Tracking numbers are automatically generated upon label creation. You should receive yours via email by 5:00 PM EST.",
-            "We ship strictly via Priority Air to maintain peptide stability. Do you have a specific Order ID you wish to trace?"
+            `<strong>Logistics Protocol:</strong><br>
+             We ship exclusively via <strong>FedEx Priority</strong> from our US facility. Orders placed before 14:00 EST dispatch same-day. Transit time is typically 24-48 hours.`,
+             
+            `All parcels are shipped in temperature-controlled packaging containing phase-change gel packs. This protects the reagents from thermal spikes during transit.`,
+            
+            `Tracking numbers are automated. Check your email (and spam folder) after 5:00 PM EST on the day of your order.`
         ]
     },
 
-    // 3. STORAGE & HANDLING
-    storage: {
-        triggers: ['store', 'keep', 'fridge', 'freezer', 'temperature', 'shelf life', 'expire', 'stable'],
+    international: {
+        triggers: ['canada', 'uk', 'australia', 'europe', 'asia', 'mexico', 'international', 'customs', 'overseas'],
         responses: [
-            "For long-term preservation, all lyophilized reagents should be stored at <strong>-20°C</strong> (Freezer).",
-            "Once reconstituted with bacteriostatic water, the solution must be refrigerated at 4°C and used within 30 days.",
-            "Lyophilized powder is stable at room temperature for up to 8 weeks, but we recommend immediate cold storage upon receipt.",
-            "Avoid repeated freeze-thaw cycles. We recommend aliquoting your solution if you do not plan to use the full vial immediately."
+            `<span class="text-red-600 font-bold"><i class="fas fa-ban"></i> Protocol Violation</span><br>
+             Precision Peptides services <strong>United States domestic addresses only</strong>. We do not export international orders due to cold-chain stability risks.`
         ]
     },
 
-    // 4. PURITY & TESTING
-    purity: {
-        triggers: ['purity', 'test', 'hplc', 'coa', 'lab', 'janoshik', 'mz', 'quality', 'verified'],
+    // 4. TROUBLESHOOTING
+    troubleshooting: {
+        triggers: ['warm', 'hot', 'melted', 'ice', 'cloudy', 'broken', 'damage', 'clear'],
         responses: [
-            "Our purity standard is strict: <strong>&ge;99.0%</strong>. Any batch testing lower is rejected.",
-            "We verify every batch through Janoshik Analytics or MZ Biolabs. You can find the raw HPLC data on the 'Batch Verification' page.",
-            "We test for both identity (Mass Spec) and purity (HPLC). We do not sell unverified raw powder.",
-            "Transparency is key. If you have a specific Batch ID, I can pull the chromatogram for you immediately."
+            `<strong>Temperature Alert:</strong><br>
+             If your ice pack arrived melted, do not panic. Lyophilized peptides are stable at room temperature for weeks. The ice is a precaution for extreme heat spikes only. Put the vial in the freezer upon receipt.`,
+             
+            `<strong>Solubility Check:</strong><br>
+             If the solution is cloudy after mixing, let it sit in the fridge for 20 minutes. Some hydrophobic peptides (like Adipotide or high-concentration Tirzepatide) require time to dissolve fully. Do not use if particles remain after 1 hour.`
         ]
     },
 
-    // 5. PAYMENT
-    payment: {
-        triggers: ['pay', 'card', 'credit', 'bitcoin', 'crypto', 'payment', 'money', 'cost'],
+    // 5. PRODUCT SPECIFIC KNOWLEDGE (The "Deep Brain")
+    product_glp: {
+        triggers: ['tirzepatide', 'semaglutide', 'retatrutide', 'liraglutide', 'weight', 'fat', 'loss', 'glp'],
         responses: [
-            "We accept all major credit cards (Visa, Mastercard, Amex) via a secure, 256-bit encrypted gateway.",
-            "Institutional clients may request net-30 terms. For individual researchers, we accept Credit Card and Bitcoin.",
-            "All transactions are discreetly billed. We do not store payment data on our servers."
+            `<strong>Metabolic Agent Identified:</strong><br>
+             These peptides (GLP-1/GIP agonists) act on incretin hormones. <br>
+             &bull; <strong>Tirzepatide:</strong> Dual agonist (GIP/GLP-1).<br>
+             &bull; <strong>Retatrutide:</strong> Triple agonist (GCGR/GIP/GLP-1).<br>
+             &bull; <strong>Semaglutide:</strong> Selective GLP-1.<br>
+             <i>Note: These require careful research protocol titration.</i>`,
+             
+            `Research indicates these compounds modulate glucose homeostasis. Store strictly at 4°C after reconstitution.`
         ]
     },
 
-    // 6. COMPLIANCE (Hard Guardrail)
+    product_healing: {
+        triggers: ['bpc', '157', 'tb500', 'tb-500', 'thymosin', 'repair', 'heal', 'injury', 'kpv'],
+        responses: [
+            `<strong>Regenerative Agent Identified:</strong><br>
+             &bull; <strong>BPC-157:</strong> Stable Arginine Salt (Gastric/Systemic).<br>
+             &bull; <strong>TB-500:</strong> Actin sequestering (Cell migration).<br>
+             Standard lab protocol often investigates these two in synergy.`,
+             
+            `BPC-157 is soluble in water/saline. It is highly stable. TB-500 is more sensitive to shaking/agitation.`
+        ]
+    },
+
+    product_nootropic: {
+        triggers: ['semax', 'selank', 'na-semax', 'na-selank', 'brain', 'focus', 'anxiety', 'amidate'],
+        responses: [
+            `<strong>Cognitive Agent Identified:</strong><br>
+             Our "NA-Amidate" versions are modified with an N-Acetyl group and C-Terminal Amide. This enhances metabolic stability and blood-brain barrier permeability compared to the standard acetate forms.`
+        ]
+    },
+
+    product_longevity: {
+        triggers: ['epitalon', 'nad', 'foxo4', 'mots', 'motsc', 'aging', 'telomere'],
+        responses: [
+            `<strong>Longevity Agent Identified:</strong><br>
+             &bull; <strong>Epitalon:</strong> Telomerase activator.<br>
+             &bull; <strong>FOXO4-DRI:</strong> Senolytic (targets senescent cells).<br>
+             &bull; <strong>MOTS-c:</strong> Mitochondrial-Derived Peptide.<br>
+             These are strictly for cellular research.`
+        ]
+    },
+
+    // 6. COMPLIANCE (Guardrail)
     compliance: {
-        triggers: ['human', 'inject', 'dose', 'dosage', 'body', 'muscle', 'fat loss', 'take', 'consumption', 'oral'],
+        triggers: ['human', 'inject', 'dose', 'dosage', 'me', 'my', 'body', 'muscle', 'take', 'consumption', 'oral', 'subq', 'iu'],
         responses: [
-            `<div class="border-l-4 border-red-500 pl-4 py-2 bg-red-50 text-red-900">
-                <strong><i class="fas fa-exclamation-triangle"></i> Compliance Alert</strong><br>
-                I must remind you that all Precision Peptides reagents are for <strong>in-vitro laboratory research only</strong>. 
-                I cannot provide instructions for human administration or therapeutic dosage.
+            `<div class="border-l-4 border-red-500 pl-4 py-2 bg-red-50 text-red-900 text-xs">
+                <strong><i class="fas fa-exclamation-triangle"></i> Compliance Restriction</strong><br>
+                I am a laboratory assistant AI. I cannot provide instructions for <strong>human consumption, injection, or therapeutic dosage</strong>.<br><br>
+                These reagents are for in-vitro / biological test subject research only.
             </div>`
         ]
     },
 
-    // 7. PRODUCT SPECIFICS
-    products: {
-        'tirzepatide': "Tirzepatide is a dual GIP/GLP-1 agonist. We stock it in 5mg, 10mg, and 15mg aliquots.",
-        'semaglutide': "Semaglutide is our most popular GLP-1 analogue. It features a C18 fatty acid chain for extended research half-life.",
-        'bpc': "BPC-157 is available in the stable Arginine Salt form, which is more resistant to pH variations than the Acetate form.",
-        'retatrutide': "Retatrutide is the triple agonist (GCGR/GIP/GLP-1). It is currently the most potent metabolic agent in our catalog.",
-        'tesamorelin': "Tesamorelin is a GHRH analogue. Note that it is highly fragile once reconstituted and should be handled gently."
+    // 7. PAYMENT
+    payment: {
+        triggers: ['pay', 'card', 'credit', 'bitcoin', 'crypto', 'money', 'cost', 'buy'],
+        responses: [
+            "We accept all major credit cards (Visa/Mastercard) and Bitcoin. All transactions are SSL-encrypted and billing is discreet."
+        ]
+    },
+
+    // 8. GREETINGS
+    greetings: {
+        triggers: ['hello', 'hi', 'hey', 'start', 'morning'],
+        responses: [
+            "Greetings. Accessing Precision Peptides Database... Ready.",
+            "Dr. Alara online. How can I assist with your synthesis or logistics today?",
+            "Welcome to the portal. I have full access to our COA and Shipping protocols. Go ahead."
+        ]
     }
 };
 
 const FALLBACKS = [
-    "I am analyzing your query. Could you rephrase that using specific chemical or logistical terminology?",
-    "I do not have a protocol for that specific inquiry. Are you asking about shipping, purity, or a specific compound?",
-    "My database is limited to technical specifications and logistics. Please clarify your request.",
-    "I am unable to parse that input. Would you like to open a ticket with a human specialist?"
+    "I am analyzing your input but cannot match it to a standard protocol. Are you asking about <strong>Reconstitution</strong>, <strong>Storage</strong>, or a specific <strong>Compound</strong>?",
+    "My database covers: Stability, Mixing Ratios, Shipping Logistics, and Purity Data. Please refine your query.",
+    "Query unclear. Please use standard laboratory terminology.",
+    "I cannot process that request. If you need custom synthesis, please contact the lab director directly."
 ];
 
 // --- SYSTEM LOGIC ---
@@ -114,7 +184,6 @@ function initChatSystem() {
     const form = document.getElementById('chat-form');
     if (!form) return;
 
-    // Greeting on load (only once)
     if (!sessionState.hasGreeted) {
         setTimeout(() => {
             addMessageToUI('bot', KNOWLEDGE_BASE.greetings.responses[0]);
@@ -135,17 +204,11 @@ function initChatSystem() {
 }
 
 function processUserMessage(text) {
-    // 1. Add User Message
     addMessageToUI('user', text);
     sessionState.messageCount++;
-
-    // 2. Show Typing
     showTypingIndicator();
 
-    // 3. Think & Respond
     const responseData = analyzeInput(text);
-    
-    // Calculated delay based on response length to feel "human"
     const delay = Math.max(CONFIG.minDelay, (responseData.length * CONFIG.typingSpeed) / 4);
 
     setTimeout(() => {
@@ -157,41 +220,50 @@ function processUserMessage(text) {
 function analyzeInput(input) {
     const lower = input.toLowerCase();
 
-    // 1. PRODUCT SPECIFIC CHECK (Priority)
-    for (const [key, value] of Object.entries(KNOWLEDGE_BASE.products)) {
-        if (lower.includes(key)) {
-            return `<strong>Reagent Identified:</strong><br>${value}<br><br>Would you like to view the COA for this compound?`;
-        }
+    // Priority Check: Compliance
+    if (matchTrigger(lower, KNOWLEDGE_BASE.compliance.triggers)) return getRandom(KNOWLEDGE_BASE.compliance.responses);
+
+    // International Block
+    if (matchTrigger(lower, KNOWLEDGE_BASE.international.triggers)) return getRandom(KNOWLEDGE_BASE.international.responses);
+
+    // Specific Product Knowledge
+    if (matchTrigger(lower, KNOWLEDGE_BASE.product_glp.triggers)) return getRandom(KNOWLEDGE_BASE.product_glp.responses);
+    if (matchTrigger(lower, KNOWLEDGE_BASE.product_healing.triggers)) return getRandom(KNOWLEDGE_BASE.product_healing.responses);
+    if (matchTrigger(lower, KNOWLEDGE_BASE.product_nootropic.triggers)) return getRandom(KNOWLEDGE_BASE.product_nootropic.responses);
+    if (matchTrigger(lower, KNOWLEDGE_BASE.product_longevity.triggers)) return getRandom(KNOWLEDGE_BASE.product_longevity.responses);
+
+    // Protocol Knowledge
+    // Note: We check for "mix" or "liquid" combined with "store" to differentiate states
+    if (matchTrigger(lower, ['mix', 'reconstitut']) && matchTrigger(lower, ['store', 'keep'])) {
+        return getRandom(KNOWLEDGE_BASE.storage_liquid.responses);
     }
 
-    // 2. CATEGORY SCANNING
-    // We shuffle the response array to ensure variety
-    if (matchTrigger(lower, KNOWLEDGE_BASE.compliance.triggers)) return getRandom(KNOWLEDGE_BASE.compliance.responses);
+    if (matchTrigger(lower, KNOWLEDGE_BASE.reconstitution.triggers)) return getRandom(KNOWLEDGE_BASE.reconstitution.responses);
+    if (matchTrigger(lower, KNOWLEDGE_BASE.storage_liquid.triggers)) return getRandom(KNOWLEDGE_BASE.storage_liquid.responses);
+    if (matchTrigger(lower, KNOWLEDGE_BASE.storage_powder.triggers)) return getRandom(KNOWLEDGE_BASE.storage_powder.responses);
+    if (matchTrigger(lower, KNOWLEDGE_BASE.troubleshooting.triggers)) return getRandom(KNOWLEDGE_BASE.troubleshooting.responses);
     if (matchTrigger(lower, KNOWLEDGE_BASE.shipping.triggers)) return getRandom(KNOWLEDGE_BASE.shipping.responses);
-    if (matchTrigger(lower, KNOWLEDGE_BASE.storage.triggers)) return getRandom(KNOWLEDGE_BASE.storage.responses);
-    if (matchTrigger(lower, KNOWLEDGE_BASE.purity.triggers)) return getRandom(KNOWLEDGE_BASE.purity.responses);
     if (matchTrigger(lower, KNOWLEDGE_BASE.payment.triggers)) return getRandom(KNOWLEDGE_BASE.payment.responses);
+    
+    // Greeting Check
     if (matchTrigger(lower, KNOWLEDGE_BASE.greetings.triggers)) {
-        if (sessionState.messageCount > 1) return "We are already in an active session. Please state your inquiry.";
+        if (sessionState.messageCount > 1) return "System is already active. Please state your query.";
         return getRandom(KNOWLEDGE_BASE.greetings.responses);
     }
 
-    // 3. FALLBACK
+    // Fallback
     return getRandom(FALLBACKS);
 }
 
-// Helper: Check if input contains any trigger word
 function matchTrigger(input, triggers) {
     return triggers.some(trigger => input.includes(trigger));
 }
 
-// Helper: Get random item from array
 function getRandom(array) {
     return array[Math.floor(Math.random() * array.length)];
 }
 
-// --- UI RENDERING (Identical to previous, ensures visual consistency) ---
-
+// --- UI RENDER FUNCTIONS ---
 function addMessageToUI(sender, htmlContent) {
     const container = document.getElementById('chat-container');
     const div = document.createElement('div');
@@ -251,7 +323,6 @@ function scrollToBottom() {
     container.scrollTop = container.scrollHeight;
 }
 
-// Global scope for Quick Reply buttons in the HTML
 window.sendQuickReply = function(text) {
     const input = document.getElementById('user-input');
     input.value = text;
