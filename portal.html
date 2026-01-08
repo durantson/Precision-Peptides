@@ -3,7 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Researcher Dashboard | Precision Labs</title>
+    <title>Researcher Intelligence Portal | Precision Labs</title>
+    
+    <meta name="description" content="Precision Labs Secure Research Terminal. Access laboratory protocols, clinical study libraries, and reconstitution calculators.">
+    <meta name="author" content="Precision Labs">
+    <meta name="theme-color" content="#0f172a"> 
+
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚛️</text></svg>">
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
@@ -16,22 +23,19 @@
 <body class="bg-slate-50 font-sans antialiased text-slate-900 min-h-screen">
 
     <script>
-        // Security Guard: Check for Authorization
-        if (localStorage.getItem('portalAuthorized') !== 'true') {
-            window.location.href = 'login.html';
-        }
+        if (localStorage.getItem('portalAuthorized') !== 'true') { window.location.href = 'login.html'; }
     </script>
 
     <nav class="bg-white border-b border-slate-200 h-16 flex items-center px-6 justify-between sticky top-0 z-50">
-        <div class="flex items-center gap-2">
+        <a href="index.html" class="flex items-center gap-2 hover:opacity-80 transition-opacity">
             <div class="w-8 h-8 bg-blue-600 rounded flex items-center justify-center text-white">
-                <i class="fas fa-database text-xs"></i>
+                <i class="fas fa-atom text-xs"></i>
             </div>
-            <span class="font-bold text-lg tracking-tighter uppercase italic">Precision<span class="text-blue-600">Intelligence</span></span>
-        </div>
+            <span class="font-bold text-lg tracking-tighter uppercase italic">Precision<span class="text-blue-600">Labs</span></span>
+        </a>
         <div class="flex items-center gap-4">
             <span class="hidden md:block text-[9px] font-black uppercase tracking-widest text-emerald-500 bg-emerald-50 px-3 py-1 rounded-full">Secure Session Active</span>
-            <a href="catalog.html" class="text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-blue-600">Exit Terminal</a>
+            <button onclick="logout()" class="text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-red-500 transition-colors">Sign Out</button>
         </div>
     </nav>
 
@@ -59,7 +63,7 @@
             <div class="bg-slate-900 rounded-2xl p-4 text-white">
                 <p class="text-[9px] font-black uppercase tracking-[0.2em] text-blue-400 mb-2">Support Terminal</p>
                 <p class="text-[11px] leading-relaxed text-slate-300 mb-4">Direct access to lab staff for technical inquiries.</p>
-                <a href="contact.html" class="block w-full text-center bg-white text-slate-900 py-2 rounded-lg text-[9px] font-black uppercase tracking-widest hover:bg-blue-600 hover:text-white transition-all">Open Ticket</a>
+                <a href="support.html" class="block w-full text-center bg-white text-slate-900 py-2 rounded-lg text-[9px] font-black uppercase tracking-widest hover:bg-blue-600 hover:text-white transition-all">Open Ticket</a>
             </div>
         </aside>
 
@@ -88,7 +92,7 @@
             <section id="module-studies" class="module-section hidden space-y-8">
                 <header>
                     <h1 class="text-3xl font-black italic uppercase tracking-tighter">Clinical Reference Library</h1>
-                    <p class="text-slate-500 text-sm italic">Verified research papers and trials from PubMed and NEJM.</p>
+                    <p class="text-slate-500 text-sm italic">Verified research papers and trials from PubMed and NIH Database.</p>
                 </header>
 
                 <div class="bg-white border border-slate-200 rounded-3xl overflow-hidden shadow-sm">
@@ -101,7 +105,8 @@
                                     <th class="p-4 text-[9px] font-black uppercase tracking-widest text-slate-400">Database Link</th>
                                 </tr>
                             </thead>
-                            <tbody class="text-[11px] font-medium" id="studies-table-body"></tbody>
+                            <tbody class="text-[11px] font-medium" id="studies-table-body">
+                                </tbody>
                         </table>
                     </div>
                 </div>
@@ -123,11 +128,11 @@
                             <label class="text-[9px] font-black uppercase tracking-widest text-blue-400 block mb-2">Water Added (mL)</label>
                             <input type="number" id="calc-ml" value="2" class="w-full bg-white/10 border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-blue-500">
                         </div>
-                        <button onclick="runCalc()" class="w-full bg-blue-600 py-4 rounded-xl font-black uppercase tracking-widest text-[10px]">Calculate Concentration</button>
+                        <button onclick="runCalc()" class="w-full bg-blue-600 py-4 rounded-xl font-black uppercase tracking-widest text-[10px] hover:bg-white hover:text-slate-900 transition-all">Calculate Concentration</button>
                         <div id="calc-result" class="pt-6 border-t border-white/10 text-center hidden">
                             <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Concentration</p>
                             <p id="result-text" class="text-3xl font-black italic text-white leading-none"></p>
-                            <p class="text-[10px] text-slate-500 mt-2">10 Units on U-100 syringe = <span id="result-units" class="text-blue-400"></span></p>
+                            <p class="text-[10px] text-slate-500 mt-2">10 Units on U-100 syringe = <span id="result-units" class="text-blue-400 font-bold"></span></p>
                         </div>
                     </div>
                 </div>
@@ -152,6 +157,12 @@
     </div>
 
     <script>
+        // Security logic
+        function logout() {
+            localStorage.removeItem('portalAuthorized');
+            window.location.href = 'index.html';
+        }
+
         // Disclaimer Logic
         if (sessionStorage.getItem('disclaimerAccepted') === 'true') {
             document.getElementById('disclaimerModal').classList.add('hidden');
@@ -161,34 +172,14 @@
             document.getElementById('disclaimerModal').classList.add('hidden');
         }
 
+        // Library Database
         const studyData = [
             { name: "Tirzepatide", focus: "SURMOUNT-1 Phase 3 Clinical Trial", link: "https://pubmed.ncbi.nlm.nih.gov/35658024/" },
             { name: "Retatrutide", focus: "Triple-Hormone-Receptor Agonist for Obesity", link: "https://www.nejm.org/doi/full/10.1056/NEJMoa2301972" },
             { name: "Semaglutide", focus: "Glucagon-Like Peptide-1 (STEP trials)", link: "https://pubmed.ncbi.nlm.nih.gov/33567185/" },
-            { name: "AOD-9604", focus: "Lipolytic effect of hGH 177-191 fragment", link: "https://pubmed.ncbi.nlm.nih.gov/11713213/" },
-            { name: "Cardarine", focus: "PPAR-delta agonist and oxidative capacity", link: "https://pubmed.ncbi.nlm.nih.gov/12604604/" },
-            { name: "Tesamorelin", focus: "GHRH analogue for visceral fat reduction", link: "https://pubmed.ncbi.nlm.nih.gov/17166885/" },
             { name: "BPC-157", focus: "Gastric peptide and tendon-to-bone healing", link: "https://pubmed.ncbi.nlm.nih.gov/21030671/" },
             { name: "TB-500", focus: "Thymosin Beta-4 and dermal wound healing", link: "https://pubmed.ncbi.nlm.nih.gov/20536454/" },
-            { name: "GHK-Cu", focus: "Copper-peptide and collagen synthesis", link: "https://pubmed.ncbi.nlm.nih.gov/26318444/" },
-            { name: "IGF-1 LR3", focus: "Long R3 IGF-1 protein synthesis", link: "https://pubmed.ncbi.nlm.nih.gov/2164476/" },
-            { name: "Semax", focus: "BDNF expression and neuroprotection", link: "https://pubmed.ncbi.nlm.nih.gov/21323136/" },
-            { name: "NA-Semax Amidate", focus: "Cognitive effects of modified ACTH fragments", link: "https://pubmed.ncbi.nlm.nih.gov/21323136/" },
-            { name: "Selank", focus: "Anxiolytic and Th1/Th2 cytokine balance", link: "https://pubmed.ncbi.nlm.nih.gov/19093355/" },
-            { name: "NA-Selank Amidate", focus: "N-acetylated Tuftsin analogues", link: "https://pubmed.ncbi.nlm.nih.gov/19093355/" },
-            { name: "NAD+", focus: "NAD+ and sirtuin-mediated metabolic control", link: "https://pubmed.ncbi.nlm.nih.gov/29466644/" },
-            { name: "Epitalon", focus: "Telomerase activation and life extension", link: "https://pubmed.ncbi.nlm.nih.gov/12707640/" },
-            { name: "MOTS-c", focus: "Mitochondrial-derived peptide and metabolism", link: "https://pubmed.ncbi.nlm.nih.gov/25738892/" },
-            { name: "FOXO4-DRI", focus: "Targeting senescent cells via p53-FOXO4", link: "https://pubmed.ncbi.nlm.nih.gov/28334579/" },
-            { name: "LL-37", focus: "Antimicrobial peptide and host defense", link: "https://pubmed.ncbi.nlm.nih.gov/12595604/" },
-            { name: "Thymosin Alpha-1", focus: "T-cell regulation and immune modulation", link: "https://pubmed.ncbi.nlm.nih.gov/10464919/" },
-            { name: "DSIP", focus: "Delta sleep-inducing peptide and circadian rhythm", link: "https://pubmed.ncbi.nlm.nih.gov/6140134/" },
-            { name: "Melanotan 2", focus: "Alpha-MSH analog for melanogenesis", link: "https://pubmed.ncbi.nlm.nih.gov/9683056/" },
-            { name: "CJC-1295", focus: "Half-life of Growth Hormone-Releasing Factor", link: "https://pubmed.ncbi.nlm.nih.gov/16352683/" },
-            { name: "Ipamorelin", focus: "Selectivity of GH-releasing secretagogue", link: "https://pubmed.ncbi.nlm.nih.gov/9811365/" },
-            { name: "KPV", focus: "Anti-inflammatory tripeptide (Alpha-MSH 11-13)", link: "https://pubmed.ncbi.nlm.nih.gov/12850389/" },
-            { name: "AICAR", focus: "AMPK activation and exercise mimetics", link: "https://pubmed.ncbi.nlm.nih.gov/11485901/" },
-            { name: "PT-141", focus: "Melanocortin agonist and sexual dysfunction", link: "https://pubmed.ncbi.nlm.nih.gov/12851303/" }
+            { name: "GHK-Cu", focus: "Copper-peptide and collagen synthesis", link: "https://pubmed.ncbi.nlm.nih.gov/26318444/" }
         ];
 
         function populateStudies() {
@@ -218,8 +209,8 @@
         }
 
         function runCalc() {
-            const mg = document.getElementById('calc-mg').value;
-            const ml = document.getElementById('calc-ml').value;
+            const mg = parseFloat(document.getElementById('calc-mg').value);
+            const ml = parseFloat(document.getElementById('calc-ml').value);
             const resText = document.getElementById('result-text');
             const resUnits = document.getElementById('result-units');
             const resDiv = document.getElementById('calc-result');
