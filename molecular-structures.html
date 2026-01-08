@@ -3,14 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Molecular Intelligence | Precision Labs</title>
+    <title>Global Molecular Database | Precision Intelligence</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <script src="https://3Dmol.org/build/3Dmol-min.js"></script>
     <style>
-        .mol-container { width: 100%; height: 300px; position: relative; background: radial-gradient(circle, #1e293b 0%, #0f172a 100%); }
-        .sidebar-item.active { background-color: #f1f5f9; color: #2563eb; border-right: 4px solid #2563eb; }
-        * { -webkit-tap-highlight-color: transparent; }
+        .mol-container { width: 100%; height: 400px; position: relative; background: #0f172a; border-radius: 2rem; }
+        .glass-card { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(10px); border: 1px solid rgba(226, 232, 240, 1); }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        @keyframes pulse-blue { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+        .loading-pulse { animation: pulse-blue 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
     </style>
 </head>
 <body class="bg-slate-50 font-sans antialiased text-slate-900 min-h-screen">
@@ -21,83 +23,128 @@
 
     <nav class="bg-white border-b border-slate-200 h-16 flex items-center px-6 justify-between sticky top-0 z-50">
         <div class="flex items-center gap-2">
-            <div class="w-8 h-8 bg-blue-600 rounded flex items-center justify-center text-white"><i class="fas fa-cube text-xs"></i></div>
+            <div class="w-8 h-8 bg-blue-600 rounded flex items-center justify-center text-white"><i class="fas fa-atom text-xs"></i></div>
             <span class="font-bold text-lg tracking-tighter uppercase italic">Precision<span class="text-blue-600">Intelligence</span></span>
         </div>
-        <a href="portal.html" class="text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-blue-600">Back to Dashboard</a>
+        <a href="portal.html" class="text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-blue-600 transition-colors">Back to Terminal</a>
     </nav>
 
-    <div class="flex flex-col md:flex-row min-h-[calc(100vh-64px)]">
-        <main class="flex-1 p-6 md:p-12 overflow-y-auto">
-            <header class="mb-12">
-                <h2 class="text-[10px] font-black uppercase tracking-[0.4em] text-blue-600 mb-2">3D Visualization</h2>
-                <h1 class="text-4xl font-black italic uppercase tracking-tighter mb-4">Molecular Database</h1>
-                <p class="text-slate-500 text-sm max-w-2xl">Interactive 3D spatial models. Drag to rotate, scroll to zoom. Data sourced via PubChem API.</p>
-            </header>
+    <header class="bg-slate-900 py-16 px-6 relative overflow-hidden">
+        <div class="max-w-4xl mx-auto relative z-10 text-center">
+            <h2 class="text-[10px] font-black uppercase tracking-[0.4em] text-blue-500 mb-4">NIH-Linked Discovery Engine</h2>
+            <h1 class="text-4xl md:text-6xl font-black text-white italic uppercase tracking-tighter mb-8">Global Peptide Database</h1>
+            
+            <div class="relative max-w-2xl mx-auto">
+                <input type="text" id="globalSearch" placeholder="Search by name (e.g. Oxytocin, Ghrelin, GHK-Cu)..." 
+                class="w-full bg-white/10 border border-white/20 rounded-2xl py-5 px-8 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:bg-white/20 transition-all text-lg">
+                <button onclick="searchPubChem()" class="absolute right-3 top-1/2 -translate-y-1/2 bg-blue-600 text-white p-3 rounded-xl hover:bg-white hover:text-blue-600 transition-all">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+            <p class="mt-6 text-slate-400 text-xs font-bold uppercase tracking-widest">Accessing 100M+ Compounds via PubChem REST API</p>
+        </div>
+        <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(#2563eb 1px, transparent 1px); background-size: 30px 30px;"></div>
+    </header>
 
-            <div id="molecule-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+    <main class="max-w-7xl mx-auto px-6 py-12">
+        
+        <div id="search-results-area" class="mb-20 hidden">
+            <h3 class="text-[10px] font-black uppercase tracking-widest text-blue-600 mb-8 border-b border-blue-100 pb-4">Discovery Result</h3>
+            <div id="search-card-container"></div>
+        </div>
+
+        <div class="mb-12">
+            <h3 class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-8 border-b border-slate-200 pb-4">Featured Research Compounds</h3>
+            <div id="featured-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 </div>
-        </main>
-    </div>
+        </div>
+    </main>
 
     <script>
-        // Data for the 3D Viewer (Using PubChem CIDs for accuracy)
-        const molecules = [
-            { name: "Tirzepatide", cid: "16235086", formula: "C225H348N48O68" },
-            { name: "Semaglutide", cid: "56843331", formula: "C187H291N45O59" },
-            { name: "BPC-157", cid: "10182582", formula: "C62H98N16O22" },
-            { name: "NAD+", cid: "5892", formula: "C21H27N7O14P2" },
-            { name: "Cardarine", cid: "9831648", formula: "C21H18F3NO3S2" },
-            { name: "Melanotan 2", cid: "92432", formula: "C50H69N15O9" },
-            { name: "AICAR", cid: "65110", formula: "C9H14N4O5" },
-            { name: "PT-141", cid: "10051280", formula: "C50H68N14O10" },
-            { name: "DSIP", cid: "439294", formula: "C35H48N10O15" }
+        // Featured list (your core products + expansion)
+        const featured = [
+            { name: "Tirzepatide", cid: "16235086" },
+            { name: "Semaglutide", cid: "56843331" },
+            { name: "BPC-157", cid: "10182582" },
+            { name: "Oxytocin", cid: "439302" },
+            { name: "Vasopressin", cid: "108162" },
+            { name: "Gonadorelin", cid: "439155" },
+            { name: "Sermorelin", cid: "16133171" },
+            { name: "Ipamorelin", cid: "9811365" },
+            { name: "Hexarelin", cid: "6918296" }
         ];
 
-        function renderMolecules() {
-            const grid = document.getElementById('molecule-grid');
-            grid.innerHTML = molecules.map((m, idx) => `
-                <div class="bg-white border border-slate-200 rounded-[2.5rem] overflow-hidden shadow-xl shadow-slate-200/50 group transition-all hover:border-blue-600">
-                    <div id="container-${idx}" class="mol-container" data-cid="${m.cid}"></div>
-                    
-                    <div class="p-8">
-                        <div class="flex justify-between items-start mb-4">
-                            <div>
-                                <h3 class="text-xl font-black italic uppercase tracking-tighter text-slate-900">${m.name}</h3>
-                                <p class="text-[10px] font-bold text-blue-600 uppercase tracking-widest">${m.formula}</p>
-                            </div>
-                            <div class="bg-slate-50 px-3 py-1 rounded-full text-[9px] font-bold text-slate-400">CID: ${m.cid}</div>
+        // RENDER CARDS
+        function createCard(m, idPrefix) {
+            return `
+                <div class="glass-card rounded-[2.5rem] overflow-hidden shadow-sm hover:shadow-2xl transition-all">
+                    <div id="${idPrefix}-${m.cid}" class="mol-container">
+                        <div class="absolute inset-0 flex flex-col items-center justify-center">
+                            <button onclick="initViewer('${idPrefix}-${m.cid}', '${m.cid}')" class="bg-blue-600 text-white px-8 py-4 rounded-2xl font-black uppercase tracking-widest text-[10px] shadow-xl shadow-blue-600/30 hover:scale-105 transition-transform">
+                                Initialize 3D Structure
+                            </button>
                         </div>
-                        <button onclick="initViewer('container-${idx}', '${m.cid}')" class="w-full bg-slate-900 text-white py-3 rounded-xl font-black uppercase tracking-widest text-[9px] hover:bg-blue-600 transition-all">
-                            Initialize 3D View
-                        </button>
+                    </div>
+                    <div class="p-8">
+                        <h4 class="text-xl font-black italic uppercase tracking-tighter mb-2">${m.name}</h4>
+                        <div class="flex justify-between items-center text-[10px] font-bold uppercase tracking-widest text-slate-400">
+                            <span>NIH Reference</span>
+                            <span class="text-blue-600">CID: ${m.cid}</span>
+                        </div>
                     </div>
                 </div>
-            `).join('');
+            `;
         }
 
+        // INIT 3D VIEWER
         function initViewer(id, cid) {
-            const element = document.getElementById(id);
-            element.innerHTML = ""; // Clear button
+            const el = document.getElementById(id);
+            el.innerHTML = `<div class="absolute inset-0 flex items-center justify-center text-blue-500 font-black text-[10px] uppercase tracking-widest loading-pulse">Fetching SDF Data...</div>`;
             
             const viewer = $3Dmol.createViewer(id, { backgroundColor: 'transparent' });
-            
-            // Pull 3D data from PubChem
             fetch(`https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/${cid}/record/SDF/?record_type=3d`)
-                .then(response => response.text())
+                .then(r => r.text())
                 .then(data => {
+                    el.querySelector('.loading-pulse').remove();
                     viewer.addModel(data, "sdf");
-                    viewer.setStyle({}, { stick: { radius: 0.15, colorscheme: 'Jmol' }, sphere: { scale: 0.25 } });
+                    viewer.setStyle({}, { stick: {radius: 0.15}, sphere: {scale: 0.25} });
                     viewer.zoomTo();
                     viewer.render();
                     viewer.animate({loop: "backAndForth", step: 0.5});
                 })
-                .catch(err => {
-                    element.innerHTML = "<div class='text-white text-xs p-10'>3D Data currently unavailable for this sequence.</div>";
+                .catch(() => {
+                    el.innerHTML = `<div class="p-10 text-center text-slate-500 text-[10px] font-bold uppercase">3D Render unavailable for this specific sequence.</div>`;
                 });
         }
 
-        renderMolecules();
+        // GLOBAL PUBCHEM SEARCH
+        async function searchPubChem() {
+            const query = document.getElementById('globalSearch').value;
+            if(!query) return;
+
+            const resultsArea = document.getElementById('search-results-area');
+            const container = document.getElementById('search-card-container');
+            
+            resultsArea.classList.remove('hidden');
+            container.innerHTML = `<div class="text-slate-400 font-bold uppercase text-[10px] tracking-widest animate-pulse">Querying NIH Database...</div>`;
+
+            try {
+                // Get CID from Name
+                const res = await fetch(`https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/name/${query}/cids/JSON`);
+                const data = await res.json();
+                const cid = data.IdentifierList.CID[0];
+
+                container.innerHTML = createCard({ name: query, cid: cid }, 'search');
+            } catch (e) {
+                container.innerHTML = `<div class="text-red-500 font-bold uppercase text-[10px] tracking-widest">Compound not found in active research registry.</div>`;
+            }
+        }
+
+        // Initial Load
+        document.getElementById('featured-grid').innerHTML = featured.map(m => createCard(m, 'feat')).join('');
+
+        // Enter Key Search
+        document.getElementById('globalSearch').addEventListener('keypress', e => { if(e.key === 'Enter') searchPubChem(); });
     </script>
 </body>
 </html>
