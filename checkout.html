@@ -3,166 +3,157 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Secure Checkout | Precision Peptides</title>
+    <title>Research Manifest | Precision Labs</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        /* Smooth fade for the order summary */
-        .summary-row { animation: fadeIn 0.5s ease-out; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+        .manifest-card { background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%); }
+        * { -webkit-tap-highlight-color: transparent; }
     </style>
 </head>
-<body class="bg-white font-sans antialiased text-slate-900">
+<body class="bg-slate-50 font-sans antialiased text-slate-900 min-h-screen flex flex-col">
 
-    <div class="min-h-screen grid grid-cols-1 lg:grid-cols-2">
+    <nav class="bg-white border-b border-slate-200 h-16 flex items-center px-6 justify-between sticky top-0 z-50">
+        <a href="index.html" class="flex items-center gap-2 hover:opacity-80 transition-opacity">
+            <div class="w-8 h-8 bg-blue-600 rounded flex items-center justify-center text-white">
+                <i class="fas fa-atom text-xs"></i>
+            </div>
+            <span class="font-bold text-lg tracking-tighter uppercase italic text-slate-900">
+                Precision<span class="text-blue-600">Labs</span>
+            </span>
+        </a>
+        <a href="catalog.html" class="text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-blue-600 transition-colors">Back to Catalog</a>
+    </nav>
+
+    <main class="flex-1 max-w-4xl mx-auto w-full px-4 md:px-6 py-12">
         
-        <div class="p-8 lg:p-16 lg:pr-24 order-2 lg:order-1">
+        <div class="text-center mb-12">
+            <h2 class="text-[10px] font-black uppercase tracking-[0.4em] text-blue-600 mb-4">Procurement</h2>
+            <h1 class="text-4xl md:text-5xl font-black text-slate-900 italic uppercase tracking-tighter mb-4">Research Manifest</h1>
+            <p class="text-slate-500 text-sm">Review your selected reagents and submit for institutional clearance.</p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
             
-            <a href="index.html" class="flex items-center gap-2 hover:opacity-75 transition-opacity">
-    <div class="w-8 h-8 bg-blue-600 rounded flex items-center justify-center text-white"><i class="fas fa-atom text-xs"></i></div>
-    <span class="font-bold text-lg tracking-tighter uppercase italic text-slate-900">Precision<span class="text-blue-600">Labs</span></span>
-</a>
-
-            <div class="flex items-center gap-2 text-xs font-bold text-slate-400 mb-8">
-                <a href="catalog.html" class="hover:text-blue-600">Catalog</a>
-                <i class="fas fa-chevron-right text-[10px]"></i>
-                <span class="text-slate-900">Checkout</span>
-            </div>
-
-            <form id="checkoutForm" onsubmit="processOrder(event)" class="space-y-8">
+            <div class="lg:col-span-7 space-y-4">
+                <div id="manifest-items" class="space-y-4">
+                    </div>
                 
-                <div>
-                    <h2 class="text-lg font-bold text-slate-900 mb-4">Contact Information</h2>
-                    <input type="email" required placeholder="Institutional Email" class="w-full border border-slate-300 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all">
+                <div id="empty-state" class="hidden text-center py-20 bg-white rounded-[2.5rem] border-2 border-dashed border-slate-200">
+                    <i class="fas fa-folder-open text-slate-200 text-5xl mb-4"></i>
+                    <p class="text-slate-400 font-bold uppercase text-xs tracking-widest">No reagents selected</p>
+                    <a href="catalog.html" class="text-blue-600 font-black text-[10px] uppercase mt-4 inline-block tracking-widest hover:underline">Return to Catalog</a>
                 </div>
-
-                <div>
-                    <h2 class="text-lg font-bold text-slate-900 mb-4">Shipping Address</h2>
-                    <div class="grid grid-cols-2 gap-4">
-                        <input type="text" required placeholder="First Name" class="border border-slate-300 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-600">
-                        <input type="text" required placeholder="Last Name" class="border border-slate-300 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-600">
-                        <input type="text" required placeholder="Laboratory / Company" class="col-span-2 border border-slate-300 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-600">
-                        <input type="text" required placeholder="Street Address" class="col-span-2 border border-slate-300 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-600">
-                        <input type="text" required placeholder="City" class="border border-slate-300 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-600">
-                        <input type="text" required placeholder="Zip / Postal Code" class="border border-slate-300 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-600">
-                    </div>
-                </div>
-
-                <div>
-                    <h2 class="text-lg font-bold text-slate-900 mb-4">Payment Method</h2>
-                    <div class="bg-slate-50 border border-slate-200 rounded-xl p-4">
-                        <div class="flex items-center gap-3 mb-4 border-b border-slate-200 pb-4">
-                            <i class="fas fa-credit-card text-blue-600"></i>
-                            <span class="text-sm font-bold text-slate-700">Credit Card (Encrypted)</span>
-                        </div>
-                        <input type="text" required placeholder="Card Number" class="w-full bg-white border border-slate-300 rounded-lg px-4 py-3 text-sm mb-3">
-                        <div class="grid grid-cols-2 gap-3">
-                            <input type="text" required placeholder="MM / YY" class="bg-white border border-slate-300 rounded-lg px-4 py-3 text-sm">
-                            <input type="text" required placeholder="CVC" class="bg-white border border-slate-300 rounded-lg px-4 py-3 text-sm">
-                        </div>
-                    </div>
-                    <div class="mt-4 flex items-center gap-2 text-[10px] text-slate-400 font-bold uppercase tracking-wider">
-                        <i class="fas fa-lock"></i> 256-Bit SSL Secured
-                    </div>
-                </div>
-
-                <button type="submit" id="payBtn" class="w-full bg-slate-900 text-white py-5 rounded-xl font-bold uppercase tracking-widest text-xs hover:bg-blue-600 transition-all shadow-xl">
-                    Pay Now
-                </button>
-
-            </form>
-        </div>
-
-        <div class="bg-slate-50 border-l border-slate-200 p-8 lg:p-16 order-1 lg:order-2 h-full">
-            <div id="emptyCartMsg" class="hidden text-center mt-20">
-                <i class="fas fa-shopping-basket text-4xl text-slate-300 mb-4"></i>
-                <p class="text-slate-500 font-bold">Your manifest is empty.</p>
-                <a href="catalog.html" class="text-blue-600 text-sm font-bold mt-2 block">Return to Catalog</a>
             </div>
 
-            <div id="cartContent">
-                <div id="cartItems" class="space-y-6 mb-8 border-b border-slate-200 pb-8">
+            <div class="lg:col-span-5">
+                <div class="bg-white rounded-[2.5rem] border border-slate-200 p-8 sticky top-24 shadow-xl shadow-slate-200/50">
+                    <h3 class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-6 border-b border-slate-50 pb-4">Manifest Summary</h3>
+                    
+                    <div class="space-y-4 mb-8">
+                        <div class="flex justify-between text-sm">
+                            <span class="text-slate-400 font-medium">Subtotal</span>
+                            <span id="subtotal" class="font-bold text-slate-900">$0.00</span>
+                        </div>
+                        <div class="flex justify-between text-sm">
+                            <span class="text-slate-400 font-medium">Research Shipping</span>
+                            <span class="font-bold text-emerald-600 uppercase text-[10px]">Complimentary</span>
+                        </div>
+                        <div class="pt-4 border-t border-slate-100 flex justify-between items-baseline">
+                            <span class="text-xs font-black uppercase tracking-widest text-slate-900">Total Est.</span>
+                            <span id="total" class="text-3xl font-black text-blue-600 italic tracking-tighter">$0.00</span>
+                        </div>
                     </div>
 
-                <div class="space-y-3 text-sm text-slate-500 font-medium">
-                    <div class="flex justify-between">
-                        <span>Subtotal</span>
-                        <span id="subtotalDisplay" class="font-bold text-slate-900">$0.00</span>
-                    </div>
-                    <div class="flex justify-between">
-                        <span>Shipping (Priority Cold Chain)</span>
-                        <span class="font-bold text-slate-900">$15.00</span>
-                    </div>
-                    <div class="flex justify-between items-center pt-4 border-t border-slate-200 mt-4">
-                        <span class="text-lg font-bold text-slate-900">Total</span>
-                        <span id="totalDisplay" class="text-2xl font-black text-slate-900">$0.00</span>
-                    </div>
+                    <form action="https://formsubmit.co/precisionpeptidelabs@gmail.com" method="POST" class="space-y-4">
+                        <input type="hidden" name="_next" value="https://durantson.github.io/Precision-Peptides/thank-you.html">
+                        <input type="hidden" name="_captcha" value="false">
+                        <input type="hidden" name="_subject" value="New Research Manifest Submitted">
+                        
+                        <input type="hidden" id="manifest-data-field" name="Manifest_Details" value="">
+
+                        <input type="text" name="name" required placeholder="Full Name" class="w-full bg-slate-50 border border-slate-100 rounded-xl py-3 px-4 text-xs focus:outline-none focus:border-blue-600">
+                        <input type="email" name="email" required placeholder="Institutional Email" class="w-full bg-slate-50 border border-slate-100 rounded-xl py-3 px-4 text-xs focus:outline-none focus:border-blue-600">
+                        <textarea name="shipping" required placeholder="Shipping Address / Lab Location" rows="2" class="w-full bg-slate-50 border border-slate-100 rounded-xl py-3 px-4 text-xs focus:outline-none focus:border-blue-600 resize-none"></textarea>
+
+                        <button type="submit" id="submit-btn" class="w-full bg-blue-600 text-white py-4 rounded-xl font-black uppercase tracking-widest text-[10px] hover:bg-slate-900 transition-all shadow-lg shadow-blue-600/20">
+                            Submit Manifest
+                        </button>
+                    </form>
+                    
+                    <button onclick="clearManifest()" class="w-full mt-4 text-[9px] font-black text-slate-300 uppercase tracking-widest hover:text-red-500 transition-colors">
+                        Clear Manifest
+                    </button>
                 </div>
             </div>
         </div>
-
-    </div>
+    </main>
 
     <script>
-        const cart = JSON.parse(localStorage.getItem('precisionCart')) || [];
-        const shippingCost = 15.00;
+        let cart = JSON.parse(localStorage.getItem('precisionCart')) || [];
+        const itemsContainer = document.getElementById('manifest-items');
+        const emptyState = document.getElementById('empty-state');
+        const dataField = document.getElementById('manifest-data-field');
 
-        window.onload = function() {
+        function renderManifest() {
             if (cart.length === 0) {
-                document.getElementById('cartContent').style.display = 'none';
-                document.getElementById('emptyCartMsg').classList.remove('hidden');
-                document.getElementById('payBtn').disabled = true;
-                document.getElementById('payBtn').classList.add('opacity-50', 'cursor-not-allowed');
+                itemsContainer.innerHTML = '';
+                emptyState.classList.remove('hidden');
+                document.getElementById('submit-btn').disabled = true;
+                document.getElementById('submit-btn').classList.add('opacity-50', 'cursor-not-allowed');
                 return;
             }
 
-            const container = document.getElementById('cartItems');
             let subtotal = 0;
+            let manifestText = ""; // To send in the email
 
-            cart.forEach(item => {
+            itemsContainer.innerHTML = cart.map((item, index) => {
                 const itemTotal = item.price * item.qty;
                 subtotal += itemTotal;
-
-                const div = document.createElement('div');
-                div.className = 'flex justify-between items-center summary-row';
-                div.innerHTML = `
-                    <div class="flex items-center gap-4">
-                        <div class="relative">
-                            <div class="w-16 h-16 bg-white border border-slate-200 rounded-lg flex items-center justify-center">
-                                <i class="fas fa-vial text-slate-300"></i>
+                manifestText += `${item.name} | Qty: ${item.qty} | $${itemTotal}\n`;
+                
+                return `
+                    <div class="manifest-card border border-slate-200 rounded-3xl p-5 flex justify-between items-center group">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 bg-white rounded-xl border border-slate-100 flex items-center justify-center text-blue-600">
+                                <i class="fas fa-vial"></i>
                             </div>
-                            <span class="absolute -top-2 -right-2 bg-slate-500 text-white text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center">${item.qty}</span>
+                            <div>
+                                <h4 class="font-black text-slate-900 uppercase italic text-sm tracking-tight">${item.name}</h4>
+                                <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest">Quantity: ${item.qty}</p>
+                            </div>
                         </div>
-                        <div>
-                            <h4 class="font-bold text-slate-900 text-sm">${item.name}</h4>
-                            <p class="text-xs text-slate-400">Research Reagent</p>
+                        <div class="text-right">
+                            <div class="font-black text-slate-900">$${itemTotal.toFixed(2)}</div>
+                            <button onclick="removeItem(${index})" class="text-[9px] font-bold text-slate-300 uppercase hover:text-red-500 transition-colors">Remove</button>
                         </div>
                     </div>
-                    <div class="font-bold text-slate-700">$${itemTotal.toFixed(2)}</div>
                 `;
-                container.appendChild(div);
-            });
+            }).join('');
 
-            document.getElementById('subtotalDisplay').innerText = `$${subtotal.toFixed(2)}`;
-            document.getElementById('totalDisplay').innerText = `$${(subtotal + shippingCost).toFixed(2)}`;
-        };
-
-        function processOrder(e) {
-            e.preventDefault();
-            const btn = document.getElementById('payBtn');
+            document.getElementById('subtotal').innerText = `$${subtotal.toFixed(2)}`;
+            document.getElementById('total').innerText = `$${subtotal.toFixed(2)}`;
             
-            // Loading State
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
-            btn.disabled = true;
-
-            // Simulate Processing Delay
-            setTimeout(() => {
-                // Clear Cart
-                localStorage.removeItem('precisionCart');
-                // Redirect to Success
-                window.location.href = 'order-success.html';
-            }, 2000);
+            // Put the manifest list into the hidden field so it emails to you
+            dataField.value = manifestText;
         }
+
+        function removeItem(index) {
+            cart.splice(index, 1);
+            localStorage.setItem('precisionCart', JSON.stringify(cart));
+            renderManifest();
+        }
+
+        function clearManifest() {
+            if(confirm('Clear all research items?')) {
+                localStorage.removeItem('precisionCart');
+                cart = [];
+                renderManifest();
+            }
+        }
+
+        // Run on load
+        renderManifest();
     </script>
 </body>
 </html>
