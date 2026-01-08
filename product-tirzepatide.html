@@ -6,6 +6,10 @@
     <title>Tirzepatide Technical Data | Precision Peptides</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .size-btn.active { background-color: #0f172a; color: white; border-color: #0f172a; }
+        .size-btn:hover:not(.active) { border-color: #2563eb; color: #2563eb; }
+    </style>
 </head>
 <body class="bg-white font-sans antialiased text-slate-900">
 
@@ -63,16 +67,35 @@
             </div>
 
             <div class="lg:col-span-7">
-                <h1 class="text-6xl font-black text-slate-900 italic uppercase tracking-tighter mb-4">Tirzepatide <span class="text-blue-600 text-3xl block">10.0 mg</span></h1>
+                <h1 class="text-6xl font-black text-slate-900 italic uppercase tracking-tighter mb-4">
+                    Tirzepatide <span id="title-size" class="text-blue-600 text-3xl block">10.0 mg</span>
+                </h1>
                 <p class="text-xl text-slate-500 font-medium leading-relaxed mb-8">Dual Glucose-Dependent Insulinotropic Polypeptide (GIP) and Glucagon-Like Peptide-1 (GLP-1) Receptor Agonist.</p>
 
                 <div class="bg-white border-2 border-slate-100 rounded-3xl p-6 mb-10 shadow-lg shadow-slate-100/50">
-                    <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+                    
+                    <div class="mb-8">
+                        <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest mb-3">Select Vial Concentration</p>
+                        <div class="flex gap-3">
+                            <button onclick="selectSize(5, 69.00, this)" class="size-btn flex-1 py-3 border-2 border-slate-100 rounded-xl font-bold text-sm transition-all text-slate-500">
+                                5 mg
+                            </button>
+                            <button onclick="selectSize(10, 129.00, this)" class="size-btn active flex-1 py-3 border-2 border-slate-100 rounded-xl font-bold text-sm transition-all text-slate-500">
+                                10 mg
+                            </button>
+                            <button onclick="selectSize(15, 179.00, this)" class="size-btn flex-1 py-3 border-2 border-slate-100 rounded-xl font-bold text-sm transition-all text-slate-500 relative overflow-hidden">
+                                15 mg
+                                <span class="absolute top-0 right-0 bg-emerald-100 text-emerald-600 text-[8px] px-1.5 py-0.5 rounded-bl font-black uppercase">Value</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col md:flex-row justify-between items-center gap-6 border-t border-slate-100 pt-6">
                         
                         <div>
                             <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest mb-1">Institutional Price</p>
                             <div class="flex items-baseline gap-1">
-                                <span class="text-3xl font-black text-slate-900">$145.00</span>
+                                <span id="display-price" class="text-3xl font-black text-slate-900">$129.00</span>
                                 <span class="text-sm font-medium text-slate-400">/ vial</span>
                             </div>
                         </div>
@@ -83,16 +106,10 @@
                                 <input type="text" id="qtyInput" value="1" class="w-10 text-center bg-transparent font-bold text-slate-900 outline-none" readonly>
                                 <button onclick="updateQty(1)" class="w-10 h-10 flex items-center justify-center text-slate-400 hover:text-slate-900 hover:bg-white rounded-xl transition-all font-bold">+</button>
                             </div>
-                            <button onclick="addToManifest('Tirzepatide 10mg', 145.00)" class="bg-blue-600 text-white px-8 h-10 rounded-xl font-bold text-xs uppercase tracking-widest hover:bg-slate-900 transition-colors whitespace-nowrap">
+                            <button onclick="addToManifest()" class="bg-blue-600 text-white px-8 h-10 rounded-xl font-bold text-xs uppercase tracking-widest hover:bg-slate-900 transition-colors whitespace-nowrap">
                                 Add to Manifest
                             </button>
                         </div>
-                    </div>
-                    
-                    <div class="mt-4 pt-4 border-t border-slate-100 text-center">
-                        <p class="text-[10px] text-emerald-600 font-bold uppercase tracking-widest">
-                            <i class="fas fa-tags mr-1"></i> Bulk Pricing: Order 10+ vials for 15% off
-                        </p>
                     </div>
                 </div>
 
@@ -103,7 +120,7 @@
                             <span class="w-8 h-[2px] bg-blue-600"></span> Primary Research Data
                         </h2>
                         <div class="prose prose-slate max-w-none text-slate-600 leading-loose">
-                            Tirzepatide is a synthetic derivative of the gastric inhibitory polypeptide (GIP) which has been engineered to possess co-agonist activity at the GLP-1 receptor. Research models indicate that this dual-agonist approach creates a synergistic effect on glucose metabolism and lipid regulation. The peptide sequence contains a <strong>C20 fatty diacid moiety</strong> attached via a hydrophilic linker, which enables albumin binding and extends the elimination half-life.
+                            Tirzepatide is a synthetic derivative of the gastric inhibitory polypeptide (GIP) which has been engineered to possess co-agonist activity at the GLP-1 receptor. Research models indicate that this dual-agonist approach creates a synergistic effect on glucose metabolism and lipid regulation compared to selective GLP-1 agonists. The peptide sequence contains a <strong>C20 fatty diacid moiety</strong> attached via a hydrophilic linker, which enables albumin binding and extends the elimination half-life to approximately 5 days.
                         </div>
                     </section>
                     
@@ -144,9 +161,25 @@
     </main>
 
     <script>
+        let currentSize = 10;
+        let currentPrice = 129.00;
         let qty = 1;
         let cart = JSON.parse(localStorage.getItem('precisionCart')) || [];
         updateBadge();
+
+        function selectSize(size, price, btn) {
+            // Update State
+            currentSize = size;
+            currentPrice = price;
+
+            // Visual Updates
+            document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            
+            // Text Updates
+            document.getElementById('display-price').innerText = `$${price.toFixed(2)}`;
+            document.getElementById('title-size').innerText = `${size}.0 mg`;
+        }
 
         function updateQty(change) {
             qty += change;
@@ -154,12 +187,14 @@
             document.getElementById('qtyInput').value = qty;
         }
 
-        function addToManifest(name, price) {
-            const existingItem = cart.find(item => item.name === name);
+        function addToManifest() {
+            const productName = `Tirzepatide ${currentSize}mg`;
+            
+            const existingItem = cart.find(item => item.name === productName);
             if (existingItem) {
                 existingItem.qty += qty;
             } else {
-                cart.push({ name: name, price: price, qty: qty });
+                cart.push({ name: productName, price: currentPrice, qty: qty });
             }
             
             localStorage.setItem('precisionCart', JSON.stringify(cart));
@@ -168,12 +203,12 @@
             // Visual Feedback
             const btn = document.querySelector('button[onclick^="addToManifest"]');
             const originalText = btn.innerText;
-            btn.innerText = "Added to Manifest";
+            btn.innerText = "Added";
             btn.classList.add('bg-emerald-600');
             setTimeout(() => {
                 btn.innerText = originalText;
                 btn.classList.remove('bg-emerald-600');
-            }, 2000);
+            }, 1000);
         }
 
         function updateBadge() {
@@ -184,8 +219,9 @@
         }
 
         function viewManifest() {
-            alert("This simulates opening the Cart/Checkout drawer.\n\nCurrent Items:\n" + 
-                  cart.map(i => `- ${i.name} x${i.qty}`).join('\n'));
+            alert("Current Manifest:\n\n" + 
+                  cart.map(i => `• ${i.name} ($${i.price}) x${i.qty}`).join('\n') + 
+                  "\n\nTotal: $" + cart.reduce((acc, i) => acc + (i.price * i.qty), 0).toFixed(2));
         }
     </script>
 </body>
