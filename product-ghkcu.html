@@ -5,71 +5,111 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GHK-Cu Technical Data | Precision Peptides</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=JetBrains+Mono&display=swap" rel="stylesheet">
-    <style>body { font-family: 'Inter', sans-serif; } .mono { font-family: 'JetBrains Mono', monospace; }</style>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
-<body class="bg-gray-50 text-slate-900">
+<body class="bg-white font-sans antialiased text-slate-900">
 
-    <nav class="bg-white border-b border-slate-200 h-20 flex items-center px-6 sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto w-full flex justify-between items-center text-2xl font-black italic uppercase">
-            <a href="index.html">Precision<span class="text-sky-500">Peptides</span></a>
+    <nav class="bg-white border-b border-slate-100 h-16 flex items-center px-6 justify-between sticky top-0 z-50">
+        <div class="flex items-center gap-2">
+            <div class="w-8 h-8 bg-blue-600 rounded flex items-center justify-center text-white"><i class="fas fa-atom text-xs"></i></div>
+            <span class="font-bold text-lg tracking-tighter uppercase italic text-slate-900">Precision<span class="text-blue-600">Labs</span></span>
+        </div>
+        <div class="flex gap-6 text-[10px] font-black uppercase tracking-widest text-slate-400">
+            <a href="catalog.html" class="hover:text-blue-600 transition-colors">Catalog</a>
+            <a href="portal.html" class="hover:text-blue-600 transition-colors">Portal</a>
         </div>
     </nav>
 
-    <main class="max-w-6xl mx-auto py-12 px-6">
-        <div class="grid lg:grid-cols-2 gap-16">
-            <div>
-                <nav class="text-[10px] font-bold text-slate-400 uppercase mb-4 flex gap-2">
-                    <a href="catalog.html">Catalog</a> / <span>Dermatological & DNA Research</span>
-                </nav>
-                <h1 class="text-4xl font-extrabold mb-2 uppercase tracking-tight text-slate-900">GHK-Cu</h1>
-                <p class="text-sm font-bold text-blue-600 uppercase tracking-widest mb-8">Copper Glycyl-L-Histidyl-L-Lysine</p>
+    <main class="max-w-7xl mx-auto px-6 py-12">
+        
+        <div class="flex items-center gap-2 text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em] mb-8">
+            <a href="catalog.html">Catalog</a>
+            <i class="fas fa-chevron-right text-[8px]"></i>
+            <span class="text-blue-600">Technical Data Sheet</span>
+        </div>
 
-                <div class="bg-white rounded-2xl border border-slate-200 p-8 space-y-6 shadow-sm">
-                    <div class="grid grid-cols-2 gap-6 text-sm">
-                        <div><div class="text-[10px] font-bold text-slate-400 uppercase">Chemical Formula</div><div class="mono">C14H22CuN6O4</div></div>
-                        <div><div class="text-[10px] font-bold text-slate-400 uppercase">Molecular Weight</div><div class="mono">401.91 g/mol</div></div>
-                        <div><div class="text-[10px] font-bold text-slate-400 uppercase">CAS Number</div><div class="mono">89030-95-5</div></div>
-                        <div><div class="text-[10px] font-bold text-slate-400 uppercase">Appearance</div><div class="mono text-blue-500 font-bold">Fine Blue Powder</div></div>
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+            
+            <div class="lg:col-span-5 space-y-8">
+                <div class="bg-slate-50 rounded-[3rem] p-8 border border-slate-100 overflow-hidden group">
+                    <img src="images/vial-ghkcu.jpg" class="w-full aspect-square object-contain mix-blend-multiply group-hover:scale-110 transition-transform duration-700" alt="GHK-Cu Reagent Vial">
+                </div>
+
+                <div class="bg-white border border-slate-200 rounded-[2rem] overflow-hidden">
+                    <div class="bg-slate-900 p-4">
+                        <h3 class="text-white text-[10px] font-black uppercase tracking-widest">Chemical Specifications</h3>
                     </div>
+                    <table class="w-full text-sm">
+                        <tr class="border-b border-slate-100">
+                            <td class="p-4 font-bold text-slate-500 uppercase text-[10px]">CAS Number</td>
+                            <td class="p-4 font-mono text-right text-xs">89030-95-5</td>
+                        </tr>
+                        <tr class="border-b border-slate-100">
+                            <td class="p-4 font-bold text-slate-500 uppercase text-[10px]">Molecular Formula</td>
+                            <td class="p-4 font-mono text-right text-xs">C<sub>14</sub>H<sub>24</sub>CuN<sub>6</sub>O<sub>4</sub></td>
+                        </tr>
+                        <tr class="border-b border-slate-100">
+                            <td class="p-4 font-bold text-slate-500 uppercase text-[10px]">Molar Mass</td>
+                            <td class="p-4 font-mono text-right text-xs">403.94 g/mol</td>
+                        </tr>
+                        <tr>
+                            <td class="p-4 font-bold text-slate-500 uppercase text-[10px]">Appearance</td>
+                            <td class="p-4 font-bold text-blue-600 text-right">Blue Crystal Powder</td>
+                        </tr>
+                    </table>
                 </div>
             </div>
 
-            <div class="bg-slate-900 rounded-3xl p-10 text-white flex flex-col justify-center shadow-2xl">
-                <h3 class="text-xl font-bold mb-4 uppercase tracking-wide">Copper Chelation & Bioactivity</h3>
-                <p class="text-slate-400 text-sm leading-relaxed mb-6">
-                    GHK-Cu is a tripeptide with a high affinity for copper (II) ions. It is studied for its ability to regulate a wide array of human genes, particularly those involved in copper-dependent enzymatic processes, collagen synthesis, and tissue remodeling.
-                </p>
-                
-                <div class="space-y-4 mb-8 pt-6 border-t border-white/10">
-                    <div class="flex justify-between text-xs font-bold uppercase"><span class="text-slate-500">Purity</span><span>>99% (HPLC)</span></div>
-                    <div class="flex justify-between text-xs font-bold uppercase"><span class="text-slate-500">Stability</span><span>pH 4.5 - 7.5</span></div>
+            <div class="lg:col-span-7">
+                <h1 class="text-6xl font-black text-slate-900 italic uppercase tracking-tighter mb-4">GHK-Cu <span class="text-blue-600 text-3xl block">50.0 mg</span></h1>
+                <p class="text-xl text-slate-500 font-medium leading-relaxed mb-8">Copper Tripeptide-1. A naturally occurring copper complex with high affinity for copper(II) ions.</p>
+
+                <div class="space-y-10">
+                    
+                    <section>
+                        <h2 class="text-xs font-black uppercase tracking-[0.3em] text-blue-600 mb-4 flex items-center gap-3">
+                            <span class="w-8 h-[2px] bg-blue-600"></span> Primary Research Data
+                        </h2>
+                        <div class="prose prose-slate max-w-none text-slate-600 leading-loose">
+                            GHK-Cu is a tripeptide (Glycyl-L-Histidyl-L-Lysine) that has a strong binding affinity for copper. In biological systems, it is involved in the transport of copper ions, which are essential cofactors for enzymes involved in collagen synthesis and wound healing (such as lysyl oxidase). Research indicates that GHK-Cu modulates the expression of genes involved in tissue remodeling, antioxidant defense, and anti-inflammatory responses. It is one of the most widely studied cosmetic and regenerative peptides in existence.
+                        </div>
+                    </section>
+                    
+                    
+
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="bg-slate-50 p-6 rounded-3xl border border-slate-100">
+                            <i class="fas fa-snowflake text-blue-500 mb-2"></i>
+                            <h4 class="font-bold text-sm uppercase italic">Storage</h4>
+                            <p class="text-xs text-slate-500">Store at room temperature (Dark). Hygroscopic.</p>
+                        </div>
+                        <div class="bg-slate-50 p-6 rounded-3xl border border-slate-100">
+                            <i class="fas fa-flask text-blue-500 mb-2"></i>
+                            <h4 class="font-bold text-sm uppercase italic">Solubility</h4>
+                            <p class="text-xs text-slate-500 text-slate-600">Highly Water Soluble (Deep Blue Solution).</p>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-4">
+                        <a href="batch-verification.html" class="flex-1 bg-slate-900 text-white text-center py-4 rounded-2xl font-black uppercase tracking-widest text-[10px] hover:bg-blue-600 transition-all shadow-lg">
+                            View HPLC Report
+                        </a>
+                        <button class="flex-1 border-2 border-slate-900 text-slate-900 py-4 rounded-2xl font-black uppercase tracking-widest text-[10px] hover:bg-slate-50 transition-all">
+                            Download SDS (PDF)
+                        </button>
+                    </div>
+
                 </div>
-                <button class="w-full bg-blue-600 text-white py-4 rounded-full font-bold uppercase text-[10px] tracking-widest hover:bg-sky-500 transition">
-                    View Chelation Assay
-                </button>
             </div>
         </div>
 
-        <section class="mt-20">
-            <h2 class="text-2xl font-bold mb-8 uppercase tracking-tight">Analytical & Genomic Context</h2>
-            <div class="grid md:grid-cols-2 gap-12 text-sm text-slate-600 leading-relaxed">
-                <div>
-                    <h4 class="font-bold text-slate-900 mb-2 uppercase text-xs">Extracellular Matrix (ECM) Modeling</h4>
-                    <p>Research indicates that GHK-Cu stimulates the synthesis of collagen, dermatan sulfate, and chondroitin sulfate. It is frequently utilized in in-vitro models to study the modulation of metalloproteinases (MMPs) and their inhibitors (TIMPs).</p>
-                    
-                </div>
-                <div>
-                    <h4 class="font-bold text-slate-900 mb-2 uppercase text-xs">Anti-Oxidant Properties</h4>
-                    <p>GHK-Cu has been observed to inhibit lipid peroxidation and neutralize toxic products of oxidative stress. Its role in quenching reactive carbonyl species is a primary focus for longevity and anti-aging research.</p>
-                </div>
-            </div>
-        </section>
+        <div class="mt-20 p-8 rounded-[3rem] bg-red-50 border border-red-100 text-center">
+            <h3 class="text-red-600 font-black uppercase tracking-widest text-xs mb-2">Institutional Research Disclaimer</h3>
+            <p class="text-red-700/70 text-sm max-w-3xl mx-auto leading-relaxed">
+                This material is synthesized for <strong>in-vitro laboratory research purposes only</strong>. It is not for human or veterinary diagnostic or therapeutic use. All research must be conducted by qualified professionals using appropriate biosafety protocols.
+            </p>
+        </div>
     </main>
-
-    <footer class="py-12 border-t border-slate-200 text-center text-[10px] uppercase tracking-widest text-slate-400">
-        Strictly for Laboratory Research | CAS: 89030-95-5
-    </footer>
 
 </body>
 </html>
