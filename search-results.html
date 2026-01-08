@@ -3,78 +3,213 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Search Results | Precision Peptides</title>
+    <title>Database Query | Precision Peptides</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
-    <style>body { font-family: 'Inter', sans-serif; }</style>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        /* Card Hover Effects */
+        .product-card { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        .product-card:hover { transform: translateY(-5px); box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1); }
+        
+        /* Loader Animation */
+        .scanner-line {
+            height: 2px;
+            width: 100%;
+            background: #2563eb;
+            position: absolute;
+            top: 0;
+            left: 0;
+            animation: scan 2s infinite linear;
+            display: none;
+        }
+        @keyframes scan {
+            0% { transform: translateY(0); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translateY(100px); opacity: 0; }
+        }
+    </style>
 </head>
-<body class="bg-gray-50 text-slate-900">
+<body class="bg-slate-50 font-sans antialiased text-slate-900 min-h-screen flex flex-col">
 
-    <nav class="bg-white border-b border-slate-200 h-20 flex items-center px-6">
-        <div class="max-w-7xl mx-auto w-full flex justify-between items-center text-2xl font-black italic uppercase">
-            <a href="index.html">Precision<span class="text-sky-500">Peptides</span></a>
+    <nav class="bg-white border-b border-slate-200 h-16 flex items-center px-6 justify-between sticky top-0 z-50">
+        <div class="flex items-center gap-2">
+            <div class="w-8 h-8 bg-blue-600 rounded flex items-center justify-center text-white"><i class="fas fa-atom text-xs"></i></div>
+            <span class="font-bold text-lg tracking-tighter uppercase italic text-slate-900">Precision<span class="text-blue-600">Labs</span></span>
+        </div>
+        <div class="flex gap-6 text-[10px] font-black uppercase tracking-widest text-slate-400">
+            <a href="index.html" class="hover:text-blue-600 transition-colors">Home</a>
+            <a href="catalog.html" class="hover:text-blue-600 transition-colors">Catalog</a>
+            <a href="portal.html" class="hover:text-blue-600 transition-colors">Portal</a>
         </div>
     </nav>
 
-    <main class="max-w-4xl mx-auto py-16 px-6">
-        <div class="mb-12">
-            <h1 class="text-3xl font-extrabold uppercase tracking-tight">Search Results</h1>
-            <p class="text-slate-500">Showing matches for: <span id="search-query" class="text-sky-600 font-bold italic"></span></p>
+    <main class="flex-1 max-w-7xl mx-auto px-6 py-12 w-full">
+        
+        <div class="max-w-3xl mx-auto mb-16">
+            <h1 class="text-center text-xs font-black uppercase tracking-widest text-slate-400 mb-4">Inventory Database Search</h1>
+            <div class="relative group">
+                <input type="text" id="queryInput" class="w-full bg-white border-2 border-slate-200 rounded-2xl px-8 py-5 text-lg font-bold text-slate-900 focus:outline-none focus:border-blue-600 transition-all shadow-xl shadow-slate-200/50" placeholder="Enter CAS Number or Reagent Name..." autofocus onkeyup="handleEnter(event)">
+                <button onclick="runSearch()" class="absolute right-4 top-1/2 -translate-y-1/2 bg-slate-900 text-white w-12 h-12 rounded-xl flex items-center justify-center hover:bg-blue-600 transition-colors">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+            <div class="flex justify-center gap-4 mt-4 text-[10px] font-bold text-slate-400 uppercase tracking-widest">
+                <span><i class="fas fa-database mr-1"></i> Index: Active</span>
+                <span><i class="fas fa-clock mr-1"></i> Latency: 12ms</span>
+            </div>
         </div>
 
-        <div id="results-list" class="space-y-6">
+        <div id="loader" class="hidden text-center py-20">
+            <div class="w-16 h-16 border-4 border-slate-200 border-t-blue-600 rounded-full animate-spin mx-auto mb-6"></div>
+            <p class="text-xs font-bold uppercase tracking-widest text-slate-400 animate-pulse">Querying Logistics Nodes...</p>
+        </div>
+
+        <div id="resultsArea">
+            <div class="flex items-center justify-between mb-8 border-b border-slate-200 pb-4">
+                <h2 class="text-xl font-black italic text-slate-900">Results</h2>
+                <span id="resultCount" class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs font-bold">0 Matches</span>
             </div>
 
-        <div id="no-results" class="hidden text-center py-20 bg-white rounded-3xl border border-dashed border-slate-300">
-            <p class="text-slate-400 mb-6">No matching reagents found in the current inventory.</p>
-            <a href="catalog.html" class="inline-block bg-slate-900 text-white px-8 py-3 rounded-full font-bold text-xs uppercase tracking-widest">Browse Full Catalog</a>
+            <div id="grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                </div>
+
+            <div id="noResults" class="hidden bg-white p-12 rounded-[2rem] border-2 border-dashed border-slate-200 text-center">
+                <div class="w-16 h-16 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-6 text-slate-300 text-2xl">
+                    <i class="fas fa-search"></i>
+                </div>
+                <h3 class="text-lg font-bold text-slate-900 mb-2">Compound Not Indexed</h3>
+                <p class="text-slate-500 text-sm max-w-md mx-auto mb-8">
+                    The reagent you are looking for is not currently in our public catalog. It may be available via private synthesis.
+                </p>
+                <div class="flex justify-center gap-4">
+                    <a href="catalog.html" class="px-6 py-3 bg-slate-900 text-white rounded-xl text-xs font-bold uppercase tracking-widest hover:bg-blue-600 transition-colors">
+                        Browse Full Catalog
+                    </a>
+                    <a href="portal.html" class="px-6 py-3 border border-slate-200 text-slate-600 rounded-xl text-xs font-bold uppercase tracking-widest hover:border-slate-900 hover:text-slate-900 transition-colors">
+                        Request Synthesis
+                    </a>
+                </div>
+            </div>
         </div>
+
     </main>
 
+    <footer class="bg-white border-t border-slate-200 py-12 text-center mt-auto">
+        <div class="text-[10px] text-slate-300 uppercase tracking-widest">
+            &copy; 2024 Precision Peptides. Verified Science.
+        </div>
+    </footer>
+
     <script>
-        // Simulating a database of your pages
-        const database = [
-            { name: "BPC-157", desc: "Tissue repair and gastric protection fragment.", link: "product-bpc157.html", tags: "healing, recovery, bpc" },
-            { name: "Semaglutide", desc: "GLP-1 receptor agonist for metabolic research.", link: "product-semaglutide.html", tags: "weight, glp1, metabolism" },
-            { name: "Tirzepatide", desc: "Dual GIP/GLP-1 receptor agonist.", link: "product-tirzepatide.html", tags: "weight, metabolism, gip" },
-            { name: "NAD+", desc: "Essential coenzyme for mitochondrial redox research.", link: "product-nad.html", tags: "longevity, aging, dna" },
-            { name: "LL-37", desc: "Human cathelicidin antimicrobial peptide.", link: "product-ll37.html", tags: "immune, antimicrobial, bacteria" },
-            { name: "KPV", desc: "Anti-inflammatory tripeptide fragment of alpha-MSH.", link: "product-kpv.html", tags: "skin, gut, inflammation" },
-            { name: "GHK-Cu", desc: "Copper peptide for collagen and DNA repair studies.", link: "product-ghkcu.html", tags: "skin, hair, copper" }
+        // 1. THE "DATABASE" (Simulated Backend)
+        const products = [
+            { name: "Tirzepatide", cat: "Metabolic", price: "$69.00", img: "vial-tirzepatide.jpg", url: "product-tirzepatide.html", desc: "Dual GIP/GLP-1 agonist." },
+            { name: "Retatrutide", cat: "Metabolic", price: "$115.00", img: "vial-retatrutide.jpg", url: "product-retatrutide.html", desc: "Triple agonist (GLP-1/GIP/GCGR)." },
+            { name: "Semaglutide", cat: "Metabolic", price: "$85.00", img: "vial-semaglutide.jpg", url: "product-semaglutide.html", desc: "GLP-1 Analogue." },
+            { name: "AOD-9604", cat: "Metabolic", price: "$45.00", img: "vial-aod9604.jpg", url: "product-aod9604.html", desc: "Lipolytic fragment 177-191." },
+            { name: "BPC-157", cat: "Regenerative", price: "$45.00", img: "vial-bpc157.jpg", url: "product-bpc157.html", desc: "Stable Arginine Salt." },
+            { name: "TB-500", cat: "Regenerative", price: "$55.00", img: "vial-tb500.jpg", url: "product-tb500.html", desc: "Thymosin Beta-4 synthetic." },
+            { name: "GHK-Cu", cat: "Regenerative", price: "$45.00", img: "vial-ghkcu.jpg", url: "product-ghkcu.html", desc: "Copper peptide complex." },
+            { name: "Semax", cat: "Nootropic", price: "$45.00", img: "vial-semax.jpg", url: "product-semax.html", desc: "ACTH(4-10) Analogue." },
+            { name: "NA-Semax Amidate", cat: "Nootropic", price: "$55.00", img: "vial-na-semax.jpg", url: "product-na-semax-amidate.html", desc: "Acetylated/Amidated Semax." },
+            { name: "Selank", cat: "Nootropic", price: "$45.00", img: "vial-selank.jpg", url: "product-selank.html", desc: "Tuftsin analogue." },
+            { name: "NA-Selank Amidate", cat: "Nootropic", price: "$55.00", img: "vial-na-selank.jpg", url: "product-na-selank-amidate.html", desc: "Acetylated/Amidated Selank." },
+            { name: "Epitalon", cat: "Longevity", price: "$45.00", img: "vial-epitalon.jpg", url: "product-epitalon.html", desc: "Telomerase activator." },
+            { name: "NAD+", cat: "Longevity", price: "$45.00", img: "vial-nad.jpg", url: "product-nad.html", desc: "Oxidized Coenzyme." },
+            { name: "DSIP", cat: "Nootropic", price: "$35.00", img: "vial-dsip.jpg", url: "product-dsip.html", desc: "Delta Sleep-Inducing Peptide." },
+            { name: "Tesamorelin", cat: "Metabolic", price: "$45.00", img: "vial-tesamorelin.jpg", url: "product-tesamorelin.html", desc: "GHRH Analogue." },
+            { name: "Ipamorelin", cat: "Metabolic", price: "$35.00", img: "vial-ipamorelin.jpg", url: "product-ipamorelin.html", desc: "Selective GH Secretagogue." },
+            { name: "CJC-1295", cat: "Metabolic", price: "$35.00", img: "vial-cjc1295.jpg", url: "product-cjc1295.html", desc: "Mod GRF 1-29 No DAC." },
+            { name: "Melanotan 2", cat: "Longevity", price: "$35.00", img: "vial-mt2.jpg", url: "product-melanotan2.html", desc: "Alpha-MSH analog." },
+            { name: "PT-141", cat: "Longevity", price: "$45.00", img: "vial-pt141.jpg", url: "product-pt141.html", desc: "Bremelanotide." },
+            { name: "Cardarine", cat: "Metabolic", price: "$40.00", img: "vial-cardarine.jpg", url: "product-cardarine.html", desc: "GW-501516." },
+            { name: "AICAR", cat: "Metabolic", price: "$45.00", img: "vial-aicar.jpg", url: "product-aicar.html", desc: "AMPK Activator." },
+            { name: "MOTS-c", cat: "Metabolic", price: "$55.00", img: "vial-motsc.jpg", url: "product-motsc.html", desc: "Mitochondrial-Derived Peptide." },
+            { name: "FOXO4-DRI", cat: "Longevity", price: "$120.00", img: "vial-foxo4dri.jpg", url: "product-foxo4dri.html", desc: "Senolytic Peptide." },
+            { name: "LL-37", cat: "Immune", price: "$55.00", img: "vial-ll37.jpg", url: "product-ll37.html", desc: "Antimicrobial Peptide." },
+            { name: "Thymosin Alpha-1", cat: "Immune", price: "$45.00", img: "vial-ta1.jpg", url: "product-ta1.html", desc: "Immune Modulator." },
+            { name: "KPV", cat: "Regenerative", price: "$45.00", img: "vial-kpv.jpg", url: "product-kpv.html", desc: "Anti-inflammatory tripeptide." },
+            { name: "IGF-1 LR3", cat: "Regenerative", price: "$75.00", img: "vial-igf1lr3.jpg", url: "product-igf1lr3.html", desc: "Long R3 Growth Factor." }
         ];
 
-        // 1. Get the search term from the URL (e.g., search.html?q=bpc)
-        const urlParams = new URLSearchParams(window.location.search);
-        const query = urlParams.get('q')?.toLowerCase() || "";
-        document.getElementById('search-query').innerText = `"${query}"`;
+        // 2. INITIALIZATION
+        window.onload = function() {
+            // Check URL parameters for query
+            const urlParams = new URLSearchParams(window.location.search);
+            const query = urlParams.get('q');
+            
+            if (query) {
+                document.getElementById('queryInput').value = query;
+                runSearch();
+            } else {
+                // Show all if empty
+                renderResults(products);
+            }
+        };
 
-        // 2. Filter the database
-        const results = database.filter(item => 
-            item.name.toLowerCase().includes(query) || 
-            item.tags.toLowerCase().includes(query)
-        );
+        function handleEnter(e) {
+            if (e.key === 'Enter') runSearch();
+        }
 
-        // 3. Display the results
-        const container = document.getElementById('results-list');
-        const noResults = document.getElementById('no-results');
+        // 3. SEARCH LOGIC
+        function runSearch() {
+            const query = document.getElementById('queryInput').value.toLowerCase().trim();
+            const loader = document.getElementById('loader');
+            const resultsArea = document.getElementById('resultsArea');
+            
+            // UI Toggle
+            resultsArea.classList.add('hidden');
+            loader.classList.remove('hidden');
 
-        if (results.length > 0) {
-            results.forEach(item => {
-                const div = document.createElement('div');
-                div.className = "bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition flex justify-between items-center";
-                div.innerHTML = `
-                    <div>
-                        <h3 class="font-bold text-lg">${item.name}</h3>
-                        <p class="text-sm text-slate-500">${item.desc}</p>
+            // Simulate Network Delay (500ms)
+            setTimeout(() => {
+                const filtered = products.filter(p => 
+                    p.name.toLowerCase().includes(query) || 
+                    p.cat.toLowerCase().includes(query) ||
+                    p.desc.toLowerCase().includes(query)
+                );
+                
+                renderResults(filtered);
+                loader.classList.add('hidden');
+                resultsArea.classList.remove('hidden');
+            }, 500);
+        }
+
+        // 4. RENDER FUNCTION
+        function renderResults(items) {
+            const grid = document.getElementById('grid');
+            const countLabel = document.getElementById('resultCount');
+            const noResults = document.getElementById('noResults');
+
+            grid.innerHTML = '';
+            countLabel.innerText = `${items.length} Matches Found`;
+
+            if (items.length === 0) {
+                noResults.classList.remove('hidden');
+                return;
+            } else {
+                noResults.classList.add('hidden');
+            }
+
+            items.forEach(item => {
+                const card = `
+                <div class="product-card bg-white p-6 rounded-2xl border border-slate-200 group relative">
+                    <div class="absolute top-4 right-4 w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
+                    <div class="h-40 bg-slate-50 rounded-xl mb-4 flex items-center justify-center overflow-hidden">
+                        <img src="images/${item.img}" class="h-32 object-contain mix-blend-multiply group-hover:scale-110 transition-transform duration-500" alt="${item.name}">
                     </div>
-                    <a href="${item.link}" class="bg-slate-900 text-white px-6 py-2 rounded-lg text-xs font-bold uppercase tracking-widest">View Specs</a>
+                    <div class="text-[10px] font-bold text-blue-600 uppercase tracking-widest mb-1">${item.cat}</div>
+                    <h3 class="text-xl font-black italic text-slate-900 mb-1">${item.name}</h3>
+                    <p class="text-xs text-slate-400 mb-4 line-clamp-2">${item.desc}</p>
+                    <div class="flex items-center justify-between border-t border-slate-100 pt-4">
+                        <span class="font-bold text-slate-900">${item.price}+</span>
+                        <a href="${item.url}" class="text-xs font-bold text-blue-600 hover:text-slate-900 transition-colors uppercase tracking-wider">View Reagent <i class="fas fa-arrow-right ml-1"></i></a>
+                    </div>
+                </div>
                 `;
-                container.appendChild(div);
+                grid.innerHTML += card;
             });
-        } else {
-            noResults.classList.remove('hidden');
         }
     </script>
-
 </body>
 </html>
