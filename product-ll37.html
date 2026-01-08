@@ -123,7 +123,8 @@
             setTimeout(() => { btn.innerText = "Add to Manifest"; btn.classList.remove('bg-emerald-600'); }, 1000);
         }
         function updateBadge() { document.getElementById('cart-badge').innerText = cart.reduce((a,b)=>a+b.qty,0); document.getElementById('cart-badge').style.opacity = cart.length>0?'1':'0'; }
-        function viewManifest() { alert("Cart:\n" + cart.map(i=>`${i.name} x${i.qty}`).join('\n')); }
+        function viewManifest() { window.location.href = 'checkout.html'; }
     </script>
 </body>
 </html>
+
