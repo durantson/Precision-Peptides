@@ -50,6 +50,9 @@
                     <button onclick="showModule('calculators')" class="sidebar-item w-full text-left px-4 py-3 text-xs font-bold uppercase tracking-tight rounded-lg transition-all">
                         <i class="fas fa-calculator mr-3"></i> Reconstitution Math
                     </button>
+                    <a href="molecular-structures.html" class="sidebar-item w-full text-left px-4 py-3 text-xs font-bold uppercase tracking-tight rounded-lg transition-all flex items-center">
+                        <i class="fas fa-cubes mr-3"></i> Molecular Database
+                    </a>
                 </nav>
             </div>
 
@@ -98,8 +101,7 @@
                                     <th class="p-4 text-[9px] font-black uppercase tracking-widest text-slate-400">Database Link</th>
                                 </tr>
                             </thead>
-                            <tbody class="text-[11px] font-medium" id="studies-table-body">
-                                </tbody>
+                            <tbody class="text-[11px] font-medium" id="studies-table-body"></tbody>
                         </table>
                     </div>
                 </div>
@@ -122,7 +124,6 @@
                             <input type="number" id="calc-ml" value="2" class="w-full bg-white/10 border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-blue-500">
                         </div>
                         <button onclick="runCalc()" class="w-full bg-blue-600 py-4 rounded-xl font-black uppercase tracking-widest text-[10px]">Calculate Concentration</button>
-                        
                         <div id="calc-result" class="pt-6 border-t border-white/10 text-center hidden">
                             <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Concentration</p>
                             <p id="result-text" class="text-3xl font-black italic text-white leading-none"></p>
@@ -134,8 +135,32 @@
         </main>
     </div>
 
+    <div id="disclaimerModal" class="fixed inset-0 z-[100] flex items-center justify-center bg-slate-900/90 backdrop-blur-sm p-4">
+        <div class="bg-white max-w-lg w-full rounded-[2.5rem] p-10 md:p-12 shadow-2xl text-center">
+            <div class="w-16 h-16 bg-amber-50 text-amber-500 rounded-full flex items-center justify-center mx-auto mb-6">
+                <i class="fas fa-exclamation-triangle text-2xl"></i>
+            </div>
+            <h2 class="text-[10px] font-black uppercase tracking-[0.4em] text-slate-400 mb-4">Regulatory Compliance</h2>
+            <h1 class="text-2xl font-black italic uppercase tracking-tighter text-slate-900 mb-6">Research Use Only</h1>
+            <p class="text-xs text-slate-500 leading-relaxed mb-8">
+                All clinical links and molecular structures provided are for <strong>in-vitro laboratory research purposes only</strong>. Precision Labs reagents are not for human clinical use.
+            </p>
+            <button onclick="acceptDisclaimer()" class="w-full bg-slate-900 text-white py-4 rounded-xl font-black uppercase tracking-widest text-[10px] hover:bg-blue-600 transition-all">
+                I Acknowledge & Authorize
+            </button>
+        </div>
+    </div>
+
     <script>
-        // MASTER DATABASE OF CLINICAL STUDIES
+        // Disclaimer Logic
+        if (sessionStorage.getItem('disclaimerAccepted') === 'true') {
+            document.getElementById('disclaimerModal').classList.add('hidden');
+        }
+        function acceptDisclaimer() {
+            sessionStorage.setItem('disclaimerAccepted', 'true');
+            document.getElementById('disclaimerModal').classList.add('hidden');
+        }
+
         const studyData = [
             { name: "Tirzepatide", focus: "SURMOUNT-1 Phase 3 Clinical Trial", link: "https://pubmed.ncbi.nlm.nih.gov/35658024/" },
             { name: "Retatrutide", focus: "Triple-Hormone-Receptor Agonist for Obesity", link: "https://www.nejm.org/doi/full/10.1056/NEJMoa2301972" },
@@ -182,10 +207,11 @@
         }
 
         function showModule(id) {
-            document.querySelectorAll('.sidebar-item').forEach(btn => {
-                btn.classList.remove('active');
-                if (btn.getAttribute('onclick').includes(id)) btn.classList.add('active');
-            });
+            document.querySelectorAll('.sidebar-item').forEach(btn => btn.classList.remove('active'));
+            // Find the correct button even if it's an anchor tag
+            const activeBtn = Array.from(document.querySelectorAll('.sidebar-item')).find(b => b.outerHTML.includes(id));
+            if(activeBtn) activeBtn.classList.add('active');
+
             document.querySelectorAll('.module-section').forEach(sec => sec.classList.add('hidden'));
             document.getElementById('module-' + id).classList.remove('hidden');
             if(id === 'studies') populateStudies();
