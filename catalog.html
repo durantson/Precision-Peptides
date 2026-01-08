@@ -9,124 +9,107 @@
 </head>
 <body class="bg-slate-50 font-sans antialiased">
 
-    <nav class="bg-white border-b border-slate-200 sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-16 items-center">
-                <div class="flex items-center gap-2">
-                    <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
-                        <i class="fas fa-flask text-white text-sm"></i>
-                    </div>
-                    <span class="text-xl font-bold text-slate-900 tracking-tight">PRECISION<span class="text-blue-600">PEPTIDES</span></span>
-                </div>
-                <div class="hidden md:flex space-x-8 text-sm font-medium text-slate-600">
-                    <a href="index.html" class="hover:text-blue-600 transition-colors">Home</a>
-                    <a href="catalog.html" class="text-blue-600">Catalog</a>
-                    <a href="calculator.html" class="hover:text-blue-600 transition-colors">Reconstitution</a>
-                    <a href="batch-verification.html" class="hover:text-blue-600 transition-colors">Batch Auth</a>
-                </div>
-            </div>
+    <nav class="bg-white border-b border-slate-200 h-16 flex items-center px-4 justify-between sticky top-0 z-50">
+        <div class="flex items-center gap-2">
+            <div class="w-8 h-8 bg-blue-600 rounded flex items-center justify-center text-white"><i class="fas fa-flask"></i></div>
+            <span class="font-bold text-lg italic uppercase tracking-tighter text-slate-900">Precision<span class="text-blue-600">Peptides</span></span>
+        </div>
+        <div class="flex gap-6 text-xs font-bold uppercase tracking-widest text-slate-500">
+            <a href="index.html" class="hover:text-blue-600">Home</a>
+            <a href="catalog.html" class="text-blue-600">Catalog</a>
+            <a href="portal.html" class="hover:text-blue-600">Portal</a>
         </div>
     </nav>
 
-    <header class="bg-white py-12 border-b border-slate-200">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h1 class="text-4xl font-extrabold text-slate-900 mb-4">Institutional Reagent Catalog</h1>
-            <p class="text-lg text-slate-600 max-w-2xl mx-auto italic">
-                &ge;99% Purity verified by HPLC and Mass Spectrometry. For <i>in vitro</i> laboratory research only.
-            </p>
-        </div>
+    <header class="bg-slate-900 py-16 text-center text-white">
+        <h1 class="text-4xl font-black italic uppercase tracking-tight mb-2">Synthetic Reagent Index</h1>
+        <p class="text-blue-400 font-mono text-sm tracking-widest uppercase">Verified &ge;99% Purity | Lyophilized Powder</p>
     </header>
 
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <main class="max-w-7xl mx-auto p-8">
 
         <div class="mb-16">
-            <div class="flex items-center gap-3 mb-8">
-                <div class="h-8 w-1 bg-blue-600 rounded-full"></div>
-                <h2 class="text-2xl font-bold text-slate-800 uppercase tracking-wide">Metabolic & Secretagogues</h2>
-            </div>
-            
+            <h2 class="text-xl font-black text-slate-900 mb-8 uppercase italic border-l-4 border-blue-600 pl-4">Metabolic Research Suite</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden hover:shadow-md transition-shadow">
-                    <img src="images/vial-tirzepatide.jpg" class="w-full h-48 object-cover bg-slate-100" alt="Tirzepatide">
-                    <div class="p-6">
-                        <h3 class="font-bold text-xl text-slate-900">Tirzepatide</h3>
-                        <p class="text-sm text-slate-500 mb-4">GLP-1/GIP Receptor Agonist</p>
-                        <a href="product-tirzepatide.html" class="block w-full text-center bg-slate-900 text-white py-3 rounded-xl font-semibold hover:bg-blue-600 transition-colors">Technical Data Sheet</a>
-                    </div>
+                <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm hover:shadow-xl transition-all group">
+                    <img src="images/vial-tirzepatide.jpg" class="w-full h-48 object-cover rounded-2xl mb-4 grayscale group-hover:grayscale-0 transition-all" alt="Tirzepatide">
+                    <h3 class="font-bold text-xl text-slate-900">Tirzepatide</h3>
+                    <p class="text-slate-500 text-sm mb-6">GLP-1 / GIP Dual Agonist</p>
+                    <a href="product-tirzepatide.html" class="block text-center bg-slate-900 text-white py-3 rounded-xl font-bold hover:bg-blue-600 transition-colors">Technical Data</a>
                 </div>
 
-                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden hover:shadow-md transition-shadow">
-                    <img src="images/vial-retatrutide.jpg" class="w-full h-48 object-cover bg-slate-100" alt="Retatrutide">
-                    <div class="p-6">
-                        <h3 class="font-bold text-xl text-slate-900">Retatrutide</h3>
-                        <p class="text-sm text-slate-500 mb-4">GLP-1/GIP/GCGR Agonist</p>
-                        <a href="product-retatrutide.html" class="block w-full text-center bg-slate-900 text-white py-3 rounded-xl font-semibold hover:bg-blue-600 transition-colors">Technical Data Sheet</a>
-                    </div>
+                <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm hover:shadow-xl transition-all group">
+                    <img src="images/vial-retatrutide.jpg" class="w-full h-48 object-cover rounded-2xl mb-4 grayscale group-hover:grayscale-0 transition-all" alt="Retatrutide">
+                    <h3 class="font-bold text-xl text-slate-900">Retatrutide</h3>
+                    <p class="text-slate-500 text-sm mb-6">GLP-1 / GIP / GCG Triple Agonist</p>
+                    <a href="product-retatrutide.html" class="block text-center bg-slate-900 text-white py-3 rounded-xl font-bold hover:bg-blue-600 transition-colors">Technical Data</a>
                 </div>
 
-                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden hover:shadow-md transition-shadow">
-                    <img src="images/vial-tesamorelin.jpg" class="w-full h-48 object-cover bg-slate-100" alt="Tesamorelin">
-                    <div class="p-6">
-                        <h3 class="font-bold text-xl text-slate-900">Tesamorelin</h3>
-                        <p class="text-sm text-slate-500 mb-4">GHRH Analogue</p>
-                        <a href="product-tesamorelin.html" class="block w-full text-center bg-slate-900 text-white py-3 rounded-xl font-semibold hover:bg-blue-600 transition-colors">Technical Data Sheet</a>
-                    </div>
+                <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm hover:shadow-xl transition-all group">
+                    <img src="images/vial-semaglutide.jpg" class="w-full h-48 object-cover rounded-2xl mb-4 grayscale group-hover:grayscale-0 transition-all" alt="Semaglutide">
+                    <h3 class="font-bold text-xl text-slate-900">Semaglutide</h3>
+                    <p class="text-slate-500 text-sm mb-6">Selective GLP-1 Receptor Agonist</p>
+                    <a href="product-semaglutide.html" class="block text-center bg-slate-900 text-white py-3 rounded-xl font-bold hover:bg-blue-600 transition-colors">Technical Data</a>
                 </div>
             </div>
         </div>
 
         <div class="mb-16">
-            <div class="flex items-center gap-3 mb-8">
-                <div class="h-8 w-1 bg-emerald-500 rounded-full"></div>
-                <h2 class="text-2xl font-bold text-slate-800 uppercase tracking-wide">Tissue Repair & Recovery</h2>
-            </div>
-            
+            <h2 class="text-xl font-black text-slate-900 mb-8 uppercase italic border-l-4 border-emerald-500 pl-4">Tissue & Regenerative Suite</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden hover:shadow-md transition-shadow">
-                    <img src="images/vial-bpc157.jpg" class="w-full h-48 object-cover bg-slate-100" alt="BPC-157">
-                    <div class="p-6">
-                        <h3 class="font-bold text-xl text-slate-900">BPC-157 (Arg Salt)</h3>
-                        <p class="text-sm text-slate-500 mb-4">Angiogenic Healing Compound</p>
-                        <a href="product-bpc157.html" class="block w-full text-center bg-slate-900 text-white py-3 rounded-xl font-semibold hover:bg-emerald-600 transition-colors">Technical Data Sheet</a>
-                    </div>
+                <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm hover:shadow-xl transition-all group">
+                    <img src="images/vial-bpc157.jpg" class="w-full h-48 object-cover rounded-2xl mb-4 grayscale group-hover:grayscale-0 transition-all" alt="BPC-157">
+                    <h3 class="font-bold text-xl text-slate-900">BPC-157 (Arg Salt)</h3>
+                    <p class="text-slate-500 text-sm mb-6">Angiogenic Gastric Pentadecapeptide</p>
+                    <a href="product-bpc157.html" class="block text-center bg-slate-900 text-white py-3 rounded-xl font-bold hover:bg-emerald-600 transition-colors">Technical Data</a>
                 </div>
 
-                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden hover:shadow-md transition-shadow">
-                    <img src="images/vial-tb500.jpg" class="w-full h-48 object-cover bg-slate-100" alt="TB-500">
-                    <div class="p-6">
-                        <h3 class="font-bold text-xl text-slate-900">TB-500</h3>
-                        <p class="text-sm text-slate-500 mb-4">Thymosin Beta-4 Derivative</p>
-                        <a href="product-tb500.html" class="block w-full text-center bg-slate-900 text-white py-3 rounded-xl font-semibold hover:bg-emerald-600 transition-colors">Technical Data Sheet</a>
-                    </div>
+                <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm hover:shadow-xl transition-all group">
+                    <img src="images/vial-tb500.jpg" class="w-full h-48 object-cover rounded-2xl mb-4 grayscale group-hover:grayscale-0 transition-all" alt="TB-500">
+                    <h3 class="font-bold text-xl text-slate-900">TB-500</h3>
+                    <p class="text-slate-500 text-sm mb-6">Thymosin Beta-4 Synthetic Fragment</p>
+                    <a href="product-tb500.html" class="block text-center bg-slate-900 text-white py-3 rounded-xl font-bold hover:bg-emerald-600 transition-colors">Technical Data</a>
+                </div>
+
+                <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm hover:shadow-xl transition-all group">
+                    <img src="images/vial-ghkcu.jpg" class="w-full h-48 object-cover rounded-2xl mb-4 grayscale group-hover:grayscale-0 transition-all" alt="GHK-Cu">
+                    <h3 class="font-bold text-xl text-slate-900">GHK-Cu</h3>
+                    <p class="text-slate-500 text-sm mb-6">Copper Binding Tripeptide</p>
+                    <a href="product-ghkcu.html" class="block text-center bg-slate-900 text-white py-3 rounded-xl font-bold hover:bg-emerald-600 transition-colors">Technical Data</a>
                 </div>
             </div>
         </div>
 
-        <div>
-            <div class="flex items-center gap-3 mb-8">
-                <div class="h-8 w-1 bg-purple-500 rounded-full"></div>
-                <h2 class="text-2xl font-bold text-slate-800 uppercase tracking-wide">Cellular Longevity</h2>
-            </div>
-            
+        <div class="mb-16">
+            <h2 class="text-xl font-black text-slate-900 mb-8 uppercase italic border-l-4 border-purple-600 pl-4">Cognitive & Growth Suite</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden hover:shadow-md transition-shadow">
-                    <img src="images/vial-nadplus.jpg" class="w-full h-48 object-cover bg-slate-100" alt="NAD+">
-                    <div class="p-6">
-                        <h3 class="font-bold text-xl text-slate-900">NAD+</h3>
-                        <p class="text-sm text-slate-500 mb-4">Nicotinamide Adenine Dinucleotide</p>
-                        <a href="product-nadplus.html" class="block w-full text-center bg-slate-900 text-white py-3 rounded-xl font-semibold hover:bg-purple-600 transition-colors">Technical Data Sheet</a>
-                    </div>
+                <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm hover:shadow-xl transition-all group">
+                    <img src="images/vial-tesamorelin.jpg" class="w-full h-48 object-cover rounded-2xl mb-4 grayscale group-hover:grayscale-0 transition-all" alt="Tesamorelin">
+                    <h3 class="font-bold text-xl text-slate-900">Tesamorelin</h3>
+                    <p class="text-slate-500 text-sm mb-6">Growth Hormone Releasing Hormone</p>
+                    <a href="product-tesamorelin.html" class="block text-center bg-slate-900 text-white py-3 rounded-xl font-bold hover:bg-purple-600 transition-colors">Technical Data</a>
+                </div>
+
+                <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm hover:shadow-xl transition-all group">
+                    <img src="images/vial-ipamorelin.jpg" class="w-full h-48 object-cover rounded-2xl mb-4 grayscale group-hover:grayscale-0 transition-all" alt="Ipamorelin">
+                    <h3 class="font-bold text-xl text-slate-900">Ipamorelin</h3>
+                    <p class="text-slate-500 text-sm mb-6">Selective GH Secretagogue</p>
+                    <a href="product-ipamorelin.html" class="block text-center bg-slate-900 text-white py-3 rounded-xl font-bold hover:bg-purple-600 transition-colors">Technical Data</a>
+                </div>
+
+                <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm hover:shadow-xl transition-all group">
+                    <img src="images/vial-nadplus.jpg" class="w-full h-48 object-cover rounded-2xl mb-4 grayscale group-hover:grayscale-0 transition-all" alt="NAD+">
+                    <h3 class="font-bold text-xl text-slate-900">NAD+</h3>
+                    <p class="text-slate-500 text-sm mb-6">Nicotinamide Adenine Dinucleotide</p>
+                    <a href="product-nadplus.html" class="block text-center bg-slate-900 text-white py-3 rounded-xl font-bold hover:bg-purple-600 transition-colors">Technical Data</a>
                 </div>
             </div>
         </div>
 
     </main>
 
-    <footer class="bg-slate-900 text-slate-400 py-12 mt-12">
-        <div class="max-w-7xl mx-auto px-4 text-center">
-            <p class="text-sm">Precision Peptides Institutional Portal &copy; 2026</p>
-            <p class="mt-2 text-xs uppercase tracking-widest text-slate-600">Strictly for In-Vitro Research Purposes Only</p>
-        </div>
+    <footer class="bg-slate-900 text-slate-500 py-12 text-center text-xs uppercase tracking-widest font-bold">
+        &copy; 2026 Precision Peptides Synthetic Laboratory | Research Use Only
     </footer>
 
 </body>
