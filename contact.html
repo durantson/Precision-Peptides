@@ -8,8 +8,6 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         .input-focus:focus { border-color: #2563eb; ring: 4px; ring-color: rgba(37, 99, 235, 0.1); }
-        /* Smooth transition for the submit button */
-        .btn-loading { pointer-events: none; opacity: 0.7; }
         * { -webkit-tap-highlight-color: transparent; }
     </style>
 </head>
@@ -38,8 +36,12 @@
                 </p>
             </div>
 
-            <form action="https://formspree.io/f/xrebnvon" method="POST" class="p-8 md:p-12 space-y-6">
+            <form action="https://formsubmit.co/precisionpeptidelabs@gmail.com" method="POST" class="p-8 md:p-12 space-y-6">
                 
+                <input type="hidden" name="_next" value="https://precisionpeptidelabs.github.io/thank-you.html">
+                
+                <input type="hidden" name="_captcha" value="false">
+
                 <div class="space-y-2">
                     <label class="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-4">Full Name</label>
                     <input type="text" name="name" required placeholder="Dr. Jane Smith" 
@@ -54,7 +56,7 @@
 
                 <div class="space-y-2">
                     <label class="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-4">Research Inquiry</label>
-                    <textarea name="message" required rows="4" placeholder="Describe your technical question regarding batch analysis or reconstitution..." 
+                    <textarea name="message" required rows="4" placeholder="Describe your technical question..." 
                     class="w-full bg-slate-50 border border-slate-200 rounded-2xl py-4 px-6 text-sm focus:outline-none focus:border-blue-600 focus:bg-white transition-all resize-none"></textarea>
                 </div>
 
@@ -76,7 +78,7 @@
                     </div>
                 </div>
             </form>
-            </div>
+        </div>
     </main>
 
     <footer class="p-8 text-center mt-auto">
