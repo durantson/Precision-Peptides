@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Structural Comparison | Precision Intelligence</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://3Dmol.org/build/3Dmol-min.js"></script>
+    <style>
+        .comparison-view { width: 100%; height: 450px; background: #0f172a; border-radius: 2rem; position: relative; }
+        .data-overlay { background: rgba(15, 23, 42, 0.8); backdrop-filter: blur(8px); }
+        * { -webkit-tap-highlight-color: transparent; }
+    </style>
+</head>
+<body class="bg-slate-50 font-sans antialiased text-slate-900 min-h-screen flex flex-col">
+
+    <script>
+        if (localStorage.getItem('portalAuthorized') !== 'true') { window.location.href = 'login.html'; }
+    </script>
+
+    <nav class="bg-white border-b border-slate-200 h-16 flex items-center px-6 justify-between sticky top-0 z-50">
+        <div class="flex items-center gap-2">
+            <div class="w-8 h-8 bg-blue-600 rounded flex items-center justify-center text-white"><i class="fas fa-balance-scale text-xs"></i></div>
+            <span class="font-bold text-lg tracking-tighter uppercase italic">Precision<span class="text-blue-600">Intelligence</span></span>
+        </div>
+        <a href="molecular-structures.html" class="text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-blue-600">Back to Database</a>
+    </nav>
+
+    <header class="bg-white border-b border-slate-200 py-10 px-6">
+        <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8">
+            <div class="text-center md:text-left">
+                <h2 class="text-[10px] font-black uppercase tracking-[0.4em] text-blue-600 mb-2">Comparative Analysis</h2>
+                <h1 class="text-3xl font-black italic uppercase tracking-tighter">Structural Comparison</h1>
+            </div>
+            
+            <div class="flex flex-col sm:flex-row gap-4 w-full max-w-2xl">
+                <input type="text" id="comp1" placeholder="Compound A (e.g. BPC-157)" class="flex-1 bg-slate-100 border-none rounded-xl py-4 px-6 text-sm focus:ring-2 focus:ring-blue-600 transition-all">
+                <input type="text" id="comp2" placeholder="Compound B (e.g. TB-500)" class="flex-1 bg-slate-100 border-none rounded-xl py-4 px-6 text-sm focus:ring-2 focus:ring-blue-600 transition-all">
+                <button onclick="runComparison()" class="bg-blue-600 text-white px-8 py-4 rounded-xl font-black uppercase tracking-widest text-[10px] hover:bg-slate-900 transition-all">Compare</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-1 max-w-7xl mx-auto w-full px-6 py-12">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            
+            <div class="space-y-4">
+                <div id="view-A" class="comparison-view overflow-hidden shadow-2xl">
+                    <div class="absolute inset-0 flex items-center justify-center text-slate-700 font-bold uppercase text-[9px] tracking-widest">Awaiting Input A</div>
+                </div>
+                <div id="data-A" class="hidden p-6 bg-white border border-slate-200 rounded-3xl">
+                    <h4 id="title-A" class="font-black italic text-xl uppercase mb-2">---</h4>
+                    <div class="grid grid-cols-2 gap-4 text-[10px]">
+                        <div><p class="text-slate-400 uppercase font-bold">Formula</p><p id="formula-A" class="font-mono text-blue-600 font-bold">---</p></div>
+                        <div><p class="text-slate-400 uppercase font-bold">Mol Weight</p><p id="mw-A" class="font-mono text-slate-900 font-bold">---</p></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="space-y-4">
+                <div id="view-B" class="comparison-view overflow-hidden shadow-2xl">
+                    <div class="absolute inset-0 flex items-center justify-center text-slate-700 font-bold uppercase text-[9px] tracking-widest">Awaiting Input B</div>
+                </div>
+                <div id="data-B" class="hidden p-6 bg-white border border-slate-200 rounded-3xl">
+                    <h4 id="title-B" class="font-black italic text-xl uppercase mb-2">---</h4>
+                    <div class="grid grid-cols-2 gap-4 text-[10px]">
+                        <div><p class="text-slate-400 uppercase font-bold">Formula</p><p id="formula-B" class="font-mono text-blue-600 font-bold">---</p></div>
+                        <div><p class="text-slate-400 uppercase font-bold">Mol Weight</p><p id="mw-B" class="font-mono text-slate-900 font-bold">---</p></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+        async function fetchCompoundData(name, suffix) {
+            try {
+                // Get CID
+                const cidRes = await fetch(`https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/name/${name}/cids/JSON`);
+                const cidData = await cidRes.json();
+                const cid = cidData.IdentifierList.CID[0];
+
+                // Get Properties
+                const propRes = await fetch(`https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/${cid}/property/MolecularFormula,MolecularWeight/JSON`);
+                const propData = await propRes.json();
+                const props = propData.PropertyTable.Properties[0];
+
+                // Update UI Text
+                document.getElementById(`data-${suffix}`).classList.remove('hidden');
+                document.getElementById(`title-${suffix}`).innerText = name;
+                document.getElementById(`formula-${suffix}`).innerText = props.MolecularFormula;
+                document.getElementById(`mw-${suffix}`).innerText = props.MolecularWeight + " g/mol";
+
+                // Initialize 3D View
+                const viewId = `view-${suffix}`;
+                const container = document.getElementById(viewId);
+                container.innerHTML = "";
+                const viewer = $3Dmol.createViewer(viewId, { backgroundColor: 'transparent' });
+                
+                const sdfRes = await fetch(`https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/${cid}/record/SDF/?record_type=3d`);
+                const sdfData = await sdfRes.text();
+                
+                viewer.addModel(sdfData, "sdf");
+                viewer.setStyle({}, { stick: {radius: 0.2}, sphere: {scale: 0.3} });
+                viewer.zoomTo();
+                viewer.render();
+                viewer.animate({loop: "backAndForth", step: 0.4});
+
+            } catch (e) {
+                alert(`Search for "${name}" returned no structural matches in the NIH database.`);
+            }
+        }
+
+        function runComparison() {
+            const a = document.getElementById('comp1').value;
+            const b = document.getElementById('comp2').value;
+            if(a) fetchCompoundData(a, 'A');
+            if(b) fetchCompoundData(b, 'B');
+        }
+    </script>
+</body>
+</html>
