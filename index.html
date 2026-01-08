@@ -3,34 +3,239 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Precision Peptides | Institutional Research</title>
+    <title>Precision Peptides | Advanced Research Reagents</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        /* Smooth Scroll */
+        html { scroll-behavior: smooth; }
+        
+        /* Hero Animation Background */
+        .molecule-bg {
+            background-color: #ffffff;
+            background-image: radial-gradient(#e2e8f0 1px, transparent 1px);
+            background-size: 30px 30px;
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+        .float-anim { animation: float 6s ease-in-out infinite; }
+        .float-anim-delay { animation: float 6s ease-in-out infinite; animation-delay: 2s; }
+
+        /* Card Hover Effects */
+        .feature-card { transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        .feature-card:hover { transform: translateY(-10px); box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1); }
+    </style>
 </head>
-<body class="bg-white font-sans antialiased">
-    <nav class="bg-white border-b border-slate-100 sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 h-16 flex justify-between items-center">
-            <div class="flex items-center gap-2">
-                <div class="w-8 h-8 bg-blue-600 rounded flex items-center justify-center text-white"><i class="fas fa-flask"></i></div>
-                <span class="font-bold text-xl tracking-tight">PRECISION<span class="text-blue-600">PEPTIDES</span></span>
+<body class="bg-white font-sans antialiased text-slate-900">
+
+    <nav class="bg-white/80 backdrop-blur-md border-b border-slate-100 h-20 flex items-center px-6 md:px-12 justify-between sticky top-0 z-50">
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center text-white shadow-lg shadow-blue-600/20">
+                <i class="fas fa-atom text-sm"></i>
             </div>
-            <div class="hidden md:flex space-x-8 text-sm font-medium">
-                <a href="index.html" class="text-blue-600">Home</a>
-                <a href="catalog.html" class="hover:text-blue-600">Catalog</a>
-                <a href="portal.html" class="hover:text-blue-600">Researcher Portal</a>
-            </div>
+            <span class="font-black text-xl tracking-tighter uppercase italic text-slate-900">Precision<span class="text-blue-600">Peptides</span></span>
         </div>
+        <div class="hidden md:flex gap-8 text-[11px] font-black uppercase tracking-[0.2em] text-slate-400">
+            <a href="catalog.html" class="hover:text-blue-600 transition-colors">Catalog</a>
+            <a href="calculator.html" class="hover:text-blue-600 transition-colors">Calculator</a>
+            <a href="portal.html" class="hover:text-blue-600 transition-colors">Researcher Portal</a>
+        </div>
+        <a href="catalog.html" class="bg-slate-900 text-white px-6 py-3 rounded-xl font-bold text-xs uppercase tracking-widest hover:bg-blue-600 transition-all shadow-xl">
+            View Stock
+        </a>
     </nav>
 
-    <section class="py-20 bg-slate-50">
-        <div class="max-w-5xl mx-auto px-4 text-center">
-            <h1 class="text-5xl font-extrabold text-slate-900 mb-6 italic uppercase tracking-tight">Purity defined by <span class="text-blue-600">Science</span></h1>
-            <p class="text-xl text-slate-600 mb-10 max-w-2xl mx-auto">Providing global research institutions with &ge;99% pure synthetic peptides for <i>in-vitro</i> analysis.</p>
-            <div class="flex flex-col md:flex-row justify-center gap-4">
-                <a href="catalog.html" class="bg-slate-900 text-white px-8 py-4 rounded-xl font-bold hover:bg-blue-600 transition-all">View Full Catalog</a>
-                <a href="portal.html" class="bg-white text-slate-900 border border-slate-200 px-8 py-4 rounded-xl font-bold hover:bg-slate-50 transition-all">Enter Researcher Portal</a>
+    <header class="relative overflow-hidden min-h-[85vh] flex items-center molecule-bg">
+        <div class="max-w-7xl mx-auto px-6 md:px-12 w-full grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            
+            <div class="relative z-10 space-y-8">
+                <div class="inline-flex items-center gap-2 bg-blue-50 border border-blue-100 px-4 py-2 rounded-full text-blue-600 font-bold text-[10px] uppercase tracking-widest">
+                    <span class="w-2 h-2 rounded-full bg-blue-600 animate-pulse"></span>
+                    Now Available: Tirzepatide & Retatrutide
+                </div>
+                <h1 class="text-6xl md:text-8xl font-black italic text-slate-900 tracking-tighter leading-[0.9]">
+                    DEFINING <br>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">PURITY</span>
+                </h1>
+                <p class="text-xl text-slate-500 font-medium max-w-lg leading-relaxed">
+                    High-performance lyophilized reagents for institutional research. HPLC verified >99% purity. Synthesized for precision.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 pt-4">
+                    <a href="catalog.html" class="px-8 py-5 bg-blue-600 text-white rounded-2xl font-black uppercase tracking-widest text-xs hover:bg-slate-900 transition-all shadow-xl shadow-blue-600/30 text-center">
+                        Browse Catalog
+                    </a>
+                    <a href="portal.html" class="px-8 py-5 bg-white border-2 border-slate-100 text-slate-900 rounded-2xl font-black uppercase tracking-widest text-xs hover:border-slate-900 transition-all text-center">
+                        Research Portal
+                    </a>
+                </div>
+                
+                <div class="flex gap-8 pt-8 opacity-60 grayscale hover:grayscale-0 transition-all duration-500">
+                    <div class="flex items-center gap-2">
+                        <i class="fas fa-check-circle text-emerald-500 text-xl"></i>
+                        <span class="text-xs font-bold uppercase text-slate-400">HPLC Verified</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <i class="fas fa-shield-alt text-blue-500 text-xl"></i>
+                        <span class="text-xs font-bold uppercase text-slate-400">Janoshik Tested</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <i class="fas fa-shipping-fast text-slate-900 text-xl"></i>
+                        <span class="text-xs font-bold uppercase text-slate-400">24h Dispatch</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="relative hidden lg:block h-full min-h-[600px]">
+                <div class="absolute top-10 right-10 bg-white p-6 rounded-[2rem] shadow-2xl border border-slate-100 float-anim w-72">
+                    <div class="flex justify-between items-start mb-4">
+                        <div class="w-12 h-12 bg-emerald-100 rounded-2xl flex items-center justify-center text-emerald-600"><i class="fas fa-check"></i></div>
+                        <span class="bg-emerald-50 text-emerald-600 text-[10px] font-black px-2 py-1 rounded uppercase">Verified</span>
+                    </div>
+                    <h3 class="font-black text-2xl text-slate-900 italic">99.9%</h3>
+                    <p class="text-xs text-slate-400 font-mono uppercase mt-1">Chromatography Purity</p>
+                    <div class="w-full bg-slate-100 h-1 mt-4 rounded-full overflow-hidden">
+                        <div class="bg-emerald-500 w-[99.9%] h-full"></div>
+                    </div>
+                </div>
+
+                <div class="absolute top-64 right-64 bg-slate-900 p-6 rounded-[2rem] shadow-2xl float-anim-delay w-64 z-20">
+                    <div class="flex justify-between items-start mb-4">
+                        <div class="w-12 h-12 bg-white/10 rounded-2xl flex items-center justify-center text-white"><i class="fas fa-box"></i></div>
+                    </div>
+                    <h3 class="font-black text-lg text-white italic">Priority Shipping</h3>
+                    <p class="text-xs text-slate-400 mt-2 leading-relaxed">Cold-chain insulated packaging for peptide stability.</p>
+                </div>
+
+                <img src="images/vial-semaglutide.jpg" class="absolute top-20 right-48 w-80 mix-blend-multiply opacity-50 blur-[2px]" alt="Background Element">
+            </div>
+        </div>
+    </header>
+
+    <section class="py-24 bg-slate-50 border-t border-slate-200">
+        <div class="max-w-7xl mx-auto px-6 md:px-12">
+            <div class="flex justify-between items-end mb-16">
+                <div>
+                    <h2 class="text-4xl font-black italic text-slate-900 uppercase tracking-tight mb-2">Research Focus</h2>
+                    <p class="text-slate-500 text-sm font-medium uppercase tracking-widest">Select your area of study</p>
+                </div>
+                <a href="catalog.html" class="hidden md:block text-blue-600 font-bold text-xs uppercase tracking-widest hover:text-slate-900 transition-colors">View All Reagents <i class="fas fa-arrow-right ml-2"></i></a>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                
+                <a href="catalog.html" class="feature-card bg-white p-8 rounded-[2.5rem] border border-slate-100 relative overflow-hidden group">
+                    <div class="absolute -right-10 -top-10 w-40 h-40 bg-blue-50 rounded-full group-hover:scale-150 transition-transform duration-700"></div>
+                    <i class="fas fa-burn text-4xl text-blue-600 mb-6 relative z-10"></i>
+                    <h3 class="text-2xl font-black text-slate-900 italic mb-2 relative z-10">Metabolic</h3>
+                    <p class="text-slate-500 text-sm leading-relaxed mb-6 relative z-10">GLP-1 agonists and lipolytic agents for obesity and diabetes research.</p>
+                    <ul class="space-y-2 relative z-10">
+                        <li class="text-xs font-bold text-slate-400 flex items-center gap-2"><div class="w-1.5 h-1.5 bg-blue-500 rounded-full"></div> Tirzepatide</li>
+                        <li class="text-xs font-bold text-slate-400 flex items-center gap-2"><div class="w-1.5 h-1.5 bg-blue-500 rounded-full"></div> Semaglutide</li>
+                        <li class="text-xs font-bold text-slate-400 flex items-center gap-2"><div class="w-1.5 h-1.5 bg-blue-500 rounded-full"></div> Retatrutide</li>
+                    </ul>
+                </a>
+
+                <a href="catalog.html" class="feature-card bg-white p-8 rounded-[2.5rem] border border-slate-100 relative overflow-hidden group">
+                    <div class="absolute -right-10 -top-10 w-40 h-40 bg-emerald-50 rounded-full group-hover:scale-150 transition-transform duration-700"></div>
+                    <i class="fas fa-dna text-4xl text-emerald-600 mb-6 relative z-10"></i>
+                    <h3 class="text-2xl font-black text-slate-900 italic mb-2 relative z-10">Regenerative</h3>
+                    <p class="text-slate-500 text-sm leading-relaxed mb-6 relative z-10">Tissue repair and angiogenic peptides for musculoskeletal recovery.</p>
+                    <ul class="space-y-2 relative z-10">
+                        <li class="text-xs font-bold text-slate-400 flex items-center gap-2"><div class="w-1.5 h-1.5 bg-emerald-500 rounded-full"></div> BPC-157</li>
+                        <li class="text-xs font-bold text-slate-400 flex items-center gap-2"><div class="w-1.5 h-1.5 bg-emerald-500 rounded-full"></div> TB-500</li>
+                        <li class="text-xs font-bold text-slate-400 flex items-center gap-2"><div class="w-1.5 h-1.5 bg-emerald-500 rounded-full"></div> GHK-Cu</li>
+                    </ul>
+                </a>
+
+                <a href="catalog.html" class="feature-card bg-white p-8 rounded-[2.5rem] border border-slate-100 relative overflow-hidden group">
+                    <div class="absolute -right-10 -top-10 w-40 h-40 bg-purple-50 rounded-full group-hover:scale-150 transition-transform duration-700"></div>
+                    <i class="fas fa-brain text-4xl text-purple-600 mb-6 relative z-10"></i>
+                    <h3 class="text-2xl font-black text-slate-900 italic mb-2 relative z-10">Cognitive</h3>
+                    <p class="text-slate-500 text-sm leading-relaxed mb-6 relative z-10">Neurological agents for BDNF enhancement and anxiolytic studies.</p>
+                    <ul class="space-y-2 relative z-10">
+                        <li class="text-xs font-bold text-slate-400 flex items-center gap-2"><div class="w-1.5 h-1.5 bg-purple-500 rounded-full"></div> Semax</li>
+                        <li class="text-xs font-bold text-slate-400 flex items-center gap-2"><div class="w-1.5 h-1.5 bg-purple-500 rounded-full"></div> Selank</li>
+                        <li class="text-xs font-bold text-slate-400 flex items-center gap-2"><div class="w-1.5 h-1.5 bg-purple-500 rounded-full"></div> DSIP</li>
+                    </ul>
+                </a>
+
             </div>
         </div>
     </section>
+
+    <section class="py-24 bg-slate-900 text-white relative overflow-hidden">
+        <div class="absolute top-0 left-0 w-full h-full opacity-10" style="background-image: url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'1\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');"></div>
+        
+        <div class="max-w-7xl mx-auto px-6 md:px-12 relative z-10 flex flex-col md:flex-row items-center justify-between gap-12">
+            <div class="max-w-xl">
+                <h2 class="text-4xl font-black italic uppercase tracking-tight mb-4">Precision Tools</h2>
+                <p class="text-slate-400 text-lg leading-relaxed mb-8">
+                    Need help with your research protocols? Access our advanced reconstitution calculator or speak to our AI Technical Assistant.
+                </p>
+                <div class="flex gap-4">
+                    <a href="calculator.html" class="bg-blue-600 text-white px-8 py-4 rounded-xl font-bold text-xs uppercase tracking-widest hover:bg-white hover:text-blue-600 transition-all">
+                        Open Calculator
+                    </a>
+                    <a href="portal.html" class="border border-slate-700 text-white px-8 py-4 rounded-xl font-bold text-xs uppercase tracking-widest hover:bg-white hover:text-slate-900 transition-all">
+                        Ask Dr. Alara
+                    </a>
+                </div>
+            </div>
+            <div class="text-9xl text-slate-800">
+                <i class="fas fa-flask"></i>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-white border-t border-slate-200 py-16">
+        <div class="max-w-7xl mx-auto px-6 md:px-12">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+                <div class="col-span-1 md:col-span-2">
+                    <div class="flex items-center gap-2 mb-6">
+                        <div class="w-8 h-8 bg-slate-900 rounded flex items-center justify-center text-white"><i class="fas fa-atom text-xs"></i></div>
+                        <span class="font-black text-lg italic uppercase tracking-tighter text-slate-900">Precision<span class="text-blue-600">Peptides</span></span>
+                    </div>
+                    <p class="text-slate-400 text-xs leading-loose max-w-sm">
+                        Precision Peptides is a specialized supplier of high-purity recombinant proteins and peptide reagents. We serve academic institutions, private laboratories, and independent researchers.
+                    </p>
+                </div>
+                <div>
+                    <h4 class="font-bold text-slate-900 uppercase tracking-widest text-xs mb-6">Catalog</h4>
+                    <ul class="space-y-4 text-xs font-medium text-slate-500">
+                        <li><a href="catalog.html" class="hover:text-blue-600">Metabolic Research</a></li>
+                        <li><a href="catalog.html" class="hover:text-blue-600">Regenerative Medicine</a></li>
+                        <li><a href="catalog.html" class="hover:text-blue-600">Nootropics</a></li>
+                        <li><a href="catalog.html" class="hover:text-blue-600">Longevity</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-slate-900 uppercase tracking-widest text-xs mb-6">Resources</h4>
+                    <ul class="space-y-4 text-xs font-medium text-slate-500">
+                        <li><a href="calculator.html" class="hover:text-blue-600">Peptide Calculator</a></li>
+                        <li><a href="portal.html" class="hover:text-blue-600">Researcher Portal</a></li>
+                        <li><a href="#" class="hover:text-blue-600">COA Database</a></li>
+                        <li><a href="#" class="hover:text-blue-600">Shipping Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-slate-100 pt-8 mt-8">
+                <div class="bg-red-50 border border-red-100 p-6 rounded-2xl text-center">
+                    <p class="text-[10px] text-red-600/70 font-bold uppercase tracking-widest mb-2">Research Use Only</p>
+                    <p class="text-[10px] text-red-800/60 leading-relaxed max-w-4xl mx-auto">
+                        All products listed on this website are for in-vitro laboratory research purposes only. They are not intended for human consumption, veterinary use, or therapeutic application. By using this website, you confirm that you are a qualified researcher familiar with the handling of these compounds.
+                    </p>
+                </div>
+                <div class="text-center mt-8 text-[10px] text-slate-300 uppercase tracking-widest">
+                    &copy; 2024 Precision Peptides. All rights reserved.
+                </div>
+            </div>
+        </div>
+    </footer>
+
 </body>
 </html>
