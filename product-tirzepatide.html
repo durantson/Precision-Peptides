@@ -14,9 +14,12 @@
             <div class="w-8 h-8 bg-blue-600 rounded flex items-center justify-center text-white"><i class="fas fa-atom text-xs"></i></div>
             <span class="font-bold text-lg tracking-tighter uppercase italic text-slate-900">Precision<span class="text-blue-600">Labs</span></span>
         </div>
-        <div class="flex gap-6 text-[10px] font-black uppercase tracking-widest text-slate-400">
-            <a href="catalog.html" class="hover:text-blue-600 transition-colors">Catalog</a>
-            <a href="portal.html" class="hover:text-blue-600 transition-colors">Portal</a>
+        <div class="flex items-center gap-6">
+            <a href="catalog.html" class="text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-blue-600 transition-colors">Catalog</a>
+            <button onclick="viewManifest()" class="relative group">
+                <i class="fas fa-shopping-bag text-slate-900 text-lg group-hover:text-blue-600 transition-colors"></i>
+                <span id="cart-badge" class="absolute -top-2 -right-2 bg-red-500 text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center opacity-0 transition-opacity">0</span>
+            </button>
         </div>
     </nav>
 
@@ -25,13 +28,16 @@
         <div class="flex items-center gap-2 text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em] mb-8">
             <a href="catalog.html">Catalog</a>
             <i class="fas fa-chevron-right text-[8px]"></i>
-            <span class="text-blue-600">Technical Data Sheet</span>
+            <span class="text-blue-600">Tirzepatide</span>
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
             
             <div class="lg:col-span-5 space-y-8">
-                <div class="bg-slate-50 rounded-[3rem] p-8 border border-slate-100 overflow-hidden group">
+                <div class="bg-slate-50 rounded-[3rem] p-8 border border-slate-100 overflow-hidden group relative">
+                    <span class="absolute top-6 left-6 bg-white/80 backdrop-blur border border-slate-200 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest text-emerald-600">
+                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block mr-1 animate-pulse"></span> In Stock
+                    </span>
                     <img src="images/vial-tirzepatide.jpg" class="w-full aspect-square object-contain mix-blend-multiply group-hover:scale-110 transition-transform duration-700" alt="Tirzepatide Reagent Vial">
                 </div>
 
@@ -49,10 +55,6 @@
                             <td class="p-4 font-mono text-right text-xs">C<sub>225</sub>H<sub>348</sub>N<sub>48</sub>O<sub>68</sub></td>
                         </tr>
                         <tr class="border-b border-slate-100">
-                            <td class="p-4 font-bold text-slate-500 uppercase text-[10px]">Molar Mass</td>
-                            <td class="p-4 font-mono text-right text-xs">4813.53 g/mol</td>
-                        </tr>
-                        <tr>
                             <td class="p-4 font-bold text-slate-500 uppercase text-[10px]">Purity Level</td>
                             <td class="p-4 font-bold text-emerald-600 text-right">&ge;99.8%</td>
                         </tr>
@@ -64,6 +66,36 @@
                 <h1 class="text-6xl font-black text-slate-900 italic uppercase tracking-tighter mb-4">Tirzepatide <span class="text-blue-600 text-3xl block">10.0 mg</span></h1>
                 <p class="text-xl text-slate-500 font-medium leading-relaxed mb-8">Dual Glucose-Dependent Insulinotropic Polypeptide (GIP) and Glucagon-Like Peptide-1 (GLP-1) Receptor Agonist.</p>
 
+                <div class="bg-white border-2 border-slate-100 rounded-3xl p-6 mb-10 shadow-lg shadow-slate-100/50">
+                    <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+                        
+                        <div>
+                            <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest mb-1">Institutional Price</p>
+                            <div class="flex items-baseline gap-1">
+                                <span class="text-3xl font-black text-slate-900">$145.00</span>
+                                <span class="text-sm font-medium text-slate-400">/ vial</span>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-4 bg-slate-50 p-2 rounded-2xl border border-slate-200">
+                            <div class="flex items-center">
+                                <button onclick="updateQty(-1)" class="w-10 h-10 flex items-center justify-center text-slate-400 hover:text-slate-900 hover:bg-white rounded-xl transition-all font-bold">-</button>
+                                <input type="text" id="qtyInput" value="1" class="w-10 text-center bg-transparent font-bold text-slate-900 outline-none" readonly>
+                                <button onclick="updateQty(1)" class="w-10 h-10 flex items-center justify-center text-slate-400 hover:text-slate-900 hover:bg-white rounded-xl transition-all font-bold">+</button>
+                            </div>
+                            <button onclick="addToManifest('Tirzepatide 10mg', 145.00)" class="bg-blue-600 text-white px-8 h-10 rounded-xl font-bold text-xs uppercase tracking-widest hover:bg-slate-900 transition-colors whitespace-nowrap">
+                                Add to Manifest
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-4 pt-4 border-t border-slate-100 text-center">
+                        <p class="text-[10px] text-emerald-600 font-bold uppercase tracking-widest">
+                            <i class="fas fa-tags mr-1"></i> Bulk Pricing: Order 10+ vials for 15% off
+                        </p>
+                    </div>
+                </div>
+
                 <div class="space-y-10">
                     
                     <section>
@@ -71,7 +103,7 @@
                             <span class="w-8 h-[2px] bg-blue-600"></span> Primary Research Data
                         </h2>
                         <div class="prose prose-slate max-w-none text-slate-600 leading-loose">
-                            Tirzepatide is a synthetic derivative of the gastric inhibitory polypeptide (GIP) which has been engineered to possess co-agonist activity at the GLP-1 receptor. Research models indicate that this dual-agonist approach creates a synergistic effect on glucose metabolism and lipid regulation compared to selective GLP-1 agonists. The peptide sequence contains a <strong>C20 fatty diacid moiety</strong> attached via a hydrophilic linker, which enables albumin binding and extends the elimination half-life to approximately 5 days.
+                            Tirzepatide is a synthetic derivative of the gastric inhibitory polypeptide (GIP) which has been engineered to possess co-agonist activity at the GLP-1 receptor. Research models indicate that this dual-agonist approach creates a synergistic effect on glucose metabolism and lipid regulation. The peptide sequence contains a <strong>C20 fatty diacid moiety</strong> attached via a hydrophilic linker, which enables albumin binding and extends the elimination half-life.
                         </div>
                     </section>
                     
@@ -81,7 +113,7 @@
                         <div class="bg-slate-50 p-6 rounded-3xl border border-slate-100">
                             <i class="fas fa-snowflake text-blue-500 mb-2"></i>
                             <h4 class="font-bold text-sm uppercase italic">Storage</h4>
-                            <p class="text-xs text-slate-500">$-20°C$ for long-term storage.</p>
+                            <p class="text-xs text-slate-500">$-20°C$ (Lyophilized).</p>
                         </div>
                         <div class="bg-slate-50 p-6 rounded-3xl border border-slate-100">
                             <i class="fas fa-tint text-blue-500 mb-2"></i>
@@ -106,10 +138,55 @@
         <div class="mt-20 p-8 rounded-[3rem] bg-red-50 border border-red-100 text-center">
             <h3 class="text-red-600 font-black uppercase tracking-widest text-xs mb-2">Institutional Research Disclaimer</h3>
             <p class="text-red-700/70 text-sm max-w-3xl mx-auto leading-relaxed">
-                This material is synthesized for <strong>in-vitro laboratory research purposes only</strong>. It is not for human or veterinary diagnostic or therapeutic use. All research must be conducted by qualified professionals using appropriate biosafety protocols.
+                This material is synthesized for <strong>in-vitro laboratory research purposes only</strong>. It is not for human or veterinary diagnostic or therapeutic use.
             </p>
         </div>
     </main>
 
+    <script>
+        let qty = 1;
+        let cart = JSON.parse(localStorage.getItem('precisionCart')) || [];
+        updateBadge();
+
+        function updateQty(change) {
+            qty += change;
+            if (qty < 1) qty = 1;
+            document.getElementById('qtyInput').value = qty;
+        }
+
+        function addToManifest(name, price) {
+            const existingItem = cart.find(item => item.name === name);
+            if (existingItem) {
+                existingItem.qty += qty;
+            } else {
+                cart.push({ name: name, price: price, qty: qty });
+            }
+            
+            localStorage.setItem('precisionCart', JSON.stringify(cart));
+            updateBadge();
+            
+            // Visual Feedback
+            const btn = document.querySelector('button[onclick^="addToManifest"]');
+            const originalText = btn.innerText;
+            btn.innerText = "Added to Manifest";
+            btn.classList.add('bg-emerald-600');
+            setTimeout(() => {
+                btn.innerText = originalText;
+                btn.classList.remove('bg-emerald-600');
+            }, 2000);
+        }
+
+        function updateBadge() {
+            const total = cart.reduce((acc, item) => acc + item.qty, 0);
+            const badge = document.getElementById('cart-badge');
+            badge.innerText = total;
+            badge.style.opacity = total > 0 ? '1' : '0';
+        }
+
+        function viewManifest() {
+            alert("This simulates opening the Cart/Checkout drawer.\n\nCurrent Items:\n" + 
+                  cart.map(i => `- ${i.name} x${i.qty}`).join('\n'));
+        }
+    </script>
 </body>
 </html>
