@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentation & Support | Precision Labs</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; }
+        .faq-item.active .faq-answer { max-height: 200px; }
+        .faq-item.active i { transform: rotate(180deg); }
+        * { -webkit-tap-highlight-color: transparent; }
+    </style>
+</head>
+<body class="bg-slate-50 font-sans antialiased text-slate-900 min-h-screen">
+
+    <nav class="bg-white border-b border-slate-200 h-16 flex items-center px-6 justify-between sticky top-0 z-50">
+        <a href="index.html" class="flex items-center gap-2">
+            <div class="w-8 h-8 bg-blue-600 rounded flex items-center justify-center text-white">
+                <i class="fas fa-atom text-xs"></i>
+            </div>
+            <span class="font-bold text-lg tracking-tighter uppercase italic text-slate-900">
+                Precision<span class="text-blue-600">Labs</span>
+            </span>
+        </a>
+        <div class="flex gap-6">
+            <a href="catalog.html" class="text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-blue-600 transition-colors">Catalog</a>
+            <a href="login.html" class="text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-blue-600 transition-colors">Portal</a>
+        </div>
+    </nav>
+
+    <main class="max-w-4xl mx-auto px-6 py-16">
+        
+        <div class="text-center mb-16">
+            <h2 class="text-[10px] font-black uppercase tracking-[0.4em] text-blue-600 mb-4">Documentation Center</h2>
+            <h1 class="text-4xl md:text-6xl font-black text-slate-900 italic uppercase tracking-tighter mb-6">Support Hub</h1>
+            <p class="text-slate-500 text-sm md:text-base font-medium leading-relaxed max-w-2xl mx-auto">
+                Access technical documentation, shipping protocols, and institutional procurement guidelines.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-20">
+            <div class="bg-white border border-slate-200 p-8 rounded-[2rem] shadow-sm">
+                <i class="fas fa-truck-ramp-box text-blue-600 text-2xl mb-4"></i>
+                <h3 class="font-black uppercase italic tracking-tight text-lg mb-2">Shipping Logistics</h3>
+                <p class="text-xs text-slate-500 leading-relaxed">Orders are dispatched within 24 hours via FedEx Express. Cold-chain integrity is maintained using insulated laboratory packaging.</p>
+            </div>
+            <div class="bg-white border border-slate-200 p-8 rounded-[2rem] shadow-sm">
+                <i class="fas fa-microscope text-emerald-600 text-2xl mb-4"></i>
+                <h3 class="font-black uppercase italic tracking-tight text-lg mb-2">Quality Standards</h3>
+                <p class="text-xs text-slate-500 leading-relaxed">All batches undergo HPLC and Mass Spec analysis. Certificates of Analysis (COA) are available via the Batch Verification portal.</p>
+            </div>
+        </div>
+
+        <div class="space-y-4">
+            <h3 class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-8 border-b border-slate-200 pb-4">Frequently Asked Questions</h3>
+            
+            <div class="faq-item bg-white border border-slate-200 rounded-2xl overflow-hidden transition-all">
+                <button onclick="toggleFAQ(this)" class="w-full flex items-center justify-between p-6 text-left">
+                    <span class="text-xs font-black uppercase tracking-tight italic">Do you ship reagents with ice packs?</span>
+                    <i class="fas fa-chevron-down text-slate-300 transition-transform"></i>
+                </button>
+                <div class="faq-answer px-6 pb-6 text-xs text-slate-500 leading-relaxed">
+                    Lyophilized (powder) peptides are highly stable at room temperature for transit. While we use insulated packaging, ice packs are typically reserved for liquid-state reagents or extreme climate zones to ensure 99.8% purity upon arrival.
+                </div>
+            </div>
+
+            <div class="faq-item bg-white border border-slate-200 rounded-2xl overflow-hidden transition-all">
+                <button onclick="toggleFAQ(this)" class="w-full flex items-center justify-between p-6 text-left">
+                    <span class="text-xs font-black uppercase tracking-tight italic">How do I access the HPLC lab reports?</span>
+                    <i class="fas fa-chevron-down text-slate-300 transition-transform"></i>
+                </button>
+                <div class="faq-answer px-6 pb-6 text-xs text-slate-500 leading-relaxed">
+                    Navigate to the "Verify Batch" link in our menu. Enter the batch number found on your vial's label to view the specific HPLC and Mass Spectrometry results for that sequence.
+                </div>
+            </div>
+
+            <div class="faq-item bg-white border border-slate-200 rounded-2xl overflow-hidden transition-all">
+                <button onclick="toggleFAQ(this)" class="w-full flex items-center justify-between p-6 text-left">
+                    <span class="text-xs font-black uppercase tracking-tight italic">What is the shelf life of your reagents?</span>
+                    <i class="fas fa-chevron-down text-slate-300 transition-transform"></i>
+                </button>
+                <div class="faq-answer px-6 pb-6 text-xs text-slate-500 leading-relaxed">
+                    Lyophilized peptides remain stable for 24 months when stored at -20°C. Once reconstituted, reagents should be kept at 2°C – 8°C and utilized within 30 days for maximum research efficacy.
+                </div>
+            </div>
+
+            <div class="faq-item bg-white border border-slate-200 rounded-2xl overflow-hidden transition-all">
+                <button onclick="toggleFAQ(this)" class="w-full flex items-center justify-between p-6 text-left">
+                    <span class="text-xs font-black uppercase tracking-tight italic">How do I submit an Institutional Quote?</span>
+                    <i class="fas fa-chevron-down text-slate-300 transition-transform"></i>
+                </button>
+                <div class="faq-answer px-6 pb-6 text-xs text-slate-500 leading-relaxed">
+                    Add your required compounds to the "Research Manifest." Upon submission, our procurement team will email a formal invoice and institutional quote to your provided email address.
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-20 p-10 bg-blue-600 rounded-[3rem] text-center text-white shadow-xl shadow-blue-600/20">
+            <h4 class="text-xl font-black italic uppercase tracking-tighter mb-4">Still need assistance?</h4>
+            <p class="text-blue-100 text-xs mb-8">Direct laboratory support is available for complex technical inquiries.</p>
+            <a href="contact.html" class="inline-block bg-white text-blue-600 px-8 py-4 rounded-xl font-black uppercase tracking-widest text-[10px] hover:bg-slate-900 hover:text-white transition-all">
+                Contact Lab Staff
+            </a>
+        </div>
+
+    </main>
+
+    <footer class="p-12 text-center text-[10px] font-bold text-slate-300 uppercase tracking-widest">
+        &copy; 2026 Precision Labs Laboratory Support
+    </footer>
+
+    <script>
+        function toggleFAQ(button) {
+            const item = button.parentElement;
+            const isActive = item.classList.contains('active');
+            
+            // Close all others
+            document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
+            
+            // Toggle clicked
+            if (!isActive) item.classList.add('active');
+        }
+    </script>
+
+</body>
+</html>
