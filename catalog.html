@@ -2,477 +2,127 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reagent Catalog | Precision Peptides</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Research Catalog | Precision Labs</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        .product-card { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
-        .product-card:hover { transform: translateY(-5px); box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); }
+        .product-card:hover { transform: translateY(-5px); border-color: #2563eb; }
         .filter-btn.active { background-color: #0f172a; color: white; border-color: #0f172a; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        * { -webkit-tap-highlight-color: transparent; }
     </style>
 </head>
-<body class="bg-slate-50 font-sans antialiased text-slate-900">
+<body class="bg-slate-50 font-sans antialiased text-slate-900 min-h-screen">
 
-    <nav class="bg-white border-b border-slate-200 h-16 flex items-center px-6 justify-between sticky top-0 z-50">
+    <nav class="bg-white border-b border-slate-200 h-16 flex items-center px-4 md:px-8 justify-between sticky top-0 z-50">
         <a href="index.html" class="flex items-center gap-2 hover:opacity-75 transition-opacity">
-    <div class="w-8 h-8 bg-blue-600 rounded flex items-center justify-center text-white"><i class="fas fa-atom text-xs"></i></div>
-    <span class="font-bold text-lg tracking-tighter uppercase italic text-slate-900">Precision<span class="text-blue-600">Labs</span></span>
-</a>
-        <div class="flex gap-6 text-[10px] font-black uppercase tracking-widest text-slate-400">
-            <a href="index.html" class="hover:text-blue-600 transition-colors">Home</a>
+            <div class="w-7 h-7 md:w-8 md:h-8 bg-blue-600 rounded flex items-center justify-center text-white shrink-0">
+                <i class="fas fa-atom text-[10px] md:text-xs"></i>
+            </div>
+            <span class="font-bold text-sm md:text-lg tracking-tighter uppercase italic text-slate-900">
+                Precision<span class="text-blue-600">Labs</span>
+            </span>
+        </a>
+        <div class="flex gap-4 md:gap-6 text-[9px] md:text-[10px] font-black uppercase tracking-widest text-slate-400">
             <a href="portal.html" class="hover:text-blue-600 transition-colors">Portal</a>
-            <a href="batch-verification.html" class="hover:text-blue-600 transition-colors">Verify Batch</a>
+            <a href="batch-verification.html" class="hover:text-blue-600 transition-colors hidden md:block">Verify Batch</a>
         </div>
     </nav>
 
-    <main class="max-w-7xl mx-auto px-6 py-12">
-        
-        <div class="flex flex-col md:flex-row justify-between items-end mb-12 gap-8">
-            <div>
-                <h1 class="text-4xl font-black italic uppercase tracking-tight text-slate-900 mb-2">Master Catalog</h1>
-                <p class="text-slate-500 font-medium">Select high-purity reagents for your research protocols.</p>
-            </div>
-            
-            <div class="w-full md:w-96 relative">
-                <input type="text" id="searchInput" placeholder="Search by CAS # or Name..." class="w-full bg-white border border-slate-200 rounded-xl pl-12 pr-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-600 transition-all shadow-sm">
-                <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
+    <header class="bg-white border-b border-slate-100 pt-8 pb-4 md:py-12 px-6">
+        <div class="max-w-7xl mx-auto flex flex-col items-center text-center">
+            <h1 class="text-3xl md:text-6xl font-black text-slate-900 italic uppercase tracking-tighter mb-4">Master Catalog</h1>
+            <div class="w-full max-w-xl relative mt-4">
+                <input type="text" id="searchInput" onkeyup="searchProducts()" placeholder="Search Name or Category..." 
+                class="w-full bg-slate-50 border border-slate-200 rounded-2xl py-4 px-12 text-sm focus:outline-none focus:border-blue-600 transition-all shadow-sm">
+                <i class="fas fa-search absolute left-5 top-1/2 -translate-y-1/2 text-slate-300"></i>
             </div>
         </div>
+    </header>
 
-        <div class="flex flex-wrap gap-2 mb-12 overflow-x-auto pb-2">
-            <button onclick="filterProducts('all', this)" class="filter-btn active px-6 py-2 rounded-full border border-slate-200 text-xs font-bold uppercase tracking-widest transition-all bg-white hover:border-blue-600">All</button>
-            <button onclick="filterProducts('metabolic', this)" class="filter-btn px-6 py-2 rounded-full border border-slate-200 text-xs font-bold uppercase tracking-widest transition-all bg-white hover:border-blue-600">Metabolic</button>
-            <button onclick="filterProducts('regenerative', this)" class="filter-btn px-6 py-2 rounded-full border border-slate-200 text-xs font-bold uppercase tracking-widest transition-all bg-white hover:border-blue-600">Regenerative</button>
-            <button onclick="filterProducts('nootropic', this)" class="filter-btn px-6 py-2 rounded-full border border-slate-200 text-xs font-bold uppercase tracking-widest transition-all bg-white hover:border-blue-600">Nootropic</button>
-            <button onclick="filterProducts('longevity', this)" class="filter-btn px-6 py-2 rounded-full border border-slate-200 text-xs font-bold uppercase tracking-widest transition-all bg-white hover:border-blue-600">Longevity</button>
-            <button onclick="filterProducts('immune', this)" class="filter-btn px-6 py-2 rounded-full border border-slate-200 text-xs font-bold uppercase tracking-widest transition-all bg-white hover:border-blue-600">Immune</button>
+    <div class="sticky top-16 bg-white/80 backdrop-blur-md border-b border-slate-100 z-40 overflow-x-auto no-scrollbar">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex gap-2 whitespace-nowrap md:justify-center">
+            <button onclick="filterProducts('all', this)" class="filter-btn active px-5 py-2 rounded-full border border-slate-200 text-[9px] font-black uppercase tracking-widest transition-all">All</button>
+            <button onclick="filterProducts('metabolic', this)" class="filter-btn px-5 py-2 rounded-full border border-slate-200 text-[9px] font-black uppercase tracking-widest transition-all">Metabolic</button>
+            <button onclick="filterProducts('regenerative', this)" class="filter-btn px-5 py-2 rounded-full border border-slate-200 text-[9px] font-black uppercase tracking-widest transition-all">Regenerative</button>
+            <button onclick="filterProducts('nootropic', this)" class="filter-btn px-5 py-2 rounded-full border border-slate-200 text-[9px] font-black uppercase tracking-widest transition-all">Nootropic</button>
+            <button onclick="filterProducts('longevity', this)" class="filter-btn px-5 py-2 rounded-full border border-slate-200 text-[9px] font-black uppercase tracking-widest transition-all">Longevity</button>
+            <button onclick="filterProducts('immune', this)" class="filter-btn px-5 py-2 rounded-full border border-slate-200 text-[9px] font-black uppercase tracking-widest transition-all">Immune</button>
         </div>
+    </div>
 
-        <div id="product-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            
-            <div class="product-card bg-white p-6 rounded-2xl border border-slate-200 group relative" data-category="metabolic" data-name="tirzepatide">
-                <div class="absolute top-4 right-4 w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
-                <div class="h-40 bg-slate-50 rounded-xl mb-4 flex items-center justify-center overflow-hidden">
-                    <img src="images/vial-tirzepatide.jpg" class="h-32 object-contain mix-blend-multiply group-hover:scale-110 transition-transform duration-500" alt="Vial">
-                </div>
-                <div class="text-[10px] font-bold text-blue-600 uppercase tracking-widest mb-1">Metabolic</div>
-                <h3 class="text-xl font-black italic text-slate-900 mb-1">Tirzepatide</h3>
-                <p class="text-xs text-slate-400 mb-4 line-clamp-2">Dual GIP/GLP-1 receptor agonist for glucose metabolism research.</p>
-                <div class="flex items-center justify-between border-t border-slate-100 pt-4">
-                    <span class="font-bold text-slate-900">$69.00+</span>
-                    <a href="product-tirzepatide.html" class="text-xs font-bold text-blue-600 hover:text-slate-900 transition-colors uppercase tracking-wider">View Reagent <i class="fas fa-arrow-right ml-1"></i></a>
-                </div>
+    <main class="max-w-7xl mx-auto px-2 md:px-8 py-8">
+        <div id="product-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-6">
             </div>
-
-            <div class="product-card bg-white p-6 rounded-2xl border border-slate-200 group relative" data-category="metabolic" data-name="retatrutide">
-                <div class="absolute top-4 right-4 w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
-                <div class="h-40 bg-slate-50 rounded-xl mb-4 flex items-center justify-center overflow-hidden">
-                    <img src="images/vial-retatrutide.jpg" class="h-32 object-contain mix-blend-multiply group-hover:scale-110 transition-transform duration-500" alt="Vial">
-                </div>
-                <div class="text-[10px] font-bold text-blue-600 uppercase tracking-widest mb-1">Metabolic</div>
-                <h3 class="text-xl font-black italic text-slate-900 mb-1">Retatrutide</h3>
-                <p class="text-xs text-slate-400 mb-4 line-clamp-2">Triple agonist (GLP-1/GIP/GCGR) for advanced lipolysis studies.</p>
-                <div class="flex items-center justify-between border-t border-slate-100 pt-4">
-                    <span class="font-bold text-slate-900">$115.00+</span>
-                    <a href="product-retatrutide.html" class="text-xs font-bold text-blue-600 hover:text-slate-900 transition-colors uppercase tracking-wider">View Reagent <i class="fas fa-arrow-right ml-1"></i></a>
-                </div>
-            </div>
-
-            <div class="product-card bg-white p-6 rounded-2xl border border-slate-200 group relative" data-category="metabolic" data-name="semaglutide">
-                <div class="absolute top-4 right-4 w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
-                <div class="h-40 bg-slate-50 rounded-xl mb-4 flex items-center justify-center overflow-hidden">
-                    <img src="images/vial-semaglutide.jpg" class="h-32 object-contain mix-blend-multiply group-hover:scale-110 transition-transform duration-500" alt="Vial">
-                </div>
-                <div class="text-[10px] font-bold text-blue-600 uppercase tracking-widest mb-1">Metabolic</div>
-                <h3 class="text-xl font-black italic text-slate-900 mb-1">Semaglutide</h3>
-                <p class="text-xs text-slate-400 mb-4 line-clamp-2">Standard GLP-1 agonist with C18 fatty acid chain modification.</p>
-                <div class="flex items-center justify-between border-t border-slate-100 pt-4">
-                    <span class="font-bold text-slate-900">$85.00+</span>
-                    <a href="product-semaglutide.html" class="text-xs font-bold text-blue-600 hover:text-slate-900 transition-colors uppercase tracking-wider">View Reagent <i class="fas fa-arrow-right ml-1"></i></a>
-                </div>
-            </div>
-
-            <div class="product-card bg-white p-6 rounded-2xl border border-slate-200 group relative" data-category="metabolic" data-name="aod9604">
-                <div class="absolute top-4 right-4 w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
-                <div class="h-40 bg-slate-50 rounded-xl mb-4 flex items-center justify-center overflow-hidden">
-                    <img src="images/vial-aod9604.jpg" class="h-32 object-contain mix-blend-multiply group-hover:scale-110 transition-transform duration-500" alt="Vial">
-                </div>
-                <div class="text-[10px] font-bold text-blue-600 uppercase tracking-widest mb-1">Metabolic</div>
-                <h3 class="text-xl font-black italic text-slate-900 mb-1">AOD-9604</h3>
-                <p class="text-xs text-slate-400 mb-4 line-clamp-2">Lipolytic fragment (177-191) of the Growth Hormone peptide.</p>
-                <div class="flex items-center justify-between border-t border-slate-100 pt-4">
-                    <span class="font-bold text-slate-900">$45.00+</span>
-                    <a href="product-aod9604.html" class="text-xs font-bold text-blue-600 hover:text-slate-900 transition-colors uppercase tracking-wider">View Reagent <i class="fas fa-arrow-right ml-1"></i></a>
-                </div>
-            </div>
-
-            <div class="product-card bg-white p-6 rounded-2xl border border-slate-200 group relative" data-category="metabolic" data-name="cardarine">
-                <div class="absolute top-4 right-4 w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
-                <div class="h-40 bg-slate-50 rounded-xl mb-4 flex items-center justify-center overflow-hidden">
-                    <img src="images/vial-cardarine.jpg" class="h-32 object-contain mix-blend-multiply group-hover:scale-110 transition-transform duration-500" alt="Vial">
-                </div>
-                <div class="text-[10px] font-bold text-blue-600 uppercase tracking-widest mb-1">Metabolic</div>
-                <h3 class="text-xl font-black italic text-slate-900 mb-1">Cardarine</h3>
-                <p class="text-xs text-slate-400 mb-4 line-clamp-2">GW-501516. PPAR-delta agonist for oxidative metabolism research.</p>
-                <div class="flex items-center justify-between border-t border-slate-100 pt-4">
-                    <span class="font-bold text-slate-900">$40.00+</span>
-                    <a href="product-cardarine.html" class="text-xs font-bold text-blue-600 hover:text-slate-900 transition-colors uppercase tracking-wider">View Reagent <i class="fas fa-arrow-right ml-1"></i></a>
-                </div>
-            </div>
-
-            <div class="product-card bg-white p-6 rounded-2xl border border-slate-200 group relative" data-category="metabolic" data-name="tesamorelin">
-                <div class="absolute top-4 right-4 w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
-                <div class="h-40 bg-slate-50 rounded-xl mb-4 flex items-center justify-center overflow-hidden">
-                    <img src="images/vial-tesamorelin.jpg" class="h-32 object-contain mix-blend-multiply group-hover:scale-110 transition-transform duration-500" alt="Vial">
-                </div>
-                <div class="text-[10px] font-bold text-blue-600 uppercase tracking-widest mb-1">Metabolic</div>
-                <h3 class="text-xl font-black italic text-slate-900 mb-1">Tesamorelin</h3>
-                <p class="text-xs text-slate-400 mb-4 line-clamp-2">GHRH analogue with N-terminal hexenoic acid modification.</p>
-                <div class="flex items-center justify-between border-t border-slate-100 pt-4">
-                    <span class="font-bold text-slate-900">$45.00+</span>
-                    <a href="product-tesamorelin.html" class="text-xs font-bold text-blue-600 hover:text-slate-900 transition-colors uppercase tracking-wider">View Reagent <i class="fas fa-arrow-right ml-1"></i></a>
-                </div>
-            </div>
-
-            <div class="product-card bg-white p-6 rounded-2xl border border-slate-200 group relative" data-category="regenerative" data-name="bpc157">
-                <div class="absolute top-4 right-4 w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
-                <div class="h-40 bg-slate-50 rounded-xl mb-4 flex items-center justify-center overflow-hidden">
-                    <img src="images/vial-bpc157.jpg" class="h-32 object-contain mix-blend-multiply group-hover:scale-110 transition-transform duration-500" alt="Vial">
-                </div>
-                <div class="text-[10px] font-bold text-blue-600 uppercase tracking-widest mb-1">Regenerative</div>
-                <h3 class="text-xl font-black italic text-slate-900 mb-1">BPC-157</h3>
-                <p class="text-xs text-slate-400 mb-4 line-clamp-2">Stable Arginine Salt form. Pentadecapeptide for tissue repair.</p>
-                <div class="flex items-center justify-between border-t border-slate-100 pt-4">
-                    <span class="font-bold text-slate-900">$45.00+</span>
-                    <a href="product-bpc157.html" class="text-xs font-bold text-blue-600 hover:text-slate-900 transition-colors uppercase tracking-wider">View Reagent <i class="fas fa-arrow-right ml-1"></i></a>
-                </div>
-            </div>
-
-            <div class="product-card bg-white p-6 rounded-2xl border border-slate-200 group relative" data-category="regenerative" data-name="tb500">
-                <div class="absolute top-4 right-4 w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
-                <div class="h-40 bg-slate-50 rounded-xl mb-4 flex items-center justify-center overflow-hidden">
-                    <img src="images/vial-tb500.jpg" class="h-32 object-contain mix-blend-multiply group-hover:scale-110 transition-transform duration-500" alt="Vial">
-                </div>
-                <div class="text-[10px] font-bold text-blue-600 uppercase tracking-widest mb-1">Regenerative</div>
-                <h3 class="text-xl font-black italic text-slate-900 mb-1">TB-500</h3>
-                <p class="text-xs text-slate-400 mb-4 line-clamp-2">Synthetic Thymosin Beta-4. Actin sequestering peptide.</p>
-                <div class="flex items-center justify-between border-t border-slate-100 pt-4">
-                    <span class="font-bold text-slate-900">$55.00+</span>
-                    <a href="product-tb500.html" class="text-xs font-bold text-blue-600 hover:text-slate-900 transition-colors uppercase tracking-wider">View Reagent <i class="fas fa-arrow-right ml-1"></i></a>
-                </div>
-            </div>
-
-            <div class="product-card bg-white p-6 rounded-2xl border border-slate-200 group relative" data-category="regenerative" data-name="ghkcu">
-                <div class="absolute top-4 right-4 w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
-                <div class="h-40 bg-slate-50 rounded-xl mb-4 flex items-center justify-center overflow-hidden">
-                    <img src="images/vial-ghkcu.jpg" class="h-32 object-contain mix-blend-multiply group-hover:scale-110 transition-transform duration-500" alt="Vial">
-                </div>
-                <div class="text-[10px] font-bold text-blue-600 uppercase tracking-widest mb-1">Regenerative</div>
-                <h3 class="text-xl font-black italic text-slate-900 mb-1">GHK-Cu</h3>
-                <p class="text-xs text-slate-400 mb-4 line-clamp-2">Copper-peptide complex for collagen synthesis research.</p>
-                <div class="flex items-center justify-between border-t border-slate-100 pt-4">
-                    <span class="font-bold text-slate-900">$45.00+</span>
-                    <a href="product-ghkcu.html" class="text-xs font-bold text-blue-600 hover:text-slate-900 transition-colors uppercase tracking-wider">View Reagent <i class="fas fa-arrow-right ml-1"></i></a>
-                </div>
-            </div>
-
-             <div class="product-card bg-white p-6 rounded-2xl border border-slate-200 group relative" data-category="regenerative" data-name="igf1lr3">
-                <div class="absolute top-4 right-4 w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
-                <div class="h-40 bg-slate-50 rounded-xl mb-4 flex items-center justify-center overflow-hidden">
-                    <img src="images/vial-igf1lr3.jpg" class="h-32 object-contain mix-blend-multiply group-hover:scale-110 transition-transform duration-500" alt="Vial">
-                </div>
-                <div class="text-[10px] font-bold text-blue-600 uppercase tracking-widest mb-1">Regenerative</div>
-                <h3 class="text-xl font-black italic text-slate-900 mb-1">IGF-1 LR3</h3>
-                <p class="text-xs text-slate-400 mb-4 line-clamp-2">Long R3 Insulin-like Growth Factor-I analogue.</p>
-                <div class="flex items-center justify-between border-t border-slate-100 pt-4">
-                    <span class="font-bold text-slate-900">$75.00+</span>
-                    <a href="product-igf1lr3.html" class="text-xs font-bold text-blue-600 hover:text-slate-900 transition-colors uppercase tracking-wider">View Reagent <i class="fas fa-arrow-right ml-1"></i></a>
-                </div>
-            </div>
-
-            <div class="product-card bg-white p-6 rounded-2xl border border-slate-200 group relative" data-category="nootropic" data-name="semax">
-                <div class="absolute top-4 right-4 w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
-                <div class="h-40 bg-slate-50 rounded-xl mb-4 flex items-center justify-center overflow-hidden">
-                    <img src="images/vial-semax.jpg" class="h-32 object-contain mix-blend-multiply group-hover:scale-110 transition-transform duration-500" alt="Vial">
-                </div>
-                <div class="text-[10px] font-bold text-blue-600 uppercase tracking-widest mb-1">Nootropic</div>
-                <h3 class="text-xl font-black italic text-slate-900 mb-1">Semax</h3>
-                <p class="text-xs text-slate-400 mb-4 line-clamp-2">ACTH(4-10) analogue for BDNF expression research.</p>
-                <div class="flex items-center justify-between border-t border-slate-100 pt-4">
-                    <span class="font-bold text-slate-900">$45.00+</span>
-                    <a href="product-semax.html" class="text-xs font-bold text-blue-600 hover:text-slate-900 transition-colors uppercase tracking-wider">View Reagent <i class="fas fa-arrow-right ml-1"></i></a>
-                </div>
-            </div>
-
-             <div class="product-card bg-white p-6 rounded-2xl border border-slate-200 group relative" data-category="nootropic" data-name="nasemax">
-                <div class="absolute top-4 right-4 w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
-                <div class="h-40 bg-slate-50 rounded-xl mb-4 flex items-center justify-center overflow-hidden">
-                    <img src="images/vial-na-semax.jpg" class="h-32 object-contain mix-blend-multiply group-hover:scale-110 transition-transform duration-500" alt="Vial">
-                </div>
-                <div class="text-[10px] font-bold text-blue-600 uppercase tracking-widest mb-1">Nootropic</div>
-                <h3 class="text-xl font-black italic text-slate-900 mb-1">NA-Semax Amidate</h3>
-                <p class="text-xs text-slate-400 mb-4 line-clamp-2">Acetyl/Amidate modified version for enhanced stability.</p>
-                <div class="flex items-center justify-between border-t border-slate-100 pt-4">
-                    <span class="font-bold text-slate-900">$55.00+</span>
-                    <a href="product-na-semax-amidate.html" class="text-xs font-bold text-blue-600 hover:text-slate-900 transition-colors uppercase tracking-wider">View Reagent <i class="fas fa-arrow-right ml-1"></i></a>
-                </div>
-            </div>
-
-            <div class="product-card bg-white p-6 rounded-2xl border border-slate-200 group relative" data-category="nootropic" data-name="selank">
-                <div class="absolute top-4 right-4 w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
-                <div class="h-40 bg-slate-50 rounded-xl mb-4 flex items-center justify-center overflow-hidden">
-                    <img src="images/vial-selank.jpg" class="h-32 object-contain mix-blend-multiply group-hover:scale-110 transition-transform duration-500" alt="Vial">
-                </div>
-                <div class="text-[10px] font-bold text-blue-600 uppercase tracking-widest mb-1">Nootropic</div>
-                <h3 class="text-xl font-black italic text-slate-900 mb-1">Selank</h3>
-                <p class="text-xs text-slate-400 mb-4 line-clamp-2">Tuftsin analogue. Anxiolytic research compound.</p>
-                <div class="flex items-center justify-between border-t border-slate-100 pt-4">
-                    <span class="font-bold text-slate-900">$45.00+</span>
-                    <a href="product-selank.html" class="text-xs font-bold text-blue-600 hover:text-slate-900 transition-colors uppercase tracking-wider">View Reagent <i class="fas fa-arrow-right ml-1"></i></a>
-                </div>
-            </div>
-            
-             <div class="product-card bg-white p-6 rounded-2xl border border-slate-200 group relative" data-category="nootropic" data-name="naselank">
-                <div class="absolute top-4 right-4 w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
-                <div class="h-40 bg-slate-50 rounded-xl mb-4 flex items-center justify-center overflow-hidden">
-                    <img src="images/vial-na-selank.jpg" class="h-32 object-contain mix-blend-multiply group-hover:scale-110 transition-transform duration-500" alt="Vial">
-                </div>
-                <div class="text-[10px] font-bold text-blue-600 uppercase tracking-widest mb-1">Nootropic</div>
-                <h3 class="text-xl font-black italic text-slate-900 mb-1">NA-Selank Amidate</h3>
-                <p class="text-xs text-slate-400 mb-4 line-clamp-2">N-Acetyl/Amidate modified for increased half-life.</p>
-                <div class="flex items-center justify-between border-t border-slate-100 pt-4">
-                    <span class="font-bold text-slate-900">$55.00+</span>
-                    <a href="product-na-selank-amidate.html" class="text-xs font-bold text-blue-600 hover:text-slate-900 transition-colors uppercase tracking-wider">View Reagent <i class="fas fa-arrow-right ml-1"></i></a>
-                </div>
-            </div>
-
-            <div class="product-card bg-white p-6 rounded-2xl border border-slate-200 group relative" data-category="longevity" data-name="nad">
-                <div class="absolute top-4 right-4 w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
-                <div class="h-40 bg-slate-50 rounded-xl mb-4 flex items-center justify-center overflow-hidden">
-                    <img src="images/vial-nad.jpg" class="h-32 object-contain mix-blend-multiply group-hover:scale-110 transition-transform duration-500" alt="Vial">
-                </div>
-                <div class="text-[10px] font-bold text-blue-600 uppercase tracking-widest mb-1">Longevity</div>
-                <h3 class="text-xl font-black italic text-slate-900 mb-1">NAD+</h3>
-                <p class="text-xs text-slate-400 mb-4 line-clamp-2">Nicotinamide Adenine Dinucleotide. Cellular coenzyme.</p>
-                <div class="flex items-center justify-between border-t border-slate-100 pt-4">
-                    <span class="font-bold text-slate-900">$45.00+</span>
-                    <a href="product-nad.html" class="text-xs font-bold text-blue-600 hover:text-slate-900 transition-colors uppercase tracking-wider">View Reagent <i class="fas fa-arrow-right ml-1"></i></a>
-                </div>
-            </div>
-
-            <div class="product-card bg-white p-6 rounded-2xl border border-slate-200 group relative" data-category="longevity" data-name="epitalon">
-                <div class="absolute top-4 right-4 w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
-                <div class="h-40 bg-slate-50 rounded-xl mb-4 flex items-center justify-center overflow-hidden">
-                    <img src="images/vial-epitalon.jpg" class="h-32 object-contain mix-blend-multiply group-hover:scale-110 transition-transform duration-500" alt="Vial">
-                </div>
-                <div class="text-[10px] font-bold text-blue-600 uppercase tracking-widest mb-1">Longevity</div>
-                <h3 class="text-xl font-black italic text-slate-900 mb-1">Epitalon</h3>
-                <p class="text-xs text-slate-400 mb-4 line-clamp-2">Synthetic tetrapeptide telomerase activator.</p>
-                <div class="flex items-center justify-between border-t border-slate-100 pt-4">
-                    <span class="font-bold text-slate-900">$45.00+</span>
-                    <a href="product-epitalon.html" class="text-xs font-bold text-blue-600 hover:text-slate-900 transition-colors uppercase tracking-wider">View Reagent <i class="fas fa-arrow-right ml-1"></i></a>
-                </div>
-            </div>
-            
-            <div class="product-card bg-white p-6 rounded-2xl border border-slate-200 group relative" data-category="metabolic" data-name="motsc">
-                <div class="absolute top-4 right-4 w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
-                <div class="h-40 bg-slate-50 rounded-xl mb-4 flex items-center justify-center overflow-hidden">
-                    <img src="images/vial-motsc.jpg" class="h-32 object-contain mix-blend-multiply group-hover:scale-110 transition-transform duration-500" alt="Vial">
-                </div>
-                <div class="text-[10px] font-bold text-blue-600 uppercase tracking-widest mb-1">Metabolic</div>
-                <h3 class="text-xl font-black italic text-slate-900 mb-1">MOTS-c</h3>
-                <p class="text-xs text-slate-400 mb-4 line-clamp-2">Mitochondrial-derived peptide (MDP) for metabolic balance.</p>
-                <div class="flex items-center justify-between border-t border-slate-100 pt-4">
-                    <span class="font-bold text-slate-900">$55.00+</span>
-                    <a href="product-motsc.html" class="text-xs font-bold text-blue-600 hover:text-slate-900 transition-colors uppercase tracking-wider">View Reagent <i class="fas fa-arrow-right ml-1"></i></a>
-                </div>
-            </div>
-
-            <div class="product-card bg-white p-6 rounded-2xl border border-slate-200 group relative" data-category="longevity" data-name="foxo4">
-                <div class="absolute top-4 right-4 w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
-                <div class="h-40 bg-slate-50 rounded-xl mb-4 flex items-center justify-center overflow-hidden">
-                    <img src="images/vial-foxo4dri.jpg" class="h-32 object-contain mix-blend-multiply group-hover:scale-110 transition-transform duration-500" alt="Vial">
-                </div>
-                <div class="text-[10px] font-bold text-blue-600 uppercase tracking-widest mb-1">Longevity</div>
-                <h3 class="text-xl font-black italic text-slate-900 mb-1">FOXO4-DRI</h3>
-                <p class="text-xs text-slate-400 mb-4 line-clamp-2">Senolytic peptide targeting p53-FOXO4 interaction.</p>
-                <div class="flex items-center justify-between border-t border-slate-100 pt-4">
-                    <span class="font-bold text-slate-900">$120.00+</span>
-                    <a href="product-foxo4dri.html" class="text-xs font-bold text-blue-600 hover:text-slate-900 transition-colors uppercase tracking-wider">View Reagent <i class="fas fa-arrow-right ml-1"></i></a>
-                </div>
-            </div>
-
-            <div class="product-card bg-white p-6 rounded-2xl border border-slate-200 group relative" data-category="immune" data-name="ll37">
-                <div class="absolute top-4 right-4 w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
-                <div class="h-40 bg-slate-50 rounded-xl mb-4 flex items-center justify-center overflow-hidden">
-                    <img src="images/vial-ll37.jpg" class="h-32 object-contain mix-blend-multiply group-hover:scale-110 transition-transform duration-500" alt="Vial">
-                </div>
-                <div class="text-[10px] font-bold text-blue-600 uppercase tracking-widest mb-1">Immune</div>
-                <h3 class="text-xl font-black italic text-slate-900 mb-1">LL-37</h3>
-                <p class="text-xs text-slate-400 mb-4 line-clamp-2">Cathelicidin antimicrobial peptide.</p>
-                <div class="flex items-center justify-between border-t border-slate-100 pt-4">
-                    <span class="font-bold text-slate-900">$55.00+</span>
-                    <a href="product-ll37.html" class="text-xs font-bold text-blue-600 hover:text-slate-900 transition-colors uppercase tracking-wider">View Reagent <i class="fas fa-arrow-right ml-1"></i></a>
-                </div>
-            </div>
-
-             <div class="product-card bg-white p-6 rounded-2xl border border-slate-200 group relative" data-category="immune" data-name="ta1">
-                <div class="absolute top-4 right-4 w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
-                <div class="h-40 bg-slate-50 rounded-xl mb-4 flex items-center justify-center overflow-hidden">
-                    <img src="images/vial-ta1.jpg" class="h-32 object-contain mix-blend-multiply group-hover:scale-110 transition-transform duration-500" alt="Vial">
-                </div>
-                <div class="text-[10px] font-bold text-blue-600 uppercase tracking-widest mb-1">Immune</div>
-                <h3 class="text-xl font-black italic text-slate-900 mb-1">Thymosin Alpha-1</h3>
-                <p class="text-xs text-slate-400 mb-4 line-clamp-2">Immune modulating peptide (T-Cell regulation).</p>
-                <div class="flex items-center justify-between border-t border-slate-100 pt-4">
-                    <span class="font-bold text-slate-900">$45.00+</span>
-                    <a href="product-ta1.html" class="text-xs font-bold text-blue-600 hover:text-slate-900 transition-colors uppercase tracking-wider">View Reagent <i class="fas fa-arrow-right ml-1"></i></a>
-                </div>
-            </div>
-            
-            <div class="product-card bg-white p-6 rounded-2xl border border-slate-200 group relative" data-category="longevity" data-name="dsip">
-                <div class="absolute top-4 right-4 w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
-                <div class="h-40 bg-slate-50 rounded-xl mb-4 flex items-center justify-center overflow-hidden">
-                    <img src="images/vial-dsip.jpg" class="h-32 object-contain mix-blend-multiply group-hover:scale-110 transition-transform duration-500" alt="Vial">
-                </div>
-                <div class="text-[10px] font-bold text-blue-600 uppercase tracking-widest mb-1">Longevity</div>
-                <h3 class="text-xl font-black italic text-slate-900 mb-1">DSIP</h3>
-                <p class="text-xs text-slate-400 mb-4 line-clamp-2">Delta Sleep-Inducing Peptide.</p>
-                <div class="flex items-center justify-between border-t border-slate-100 pt-4">
-                    <span class="font-bold text-slate-900">$35.00+</span>
-                    <a href="product-dsip.html" class="text-xs font-bold text-blue-600 hover:text-slate-900 transition-colors uppercase tracking-wider">View Reagent <i class="fas fa-arrow-right ml-1"></i></a>
-                </div>
-            </div>
-            
-             <div class="product-card bg-white p-6 rounded-2xl border border-slate-200 group relative" data-category="longevity" data-name="mt2">
-                <div class="absolute top-4 right-4 w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
-                <div class="h-40 bg-slate-50 rounded-xl mb-4 flex items-center justify-center overflow-hidden">
-                    <img src="images/vial-mt2.jpg" class="h-32 object-contain mix-blend-multiply group-hover:scale-110 transition-transform duration-500" alt="Vial">
-                </div>
-                <div class="text-[10px] font-bold text-blue-600 uppercase tracking-widest mb-1">Longevity</div>
-                <h3 class="text-xl font-black italic text-slate-900 mb-1">Melanotan 2</h3>
-                <p class="text-xs text-slate-400 mb-4 line-clamp-2">Alpha-MSH analog for melanogenesis research.</p>
-                <div class="flex items-center justify-between border-t border-slate-100 pt-4">
-                    <span class="font-bold text-slate-900">$35.00+</span>
-                    <a href="product-melanotan2.html" class="text-xs font-bold text-blue-600 hover:text-slate-900 transition-colors uppercase tracking-wider">View Reagent <i class="fas fa-arrow-right ml-1"></i></a>
-                </div>
-            </div>
-            
-             <div class="product-card bg-white p-6 rounded-2xl border border-slate-200 group relative" data-category="metabolic" data-name="cjc1295">
-                <div class="absolute top-4 right-4 w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
-                <div class="h-40 bg-slate-50 rounded-xl mb-4 flex items-center justify-center overflow-hidden">
-                    <img src="images/vial-cjc1295.jpg" class="h-32 object-contain mix-blend-multiply group-hover:scale-110 transition-transform duration-500" alt="Vial">
-                </div>
-                <div class="text-[10px] font-bold text-blue-600 uppercase tracking-widest mb-1">Metabolic</div>
-                <h3 class="text-xl font-black italic text-slate-900 mb-1">CJC-1295</h3>
-                <p class="text-xs text-slate-400 mb-4 line-clamp-2">Mod GRF 1-29 (No DAC). GHRH analogue.</p>
-                <div class="flex items-center justify-between border-t border-slate-100 pt-4">
-                    <span class="font-bold text-slate-900">$35.00+</span>
-                    <a href="product-cjc1295.html" class="text-xs font-bold text-blue-600 hover:text-slate-900 transition-colors uppercase tracking-wider">View Reagent <i class="fas fa-arrow-right ml-1"></i></a>
-                </div>
-            </div>
-            
-             <div class="product-card bg-white p-6 rounded-2xl border border-slate-200 group relative" data-category="metabolic" data-name="ipamorelin">
-                <div class="absolute top-4 right-4 w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
-                <div class="h-40 bg-slate-50 rounded-xl mb-4 flex items-center justify-center overflow-hidden">
-                    <img src="images/vial-ipamorelin.jpg" class="h-32 object-contain mix-blend-multiply group-hover:scale-110 transition-transform duration-500" alt="Vial">
-                </div>
-                <div class="text-[10px] font-bold text-blue-600 uppercase tracking-widest mb-1">Metabolic</div>
-                <h3 class="text-xl font-black italic text-slate-900 mb-1">Ipamorelin</h3>
-                <p class="text-xs text-slate-400 mb-4 line-clamp-2">Selective GH-Secretagogue agonist.</p>
-                <div class="flex items-center justify-between border-t border-slate-100 pt-4">
-                    <span class="font-bold text-slate-900">$35.00+</span>
-                    <a href="product-ipamorelin.html" class="text-xs font-bold text-blue-600 hover:text-slate-900 transition-colors uppercase tracking-wider">View Reagent <i class="fas fa-arrow-right ml-1"></i></a>
-                </div>
-            </div>
-            
-             <div class="product-card bg-white p-6 rounded-2xl border border-slate-200 group relative" data-category="regenerative" data-name="kpv">
-                <div class="absolute top-4 right-4 w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
-                <div class="h-40 bg-slate-50 rounded-xl mb-4 flex items-center justify-center overflow-hidden">
-                    <img src="images/vial-kpv.jpg" class="h-32 object-contain mix-blend-multiply group-hover:scale-110 transition-transform duration-500" alt="Vial">
-                </div>
-                <div class="text-[10px] font-bold text-blue-600 uppercase tracking-widest mb-1">Regenerative</div>
-                <h3 class="text-xl font-black italic text-slate-900 mb-1">KPV</h3>
-                <p class="text-xs text-slate-400 mb-4 line-clamp-2">Alpha-MSH fragment. Anti-inflammatory tripeptide.</p>
-                <div class="flex items-center justify-between border-t border-slate-100 pt-4">
-                    <span class="font-bold text-slate-900">$45.00+</span>
-                    <a href="product-kpv.html" class="text-xs font-bold text-blue-600 hover:text-slate-900 transition-colors uppercase tracking-wider">View Reagent <i class="fas fa-arrow-right ml-1"></i></a>
-                </div>
-            </div>
-
-             <div class="product-card bg-white p-6 rounded-2xl border border-slate-200 group relative" data-category="metabolic" data-name="aicar">
-                <div class="absolute top-4 right-4 w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
-                <div class="h-40 bg-slate-50 rounded-xl mb-4 flex items-center justify-center overflow-hidden">
-                    <img src="images/vial-aicar.jpg" class="h-32 object-contain mix-blend-multiply group-hover:scale-110 transition-transform duration-500" alt="Vial">
-                </div>
-                <div class="text-[10px] font-bold text-blue-600 uppercase tracking-widest mb-1">Metabolic</div>
-                <h3 class="text-xl font-black italic text-slate-900 mb-1">AICAR</h3>
-                <p class="text-xs text-slate-400 mb-4 line-clamp-2">AMPK Activator. Exercise mimetic agent.</p>
-                <div class="flex items-center justify-between border-t border-slate-100 pt-4">
-                    <span class="font-bold text-slate-900">$45.00+</span>
-                    <a href="product-aicar.html" class="text-xs font-bold text-blue-600 hover:text-slate-900 transition-colors uppercase tracking-wider">View Reagent <i class="fas fa-arrow-right ml-1"></i></a>
-                </div>
-            </div>
-            
-             <div class="product-card bg-white p-6 rounded-2xl border border-slate-200 group relative" data-category="longevity" data-name="pt141">
-                <div class="absolute top-4 right-4 w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
-                <div class="h-40 bg-slate-50 rounded-xl mb-4 flex items-center justify-center overflow-hidden">
-                    <img src="images/vial-pt141.jpg" class="h-32 object-contain mix-blend-multiply group-hover:scale-110 transition-transform duration-500" alt="Vial">
-                </div>
-                <div class="text-[10px] font-bold text-blue-600 uppercase tracking-widest mb-1">Longevity</div>
-                <h3 class="text-xl font-black italic text-slate-900 mb-1">PT-141</h3>
-                <p class="text-xs text-slate-400 mb-4 line-clamp-2">Bremelanotide. Central melanocortin agonist.</p>
-                <div class="flex items-center justify-between border-t border-slate-100 pt-4">
-                    <span class="font-bold text-slate-900">$45.00+</span>
-                    <a href="product-pt141.html" class="text-xs font-bold text-blue-600 hover:text-slate-900 transition-colors uppercase tracking-wider">View Reagent <i class="fas fa-arrow-right ml-1"></i></a>
-                </div>
-            </div>
-
-        </div>
-
     </main>
 
-    <footer class="bg-white border-t border-slate-200 py-12 text-center mt-12">
-        <div class="text-[10px] text-slate-300 uppercase tracking-widest">
-            &copy; 2024 Precision Peptides. Verified Science.
-        </div>
-    </footer>
-
     <script>
-        // FILTERS
-        function filterProducts(category, btn) {
-            // Button styles
-            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
+        // THE FULL 27 PRODUCT DATABASE (EVERYTHING FROM YOUR OLD CODE)
+        const products = [
+            { name: "Tirzepatide", cat: "metabolic", price: "69.00", img: "vial-tirzepatide.jpg", desc: "Dual GIP/GLP-1 receptor agonist.", url: "product-tirzepatide.html" },
+            { name: "Retatrutide", cat: "metabolic", price: "115.00", img: "vial-retatrutide.jpg", desc: "Triple agonist (GLP-1/GIP/GCGR).", url: "product-retatrutide.html" },
+            { name: "Semaglutide", cat: "metabolic", price: "85.00", img: "vial-semaglutide.jpg", desc: "Standard GLP-1 agonist reagent.", url: "product-semaglutide.html" },
+            { name: "AOD-9604", cat: "metabolic", price: "45.00", img: "vial-aod9604.jpg", desc: "Lipolytic GH fragment.", url: "product-aod9604.html" },
+            { name: "Cardarine", cat: "metabolic", price: "40.00", img: "vial-cardarine.jpg", desc: "PPAR-delta agonist research.", url: "product-cardarine.html" },
+            { name: "Tesamorelin", cat: "metabolic", price: "45.00", img: "vial-tesamorelin.jpg", desc: "GHRH analogue research reagent.", url: "product-tesamorelin.html" },
+            { name: "BPC-157", cat: "regenerative", price: "45.00", img: "vial-bpc157.jpg", desc: "Stable Arginine Salt form.", url: "product-bpc157.html" },
+            { name: "TB-500", cat: "regenerative", price: "55.00", img: "vial-tb500.jpg", desc: "Synthetic Thymosin Beta-4.", url: "product-tb500.html" },
+            { name: "GHK-Cu", cat: "regenerative", price: "45.00", img: "vial-ghkcu.jpg", desc: "Copper-peptide complex.", url: "product-ghkcu.html" },
+            { name: "IGF-1 LR3", cat: "regenerative", price: "75.00", img: "vial-igf1lr3.jpg", desc: "Long R3 IGF-1 analogue.", url: "product-igf1lr3.html" },
+            { name: "Semax", cat: "nootropic", price: "45.00", img: "vial-semax.jpg", desc: "ACTH(4-10) brain research.", url: "product-semax.html" },
+            { name: "NA-Semax Amidate", cat: "nootropic", price: "55.00", img: "vial-na-semax.jpg", desc: "Enhanced stability Semax.", url: "product-na-semax-amidate.html" },
+            { name: "Selank", cat: "nootropic", price: "45.00", img: "vial-selank.jpg", desc: "Anxiolytic research compound.", url: "product-selank.html" },
+            { name: "NA-Selank Amidate", cat: "nootropic", price: "55.00", img: "vial-na-selank.jpg", desc: "Acetyl/Amidate Selank form.", url: "product-na-selank-amidate.html" },
+            { name: "NAD+", cat: "longevity", price: "45.00", img: "vial-nad.jpg", desc: "Cellular coenzyme research.", url: "product-nad.html" },
+            { name: "Epitalon", cat: "longevity", price: "45.00", img: "vial-epitalon.jpg", desc: "Telomerase activator research.", url: "product-epitalon.html" },
+            { name: "MOTS-c", cat: "metabolic", price: "55.00", img: "vial-motsc.jpg", desc: "Mitochondrial-derived peptide.", url: "product-motsc.html" },
+            { name: "FOXO4-DRI", cat: "longevity", price: "120.00", img: "vial-foxo4dri.jpg", desc: "Senolytic research peptide.", url: "product-foxo4dri.html" },
+            { name: "LL-37", cat: "immune", price: "55.00", img: "vial-ll37.jpg", desc: "Antimicrobial peptide research.", url: "product-ll37.html" },
+            { name: "Thymosin Alpha-1", cat: "immune", price: "45.00", img: "vial-ta1.jpg", desc: "Immune modulating peptide.", url: "product-ta1.html" },
+            { name: "DSIP", cat: "longevity", price: "35.00", img: "vial-dsip.jpg", desc: "Delta Sleep-Inducing Peptide.", url: "product-dsip.html" },
+            { name: "Melanotan 2", cat: "longevity", price: "35.00", img: "vial-mt2.jpg", desc: "Alpha-MSH research analog.", url: "product-melanotan2.html" },
+            { name: "CJC-1295", cat: "metabolic", price: "35.00", img: "vial-cjc1295.jpg", desc: "GHRH analogue (No DAC).", url: "product-cjc1295.html" },
+            { name: "Ipamorelin", cat: "metabolic", price: "35.00", img: "vial-ipamorelin.jpg", desc: "Selective secretagogue research.", url: "product-ipamorelin.html" },
+            { name: "KPV", cat: "regenerative", price: "45.00", img: "vial-kpv.jpg", desc: "Anti-inflammatory tripeptide.", url: "product-kpv.html" },
+            { name: "AICAR", cat: "metabolic", price: "45.00", img: "vial-aicar.jpg", desc: "AMPK activator research.", url: "product-aicar.html" },
+            { name: "PT-141", cat: "longevity", price: "45.00", img: "vial-pt141.jpg", desc: "Bremelanotide research reagent.", url: "product-pt141.html" }
+        ];
 
-            // Logic
-            const cards = document.querySelectorAll('.product-card');
-            cards.forEach(card => {
-                if (category === 'all' || card.dataset.category === category) {
-                    card.style.display = 'block';
-                } else {
-                    card.style.display = 'none';
-                }
-            });
+        function renderProducts(productsToDisplay) {
+            const grid = document.getElementById('product-grid');
+            grid.innerHTML = productsToDisplay.map(p => `
+                <div class="product-card bg-white p-3 md:p-6 rounded-2xl border border-slate-200 group relative">
+                    <div class="absolute top-2 right-2 md:top-4 md:right-4 w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse"></div>
+                    <div class="h-32 md:h-40 bg-slate-50 rounded-xl mb-3 md:mb-4 flex items-center justify-center overflow-hidden">
+                        <img src="images/${p.img}" class="h-24 md:h-32 object-contain mix-blend-multiply group-hover:scale-110 transition-transform duration-500" alt="${p.name}">
+                    </div>
+                    <div class="text-[8px] md:text-[10px] font-bold text-blue-600 uppercase tracking-widest mb-0.5 md:mb-1">${p.cat}</div>
+                    <h3 class="text-sm md:text-xl font-black italic text-slate-900 mb-0.5 md:mb-1">${p.name}</h3>
+                    <p class="hidden md:block text-xs text-slate-400 mb-4 line-clamp-2">${p.desc}</p>
+                    <div class="flex flex-col md:flex-row md:items-center justify-between border-t border-slate-100 pt-3 md:pt-4 gap-2">
+                        <span class="font-bold text-slate-900 text-xs md:text-base">$${p.price}+</span>
+                        <a href="${p.url}" class="text-[9px] md:text-xs font-bold text-blue-600 hover:text-slate-900 transition-colors uppercase tracking-wider">View Reagent <i class="fas fa-arrow-right ml-0.5"></i></a>
+                    </div>
+                </div>
+            `).join('');
         }
 
-        // LIVE SEARCH
-        document.getElementById('searchInput').addEventListener('keyup', function(e) {
-            const term = e.target.value.toLowerCase();
-            const cards = document.querySelectorAll('.product-card');
-            
-            cards.forEach(card => {
-                const name = card.dataset.name.toLowerCase();
-                const text = card.innerText.toLowerCase();
-                
-                if (name.includes(term) || text.includes(term)) {
-                    card.style.display = 'block';
-                } else {
-                    card.style.display = 'none';
-                }
-            });
-        });
+        function filterProducts(category, btn) {
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            const filtered = category === 'all' ? products : products.filter(p => p.cat === category);
+            renderProducts(filtered);
+        }
+
+        function searchProducts() {
+            const term = document.getElementById('searchInput').value.toLowerCase();
+            const filtered = products.filter(p => p.name.toLowerCase().includes(term) || p.cat.toLowerCase().includes(term));
+            renderProducts(filtered);
+        }
+
+        // Initial Load
+        renderProducts(products);
     </script>
 </body>
 </html>
