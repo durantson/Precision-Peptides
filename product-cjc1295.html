@@ -5,51 +5,111 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CJC-1295 Technical Data | Precision Peptides</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=JetBrains+Mono&display=swap" rel="stylesheet">
-    <style>body { font-family: 'Inter', sans-serif; } .mono { font-family: 'JetBrains Mono', monospace; }</style>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
-<body class="bg-gray-50 text-slate-900">
-    <nav class="bg-white border-b border-slate-200 h-20 flex items-center px-6">
-        <div class="max-w-7xl mx-auto w-full flex justify-between items-center">
-            <div class="text-2xl font-black uppercase italic"><a href="index.html">Precision<span class="text-sky-500">Peptides</span></a></div>
-            <a href="catalog.html" class="text-xs font-bold uppercase tracking-widest">Research Catalog</a>
+<body class="bg-white font-sans antialiased text-slate-900">
+
+    <nav class="bg-white border-b border-slate-100 h-16 flex items-center px-6 justify-between sticky top-0 z-50">
+        <div class="flex items-center gap-2">
+            <div class="w-8 h-8 bg-blue-600 rounded flex items-center justify-center text-white"><i class="fas fa-atom text-xs"></i></div>
+            <span class="font-bold text-lg tracking-tighter uppercase italic text-slate-900">Precision<span class="text-blue-600">Labs</span></span>
+        </div>
+        <div class="flex gap-6 text-[10px] font-black uppercase tracking-widest text-slate-400">
+            <a href="catalog.html" class="hover:text-blue-600 transition-colors">Catalog</a>
+            <a href="portal.html" class="hover:text-blue-600 transition-colors">Portal</a>
         </div>
     </nav>
 
-    <main class="max-w-6xl mx-auto py-12 px-6">
-        <div class="grid lg:grid-cols-2 gap-16">
-            <div>
-                <h1 class="text-4xl font-extrabold mb-2 uppercase tracking-tight">CJC-1295 (No DAC)</h1>
-                <p class="text-sm font-bold text-sky-600 uppercase tracking-[0.2em] mb-8">Growth Hormone Releasing Hormone Analog</p>
+    <main class="max-w-7xl mx-auto px-6 py-12">
+        
+        <div class="flex items-center gap-2 text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em] mb-8">
+            <a href="catalog.html">Catalog</a>
+            <i class="fas fa-chevron-right text-[8px]"></i>
+            <span class="text-blue-600">Technical Data Sheet</span>
+        </div>
 
-                <div class="bg-white rounded-2xl border border-slate-200 p-8 space-y-6 shadow-sm">
-                    <div class="grid grid-cols-2 gap-6">
-                        <div><div class="text-[10px] font-bold text-slate-400 uppercase">Chemical Formula</div><div class="mono text-sm">C152H252N44O42</div></div>
-                        <div><div class="text-[10px] font-bold text-slate-400 uppercase">Molecular Weight</div><div class="mono text-sm">3367.9 g/mol</div></div>
-                        <div><div class="text-[10px] font-bold text-slate-400 uppercase">CAS Number</div><div class="mono text-sm">448968-38-1</div></div>
-                        <div><div class="text-[10px] font-bold text-slate-400 uppercase">Synthesis Method</div><div class="mono text-sm">Solid Phase (SPPS)</div></div>
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+            
+            <div class="lg:col-span-5 space-y-8">
+                <div class="bg-slate-50 rounded-[3rem] p-8 border border-slate-100 overflow-hidden group">
+                    <img src="images/vial-cjc1295.jpg" class="w-full aspect-square object-contain mix-blend-multiply group-hover:scale-110 transition-transform duration-700" alt="CJC-1295 Reagent Vial">
+                </div>
+
+                <div class="bg-white border border-slate-200 rounded-[2rem] overflow-hidden">
+                    <div class="bg-slate-900 p-4">
+                        <h3 class="text-white text-[10px] font-black uppercase tracking-widest">Chemical Specifications</h3>
                     </div>
-                    <div class="pt-6 border-t border-slate-100">
-                        <div class="text-[10px] font-bold text-slate-400 uppercase mb-2">Primary Sequence</div>
-                        <div class="bg-slate-50 p-4 rounded-lg mono text-[10px] break-all leading-relaxed text-slate-700">
-                            Tyr-D-Ala-Asp-Ala-Ile-Phe-Thr-Gln-Ser-Tyr-Arg-Lys-Val-Leu-Ala-Gln-Leu-Ser-Ala-Arg-Lys-Leu-Leu-Gln-Asp-Ile-Leu-Ser-Arg-NH2
-                        </div>
-                    </div>
+                    <table class="w-full text-sm">
+                        <tr class="border-b border-slate-100">
+                            <td class="p-4 font-bold text-slate-500 uppercase text-[10px]">CAS Number</td>
+                            <td class="p-4 font-mono text-right text-xs">863288-34-0</td>
+                        </tr>
+                        <tr class="border-b border-slate-100">
+                            <td class="p-4 font-bold text-slate-500 uppercase text-[10px]">Molecular Formula</td>
+                            <td class="p-4 font-mono text-right text-xs">C<sub>152</sub>H<sub>252</sub>N<sub>44</sub>O<sub>42</sub></td>
+                        </tr>
+                        <tr class="border-b border-slate-100">
+                            <td class="p-4 font-bold text-slate-500 uppercase text-[10px]">Molar Mass</td>
+                            <td class="p-4 font-mono text-right text-xs">3367.97 g/mol</td>
+                        </tr>
+                        <tr>
+                            <td class="p-4 font-bold text-slate-500 uppercase text-[10px]">Purity Level</td>
+                            <td class="p-4 font-bold text-emerald-600 text-right">&ge;99.4%</td>
+                        </tr>
+                    </table>
                 </div>
             </div>
 
-            <div class="bg-slate-900 rounded-3xl p-10 text-white">
-                <h3 class="text-xl font-bold mb-4 uppercase">Stability & Substitution</h3>
-                <p class="text-slate-400 text-sm leading-relaxed mb-6">
-                    This compound features four amino acid substitutions (positions 2, 8, 15, and 27) that increase resistance to DPP-IV enzymatic cleavage. In research models, it is used to study the stimulation of endogenous growth hormone secretion.
-                </p>
-                
-                <div class="mt-8 space-y-4">
-                    <div class="flex justify-between text-[10px] font-bold uppercase"><span class="text-slate-500">Purity</span><span>>99%</span></div>
-                    <button class="w-full bg-sky-500 text-white py-4 rounded-full font-bold uppercase text-[10px] tracking-widest hover:bg-sky-400 transition">View Batch HPLC Report</button>
+            <div class="lg:col-span-7">
+                <h1 class="text-6xl font-black text-slate-900 italic uppercase tracking-tighter mb-4">CJC-1295 <span class="text-blue-600 text-3xl block">5.0 mg</span></h1>
+                <p class="text-xl text-slate-500 font-medium leading-relaxed mb-8">Modified GRF 1-29. A tetrasubstituted peptide analogue of Growth Hormone Releasing Hormone (GHRH).</p>
+
+                <div class="space-y-10">
+                    
+                    <section>
+                        <h2 class="text-xs font-black uppercase tracking-[0.3em] text-blue-600 mb-4 flex items-center gap-3">
+                            <span class="w-8 h-[2px] bg-blue-600"></span> Primary Research Data
+                        </h2>
+                        <div class="prose prose-slate max-w-none text-slate-600 leading-loose">
+                            CJC-1295 (Mod GRF 1-29) acts on the pituitary gland to stimulate the secretion of Growth Hormone. By modifying the first 29 amino acids of GHRH with four specific substitutions, researchers have increased the peptide's resistance to enzymatic degradation by dipeptidyl peptidase-IV. In research settings, it is primarily used to study pulsatile GH release, metabolic rate acceleration, and cellular repair mechanisms without significantly impacting prolactin or cortisol levels.
+                        </div>
+                    </section>
+
+                    
+
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="bg-slate-50 p-6 rounded-3xl border border-slate-100">
+                            <i class="fas fa-snowflake text-blue-500 mb-2"></i>
+                            <h4 class="font-bold text-sm uppercase italic">Storage</h4>
+                            <p class="text-xs text-slate-500">$-20°C$ for long-term stability.</p>
+                        </div>
+                        <div class="bg-slate-50 p-6 rounded-3xl border border-slate-100">
+                            <i class="fas fa-vial text-blue-500 mb-2"></i>
+                            <h4 class="font-bold text-sm uppercase italic">Sequence</h4>
+                            <p class="text-[9px] text-slate-500 font-mono leading-tight uppercase">Tyr-D-Ala-Asp-Ala-Ile-Phe-Thr-Gln-Ser-Tyr-Arg-Lys-Val-Leu-Ala-Gln-Leu-Ser-Ala-Arg-Lys-Leu-Leu-Gln-Asp-Ile-Leu-Ser-Arg-NH2</p>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-4">
+                        <a href="batch-verification.html" class="flex-1 bg-slate-900 text-white text-center py-4 rounded-2xl font-black uppercase tracking-widest text-[10px] hover:bg-blue-600 transition-all shadow-lg">
+                            View HPLC Report
+                        </a>
+                        <button class="flex-1 border-2 border-slate-900 text-slate-900 py-4 rounded-2xl font-black uppercase tracking-widest text-[10px] hover:bg-slate-50 transition-all">
+                            Download SDS (PDF)
+                        </button>
+                    </div>
+
                 </div>
             </div>
         </div>
+
+        <div class="mt-20 p-8 rounded-[3rem] bg-red-50 border border-red-100 text-center">
+            <h3 class="text-red-600 font-black uppercase tracking-widest text-xs mb-2">Institutional Research Disclaimer</h3>
+            <p class="text-red-700/70 text-sm max-w-3xl mx-auto leading-relaxed">
+                This material is synthesized for <strong>in-vitro laboratory research purposes only</strong>. It is not for human or veterinary diagnostic or therapeutic use. All research must be conducted by qualified professionals using appropriate biosafety protocols.
+            </p>
+        </div>
     </main>
+
 </body>
 </html>
