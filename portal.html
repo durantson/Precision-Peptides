@@ -3,39 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Researcher Portal | Precision Peptides</title>
+    <title>Researcher Portal | Precision Labs</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        /* Custom Scrollbar for the Chat Window */
+        .faq-tab.active { background-color: #2563eb; color: white; border-color: #2563eb; shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1); }
+        .faq-item:hover { border-color: #2563eb; transform: translateY(-2px); }
         .chat-scroll::-webkit-scrollbar { width: 6px; }
         .chat-scroll::-webkit-scrollbar-track { background: #f1f5f9; }
         .chat-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
-        .chat-scroll::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
-        
-        /* Message Animation */
-        @keyframes message-pop {
-            0% { opacity: 0; transform: translateY(10px); }
-            100% { opacity: 1; transform: translateY(0); }
-        }
-        .message-bubble { animation: message-pop 0.3s ease-out forwards; }
-        
-        /* Typing Indicator Bounce */
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-5px); }
-        }
-        .typing-dot { animation: bounce 1s infinite; }
-        .typing-dot:nth-child(2) { animation-delay: 0.2s; }
-        .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+        * { -webkit-tap-highlight-color: transparent; }
     </style>
 </head>
 <body class="bg-slate-50 font-sans antialiased text-slate-900 h-screen flex flex-col overflow-hidden">
 
     <nav class="bg-white border-b border-slate-200 h-16 flex items-center px-6 justify-between flex-shrink-0 z-50">
         <div class="flex items-center gap-2">
-            <div class="w-8 h-8 bg-blue-600 rounded flex items-center justify-center text-white"><i class="fas fa-atom text-xs"></i></div>
-            <span class="font-bold text-lg tracking-tighter uppercase italic text-slate-900">Precision<span class="text-blue-600">Labs</span></span>
+            <div class="w-8 h-8 bg-blue-600 rounded flex items-center justify-center text-white">
+                <i class="fas fa-atom text-xs"></i>
+            </div>
+            <span class="font-bold text-lg tracking-tighter uppercase italic text-slate-900">
+                Precision<span class="text-blue-600">Labs</span>
+            </span>
         </div>
         <div class="flex gap-6 text-[10px] font-black uppercase tracking-widest text-slate-400">
             <a href="catalog.html" class="hover:text-blue-600 transition-colors">Catalog</a>
@@ -45,79 +34,123 @@
 
     <div class="flex flex-1 overflow-hidden">
         
-        <aside class="w-80 bg-white border-r border-slate-200 hidden md:flex flex-col">
+        <aside class="w-72 bg-white border-r border-slate-200 hidden md:flex flex-col">
             <div class="p-6 border-b border-slate-100">
-                <h2 class="text-xs font-black uppercase tracking-widest text-slate-400 mb-4">Active Session</h2>
-                <div class="flex items-center gap-3">
-                    <div class="relative">
-                        <div class="w-10 h-10 rounded-full bg-slate-900 flex items-center justify-center text-white"><i class="fas fa-robot"></i></div>
-                        <div class="absolute bottom-0 right-0 w-3 h-3 bg-emerald-500 border-2 border-white rounded-full"></div>
-                    </div>
-                    <div>
-                        <div class="font-bold text-sm text-slate-900">Dr. Alara</div>
-                        <div class="text-[10px] font-mono text-emerald-600 uppercase">Online • AI Support</div>
-                    </div>
+                <h2 class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-4">Database Filters</h2>
+                <div class="space-y-2">
+                    <button onclick="filterFaq('all', this)" class="faq-tab active w-full text-left px-4 py-3 rounded-xl border border-slate-100 text-[10px] font-bold uppercase tracking-widest transition-all">
+                        <i class="fas fa-layer-group mr-2"></i> All Data
+                    </button>
+                    <button onclick="filterFaq('handling', this)" class="faq-tab w-full text-left px-4 py-3 rounded-xl border border-slate-100 text-[10px] font-bold uppercase tracking-widest transition-all">
+                        <i class="fas fa-vial mr-2"></i> Handling
+                    </button>
+                    <button onclick="filterFaq('storage', this)" class="faq-tab w-full text-left px-4 py-3 rounded-xl border border-slate-100 text-[10px] font-bold uppercase tracking-widest transition-all">
+                        <i class="fas fa-snowflake mr-2"></i> Storage
+                    </button>
+                    <button onclick="filterFaq('math', this)" class="faq-tab w-full text-left px-4 py-3 rounded-xl border border-slate-100 text-[10px] font-bold uppercase tracking-widest transition-all">
+                        <i class="fas fa-calculator mr-2"></i> Concentration
+                    </button>
                 </div>
             </div>
             
-            <div class="p-6 space-y-2 overflow-y-auto flex-1">
-                <h2 class="text-xs font-black uppercase tracking-widest text-slate-400 mb-4">Quick Inquiries</h2>
-                <button onclick="sendQuickReply('What is the purity standard?')" class="w-full text-left p-4 rounded-xl border border-slate-100 hover:border-blue-500 hover:bg-blue-50 transition-all group">
-                    <div class="text-xs font-bold text-slate-700 group-hover:text-blue-700">HPLC Purity Standards</div>
-                    <div class="text-[10px] text-slate-400 mt-1">Ask about verification...</div>
-                </button>
-                <button onclick="sendQuickReply('Where do you ship from?')" class="w-full text-left p-4 rounded-xl border border-slate-100 hover:border-blue-500 hover:bg-blue-50 transition-all group">
-                    <div class="text-xs font-bold text-slate-700 group-hover:text-blue-700">Shipping Logistics</div>
-                    <div class="text-[10px] text-slate-400 mt-1">Lead times & origin...</div>
-                </button>
-                <button onclick="sendQuickReply('Do you offer bulk wholesale?')" class="w-full text-left p-4 rounded-xl border border-slate-100 hover:border-blue-500 hover:bg-blue-50 transition-all group">
-                    <div class="text-xs font-bold text-slate-700 group-hover:text-blue-700">Institutional Wholesale</div>
-                    <div class="text-[10px] text-slate-400 mt-1">Lab partnerships...</div>
-                </button>
-            </div>
-
-            <div class="p-6 bg-slate-50 border-t border-slate-200">
-                <div class="text-[10px] text-slate-400 leading-relaxed text-center">
-                    <i class="fas fa-lock mb-1"></i><br>
-                    End-to-End Encrypted.<br>Research purposes only.
+            <div class="p-6 flex-1 flex flex-col justify-end">
+                <div class="bg-blue-50 border border-blue-100 p-4 rounded-2xl mb-4">
+                    <p class="text-[10px] font-black text-blue-800 uppercase tracking-widest mb-2">Lab Status</p>
+                    <div class="flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                        <span class="text-[10px] text-emerald-700 font-bold uppercase">Systems Nominal</span>
+                    </div>
+                </div>
+                <div class="text-[9px] text-slate-400 leading-relaxed text-center uppercase tracking-tighter">
+                    Encrypted Research Environment<br>Precision Labs v2.4
                 </div>
             </div>
         </aside>
 
-        <main class="flex-1 flex flex-col bg-slate-50 relative">
+        <main class="flex-1 flex flex-col bg-slate-50 overflow-y-auto chat-scroll p-4 md:p-12">
             
-            <div id="chat-container" class="flex-1 overflow-y-auto p-6 space-y-6 chat-scroll pb-32">
-                
-                <div class="flex gap-4 message-bubble">
-                    <div class="w-8 h-8 rounded-full bg-slate-900 flex-shrink-0 flex items-center justify-center text-white text-xs"><i class="fas fa-robot"></i></div>
-                    <div class="max-w-2xl">
-                        <div class="flex items-center gap-2 mb-1">
-                            <span class="text-xs font-bold text-slate-900">Dr. Alara</span>
-                            <span class="text-[10px] text-slate-400">Now</span>
-                        </div>
-                        <div class="bg-white p-4 rounded-2xl rounded-tl-none border border-slate-200 shadow-sm text-sm text-slate-600 leading-relaxed">
-                            <p>Welcome to the Precision Peptides secure portal. I am Alara, your technical research assistant.</p>
-                            <p class="mt-2">I can assist with HPLC data retrieval, chemical specifications, or synthesis inquiries. How can I help your lab today?</p>
-                        </div>
-                    </div>
+            <div class="max-w-4xl mx-auto w-full mb-12">
+                <div class="text-center mb-10">
+                    <h2 class="text-[10px] font-black uppercase tracking-[0.4em] text-blue-600 mb-4">Precision Intelligence</h2>
+                    <h1 class="text-4xl md:text-5xl font-black text-slate-900 italic uppercase tracking-tighter mb-4">Technical Knowledge Base</h1>
+                    <p class="text-slate-500 text-sm md:text-base font-medium">Verified laboratory protocols and molecular stability data for professional researchers.</p>
                 </div>
 
-            </div>
+                <div class="relative max-w-2xl mx-auto mb-12">
+                    <input type="text" id="faqSearch" onkeyup="searchFaq()" placeholder="Search protocols (e.g., 'Storage', 'Reconstitution')..." 
+                    class="w-full bg-white border-2 border-slate-200 rounded-2xl py-5 px-8 text-sm focus:outline-none focus:border-blue-600 focus:ring-4 focus:ring-blue-50 transition-all shadow-xl shadow-slate-200/50">
+                    <i class="fas fa-search absolute right-8 top-1/2 -translate-y-1/2 text-slate-300"></i>
+                </div>
 
-            <div class="absolute bottom-0 left-0 right-0 bg-white border-t border-slate-200 p-6">
-                <div class="max-w-4xl mx-auto relative">
-                    <form id="chat-form" onsubmit="handleChatSubmit(event)" class="flex gap-4">
-                        <button type="button" class="w-12 h-12 rounded-xl border border-slate-200 text-slate-400 hover:text-blue-600 hover:border-blue-600 transition-colors flex items-center justify-center">
-                            <i class="fas fa-paperclip"></i>
-                        </button>
-                        <input type="text" id="user-input" class="flex-1 bg-slate-50 border border-slate-200 rounded-xl px-4 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-blue-600 focus:bg-white transition-all" placeholder="Type your inquiry here..." autocomplete="off">
-                        <button type="submit" class="bg-blue-600 text-white px-8 rounded-xl font-bold text-xs uppercase tracking-widest hover:bg-slate-900 transition-colors shadow-lg shadow-blue-600/20">
-                            Send
-                        </button>
-                    </form>
-                    <div class="text-center mt-2">
-                        <span class="text-[10px] text-slate-300 uppercase tracking-widest">System Operational</span>
+                <div id="faq-grid" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    
+                    <div class="faq-item bg-white border border-slate-200 rounded-3xl p-6 transition-all cursor-pointer group" data-category="handling" onclick="toggleFaq('f1')">
+                        <div class="flex justify-between items-start gap-4">
+                            <span class="text-sm font-black uppercase tracking-tight text-slate-900">What is the "Wall-Drip" method?</span>
+                            <i id="icon-f1" class="fas fa-plus text-[10px] text-slate-300 group-hover:text-blue-600"></i>
+                        </div>
+                        <div id="f1" class="hidden mt-4 text-xs text-slate-500 leading-relaxed border-t border-slate-50 pt-4">
+                            To prevent molecular denaturing, point the needle at the glass wall of the vial. Allow the Bacteriostatic Water to run down the glass into the lyophilized powder. **Never spray directly onto the powder**, as high-pressure impact can damage fragile peptide bonds.
+                        </div>
                     </div>
+
+                    <div class="faq-item bg-white border border-slate-200 rounded-3xl p-6 transition-all cursor-pointer group" data-category="storage" onclick="toggleFaq('f2')">
+                        <div class="flex justify-between items-start gap-4">
+                            <span class="text-sm font-black uppercase tracking-tight text-slate-900">Storage for reconstituted reagents?</span>
+                            <i id="icon-f2" class="fas fa-plus text-[10px] text-slate-300 group-hover:text-blue-600"></i>
+                        </div>
+                        <div id="f2" class="hidden mt-4 text-xs text-slate-500 leading-relaxed border-t border-slate-50 pt-4">
+                            Reconstituted peptides must be stored at 2°C – 8°C (36°F – 46°F). Avoid the refrigerator door due to temperature fluctuations. Once in solution, research integrity is typically maintained for 14-21 days.
+                        </div>
+                    </div>
+
+                    <div class="faq-item bg-white border border-slate-200 rounded-3xl p-6 transition-all cursor-pointer group" data-category="math" onclick="toggleFaq('f3')">
+                        <div class="flex justify-between items-start gap-4">
+                            <span class="text-sm font-black uppercase tracking-tight text-slate-900">Calculating mg per mL concentration?</span>
+                            <i id="icon-f3" class="fas fa-plus text-[10px] text-slate-300 group-hover:text-blue-600"></i>
+                        </div>
+                        <div id="f3" class="hidden mt-4 text-xs text-slate-500 leading-relaxed border-t border-slate-50 pt-4">
+                            Divide the total vial mg by the mL of water added. 
+                            <br><br>
+                            <strong>Formula:</strong> 10mg Vial ÷ 2mL Water = 5mg/mL. On a standard U-100 syringe, 10 units = 0.5mg of reagent.
+                        </div>
+                    </div>
+
+                    <div class="faq-item bg-white border border-slate-200 rounded-3xl p-6 transition-all cursor-pointer group" data-category="handling" onclick="toggleFaq('f4')">
+                        <div class="flex justify-between items-start gap-4">
+                            <span class="text-sm font-black uppercase tracking-tight text-slate-900">Can I shake the vial to mix?</span>
+                            <i id="icon-f4" class="fas fa-plus text-[10px] text-slate-300 group-hover:text-blue-600"></i>
+                        </div>
+                        <div id="f4" class="hidden mt-4 text-xs text-slate-500 leading-relaxed border-t border-slate-50 pt-4">
+                            No. Shaking causes "shearing stress," which breaks the delicate amino acid chains. Always use a gentle, circular swirling motion until the solution is completely clear.
+                        </div>
+                    </div>
+
+                    <div class="faq-item bg-white border border-slate-200 rounded-3xl p-6 transition-all cursor-pointer group" data-category="storage" onclick="toggleFaq('f5')">
+                        <div class="flex justify-between items-start gap-4">
+                            <span class="text-sm font-black uppercase tracking-tight text-slate-900">Stability during transit heat?</span>
+                            <i id="icon-f5" class="fas fa-plus text-[10px] text-slate-300 group-hover:text-blue-600"></i>
+                        </div>
+                        <div id="f5" class="hidden mt-4 text-xs text-slate-500 leading-relaxed border-t border-slate-50 pt-4">
+                            Lyophilized (powder) peptides are extremely stable. They can withstand room-temperature exposure for up to 4 weeks during transit without degradation. Always refrigerate immediately upon arrival.
+                        </div>
+                    </div>
+
+                    <div class="faq-item bg-white border border-slate-200 rounded-3xl p-6 transition-all cursor-pointer group" data-category="handling" onclick="toggleFaq('f6')">
+                        <div class="flex justify-between items-start gap-4">
+                            <span class="text-sm font-black uppercase tracking-tight text-slate-900">Significance of the vacuum seal?</span>
+                            <i id="icon-f6" class="fas fa-plus text-[10px] text-slate-300 group-hover:text-blue-600"></i>
+                        </div>
+                        <div id="f6" class="hidden mt-4 text-xs text-slate-500 leading-relaxed border-t border-slate-50 pt-4">
+                            The vacuum seal protects against oxidation. A "pull" on the syringe during reconstitution indicates an airtight, sterile environment. If no vacuum is present, the vial's integrity may be compromised.
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="mt-16 text-center border-t border-slate-200 pt-12">
+                    <p class="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400 mb-6">Unlisted Technical Inquiry?</p>
+                    <a href="mailto:support@precisionlabs.com" class="bg-slate-900 text-white px-10 py-4 rounded-2xl text-[11px] font-black uppercase tracking-widest hover:bg-blue-600 transition-all shadow-xl shadow-slate-900/10">Contact Lab Staff</a>
                 </div>
             </div>
 
@@ -125,134 +158,41 @@
     </div>
 
     <script>
-        const chatContainer = document.getElementById('chat-container');
-        const userInput = document.getElementById('user-input');
-
-        function sendQuickReply(text) {
-            userInput.value = text;
-            handleChatSubmit(new Event('submit'));
-        }
-
-        function handleChatSubmit(e) {
-            e.preventDefault();
-            const text = userInput.value.trim();
-            if (!text) return;
-
-            // 1. Add User Message
-            addMessage('user', text);
-            userInput.value = '';
-
-            // 2. Show Typing Indicator
-            showTypingIndicator();
-
-            // 3. Process Bot Response (Simulated Delay)
-            setTimeout(() => {
-                removeTypingIndicator();
-                const response = generateResponse(text);
-                addMessage('bot', response);
-            }, 1500);
-        }
-
-        function addMessage(sender, htmlContent) {
-            const div = document.createElement('div');
-            div.className = `flex gap-4 message-bubble ${sender === 'user' ? 'flex-row-reverse' : ''}`;
-            
-            const avatar = sender === 'user' 
-                ? `<div class="w-8 h-8 rounded-full bg-blue-600 flex-shrink-0 flex items-center justify-center text-white text-xs"><i class="fas fa-user"></i></div>`
-                : `<div class="w-8 h-8 rounded-full bg-slate-900 flex-shrink-0 flex items-center justify-center text-white text-xs"><i class="fas fa-robot"></i></div>`;
-
-            const name = sender === 'user' ? 'You' : 'Dr. Alara';
-            const bubbleColor = sender === 'user' 
-                ? 'bg-blue-600 text-white rounded-tr-none' 
-                : 'bg-white border border-slate-200 text-slate-600 rounded-tl-none';
-
-            div.innerHTML = `
-                ${avatar}
-                <div class="max-w-2xl">
-                    <div class="flex items-center gap-2 mb-1 ${sender === 'user' ? 'justify-end' : ''}">
-                        <span class="text-xs font-bold ${sender === 'user' ? 'text-slate-900' : 'text-slate-900'}">${name}</span>
-                        <span class="text-[10px] text-slate-400">Just now</span>
-                    </div>
-                    <div class="${bubbleColor} p-4 rounded-2xl shadow-sm text-sm leading-relaxed">
-                        ${htmlContent}
-                    </div>
-                </div>
-            `;
-            
-            chatContainer.appendChild(div);
-            scrollToBottom();
-        }
-
-        function showTypingIndicator() {
-            const div = document.createElement('div');
-            div.id = 'typing-indicator';
-            div.className = 'flex gap-4 message-bubble';
-            div.innerHTML = `
-                <div class="w-8 h-8 rounded-full bg-slate-900 flex-shrink-0 flex items-center justify-center text-white text-xs"><i class="fas fa-robot"></i></div>
-                <div class="bg-white border border-slate-200 p-4 rounded-2xl rounded-tl-none shadow-sm flex items-center gap-1 h-[52px]">
-                    <div class="w-2 h-2 bg-slate-400 rounded-full typing-dot"></div>
-                    <div class="w-2 h-2 bg-slate-400 rounded-full typing-dot"></div>
-                    <div class="w-2 h-2 bg-slate-400 rounded-full typing-dot"></div>
-                </div>
-            `;
-            chatContainer.appendChild(div);
-            scrollToBottom();
-        }
-
-        function removeTypingIndicator() {
-            const el = document.getElementById('typing-indicator');
-            if (el) el.remove();
-        }
-
-        function scrollToBottom() {
-            chatContainer.scrollTop = chatContainer.scrollHeight;
-        }
-
-        // --- INTELLIGENT RESPONSE SYSTEM ---
-        function generateResponse(input) {
-            const lower = input.toLowerCase();
-
-            // Safety Guardrail (Crucial for Peptides)
-            if (lower.includes('human') || lower.includes('inject') || lower.includes('dosage') || lower.includes('take') || lower.includes('dose')) {
-                return `<div class="border-l-4 border-red-500 pl-4 py-1">
-                            <strong class="text-red-600 uppercase text-xs tracking-widest block mb-1">Compliance Warning</strong>
-                            All products listed in our catalog are strictly for <strong>in-vitro laboratory research only</strong>. 
-                            We cannot provide instructions for administration, dosage, or human consumption. 
-                            Any indication of intended human use will result in the permanent termination of your account.
-                        </div>`;
+        function toggleFaq(id) {
+            const el = document.getElementById(id);
+            const icon = document.getElementById('icon-' + id);
+            if (el.classList.contains('hidden')) {
+                el.classList.remove('hidden');
+                icon.classList.replace('fa-plus', 'fa-minus');
+                icon.classList.add('text-blue-600');
+            } else {
+                el.classList.add('hidden');
+                icon.classList.replace('fa-minus', 'fa-plus');
+                icon.classList.remove('text-blue-600');
             }
+        }
 
-            // Shipping
-            if (lower.includes('ship') || lower.includes('track') || lower.includes('delivery')) {
-                return `We ship primarily via <strong>FedEx Priority</strong> (1-2 days domestic) and DHL Express for international orders. 
-                        Orders placed before 2:00 PM EST are processed the same day. Tracking numbers are automatically emailed upon label generation.`;
-            }
+        function filterFaq(cat, btn) {
+            // Mobile: Close menu if open (logic could be added if you use a mobile burger)
+            document.querySelectorAll('.faq-tab').forEach(t => t.classList.remove('active'));
+            btn.classList.add('active');
 
-            // Purity / Quality
-            if (lower.includes('pure') || lower.includes('purity') || lower.includes('test') || lower.includes('hplc') || lower.includes('coa')) {
-                return `Our purity standard is strict. We reject any batch testing below <strong>99.0% purity</strong>. 
-                        Every vial includes a scannable QR code linking directly to its specific mass spectrometry and HPLC reports from our third-party testing facility (Janoshik or similar).`;
-            }
+            document.querySelectorAll('.faq-item').forEach(item => {
+                if (cat === 'all' || item.getAttribute('data-category') === cat) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
 
-            // Wholesale
-            if (lower.includes('bulk') || lower.includes('whole') || lower.includes('discount')) {
-                return `We offer tiered pricing for institutional research facilities. 
-                        <ul class="list-disc ml-4 mt-2 space-y-1">
-                            <li>10+ Vials: 15% Off</li>
-                            <li>50+ Vials: 25% Off</li>
-                            <li>100+ Vials: Contact strict wholesale department.</li>
-                        </ul>
-                        Would you like me to open a wholesale ticket for you?`;
-            }
-
-            // Specific Product Checks
-            if (lower.includes('tirzepatide')) return `Tirzepatide is available in 10mg aliquots. It is a dual GIP/GLP-1 agonist. Please note this reagent requires storage at -20°C.`;
-            if (lower.includes('semaglutide')) return `Semaglutide is in stock (5mg). It features the C18 fatty acid chain modification for albumin binding research.`;
-            if (lower.includes('bpc')) return `BPC-157 is our most popular regenerative compound. We stock the stable Arginine Salt form, which is resistant to gastric pH variations in research settings.`;
-            
-            // Default
-            return `I have logged your query regarding "<em>${input}</em>". 
-                    While I scan our technical database, could you clarify if you are looking for a specific CAS number or chemical specification?`;
+        function searchFaq() {
+            let input = document.getElementById('faqSearch').value.toLowerCase();
+            let items = document.querySelectorAll('.faq-item');
+            items.forEach(item => {
+                let text = item.innerText.toLowerCase();
+                item.style.display = text.includes(input) ? 'block' : 'none';
+            });
         }
     </script>
 </body>
