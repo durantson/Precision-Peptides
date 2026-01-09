@@ -6,37 +6,34 @@
     <title>Research Manifest | Precision Labs</title>
     
     <meta name="description" content="Precision Labs Research Manifest. Review and submit your institutional reagent procurement order.">
-    <meta name="keywords" content="research procurement, lab reagents, peptide order, scientific supplies">
+    <meta name="keywords" content="research procurement, lab reagents, peptide order, scientific supplies, institutional checkout">
     <meta name="author" content="Precision Labs">
     <meta name="theme-color" content="#2563eb"> 
 
     <meta property="og:type" content="website">
     <meta property="og:title" content="Precision Labs | Research Manifest">
     <meta property="og:description" content="Secure procurement terminal for Precision Labs reagents.">
-    <meta property="og:image" content="images/social-preview.jpg"> 
+    <meta property="og:image" content="images/checkout-banner.jpg"> 
     <meta property="og:url" content="https://www.your-website.com/checkout.html">
 
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚛️</text></svg>">
-    
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        .manifest-card { background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%); }
+        .manifest-card { background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%); transition: all 0.3s ease; }
+        .manifest-card:hover { transform: translateX(5px); border-color: #93c5fd; }
         * { -webkit-tap-highlight-color: transparent; }
     </style>
 </head>
 <body class="bg-slate-50 font-sans antialiased text-slate-900 min-h-screen flex flex-col">
 
-    <nav class="bg-white border-b border-slate-200 h-16 flex items-center px-6 justify-between sticky top-0 z-50">
-        <a href="index.html" class="flex items-center gap-2 hover:opacity-80 transition-opacity">
-            <div class="w-8 h-8 bg-blue-600 rounded flex items-center justify-center text-white">
-                <i class="fas fa-atom text-xs"></i>
-            </div>
-            <span class="font-bold text-lg tracking-tighter uppercase italic text-slate-900">
-                Precision<span class="text-blue-600">Labs</span>
-            </span>
+    <nav class="bg-white border-b border-slate-100 h-16 flex items-center px-6 justify-between sticky top-0 z-50">
+        <a href="index.html" class="flex items-center gap-2 hover:opacity-75 transition-opacity">
+            <div class="w-8 h-8 bg-blue-600 rounded flex items-center justify-center text-white"><i class="fas fa-atom text-xs"></i></div>
+            <span class="font-bold text-lg tracking-tighter uppercase italic text-slate-900">Precision<span class="text-blue-600">Labs</span></span>
         </a>
-        <div class="flex gap-6">
+        <div class="flex items-center gap-6">
             <a href="catalog.html" class="text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-blue-600 transition-colors">Catalog</a>
             <a href="support.html" class="text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-blue-600 transition-colors">Help</a>
         </div>
@@ -47,7 +44,7 @@
         <div class="text-center mb-12">
             <h2 class="text-[10px] font-black uppercase tracking-[0.4em] text-blue-600 mb-4">Procurement</h2>
             <h1 class="text-4xl md:text-5xl font-black text-slate-900 italic uppercase tracking-tighter mb-4">Research Manifest</h1>
-            <p class="text-slate-500 text-sm leading-relaxed">Review your selected reagents and submit for institutional clearance.</p>
+            <p class="text-slate-500 text-sm leading-relaxed max-w-lg mx-auto">Review your selected reagents and submit for institutional clearance and processing.</p>
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
@@ -74,7 +71,7 @@
                         </div>
                         <div class="flex justify-between text-sm">
                             <span class="text-slate-400 font-medium">Research Shipping</span>
-                            <span class="font-bold text-emerald-600 uppercase text-[10px]">Complimentary</span>
+                            <span class="font-bold text-emerald-600 uppercase text-[10px] tracking-wider">Complimentary</span>
                         </div>
                         <div class="pt-4 border-t border-slate-100 flex justify-between items-baseline">
                             <span class="text-xs font-black uppercase tracking-widest text-slate-900">Total Est.</span>
@@ -82,25 +79,26 @@
                         </div>
                     </div>
 
-                    <form action="https://formsubmit.co/precisionpeptidelabs@gmail.com" method="POST" class="space-y-4">
-                        <input type="hidden" name="_next" value="https://durantson.github.io/Precision-Peptides/thank-you.html">
+                    <form action="https://formsubmit.co/precisionpeptidelabs@gmail.com" method="POST" class="space-y-4" onsubmit="clearCartOnSubmit()">
+                        <input type="hidden" name="_next" value="https://durantson.github.io/Precision-Peptides/success.html">
                         <input type="hidden" name="_captcha" value="false">
                         <input type="hidden" name="_subject" value="New Research Manifest Submitted">
-                        
                         <input type="hidden" name="_autorespond" value="MANIFEST RECEIVED: Your procurement request has been logged. As an authorized research partner, you may now access the secure terminal using code LAB2026 at: https://durantson.github.io/Precision-Peptides/login.html">
 
                         <input type="hidden" id="manifest-data-field" name="Manifest_Details" value="">
 
-                        <input type="text" name="name" required placeholder="Full Name" class="w-full bg-slate-50 border border-slate-100 rounded-xl py-3 px-4 text-xs focus:outline-none focus:border-blue-600">
-                        <input type="email" name="email" required placeholder="Institutional Email" class="w-full bg-slate-50 border border-slate-100 rounded-xl py-3 px-4 text-xs focus:outline-none focus:border-blue-600">
-                        <textarea name="shipping" required placeholder="Shipping Address / Lab Location" rows="2" class="w-full bg-slate-50 border border-slate-100 rounded-xl py-3 px-4 text-xs focus:outline-none focus:border-blue-600 resize-none"></textarea>
+                        <input type="text" name="name" required placeholder="Principal Investigator / Full Name" class="w-full bg-slate-50 border border-slate-100 rounded-xl py-3 px-4 text-xs font-bold text-slate-900 focus:outline-none focus:border-blue-600 focus:bg-white transition-all">
+                        
+                        <input type="email" name="email" required placeholder="Institutional Email (@university.edu)" class="w-full bg-slate-50 border border-slate-100 rounded-xl py-3 px-4 text-xs font-bold text-slate-900 focus:outline-none focus:border-blue-600 focus:bg-white transition-all">
+                        
+                        <textarea name="shipping" required placeholder="Shipping Address / Lab Location Details" rows="2" class="w-full bg-slate-50 border border-slate-100 rounded-xl py-3 px-4 text-xs font-bold text-slate-900 focus:outline-none focus:border-blue-600 focus:bg-white transition-all resize-none"></textarea>
 
-                        <button type="submit" id="submit-btn" class="w-full bg-blue-600 text-white py-4 rounded-xl font-black uppercase tracking-widest text-[10px] hover:bg-slate-900 transition-all shadow-lg shadow-blue-600/20">
+                        <button type="submit" id="submit-btn" class="w-full bg-blue-600 text-white py-4 rounded-xl font-black uppercase tracking-widest text-[10px] hover:bg-slate-900 transition-all shadow-lg shadow-blue-600/30 active:scale-95">
                             Submit Manifest
                         </button>
                     </form>
                     
-                    <button onclick="clearManifest()" class="w-full mt-4 text-[9px] font-black text-slate-300 uppercase tracking-widest hover:text-red-500 transition-colors">
+                    <button onclick="clearManifest()" class="w-full mt-6 text-[9px] font-black text-slate-300 uppercase tracking-widest hover:text-red-500 transition-colors">
                         Clear Manifest
                     </button>
                 </div>
@@ -108,47 +106,9 @@
         </div>
     </main>
 
-    <footer class="bg-white border-t border-slate-200 py-16">
-        <div class="max-w-7xl mx-auto px-6 md:px-12">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
-                <div class="col-span-1 md:col-span-2">
-                    <div class="flex items-center gap-2 mb-6">
-                        <div class="w-8 h-8 bg-slate-900 rounded flex items-center justify-center text-white"><i class="fas fa-atom text-xs"></i></div>
-                        <span class="font-black text-lg italic uppercase tracking-tighter text-slate-900">Precision<span class="text-blue-600">Labs</span></span>
-                    </div>
-                    <p class="text-slate-400 text-xs leading-loose max-w-sm">
-                        Precision Labs is a specialized supplier serving academic institutions and private laboratories.
-                    </p>
-                </div>
-                <div>
-                    <h4 class="font-bold text-slate-900 uppercase tracking-widest text-xs mb-6">Catalog</h4>
-                    <ul class="space-y-4 text-xs font-medium text-slate-500">
-                        <li><a href="catalog.html" class="hover:text-blue-600 transition-colors">Metabolic</a></li>
-                        <li><a href="catalog.html" class="hover:text-blue-600 transition-colors">Regenerative</a></li>
-                        <li><a href="catalog.html" class="hover:text-blue-600 transition-colors">Nootropics</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 class="font-bold text-slate-900 uppercase tracking-widest text-xs mb-6">Resources</h4>
-                    <ul class="space-y-4 text-xs font-medium text-slate-500">
-                        <li><a href="login.html" class="hover:text-blue-600 transition-colors">Researcher Portal</a></li>
-                        <li><a href="batch-verification.html" class="hover:text-blue-600 transition-colors">Batch Verification</a></li>
-                        <li><a href="support.html" class="hover:text-blue-600 transition-colors">Help Center</a></li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div class="border-t border-slate-100 pt-8 mt-8">
-                <div class="bg-red-50 border border-red-100 p-6 rounded-2xl text-center">
-                    <p class="text-[10px] text-red-600/70 font-bold uppercase tracking-widest mb-2">Research Use Only</p>
-                    <p class="text-[10px] text-red-800/60 leading-relaxed max-w-4xl mx-auto uppercase">
-                        Strictly for in-vitro laboratory research purposes only. Not for human consumption.
-                    </p>
-                </div>
-                <div class="text-center mt-8 text-[10px] text-slate-300 uppercase tracking-widest">
-                    &copy; 2026 Precision Labs. All rights reserved.
-                </div>
-            </div>
+    <footer class="bg-white border-t border-slate-200 py-12 text-center mt-auto">
+        <div class="text-[10px] text-slate-300 uppercase tracking-widest">
+            &copy; 2026 Precision Labs. Verified Science.
         </div>
     </footer>
 
@@ -164,8 +124,15 @@
                 emptyState.classList.remove('hidden');
                 document.getElementById('submit-btn').disabled = true;
                 document.getElementById('submit-btn').classList.add('opacity-50', 'cursor-not-allowed');
+                document.getElementById('subtotal').innerText = '$0.00';
+                document.getElementById('total').innerText = '$0.00';
                 return;
             }
+
+            // Enable button if items exist
+            document.getElementById('submit-btn').disabled = false;
+            document.getElementById('submit-btn').classList.remove('opacity-50', 'cursor-not-allowed');
+            emptyState.classList.add('hidden');
 
             let subtotal = 0;
             let manifestText = "";
@@ -178,7 +145,7 @@
                 return `
                     <div class="manifest-card border border-slate-200 rounded-3xl p-5 flex justify-between items-center group">
                         <div class="flex items-center gap-4">
-                            <div class="w-12 h-12 bg-white rounded-xl border border-slate-100 flex items-center justify-center text-blue-600">
+                            <div class="w-12 h-12 bg-white rounded-xl border border-slate-100 flex items-center justify-center text-blue-600 group-hover:bg-blue-600 group-hover:text-white transition-colors">
                                 <i class="fas fa-vial"></i>
                             </div>
                             <div>
@@ -187,8 +154,8 @@
                             </div>
                         </div>
                         <div class="text-right">
-                            <div class="font-black text-slate-900">$${itemTotal.toFixed(2)}</div>
-                            <button onclick="removeItem(${index})" class="text-[9px] font-bold text-slate-300 uppercase hover:text-red-500 transition-colors">Remove</button>
+                            <div class="font-black text-slate-900 text-lg">$${itemTotal.toFixed(2)}</div>
+                            <button onclick="removeItem(${index})" class="text-[9px] font-bold text-slate-300 uppercase hover:text-red-500 transition-colors tracking-wider">Remove</button>
                         </div>
                     </div>
                 `;
@@ -196,7 +163,7 @@
 
             document.getElementById('subtotal').innerText = `$${subtotal.toFixed(2)}`;
             document.getElementById('total').innerText = `$${subtotal.toFixed(2)}`;
-            dataField.value = manifestText;
+            dataField.value = manifestText; // Populate hidden field for email
         }
 
         function removeItem(index) {
@@ -206,11 +173,20 @@
         }
 
         function clearManifest() {
-            if(confirm('Clear all research items?')) {
+            if(confirm('Clear all research items from the manifest?')) {
                 localStorage.removeItem('precisionCart');
                 cart = [];
                 renderManifest();
             }
+        }
+
+        // Clears the cart from local storage AFTER the form is submitted
+        // So the user doesn't see old items if they come back later
+        function clearCartOnSubmit() {
+            // We set a small timeout to allow the form submission to grab the data first
+            setTimeout(() => {
+                localStorage.removeItem('precisionCart');
+            }, 500);
         }
 
         renderManifest();
