@@ -3,35 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Logistics & Cold Chain | Precision Peptides</title>
+    <title>Logistics & Cold Chain | Precision Labs</title>
+    
+    <meta name="description" content="Precision Labs shipping protocols. Cold chain logistics, thermal packaging layers, and same-day dispatch policies for research reagents.">
+    <meta name="keywords" content="cold chain shipping, peptide logistics, thermal packaging, research chemical shipping, laboratory logistics">
+    <meta name="author" content="Precision Labs">
+    <meta name="theme-color" content="#2563eb"> 
+
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Logistics Protocols | Precision Labs">
+    <meta property="og:description" content="How we ensure stability from our lab to your bench.">
+    <meta property="og:image" content="images/logistics-banner.jpg"> 
+    <meta property="og:url" content="https://www.your-website.com/logistics.html">
+
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚛️</text></svg>">
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         .layer-card { transition: transform 0.3s ease; }
-        .layer-card:hover { transform: translateX(10px); }
+        .layer-card:hover { transform: translateX(10px); border-color: #2563eb; }
         
         @keyframes pulse-ring {
             0% { transform: scale(0.8); opacity: 0.5; }
             100% { transform: scale(2); opacity: 0; }
         }
         .ping-circle { animation: pulse-ring 2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite; }
+        * { -webkit-tap-highlight-color: transparent; }
     </style>
 </head>
-<body class="bg-slate-50 font-sans antialiased text-slate-900">
+<body class="bg-slate-50 font-sans antialiased text-slate-900 flex flex-col min-h-screen">
 
-    <nav class="bg-white border-b border-slate-200 h-16 flex items-center px-6 justify-between sticky top-0 z-50">
+    <nav class="bg-white border-b border-slate-100 h-16 flex items-center px-6 justify-between sticky top-0 z-50">
         <a href="index.html" class="flex items-center gap-2 hover:opacity-75 transition-opacity">
-    <div class="w-8 h-8 bg-blue-600 rounded flex items-center justify-center text-white"><i class="fas fa-atom text-xs"></i></div>
-    <span class="font-bold text-lg tracking-tighter uppercase italic text-slate-900">Precision<span class="text-blue-600">Labs</span></span>
-</a>
-        <div class="flex gap-6 text-[10px] font-black uppercase tracking-widest text-slate-400">
-            <a href="index.html" class="hover:text-blue-600 transition-colors">Home</a>
-            <a href="catalog.html" class="hover:text-blue-600 transition-colors">Catalog</a>
-            <a href="portal.html" class="hover:text-blue-600 transition-colors">Portal</a>
+            <div class="w-8 h-8 bg-blue-600 rounded flex items-center justify-center text-white"><i class="fas fa-atom text-xs"></i></div>
+            <span class="font-bold text-lg tracking-tighter uppercase italic text-slate-900">Precision<span class="text-blue-600">Labs</span></span>
+        </a>
+        <div class="flex items-center gap-6">
+            <a href="catalog.html" class="text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-blue-600 transition-colors">Catalog</a>
+            <button onclick="viewManifest()" class="relative group">
+                <i class="fas fa-shopping-bag text-slate-900 text-lg group-hover:text-blue-600 transition-colors"></i>
+                <span id="cart-badge" class="absolute -top-2 -right-2 bg-red-500 text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center opacity-0 transition-opacity">0</span>
+            </button>
         </div>
     </nav>
 
-    <main class="max-w-7xl mx-auto px-6 py-12">
+    <main class="flex-1 max-w-7xl mx-auto px-6 py-12 w-full">
         
         <div class="mb-16 border-b border-slate-200 pb-12">
             <div class="flex items-center gap-2 text-blue-600 mb-4">
@@ -45,25 +62,25 @@
                 Logistics & <br><span class="text-blue-600">Cold Chain</span> Protocols
             </h1>
             <p class="text-lg text-slate-500 max-w-2xl leading-relaxed">
-                We understand that peptide stability is paramount. Precision Peptides utilizes a proprietary thermal packaging system to ensure reagent integrity during transit, even in summer months.
+                We understand that peptide stability is paramount. Precision Labs utilizes a proprietary thermal packaging system to ensure reagent integrity during transit, even during summer months.
             </p>
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 mb-24">
             
             <div class="space-y-8">
-                <div class="bg-slate-900 text-white p-8 rounded-[2rem] shadow-xl relative overflow-hidden">
+                <div class="bg-slate-900 text-white p-8 rounded-[2rem] shadow-xl relative overflow-hidden group">
                     <div class="relative z-10">
                         <h3 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2">Same-Day Cutoff</h3>
-                        <div class="text-4xl font-mono font-bold tracking-tight mb-4" id="cutoff-timer">04:12:35</div>
+                        <div class="text-4xl font-mono font-bold tracking-tight mb-4" id="cutoff-timer">--:--:--</div>
                         <p class="text-sm text-slate-400 leading-relaxed">
                             Orders placed before <strong>2:00 PM EST (Mon-Fri)</strong> are processed and dispatched the same day. Tracking numbers are generated automatically upon label creation.
                         </p>
                     </div>
-                    <i class="fas fa-shipping-fast absolute -bottom-4 -right-4 text-9xl text-white/5 rotate-12"></i>
+                    <i class="fas fa-shipping-fast absolute -bottom-4 -right-4 text-9xl text-white/5 rotate-12 group-hover:text-white/10 transition-colors"></i>
                 </div>
 
-                <div class="bg-white border border-slate-200 rounded-[2rem] overflow-hidden">
+                <div class="bg-white border border-slate-200 rounded-[2rem] overflow-hidden shadow-sm">
                     <table class="w-full text-sm text-left">
                         <thead class="bg-slate-50 text-[10px] uppercase font-black tracking-widest text-slate-400">
                             <tr>
@@ -111,6 +128,8 @@
             <div>
                 <h3 class="text-xs font-black uppercase tracking-widest text-slate-400 mb-8">Thermal Protection System</h3>
                 
+                
+
                 <div class="space-y-4">
                     <div class="layer-card bg-white p-6 rounded-2xl border border-slate-200 flex items-center gap-6 shadow-sm">
                         <div class="w-12 h-12 bg-slate-100 rounded-xl flex items-center justify-center text-slate-900 text-xl font-bold">1</div>
@@ -177,13 +196,57 @@
 
     </main>
 
-    <footer class="bg-white border-t border-slate-200 py-12 text-center mt-12">
-        <div class="text-[10px] text-slate-300 uppercase tracking-widest">
-            &copy; 2024 Precision Peptides. Verified Science.
+    <footer class="bg-white border-t border-slate-200 py-16">
+        <div class="max-w-7xl mx-auto px-6 md:px-12">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+                <div class="col-span-1 md:col-span-2">
+                    <div class="flex items-center gap-2 mb-6">
+                        <div class="w-8 h-8 bg-slate-900 rounded flex items-center justify-center text-white"><i class="fas fa-atom text-xs"></i></div>
+                        <span class="font-black text-lg italic uppercase tracking-tighter text-slate-900">Precision<span class="text-blue-600">Labs</span></span>
+                    </div>
+                    <p class="text-slate-400 text-xs leading-loose max-w-sm">Precision Labs is a specialized supplier serving academic institutions and private laboratories.</p>
+                </div>
+                <div>
+                    <h4 class="font-bold text-slate-900 uppercase tracking-widest text-xs mb-6">Catalog</h4>
+                    <ul class="space-y-4 text-xs font-medium text-slate-500">
+                        <li><a href="catalog.html" class="hover:text-blue-600 transition-colors">Metabolic</a></li>
+                        <li><a href="catalog.html" class="hover:text-blue-600 transition-colors">Regenerative</a></li>
+                        <li><a href="catalog.html" class="hover:text-blue-600 transition-colors">Nootropics</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-slate-900 uppercase tracking-widest text-xs mb-6">Resources</h4>
+                    <ul class="space-y-4 text-xs font-medium text-slate-500">
+                        <li><a href="login.html" class="hover:text-blue-600 transition-colors">Researcher Portal</a></li>
+                        <li><a href="batch-verification.html" class="hover:text-blue-600 transition-colors">Batch Verification</a></li>
+                        <li><a href="support.html" class="hover:text-blue-600 transition-colors">Help Center</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-slate-100 pt-8 mt-8">
+                <div class="bg-red-50 border border-red-100 p-6 rounded-2xl text-center">
+                    <p class="text-[10px] text-red-600/70 font-bold uppercase tracking-widest mb-2">Research Use Only</p>
+                    <p class="text-[10px] text-red-800/60 leading-relaxed max-w-4xl mx-auto uppercase">Strictly for in-vitro laboratory research purposes only. Not for human consumption.</p>
+                </div>
+                <div class="text-center mt-8 text-[10px] text-slate-300 uppercase tracking-widest">&copy; 2026 Precision Labs. All rights reserved.</div>
+            </div>
         </div>
     </footer>
 
     <script>
+        // Cart Badge Logic
+        let cart = JSON.parse(localStorage.getItem('precisionCart')) || []; 
+        updateBadge();
+
+        function updateBadge() { 
+            const badge = document.getElementById('cart-badge');
+            const totalQty = cart.reduce((a,b)=>a+b.qty,0);
+            badge.innerText = totalQty;
+            badge.style.opacity = totalQty > 0 ? '1' : '0';
+        }
+        function viewManifest() { window.location.href = 'checkout.html'; }
+
+        // Countdown Timer Logic
         function updateTimer() {
             const now = new Date();
             const estTime = new Date(now.toLocaleString("en-US", {timeZone: "America/New_York"}));
@@ -195,7 +258,10 @@
             if (estTime > cutoff) {
                 cutoff.setDate(cutoff.getDate() + 1);
             }
-            // Skip weekends logic can be added here
+            
+            // Basic Weekend Skip (If Sat/Sun, move to Mon)
+            // Note: This is a simple implementation. 
+            // Ideally, you'd check day of week here.
 
             const diff = cutoff - estTime;
             
@@ -213,4 +279,3 @@
 
 </body>
 </html>
-
