@@ -3,21 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KPV Technical Data | Precision Peptides</title>
+    <title>KPV Technical Data | Precision Labs</title>
+    
+    <meta name="description" content="Technical specifications and institutional procurement for KPV (Lysine-Proline-Valine). HPLC verified anti-inflammatory peptide fragment of Alpha-MSH.">
+    <meta name="keywords" content="KPV, Alpha-MSH fragment, antimicrobial peptide, anti-inflammatory research, peptide synthesis">
+    <meta name="author" content="Precision Labs">
+    <meta name="theme-color" content="#2563eb"> 
+
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="KPV Technical Data | Precision Labs">
+    <meta property="og:description" content="View chemical specifications and HPLC data for KPV reagents.">
+    <meta property="og:image" content="images/vial-kpv.jpg"> 
+    <meta property="og:url" content="https://www.your-website.com/product-kpv.html">
+
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚛️</text></svg>">
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         .size-btn.active { background-color: #0f172a; color: white; border-color: #0f172a; }
         .size-btn:hover:not(.active) { border-color: #2563eb; color: #2563eb; }
+        * { -webkit-tap-highlight-color: transparent; }
     </style>
 </head>
-<body class="bg-white font-sans antialiased text-slate-900">
+<body class="bg-white font-sans antialiased text-slate-900 flex flex-col min-h-screen">
 
     <nav class="bg-white border-b border-slate-100 h-16 flex items-center px-6 justify-between sticky top-0 z-50">
         <a href="index.html" class="flex items-center gap-2 hover:opacity-75 transition-opacity">
-    <div class="w-8 h-8 bg-blue-600 rounded flex items-center justify-center text-white"><i class="fas fa-atom text-xs"></i></div>
-    <span class="font-bold text-lg tracking-tighter uppercase italic text-slate-900">Precision<span class="text-blue-600">Labs</span></span>
-</a>
+            <div class="w-8 h-8 bg-blue-600 rounded flex items-center justify-center text-white"><i class="fas fa-atom text-xs"></i></div>
+            <span class="font-bold text-lg tracking-tighter uppercase italic text-slate-900">Precision<span class="text-blue-600">Labs</span></span>
+        </a>
         <div class="flex items-center gap-6">
             <a href="catalog.html" class="text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-blue-600 transition-colors">Catalog</a>
             <button onclick="viewManifest()" class="relative group">
@@ -27,34 +42,35 @@
         </div>
     </nav>
 
-    <main class="max-w-7xl mx-auto px-6 py-12">
+    <main class="flex-1 max-w-7xl mx-auto px-6 py-12 w-full">
         <div class="flex items-center gap-2 text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em] mb-8">
-            <a href="catalog.html">Catalog</a>
+            <a href="catalog.html" class="hover:text-blue-600 transition-colors">Catalog</a>
             <i class="fas fa-chevron-right text-[8px]"></i>
-            <span class="text-blue-600">KPV</span>
+            <span class="text-blue-600 uppercase">KPV</span>
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
             <div class="lg:col-span-5 space-y-8">
                 <div class="bg-slate-50 rounded-[3rem] p-8 border border-slate-100 overflow-hidden group relative">
-                    <span class="absolute top-6 left-6 bg-white/80 backdrop-blur border border-slate-200 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest text-emerald-600">
+                    <span class="absolute top-6 left-6 bg-white/80 backdrop-blur border border-slate-200 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest text-emerald-600 z-10">
                         <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block mr-1 animate-pulse"></span> In Stock
                     </span>
                     <img src="images/vial-kpv.jpg" class="w-full aspect-square object-contain mix-blend-multiply group-hover:scale-110 transition-transform duration-700" alt="KPV Reagent Vial">
                 </div>
-                <div class="bg-white border border-slate-200 rounded-[2rem] overflow-hidden">
+
+                <div class="bg-white border border-slate-200 rounded-[2rem] overflow-hidden shadow-sm">
                     <div class="bg-slate-900 p-4"><h3 class="text-white text-[10px] font-black uppercase tracking-widest">Chemical Specifications</h3></div>
                     <table class="w-full text-sm">
                         <tr class="border-b border-slate-100"><td class="p-4 font-bold text-slate-500 uppercase text-[10px]">CAS Number</td><td class="p-4 font-mono text-right text-xs">67727-97-3</td></tr>
                         <tr class="border-b border-slate-100"><td class="p-4 font-bold text-slate-500 uppercase text-[10px]">Sequence</td><td class="p-4 font-mono text-right text-xs">Lys-Pro-Val</td></tr>
-                        <tr><td class="p-4 font-bold text-slate-500 uppercase text-[10px]">Type</td><td class="p-4 font-bold text-blue-600 text-right">Anti-Inflammatory</td></tr>
+                        <tr><td class="p-4 font-bold text-slate-500 uppercase text-[10px]">Type</td><td class="p-4 font-bold text-blue-600 text-right uppercase">Anti-Inflammatory</td></tr>
                     </table>
                 </div>
             </div>
 
             <div class="lg:col-span-7">
                 <h1 class="text-6xl font-black text-slate-900 italic uppercase tracking-tighter mb-4">KPV <span id="title-size" class="text-blue-600 text-3xl block">5.0 mg</span></h1>
-                <p class="text-xl text-slate-500 font-medium leading-relaxed mb-8">Lysine-Proline-Valine. A C-terminal tripeptide fragment of alpha-MSH with potent anti-microbial properties.</p>
+                <p class="text-xl text-slate-500 font-medium leading-relaxed mb-8">Lysine-Proline-Valine. A C-terminal tripeptide fragment of &alpha;-MSH with potent anti-microbial properties.</p>
 
                 <div class="bg-white border-2 border-slate-100 rounded-3xl p-6 mb-10 shadow-lg shadow-slate-100/50">
                     <div class="mb-8">
@@ -90,18 +106,55 @@
                     <section>
                         <h2 class="text-xs font-black uppercase tracking-[0.3em] text-blue-600 mb-4 flex items-center gap-3"><span class="w-8 h-[2px] bg-blue-600"></span> Primary Research Data</h2>
                         <div class="prose prose-slate max-w-none text-slate-600 leading-loose">
-                            KPV is a tripeptide (Lys-Pro-Val) derived from the C-terminus of alpha-melanocyte-stimulating hormone ($\alpha$-MSH). It lacks the melanotropic (pigmentation) activity of full $\alpha$-MSH but retains potent anti-inflammatory and antimicrobial properties. It is widely researched for conditions involving autoimmune inflammation.
+                            KPV is a tripeptide (Lys-Pro-Val) derived from the C-terminus of alpha-melanocyte-stimulating hormone (&alpha;-MSH). Unlike its parent molecule, KPV lacks melanotropic (pigmentation) activity, making it a highly specific tool for researching autoimmune inflammation pathways without affecting melanin production.
                         </div>
                     </section>
                     
-                    <div class="flex gap-4">
+                    <div class="flex gap-4 pb-12">
                         <a href="batch-verification.html" class="flex-1 bg-slate-900 text-white text-center py-4 rounded-2xl font-black uppercase tracking-widest text-[10px] hover:bg-blue-600 transition-all shadow-lg">View HPLC Report</a>
-                        <button class="flex-1 border-2 border-slate-900 text-slate-900 py-4 rounded-2xl font-black uppercase tracking-widest text-[10px] hover:bg-slate-50 transition-all">Download SDS</button>
+                        <a href="support.html" class="flex-1 border-2 border-slate-900 text-slate-900 text-center py-4 rounded-2xl font-black uppercase tracking-widest text-[10px] hover:bg-slate-50 transition-all">Download SDS</a>
                     </div>
                 </div>
             </div>
         </div>
     </main>
+
+    <footer class="bg-white border-t border-slate-200 py-16">
+        <div class="max-w-7xl mx-auto px-6 md:px-12">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+                <div class="col-span-1 md:col-span-2">
+                    <div class="flex items-center gap-2 mb-6">
+                        <div class="w-8 h-8 bg-slate-900 rounded flex items-center justify-center text-white"><i class="fas fa-atom text-xs"></i></div>
+                        <span class="font-black text-lg italic uppercase tracking-tighter text-slate-900">Precision<span class="text-blue-600">Labs</span></span>
+                    </div>
+                    <p class="text-slate-400 text-xs leading-loose max-w-sm">Precision Labs is a specialized supplier serving academic institutions and private laboratories.</p>
+                </div>
+                <div>
+                    <h4 class="font-bold text-slate-900 uppercase tracking-widest text-xs mb-6">Catalog</h4>
+                    <ul class="space-y-4 text-xs font-medium text-slate-500">
+                        <li><a href="catalog.html" class="hover:text-blue-600 transition-colors">Metabolic</a></li>
+                        <li><a href="catalog.html" class="hover:text-blue-600 transition-colors">Regenerative</a></li>
+                        <li><a href="catalog.html" class="hover:text-blue-600 transition-colors">Nootropics</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-slate-900 uppercase tracking-widest text-xs mb-6">Resources</h4>
+                    <ul class="space-y-4 text-xs font-medium text-slate-500">
+                        <li><a href="login.html" class="hover:text-blue-600 transition-colors">Researcher Portal</a></li>
+                        <li><a href="batch-verification.html" class="hover:text-blue-600 transition-colors">Batch Verification</a></li>
+                        <li><a href="support.html" class="hover:text-blue-600 transition-colors">Help Center</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-slate-100 pt-8 mt-8">
+                <div class="bg-red-50 border border-red-100 p-6 rounded-2xl text-center">
+                    <p class="text-[10px] text-red-600/70 font-bold uppercase tracking-widest mb-2">Research Use Only</p>
+                    <p class="text-[10px] text-red-800/60 leading-relaxed max-w-4xl mx-auto uppercase">Strictly for in-vitro laboratory research purposes only. Not for human consumption.</p>
+                </div>
+                <div class="text-center mt-8 text-[10px] text-slate-300 uppercase tracking-widest">&copy; 2026 Precision Labs. All rights reserved.</div>
+            </div>
+        </div>
+    </footer>
 
     <script>
         let currentSize = 5; let currentPrice = 45.00; let qty = 1;
@@ -122,10 +175,13 @@
             btn.innerText = "Added"; btn.classList.add('bg-emerald-600');
             setTimeout(() => { btn.innerText = "Add to Manifest"; btn.classList.remove('bg-emerald-600'); }, 1000);
         }
-        function updateBadge() { document.getElementById('cart-badge').innerText = cart.reduce((a,b)=>a+b.qty,0); document.getElementById('cart-badge').style.opacity = cart.length>0?'1':'0'; }
+        function updateBadge() { 
+            const badge = document.getElementById('cart-badge');
+            const totalQty = cart.reduce((a,b)=>a+b.qty,0);
+            badge.innerText = totalQty;
+            badge.style.opacity = totalQty > 0 ? '1' : '0';
+        }
         function viewManifest() { window.location.href = 'checkout.html'; }
     </script>
 </body>
 </html>
-
-
