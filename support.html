@@ -6,46 +6,40 @@
     <title>Documentation & Support | Precision Labs</title>
     
     <meta name="description" content="Access Precision Labs technical documentation, laboratory protocols, shipping physics, and institutional support tools.">
-    <meta name="keywords" content="research peptides, lab support, technical documentation, peptide storage, reconstitution help">
+    <meta name="keywords" content="research peptides, lab support, technical documentation, peptide storage, reconstitution help, HPLC analysis interpretation">
     <meta name="author" content="Precision Labs">
     <meta name="theme-color" content="#2563eb"> 
 
     <meta property="og:type" content="website">
     <meta property="og:title" content="Precision Labs | Support Hub">
     <meta property="og:description" content="Technical knowledge base and investigator support terminal.">
-    <meta property="og:image" content="images/social-preview.jpg"> 
+    <meta property="og:image" content="images/support-banner.jpg"> 
     <meta property="og:url" content="https://www.your-website.com/support.html">
 
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Precision Labs | Support Hub">
-    <meta name="twitter:description" content="Technical knowledge base and investigator support terminal.">
-    <meta name="twitter:image" content="images/social-preview.jpg">
-
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚛️</text></svg>">
-    
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         .faq-tab.active { background-color: #0f172a; color: white; border-color: #0f172a; }
         .faq-item { transition: all 0.3s ease; }
-        .faq-item:hover { border-color: #2563eb; }
+        .faq-item:hover { border-color: #2563eb; transform: translateX(5px); }
         * { -webkit-tap-highlight-color: transparent; }
     </style>
 </head>
-<body class="bg-slate-50 font-sans antialiased text-slate-900 min-h-screen flex flex-col">
+<body class="bg-slate-50 font-sans antialiased text-slate-900 flex flex-col min-h-screen">
 
-    <nav class="bg-white border-b border-slate-200 h-16 flex items-center px-6 justify-between sticky top-0 z-50">
-        <a href="index.html" class="flex items-center gap-2 hover:opacity-80 transition-opacity">
-            <div class="w-8 h-8 bg-blue-600 rounded flex items-center justify-center text-white">
-                <i class="fas fa-atom text-xs"></i>
-            </div>
-            <span class="font-bold text-lg tracking-tighter uppercase italic text-slate-900">
-                Precision<span class="text-blue-600">Labs</span>
-            </span>
+    <nav class="bg-white border-b border-slate-100 h-16 flex items-center px-6 justify-between sticky top-0 z-50">
+        <a href="index.html" class="flex items-center gap-2 hover:opacity-75 transition-opacity">
+            <div class="w-8 h-8 bg-blue-600 rounded flex items-center justify-center text-white"><i class="fas fa-atom text-xs"></i></div>
+            <span class="font-bold text-lg tracking-tighter uppercase italic text-slate-900">Precision<span class="text-blue-600">Labs</span></span>
         </a>
-        <div class="flex gap-6">
+        <div class="flex items-center gap-6">
             <a href="catalog.html" class="text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-blue-600 transition-colors">Catalog</a>
-            <a href="login.html" class="text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-blue-600 transition-colors">Portal</a>
+            <button onclick="viewManifest()" class="relative group">
+                <i class="fas fa-shopping-bag text-slate-900 text-lg group-hover:text-blue-600 transition-colors"></i>
+                <span id="cart-badge" class="absolute -top-2 -right-2 bg-red-500 text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center opacity-0 transition-opacity">0</span>
+            </button>
         </div>
     </nav>
 
@@ -60,15 +54,17 @@
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-24">
-            <div class="bg-white border border-slate-200 p-8 rounded-[2.5rem] shadow-sm">
+            <div class="bg-white border border-slate-200 p-8 rounded-[2.5rem] shadow-sm hover:shadow-md transition-shadow">
                 <i class="fas fa-truck-ramp-box text-blue-600 text-2xl mb-4"></i>
                 <h3 class="font-black uppercase italic tracking-tight text-lg mb-2 text-slate-900">Shipping Logistics</h3>
-                <p class="text-xs text-slate-500 leading-relaxed">Reagents are dispatched within 24 hours. Cold-chain integrity is maintained using proprietary insulated laboratory packaging to ensure sequence stability during transit.</p>
+                <p class="text-xs text-slate-500 leading-relaxed mb-4">Reagents are dispatched within 24 hours. Cold-chain integrity is maintained using proprietary insulated laboratory packaging.</p>
+                <a href="logistics.html" class="text-[10px] font-bold uppercase tracking-widest text-blue-600 hover:text-slate-900">View Protocols <i class="fas fa-arrow-right ml-1"></i></a>
             </div>
-            <div class="bg-white border border-slate-200 p-8 rounded-[2.5rem] shadow-sm">
+            <div class="bg-white border border-slate-200 p-8 rounded-[2.5rem] shadow-sm hover:shadow-md transition-shadow">
                 <i class="fas fa-microscope text-emerald-600 text-2xl mb-4"></i>
                 <h3 class="font-black uppercase italic tracking-tight text-lg mb-2 text-slate-900">Quality Standards</h3>
-                <p class="text-xs text-slate-500 leading-relaxed">All batches undergo independent third-party HPLC and Mass Spec analysis. Certificates of Analysis (COA) are authenticated via our secure verification portal.</p>
+                <p class="text-xs text-slate-500 leading-relaxed mb-4">All batches undergo independent third-party HPLC and Mass Spec analysis. Certificates of Analysis (COA) are authenticated via our portal.</p>
+                <a href="quality.html" class="text-[10px] font-bold uppercase tracking-widest text-emerald-600 hover:text-slate-900">View Standards <i class="fas fa-arrow-right ml-1"></i></a>
             </div>
         </div>
 
@@ -81,7 +77,7 @@
 
             <div class="relative max-w-xl mx-auto mb-10">
                 <input type="text" id="faqSearch" onkeyup="searchFaq()" placeholder="Search database (e.g. 'Storage', 'Wall-Drip')..." 
-                class="w-full bg-slate-50 border border-slate-200 rounded-2xl py-5 px-12 text-sm focus:outline-none focus:border-blue-600 focus:ring-4 focus:ring-blue-50 transition-all shadow-inner">
+                class="w-full bg-slate-50 border border-slate-200 rounded-2xl py-5 px-12 text-sm focus:outline-none focus:border-blue-600 focus:ring-4 focus:ring-blue-50 transition-all shadow-inner font-bold text-slate-700">
                 <i class="fas fa-search absolute left-5 top-1/2 -translate-y-1/2 text-slate-300"></i>
             </div>
 
@@ -93,13 +89,15 @@
             </div>
 
             <div id="faq-grid" class="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-6xl mx-auto text-left">
+                
                 <div class="faq-item bg-slate-50 border border-slate-100 rounded-3xl p-6 hover:shadow-lg transition-all cursor-pointer group" data-category="handling" onclick="toggleFaq('f1')">
                     <div class="flex justify-between items-start gap-4">
                         <span class="text-sm font-black uppercase tracking-tight text-slate-900 leading-tight">What is the "Wall-Drip" reconstitution method?</span>
                         <i id="icon-f1" class="fas fa-plus text-[10px] text-slate-300 group-hover:text-blue-600 mt-1"></i>
                     </div>
                     <div id="f1" class="hidden mt-4 text-sm text-slate-600 leading-relaxed border-t border-slate-200 pt-4">
-                        To prevent molecular denaturing, point the needle at the glass wall of the vial. Allow the diluent to run down the glass. **Never spray directly onto the powder**, as pressure can damage peptide chains.
+                        To prevent molecular denaturing (breaking the peptide bonds via kinetic force), point the needle at the glass wall of the vial. Allow the bacteriostatic water to run down the glass rather than spraying directly onto the lyophilized powder.
+                        
                     </div>
                 </div>
 
@@ -109,7 +107,7 @@
                         <i id="icon-f2" class="fas fa-plus text-[10px] text-slate-300 group-hover:text-blue-600 mt-1"></i>
                     </div>
                     <div id="f2" class="hidden mt-4 text-sm text-slate-600 leading-relaxed border-t border-slate-200 pt-4">
-                        Reconstituted peptides must be stored at 2°C – 8°C. Avoid the door of the refrigerator due to temperature fluctuations. Utilization should occur within 14-21 days for maximum potency.
+                        Once mixed, the peptide is less stable. It must be stored at 2°C – 8°C (refrigerated). Avoid the door of the refrigerator due to frequent temperature fluctuations. Utilization should occur within 14-21 days for maximum potency.
                     </div>
                 </div>
 
@@ -120,7 +118,8 @@
                     </div>
                     <div id="f3" class="hidden mt-4 text-sm text-slate-600 leading-relaxed border-t border-slate-200 pt-4">
                         Concentration = (Total mg in vial) / (mL of water added). <br><br>
-                        <strong>Example:</strong> A 10mg vial + 2mL of water = 5mg per 1mL concentration.
+                        <strong>Example:</strong> A 10mg vial + 2mL of water = 5mg/mL.<br>
+                        <a href="calculator.html" class="text-blue-600 underline text-xs font-bold mt-2 block">Use our Peptide Calculator</a>
                     </div>
                 </div>
 
@@ -130,36 +129,26 @@
                         <i id="icon-f4" class="fas fa-plus text-[10px] text-slate-300 group-hover:text-blue-600 mt-1"></i>
                     </div>
                     <div id="f4" class="hidden mt-4 text-sm text-slate-600 leading-relaxed border-t border-slate-200 pt-4">
-                        Vials are vacuum-sealed to prevent oxidation. A strong vacuum pull during reconstitution is a primary indicator of factory seal integrity.
+                        Vials are vacuum-sealed at the factory to prevent oxidation and ensure sterility. A strong vacuum pull (sucking in the water) during reconstitution is a primary indicator of factory seal integrity.
                     </div>
                 </div>
+
             </div>
         </section>
 
-        <div class="p-10 md:p-16 bg-blue-600 rounded-[3rem] text-center text-white shadow-xl shadow-blue-600/20 relative overflow-hidden">
-            <div class="relative z-10">
-                <h4 class="text-2xl font-black italic uppercase tracking-tighter mb-4">Institutional Support</h4>
-                <p class="text-blue-100 text-sm mb-8 max-w-md mx-auto">Direct laboratory staff assistance is available for complex technical or procurement inquiries.</p>
-                <a href="support.html" class="inline-block bg-white text-blue-600 px-10 py-4 rounded-2xl font-black uppercase tracking-widest text-xs hover:bg-slate-900 hover:text-white transition-all">
-                    Submit Technical Inquiry
-                </a>
-            </div>
-            <i class="fas fa-flask text-blue-500/20 text-9xl absolute -bottom-10 -right-10 rotate-12"></i>
-        </div>
-
     </main>
 
-    <footer class="bg-white border-t border-slate-200 py-16 mt-auto">
+    <footer class="bg-white border-t border-slate-200 py-16">
         <div class="max-w-7xl mx-auto px-6 md:px-12">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
-                <div class="col-span-1 md:col-span-2 text-left">
+                <div class="col-span-1 md:col-span-2">
                     <div class="flex items-center gap-2 mb-6">
                         <div class="w-8 h-8 bg-slate-900 rounded flex items-center justify-center text-white"><i class="fas fa-atom text-xs"></i></div>
                         <span class="font-black text-lg italic uppercase tracking-tighter text-slate-900">Precision<span class="text-blue-600">Labs</span></span>
                     </div>
                     <p class="text-slate-400 text-xs leading-loose max-w-sm">Precision Labs is a specialized supplier serving academic institutions and private laboratories.</p>
                 </div>
-                <div class="text-left">
+                <div>
                     <h4 class="font-bold text-slate-900 uppercase tracking-widest text-xs mb-6">Catalog</h4>
                     <ul class="space-y-4 text-xs font-medium text-slate-500">
                         <li><a href="catalog.html" class="hover:text-blue-600 transition-colors">Metabolic</a></li>
@@ -167,7 +156,7 @@
                         <li><a href="catalog.html" class="hover:text-blue-600 transition-colors">Nootropics</a></li>
                     </ul>
                 </div>
-                <div class="text-left">
+                <div>
                     <h4 class="font-bold text-slate-900 uppercase tracking-widest text-xs mb-6">Resources</h4>
                     <ul class="space-y-4 text-xs font-medium text-slate-500">
                         <li><a href="login.html" class="hover:text-blue-600 transition-colors">Researcher Portal</a></li>
@@ -187,6 +176,19 @@
     </footer>
 
     <script>
+        // Cart Badge Logic
+        let cart = JSON.parse(localStorage.getItem('precisionCart')) || []; 
+        updateBadge();
+
+        function updateBadge() { 
+            const badge = document.getElementById('cart-badge');
+            const totalQty = cart.reduce((a,b)=>a+b.qty,0);
+            badge.innerText = totalQty;
+            badge.style.opacity = totalQty > 0 ? '1' : '0';
+        }
+        function viewManifest() { window.location.href = 'checkout.html'; }
+
+        // FAQ Logic
         function toggleFaq(id) {
             const el = document.getElementById(id);
             const icon = document.getElementById('icon-' + id);
