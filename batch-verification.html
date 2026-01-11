@@ -3,21 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Batch Verification | Precision Labs</title>
+    <title>Batch Verification | Amintex Labs</title>
     
-    <meta name="description" content="Precision Labs provides high-purity lyophilized research reagents. HPLC-verified Tirzepatide, Semaglutide, and Retatrutide for institutional analysis.">
+    <meta name="description" content="Amintex Labs provides high-purity lyophilized research reagents. HPLC-verified Tirzepatide, Semaglutide, and Retatrutide for institutional analysis.">
     <meta name="keywords" content="research peptides, tirzepatide, semaglutide, lyophilized reagents, HPLC verified, janoshik testing, lab supplies, chemical database">
-    <meta name="author" content="Precision Labs">
+    <meta name="author" content="Amintex Labs">
     <meta name="theme-color" content="#2563eb"> 
 
     <meta property="og:type" content="website">
-    <meta property="og:title" content="Precision Labs | Advanced Research Reagents">
+    <meta property="og:title" content="Amintex Labs | Advanced Research Reagents">
     <meta property="og:description" content="Institutional-grade peptides for in-vitro research. Verified >99% purity. Access the 3D Molecular Database.">
     <meta property="og:image" content="images/social-preview.jpg"> 
     <meta property="og:url" content="https://www.your-website.com/">
 
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Precision Labs | Purity Defined">
+    <meta name="twitter:title" content="Amintex Labs | Purity Defined">
     <meta name="twitter:description" content="Access the Global Peptide Database and verified lab reports.">
     <meta name="twitter:image" content="images/social-preview.jpg">
 
@@ -39,7 +39,7 @@
                 <i class="fas fa-shield-check text-xs"></i>
             </div>
             <span class="font-bold text-lg tracking-tighter uppercase italic text-slate-900">
-                Precision<span class="text-blue-600">Labs</span>
+                Amintex<span class="text-blue-600">Labs</span>
             </span>
         </a>
         <div class="flex gap-6">
@@ -60,7 +60,7 @@
 
         <div class="max-w-xl mx-auto mb-20">
             <div class="relative group">
-                <input type="text" id="batchInput" placeholder="Enter Batch Code (e.g. PL-102)..." 
+                <input type="text" id="batchInput" placeholder="Enter Batch Code (e.g. AM-102)..." 
                 class="w-full bg-white border-2 border-slate-200 rounded-[2rem] py-6 px-10 text-lg font-bold placeholder-slate-300 focus:outline-none focus:border-blue-600 focus:ring-4 focus:ring-blue-600/5 transition-all shadow-xl shadow-slate-200/50">
                 <button onclick="verifyBatch()" class="absolute right-4 top-1/2 -translate-y-1/2 bg-blue-600 text-white px-8 py-3 rounded-2xl font-black uppercase tracking-widest text-[10px] hover:bg-slate-900 transition-all">
                     Verify
@@ -121,10 +121,10 @@
                 <div class="col-span-1 md:col-span-2">
                     <div class="flex items-center gap-2 mb-6">
                         <div class="w-8 h-8 bg-slate-900 rounded flex items-center justify-center text-white"><i class="fas fa-atom text-xs"></i></div>
-                        <span class="font-black text-lg italic uppercase tracking-tighter text-slate-900">Precision<span class="text-blue-600">Labs</span></span>
+                        <span class="font-black text-lg italic uppercase tracking-tighter text-slate-900">Amintex<span class="text-blue-600">Labs</span></span>
                     </div>
                     <p class="text-slate-400 text-xs leading-loose max-w-sm">
-                        Precision Labs is a specialized supplier serving academic institutions and private laboratories.
+                        Amintex Labs is a specialized supplier serving academic institutions and private laboratories.
                     </p>
                 </div>
                 <div>
@@ -153,30 +153,30 @@
                     </p>
                 </div>
                 <div class="text-center mt-8 text-[10px] text-slate-300 uppercase tracking-widest">
-                    &copy; 2026 Precision Labs. All rights reserved.
+                    &copy; 2026 Amintex Labs. All rights reserved.
                 </div>
             </div>
         </div>
     </footer>
 
     <script>
-        // UPDATED MASTER BATCH DATABASE (15 READY-TO-GO RESULTS)
+        // UPDATED MASTER BATCH DATABASE (AM-xxx)
         const batchDatabase = [
-            { code: "PL-101", name: "Tirzepatide", purity: "99.82%", date: "Jan 02, 2026", pdf: "reports/PL101.pdf" },
-            { code: "PL-102", name: "Semaglutide", purity: "99.94%", date: "Jan 04, 2026", pdf: "reports/PL102.pdf" },
-            { code: "PL-103", name: "Retatrutide", purity: "99.88%", date: "Jan 05, 2026", pdf: "reports/PL103.pdf" },
-            { code: "PL-104", name: "BPC-157", purity: "99.71%", date: "Jan 01, 2026", pdf: "reports/PL104.pdf" },
-            { code: "PL-105", name: "TB-500", purity: "99.90%", date: "Dec 28, 2025", pdf: "reports/PL105.pdf" },
-            { code: "PL-106", name: "GHK-Cu", purity: "99.85%", date: "Dec 20, 2025", pdf: "reports/PL106.pdf" },
-            { code: "PL-107", name: "NAD+", purity: "99.96%", date: "Jan 03, 2026", pdf: "reports/PL107.pdf" },
-            { code: "PL-108", name: "Epitalon", purity: "99.79%", date: "Dec 15, 2025", pdf: "reports/PL108.pdf" },
-            { code: "PL-109", name: "MOTS-c", purity: "99.84%", date: "Jan 06, 2026", pdf: "reports/PL109.pdf" },
-            { code: "PL-110", name: "FOXO4-DRI", purity: "99.92%", date: "Jan 07, 2026", pdf: "reports/PL110.pdf" },
-            { code: "PL-111", name: "LL-37", purity: "99.81%", date: "Dec 22, 2025", pdf: "reports/PL111.pdf" },
-            { code: "PL-112", name: "AOD-9604", purity: "99.87%", date: "Jan 05, 2026", pdf: "reports/PL112.pdf" },
-            { code: "PL-113", name: "Cardarine", purity: "99.95%", date: "Jan 04, 2026", pdf: "reports/PL113.pdf" },
-            { code: "PL-114", name: "Tesamorelin", purity: "99.76%", date: "Dec 30, 2025", pdf: "reports/PL114.pdf" },
-            { code: "PL-115", name: "CJC-1295", purity: "99.83%", date: "Jan 02, 2026", pdf: "reports/PL115.pdf" }
+            { code: "AM-101", name: "Tirzepatide", purity: "99.82%", date: "Jan 02, 2026", pdf: "reports/AM101.pdf" },
+            { code: "AM-102", name: "Semaglutide", purity: "99.94%", date: "Jan 04, 2026", pdf: "reports/AM102.pdf" },
+            { code: "AM-103", name: "Retatrutide", purity: "99.88%", date: "Jan 05, 2026", pdf: "reports/AM103.pdf" },
+            { code: "AM-104", name: "BPC-157", purity: "99.71%", date: "Jan 01, 2026", pdf: "reports/AM104.pdf" },
+            { code: "AM-105", name: "TB-500", purity: "99.90%", date: "Dec 28, 2025", pdf: "reports/AM105.pdf" },
+            { code: "AM-106", name: "GHK-Cu", purity: "99.85%", date: "Dec 20, 2025", pdf: "reports/AM106.pdf" },
+            { code: "AM-107", name: "NAD+", purity: "99.96%", date: "Jan 03, 2026", pdf: "reports/AM107.pdf" },
+            { code: "AM-108", name: "Epitalon", purity: "99.79%", date: "Dec 15, 2025", pdf: "reports/AM108.pdf" },
+            { code: "AM-109", name: "MOTS-c", purity: "99.84%", date: "Jan 06, 2026", pdf: "reports/AM109.pdf" },
+            { code: "AM-110", name: "FOXO4-DRI", purity: "99.92%", date: "Jan 07, 2026", pdf: "reports/AM110.pdf" },
+            { code: "AM-111", name: "LL-37", purity: "99.81%", date: "Dec 22, 2025", pdf: "reports/AM111.pdf" },
+            { code: "AM-112", name: "AOD-9604", purity: "99.87%", date: "Jan 05, 2026", pdf: "reports/AM112.pdf" },
+            { code: "AM-113", name: "Cardarine", purity: "99.95%", date: "Jan 04, 2026", pdf: "reports/AM113.pdf" },
+            { code: "AM-114", name: "Tesamorelin", purity: "99.76%", date: "Dec 30, 2025", pdf: "reports/AM114.pdf" },
+            { code: "AM-115", name: "CJC-1295", purity: "99.83%", date: "Jan 02, 2026", pdf: "reports/AM115.pdf" }
         ];
 
         function verifyBatch() {
