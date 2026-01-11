@@ -2,79 +2,70 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Research Catalog | Precision Labs</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reagent Catalog | Amintex Labs</title>
     
-    <meta name="description" content="Precision Labs provides high-purity lyophilized research reagents. HPLC-verified Tirzepatide, Semaglutide, and Retatrutide for institutional analysis.">
-    <meta name="keywords" content="research peptides, tirzepatide, semaglutide, lyophilized reagents, HPLC verified, janoshik testing, lab supplies, chemical database">
-    <meta name="author" content="Precision Labs">
+    <meta name="description" content="Complete inventory of Amintex Labs research reagents. GLP-1 agonists, regenerative peptides, and nootropic compounds for institutional analysis.">
+    <meta name="keywords" content="Amintex catalog, peptide price list, tirzepatide stock, buy research chemicals, lab supply">
+    <meta name="author" content="Amintex Labs">
     <meta name="theme-color" content="#2563eb"> 
 
     <meta property="og:type" content="website">
-    <meta property="og:title" content="Precision Labs | Advanced Research Reagents">
-    <meta property="og:description" content="Institutional-grade peptides for in-vitro research. Verified >99% purity. Access the 3D Molecular Database.">
-    <meta property="og:image" content="images/social-preview.jpg"> 
+    <meta property="og:title" content="Amintex Labs | Master Catalog">
+    <meta property="og:description" content="View live stock status and institutional pricing.">
+    <meta property="og:image" content="images/catalog-banner.jpg"> 
     <meta property="og:url" content="https://www.your-website.com/catalog.html">
 
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Precision Labs | Purity Defined">
-    <meta name="twitter:description" content="Access the Global Peptide Database and verified lab reports.">
-    <meta name="twitter:image" content="images/social-preview.jpg">
-
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚛️</text></svg>">
-    
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        .product-card:hover { transform: translateY(-5px); border-color: #2563eb; }
+        .product-card { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        .product-card:hover { transform: translateY(-5px); box-shadow: 0 20px 25px -5px rgba(37, 99, 235, 0.1); border-color: #93c5fd; }
         .filter-btn.active { background-color: #0f172a; color: white; border-color: #0f172a; }
-        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .filter-btn:hover:not(.active) { border-color: #2563eb; color: #2563eb; }
         * { -webkit-tap-highlight-color: transparent; }
     </style>
 </head>
-<body class="bg-slate-50 font-sans antialiased text-slate-900 min-h-screen flex flex-col">
+<body class="bg-slate-50 font-sans antialiased text-slate-900 flex flex-col min-h-screen">
 
-    <nav class="bg-white border-b border-slate-200 h-16 flex items-center px-4 md:px-8 justify-between sticky top-0 z-50">
+    <nav class="bg-white border-b border-slate-100 h-16 flex items-center px-6 justify-between sticky top-0 z-50">
         <a href="index.html" class="flex items-center gap-2 hover:opacity-75 transition-opacity">
-            <div class="w-7 h-7 md:w-8 md:h-8 bg-blue-600 rounded flex items-center justify-center text-white shrink-0">
-                <i class="fas fa-atom text-[10px] md:text-xs"></i>
-            </div>
-            <span class="font-bold text-sm md:text-lg tracking-tighter uppercase italic text-slate-900">
-                Precision<span class="text-blue-600">Labs</span>
-            </span>
+            <div class="w-8 h-8 bg-blue-600 rounded flex items-center justify-center text-white"><i class="fas fa-atom text-xs"></i></div>
+            <span class="font-bold text-lg tracking-tighter uppercase italic text-slate-900">Amintex<span class="text-blue-600">Labs</span></span>
         </a>
-        <div class="flex gap-4 md:gap-6 text-[9px] md:text-[10px] font-black uppercase tracking-widest text-slate-400">
-            <a href="index.html" class="hover:text-blue-600 transition-colors">Home</a>
-            <a href="batch-verification.html" class="hover:text-blue-600 transition-colors">Verify</a>
-            <a href="login.html" class="hover:text-blue-600 transition-colors">Portal</a>
+        <div class="flex items-center gap-6">
+            <button onclick="viewManifest()" class="relative group">
+                <i class="fas fa-shopping-bag text-slate-900 text-lg group-hover:text-blue-600 transition-colors"></i>
+                <span id="cart-badge" class="absolute -top-2 -right-2 bg-red-500 text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center opacity-0 transition-opacity">0</span>
+            </button>
         </div>
     </nav>
 
-    <header class="bg-white border-b border-slate-100 pt-8 pb-4 md:py-12 px-6">
-        <div class="max-w-7xl mx-auto flex flex-col items-center text-center">
-            <h1 class="text-3xl md:text-6xl font-black text-slate-900 italic uppercase tracking-tighter mb-4">Master Catalog</h1>
-            <div class="w-full max-w-xl relative mt-4">
-                <input type="text" id="searchInput" onkeyup="searchProducts()" placeholder="Search Name or Category..." 
-                class="w-full bg-slate-50 border border-slate-200 rounded-2xl py-4 px-12 text-sm focus:outline-none focus:border-blue-600 transition-all shadow-sm">
-                <i class="fas fa-search absolute left-5 top-1/2 -translate-y-1/2 text-slate-300"></i>
+    <main class="flex-1 max-w-7xl mx-auto px-6 py-12 w-full">
+        
+        <header class="mb-12 text-center">
+            <h2 class="text-[10px] font-black uppercase tracking-[0.4em] text-blue-600 mb-4">Master Inventory</h2>
+            <h1 class="text-4xl md:text-5xl font-black italic uppercase tracking-tighter text-slate-900 mb-6">Reagent Catalog</h1>
+            
+            <div class="max-w-xl mx-auto mb-8 relative">
+                <input type="text" id="searchInput" onkeyup="filterProducts()" placeholder="Search by name, CAS, or mechanism..." class="w-full bg-white border border-slate-200 rounded-xl py-3 px-10 text-sm font-bold text-slate-900 focus:outline-none focus:border-blue-600 shadow-sm transition-all">
+                <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-slate-300 text-xs"></i>
             </div>
-        </div>
-    </header>
 
-    <div class="sticky top-16 bg-white/80 backdrop-blur-md border-b border-slate-100 z-40 overflow-x-auto no-scrollbar">
-        <div class="max-w-7xl mx-auto px-4 py-3 flex gap-2 whitespace-nowrap md:justify-center">
-            <button onclick="filterProducts('all', this)" class="filter-btn active px-5 py-2 rounded-full border border-slate-200 text-[9px] font-black uppercase tracking-widest transition-all">All</button>
-            <button onclick="filterProducts('metabolic', this)" class="filter-btn px-5 py-2 rounded-full border border-slate-200 text-[9px] font-black uppercase tracking-widest transition-all">Metabolic</button>
-            <button onclick="filterProducts('regenerative', this)" class="filter-btn px-5 py-2 rounded-full border border-slate-200 text-[9px] font-black uppercase tracking-widest transition-all">Regenerative</button>
-            <button onclick="filterProducts('nootropic', this)" class="filter-btn px-5 py-2 rounded-full border border-slate-200 text-[9px] font-black uppercase tracking-widest transition-all">Nootropic</button>
-            <button onclick="filterProducts('longevity', this)" class="filter-btn px-5 py-2 rounded-full border border-slate-200 text-[9px] font-black uppercase tracking-widest transition-all">Longevity</button>
-            <button onclick="filterProducts('immune', this)" class="filter-btn px-5 py-2 rounded-full border border-slate-200 text-[9px] font-black uppercase tracking-widest transition-all">Immune</button>
-        </div>
-    </div>
-
-    <main class="max-w-7xl mx-auto px-2 md:px-8 py-8 flex-1">
-        <div id="product-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-6">
+            <div class="flex flex-wrap justify-center gap-2">
+                <button onclick="setCategory('all', this)" class="filter-btn active px-5 py-2 rounded-full border border-slate-200 text-[10px] font-black uppercase tracking-widest transition-all">All Stock</button>
+                <button onclick="setCategory('Metabolic', this)" class="filter-btn px-5 py-2 rounded-full border border-slate-200 text-[10px] font-black uppercase tracking-widest transition-all">Metabolic</button>
+                <button onclick="setCategory('Regenerative', this)" class="filter-btn px-5 py-2 rounded-full border border-slate-200 text-[10px] font-black uppercase tracking-widest transition-all">Regenerative</button>
+                <button onclick="setCategory('Nootropic', this)" class="filter-btn px-5 py-2 rounded-full border border-slate-200 text-[10px] font-black uppercase tracking-widest transition-all">Nootropic</button>
+                <button onclick="setCategory('Longevity', this)" class="filter-btn px-5 py-2 rounded-full border border-slate-200 text-[10px] font-black uppercase tracking-widest transition-all">Longevity</button>
             </div>
+        </header>
+
+        <div id="product-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            </div>
+
     </main>
 
     <footer class="bg-white border-t border-slate-200 py-16">
@@ -83,18 +74,16 @@
                 <div class="col-span-1 md:col-span-2">
                     <div class="flex items-center gap-2 mb-6">
                         <div class="w-8 h-8 bg-slate-900 rounded flex items-center justify-center text-white"><i class="fas fa-atom text-xs"></i></div>
-                        <span class="font-black text-lg italic uppercase tracking-tighter text-slate-900">Precision<span class="text-blue-600">Labs</span></span>
+                        <span class="font-black text-lg italic uppercase tracking-tighter text-slate-900">Amintex<span class="text-blue-600">Labs</span></span>
                     </div>
-                    <p class="text-slate-400 text-xs leading-loose max-w-sm">
-                        Precision Labs is a specialized supplier serving academic institutions and private laboratories.
-                    </p>
+                    <p class="text-slate-400 text-xs leading-loose max-w-sm">Amintex Labs is a specialized supplier serving academic institutions and private laboratories.</p>
                 </div>
                 <div>
                     <h4 class="font-bold text-slate-900 uppercase tracking-widest text-xs mb-6">Catalog</h4>
                     <ul class="space-y-4 text-xs font-medium text-slate-500">
-                        <li><a href="#" onclick="filterProducts('metabolic', document.querySelectorAll('.filter-btn')[1])" class="hover:text-blue-600 transition-colors">Metabolic</a></li>
-                        <li><a href="#" onclick="filterProducts('regenerative', document.querySelectorAll('.filter-btn')[2])" class="hover:text-blue-600 transition-colors">Regenerative</a></li>
-                        <li><a href="#" onclick="filterProducts('nootropic', document.querySelectorAll('.filter-btn')[3])" class="hover:text-blue-600 transition-colors">Nootropics</a></li>
+                        <li><a href="#" onclick="setCategory('Metabolic', document.querySelectorAll('.filter-btn')[1])" class="hover:text-blue-600 transition-colors">Metabolic</a></li>
+                        <li><a href="#" onclick="setCategory('Regenerative', document.querySelectorAll('.filter-btn')[2])" class="hover:text-blue-600 transition-colors">Regenerative</a></li>
+                        <li><a href="#" onclick="setCategory('Nootropic', document.querySelectorAll('.filter-btn')[3])" class="hover:text-blue-600 transition-colors">Nootropics</a></li>
                     </ul>
                 </div>
                 <div>
@@ -106,88 +95,106 @@
                     </ul>
                 </div>
             </div>
-            
             <div class="border-t border-slate-100 pt-8 mt-8">
                 <div class="bg-red-50 border border-red-100 p-6 rounded-2xl text-center">
                     <p class="text-[10px] text-red-600/70 font-bold uppercase tracking-widest mb-2">Research Use Only</p>
-                    <p class="text-[10px] text-red-800/60 leading-relaxed max-w-4xl mx-auto uppercase">
-                        Strictly for in-vitro laboratory research purposes only. Not for human consumption.
-                    </p>
+                    <p class="text-[10px] text-red-800/60 leading-relaxed max-w-4xl mx-auto uppercase">Strictly for in-vitro laboratory research purposes only. Not for human consumption.</p>
                 </div>
-                <div class="text-center mt-8 text-[10px] text-slate-300 uppercase tracking-widest">
-                    &copy; 2026 Precision Labs. All rights reserved.
-                </div>
+                <div class="text-center mt-8 text-[10px] text-slate-300 uppercase tracking-widest">&copy; 2026 Amintex Labs. All rights reserved.</div>
             </div>
         </div>
     </footer>
 
     <script>
-        // THE FULL PRODUCT DATABASE
+        // Data Source
         const products = [
-            { name: "Tirzepatide", cat: "metabolic", price: "69.00", img: "vial-tirzepatide.jpg", desc: "Dual GIP/GLP-1 receptor agonist.", url: "product-tirzepatide.html" },
-            { name: "Retatrutide", cat: "metabolic", price: "115.00", img: "vial-retatrutide.jpg", desc: "Triple agonist (GLP-1/GIP/GCGR).", url: "product-retatrutide.html" },
-            { name: "Semaglutide", cat: "metabolic", price: "85.00", img: "vial-semaglutide.jpg", desc: "Standard GLP-1 agonist reagent.", url: "product-semaglutide.html" },
-            { name: "AOD-9604", cat: "metabolic", price: "45.00", img: "vial-aod9604.jpg", desc: "Lipolytic GH fragment.", url: "product-aod9604.html" },
-            { name: "Cardarine", cat: "metabolic", price: "40.00", img: "vial-cardarine.jpg", desc: "PPAR-delta agonist research.", url: "product-cardarine.html" },
-            { name: "Tesamorelin", cat: "metabolic", price: "45.00", img: "vial-tesamorelin.jpg", desc: "GHRH analogue research reagent.", url: "product-tesamorelin.html" },
-            { name: "BPC-157", cat: "regenerative", price: "45.00", img: "vial-bpc157.jpg", desc: "Stable Arginine Salt form.", url: "product-bpc157.html" },
-            { name: "TB-500", cat: "regenerative", price: "55.00", img: "vial-tb500.jpg", desc: "Synthetic Thymosin Beta-4.", url: "product-tb500.html" },
-            { name: "GHK-Cu", cat: "regenerative", price: "45.00", img: "vial-ghkcu.jpg", desc: "Copper-peptide complex.", url: "product-ghkcu.html" },
-            { name: "IGF-1 LR3", cat: "regenerative", price: "75.00", img: "vial-igf1lr3.jpg", desc: "Long R3 IGF-1 analogue.", url: "product-igf1lr3.html" },
-            { name: "Semax", cat: "nootropic", price: "45.00", img: "vial-semax.jpg", desc: "ACTH(4-10) brain research.", url: "product-semax.html" },
-            { name: "NA-Semax Amidate", cat: "nootropic", price: "55.00", img: "vial-na-semax.jpg", desc: "Enhanced stability Semax.", url: "product-na-semax-amidate.html" },
-            { name: "Selank", cat: "nootropic", price: "45.00", img: "vial-selank.jpg", desc: "Anxiolytic research compound.", url: "product-selank.html" },
-            { name: "NA-Selank Amidate", cat: "nootropic", price: "55.00", img: "vial-na-selank.jpg", desc: "Acetyl/Amidate Selank form.", url: "product-na-selank-amidate.html" },
-            { name: "NAD+", cat: "longevity", price: "45.00", img: "vial-nad.jpg", desc: "Cellular coenzyme research.", url: "product-nad.html" },
-            { name: "Epitalon", cat: "longevity", price: "45.00", img: "vial-epitalon.jpg", desc: "Telomerase activator research.", url: "product-epitalon.html" },
-            { name: "MOTS-c", cat: "metabolic", price: "55.00", img: "vial-motsc.jpg", desc: "Mitochondrial-derived peptide.", url: "product-motsc.html" },
-            { name: "FOXO4-DRI", cat: "longevity", price: "120.00", img: "vial-foxo4dri.jpg", desc: "Senolytic research peptide.", url: "product-foxo4dri.html" },
-            { name: "LL-37", cat: "immune", price: "55.00", img: "vial-ll37.jpg", desc: "Antimicrobial peptide research.", url: "product-ll37.html" },
-            { name: "Thymosin Alpha-1", cat: "immune", price: "45.00", img: "vial-ta1.jpg", desc: "Immune modulating peptide.", url: "product-ta1.html" },
-            { name: "DSIP", cat: "longevity", price: "35.00", img: "vial-dsip.jpg", desc: "Delta Sleep-Inducing Peptide.", url: "product-dsip.html" },
-            { name: "Melanotan 2", cat: "longevity", price: "35.00", img: "vial-mt2.jpg", desc: "Alpha-MSH research analog.", url: "product-melanotan2.html" },
-            { name: "CJC-1295", cat: "metabolic", price: "35.00", img: "vial-cjc1295.jpg", desc: "GHRH analogue (No DAC).", url: "product-cjc1295.html" },
-            { name: "Ipamorelin", cat: "metabolic", price: "35.00", img: "vial-ipamorelin.jpg", desc: "Selective secretagogue research.", url: "product-ipamorelin.html" },
-            { name: "KPV", cat: "regenerative", price: "45.00", img: "vial-kpv.jpg", desc: "Anti-inflammatory tripeptide.", url: "product-kpv.html" },
-            { name: "AICAR", cat: "metabolic", price: "45.00", img: "vial-aicar.jpg", desc: "AMPK activator research.", url: "product-aicar.html" },
-            { name: "PT-141", cat: "longevity", price: "45.00", img: "vial-pt141.jpg", desc: "Bremelanotide research reagent.", url: "product-pt141.html" }
+            { name: "Tirzepatide", cat: "Metabolic", price: "$69.00", img: "vial-tirzepatide.jpg", url: "product-tirzepatide.html", desc: "Dual GIP/GLP-1 agonist." },
+            { name: "Retatrutide", cat: "Metabolic", price: "$115.00", img: "vial-retatrutide.jpg", url: "product-retatrutide.html", desc: "Triple agonist (GLP-1/GIP/GCGR)." },
+            { name: "Semaglutide", cat: "Metabolic", price: "$85.00", img: "vial-semaglutide.jpg", url: "product-semaglutide.html", desc: "GLP-1 Analogue." },
+            { name: "AOD-9604", cat: "Metabolic", price: "$45.00", img: "vial-aod9604.jpg", url: "product-aod9604.html", desc: "Lipolytic fragment 177-191." },
+            { name: "BPC-157", cat: "Regenerative", price: "$45.00", img: "vial-bpc157.jpg", url: "product-bpc157.html", desc: "Stable Arginine Salt." },
+            { name: "TB-500", cat: "Regenerative", price: "$55.00", img: "vial-tb500.jpg", url: "product-tb500.html", desc: "Thymosin Beta-4 synthetic." },
+            { name: "GHK-Cu", cat: "Regenerative", price: "$45.00", img: "vial-ghkcu.jpg", url: "product-ghkcu.html", desc: "Copper peptide complex." },
+            { name: "Semax", cat: "Nootropic", price: "$45.00", img: "vial-semax.jpg", url: "product-semax.html", desc: "ACTH(4-10) Analogue." },
+            { name: "NA-Semax Amidate", cat: "Nootropic", price: "$55.00", img: "vial-na-semax.jpg", url: "product-na-semax-amidate.html", desc: "Acetylated/Amidated Semax." },
+            { name: "Selank", cat: "Nootropic", price: "$45.00", img: "vial-selank.jpg", url: "product-selank.html", desc: "Tuftsin analogue." },
+            { name: "NA-Selank Amidate", cat: "Nootropic", price: "$55.00", img: "vial-na-selank.jpg", url: "product-na-selank-amidate.html", desc: "Acetylated/Amidated Selank." },
+            { name: "Epitalon", cat: "Longevity", price: "$45.00", img: "vial-epitalon.jpg", url: "product-epitalon.html", desc: "Telomerase activator." },
+            { name: "NAD+", cat: "Longevity", price: "$45.00", img: "vial-nad.jpg", url: "product-nad.html", desc: "Oxidized Coenzyme." },
+            { name: "DSIP", cat: "Nootropic", price: "$35.00", img: "vial-dsip.jpg", url: "product-dsip.html", desc: "Delta Sleep-Inducing Peptide." },
+            { name: "Tesamorelin", cat: "Metabolic", price: "$45.00", img: "vial-tesamorelin.jpg", url: "product-tesamorelin.html", desc: "GHRH Analogue." },
+            { name: "Ipamorelin", cat: "Metabolic", price: "$35.00", img: "vial-ipamorelin.jpg", url: "product-ipamorelin.html", desc: "Selective GH Secretagogue." },
+            { name: "CJC-1295", cat: "Metabolic", price: "$35.00", img: "vial-cjc1295.jpg", url: "product-cjc1295.html", desc: "Mod GRF 1-29 No DAC." },
+            { name: "Melanotan 2", cat: "Longevity", price: "$35.00", img: "vial-mt2.jpg", url: "product-melanotan2.html", desc: "Alpha-MSH analog." },
+            { name: "PT-141", cat: "Longevity", price: "$45.00", img: "vial-pt141.jpg", url: "product-pt141.html", desc: "Bremelanotide." },
+            { name: "Cardarine", cat: "Metabolic", price: "$40.00", img: "vial-cardarine.jpg", url: "product-cardarine.html", desc: "GW-501516." },
+            { name: "MOTS-c", cat: "Metabolic", price: "$55.00", img: "vial-motsc.jpg", url: "product-motsc.html", desc: "Mitochondrial-Derived Peptide." },
+            { name: "FOXO4-DRI", cat: "Longevity", price: "$120.00", img: "vial-foxo4dri.jpg", url: "product-foxo4dri.html", desc: "Senolytic Peptide." },
+            { name: "LL-37", cat: "Immune", price: "$55.00", img: "vial-ll37.jpg", url: "product-ll37.html", desc: "Antimicrobial Peptide." },
+            { name: "Thymosin Alpha-1", cat: "Immune", price: "$45.00", img: "vial-ta1.jpg", url: "product-thymosin-alpha1.html", desc: "Immune Modulator." },
+            { name: "KPV", cat: "Regenerative", price: "$45.00", img: "vial-kpv.jpg", url: "product-kpv.html", desc: "Anti-inflammatory tripeptide." },
+            { name: "IGF-1 LR3", cat: "Regenerative", price: "$75.00", img: "vial-igf1lr3.jpg", url: "product-igf1lr3.html", desc: "Long R3 Growth Factor." }
         ];
 
-        function renderProducts(productsToDisplay) {
+        let currentCategory = 'all';
+        let cart = JSON.parse(localStorage.getItem('precisionCart')) || []; 
+        updateBadge();
+
+        function renderProducts() {
             const grid = document.getElementById('product-grid');
-            grid.innerHTML = productsToDisplay.map(p => `
-                <div class="product-card bg-white p-3 md:p-6 rounded-2xl border border-slate-200 group relative">
-                    <div class="absolute top-2 right-2 md:top-4 md:right-4 w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse"></div>
-                    <div class="h-32 md:h-40 bg-slate-50 rounded-xl mb-3 md:mb-4 flex items-center justify-center overflow-hidden">
-                        <div class="text-slate-200 text-4xl"><i class="fas fa-flask"></i></div>
+            const search = document.getElementById('searchInput').value.toLowerCase();
+            grid.innerHTML = '';
+
+            const filtered = products.filter(p => {
+                const matchesCat = currentCategory === 'all' || p.cat === currentCategory;
+                const matchesSearch = p.name.toLowerCase().includes(search) || p.desc.toLowerCase().includes(search);
+                return matchesCat && matchesSearch;
+            });
+
+            filtered.forEach(item => {
+                const card = `
+                <div class="product-card bg-white p-6 rounded-2xl border border-slate-200 group relative">
+                    <div class="absolute top-4 right-4 bg-white/80 backdrop-blur border border-slate-200 px-2 py-0.5 rounded text-[8px] font-bold uppercase tracking-widest text-emerald-600">
+                        In Stock
                     </div>
-                    <div class="text-[8px] md:text-[10px] font-bold text-blue-600 uppercase tracking-widest mb-0.5 md:mb-1">${p.cat}</div>
-                    <h3 class="text-sm md:text-xl font-black italic text-slate-900 mb-0.5 md:mb-1">${p.name}</h3>
-                    <p class="hidden md:block text-xs text-slate-400 mb-4 line-clamp-2">${p.desc}</p>
-                    <div class="flex flex-col md:flex-row md:items-center justify-between border-t border-slate-100 pt-3 md:pt-4 gap-2">
-                        <span class="font-bold text-slate-900 text-xs md:text-base">$${p.price}+</span>
-                        <a href="${p.url}" class="text-[9px] md:text-xs font-bold text-blue-600 hover:text-slate-900 transition-colors uppercase tracking-wider">View Reagent <i class="fas fa-arrow-right ml-0.5"></i></a>
+                    <div class="h-40 bg-slate-50 rounded-xl mb-4 flex items-center justify-center overflow-hidden">
+                        <img src="images/${item.img}" class="h-32 object-contain mix-blend-multiply group-hover:scale-110 transition-transform duration-500" alt="${item.name}">
+                    </div>
+                    <div class="text-[10px] font-bold text-blue-600 uppercase tracking-widest mb-1">${item.cat}</div>
+                    <h3 class="text-xl font-black italic text-slate-900 mb-1">${item.name}</h3>
+                    <p class="text-xs text-slate-400 mb-4 line-clamp-2">${item.desc}</p>
+                    <div class="flex items-center justify-between border-t border-slate-100 pt-4">
+                        <span class="font-bold text-slate-900">${item.price}+</span>
+                        <a href="${item.url}" class="text-xs font-bold text-blue-600 hover:text-slate-900 transition-colors uppercase tracking-wider">View Data <i class="fas fa-arrow-right ml-1"></i></a>
                     </div>
                 </div>
-            `).join('');
+                `;
+                grid.innerHTML += card;
+            });
         }
 
-        function filterProducts(category, btn) {
+        function setCategory(cat, btn) {
+            currentCategory = cat;
             document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-            if(btn) btn.classList.add('active');
-            const filtered = category === 'all' ? products : products.filter(p => p.cat === category);
-            renderProducts(filtered);
+            btn.classList.add('active');
+            renderProducts();
         }
 
-        function searchProducts() {
-            const term = document.getElementById('searchInput').value.toLowerCase();
-            const filtered = products.filter(p => p.name.toLowerCase().includes(term) || p.cat.toLowerCase().includes(term));
-            renderProducts(filtered);
+        function filterProducts() {
+            renderProducts();
         }
 
-        // Initial Load
-        renderProducts(products);
+        function updateBadge() { 
+            const badge = document.getElementById('cart-badge');
+            const totalQty = cart.reduce((a,b)=>a+b.qty,0);
+            badge.innerText = totalQty;
+            badge.style.opacity = totalQty > 0 ? '1' : '0';
+        }
+        
+        function viewManifest() { window.location.href = 'checkout.html'; }
+
+        // Initial Render
+        renderProducts();
     </script>
-
 </body>
 </html>
