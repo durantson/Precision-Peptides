@@ -105,7 +105,7 @@
                 <div class="flex items-end gap-6 mb-8">
                     <div>
                         <p class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2">Unit Price</p>
-                        <p id="product-price" class="text-4xl font-black text-slate-900">$0.00</p>
+                        <div id="product-price" class="text-4xl font-black text-slate-900 transition-all duration-300">$0.00</div>
                     </div>
                     <div class="flex-1 max-w-[150px]">
                         <label class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2 block">Quantity</label>
@@ -164,7 +164,6 @@
 
         function init() {
             if (!product) {
-                // If product not found (e.g. broken link), go back to catalog
                 window.location.href = 'catalog.html';
                 return;
             }
@@ -204,7 +203,10 @@
                 // ACTIVE & IN STOCK
                 stockBadge.innerText = "In Stock";
                 stockBadge.className = "absolute top-8 right-8 bg-white/80 backdrop-blur border border-slate-200 px-3 py-1 rounded text-[10px] font-bold uppercase tracking-widest text-emerald-600";
-                document.getElementById('product-price').innerText = `$${product.price.toFixed(2)}`;
+                
+                // Initialize Price Engine
+                updateDynamicPrice();
+                
             } else {
                 // ACTIVE BUT OUT OF STOCK
                 stockBadge.innerText = "Out of Stock";
@@ -224,6 +226,42 @@
             current += amount;
             if (current < 1) current = 1;
             qtyInput.value = current;
+            
+            // Recalculate price whenever quantity changes
+            if (product.inStock) updateDynamicPrice();
+        }
+
+        // --- NEW: AUTOMATED BULK PRICING ENGINE ---
+        function updateDynamicPrice() {
+            const qty = parseInt(qtyInput.value);
+            let unitPrice = product.price;
+            let discount = 0;
+
+            // Discount Tiers
+            if (qty >= 20) { discount = 0.15; }      // 15% off
+            else if (qty >= 10) { discount = 0.10; } // 10% off
+            else if (qty >= 5) { discount = 0.05; }  // 5% off
+
+            const finalUnitPrice = unitPrice * (1 - discount);
+            const priceDisplay = document.getElementById('product-price');
+            
+            if (discount > 0) {
+                // Show discounted price with visual indicators
+                priceDisplay.innerHTML = `
+                    <div class="flex flex-col items-start">
+                        <div class="flex items-center gap-3">
+                            <span class="text-lg text-slate-300 line-through font-bold">$${product.price.toFixed(2)}</span>
+                            <span class="text-4xl font-black text-emerald-600">$${finalUnitPrice.toFixed(2)}</span>
+                        </div>
+                        <span class="inline-block bg-emerald-50 text-emerald-600 border border-emerald-100 px-2 py-1 rounded text-[9px] font-bold uppercase tracking-widest mt-1 animate-pulse">
+                            ${(discount*100)}% Bulk Savings Applied
+                        </span>
+                    </div>
+                `;
+            } else {
+                // Normal Price
+                priceDisplay.innerHTML = `$${unitPrice.toFixed(2)}`;
+            }
         }
 
         function addToCart() {
