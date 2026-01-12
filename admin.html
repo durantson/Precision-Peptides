@@ -19,6 +19,7 @@
             background-size: 1.5em 1.5em;
         }
         .nav-btn.active { background-color: #1e293b; color: white; border-left: 3px solid #3b82f6; }
+        
         /* Base transition for fallback */
         .tilt-card { transition: transform 0.1s ease-out; }
     </style>
@@ -69,11 +70,11 @@
                 <p class="text-slate-400 text-sm mt-2">Administrator: Root User</p>
             </div>
             <div class="flex gap-4">
-                <div class="bg-slate-800 px-6 py-3 rounded-2xl border border-slate-700 text-center">
+                <div class="tilt-card bg-slate-800 px-6 py-3 rounded-2xl border border-slate-700 text-center">
                     <p class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Total Clients</p>
                     <p class="text-2xl font-black text-white">1,204</p>
                 </div>
-                <div class="bg-slate-800 px-6 py-3 rounded-2xl border border-slate-700 text-center">
+                <div class="tilt-card bg-slate-800 px-6 py-3 rounded-2xl border border-slate-700 text-center">
                     <p class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Pending Orders</p>
                     <p class="text-2xl font-black text-blue-400">3</p>
                 </div>
@@ -81,7 +82,7 @@
         </header>
 
         <div id="view-inventory" class="view-section">
-            <div class="tilt-card bg-slate-800/50 border border-slate-700 rounded-[2.5rem] p-8">
+            <div class="bg-slate-800/50 border border-slate-700 rounded-[2.5rem] p-8">
                 <div class="flex justify-between items-center mb-8">
                     <h3 class="text-xl font-black uppercase italic">Master Database</h3>
                     <div class="relative">
@@ -106,7 +107,7 @@
         </div>
 
         <div id="view-clients" class="view-section hidden">
-            <div class="tilt-card bg-slate-800/50 border border-slate-700 rounded-[2.5rem] p-8">
+            <div class="bg-slate-800/50 border border-slate-700 rounded-[2.5rem] p-8">
                 <div class="flex justify-between items-center mb-8">
                     <h3 class="text-xl font-black uppercase italic">Registered Researchers</h3>
                     <button class="bg-blue-600 text-white px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-widest hover:bg-blue-500">Export CSV</button>
@@ -151,7 +152,7 @@
         </div>
 
         <div id="view-manifests" class="view-section hidden">
-            <div class="tilt-card bg-slate-800/50 border border-slate-700 rounded-[2.5rem] p-8">
+            <div class="bg-slate-800/50 border border-slate-700 rounded-[2.5rem] p-8">
                 <div class="flex justify-between items-center mb-8">
                     <h3 class="text-xl font-black uppercase italic">Incoming Requisitions</h3>
                 </div>
