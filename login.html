@@ -3,121 +3,89 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Secure Access | Amintex Labs</title>
+    <title>Researcher Portal Access | Amintex Labs</title>
     
-    <meta name="description" content="Amintex Labs Researcher Portal Login. Authorized institutional access only.">
-    <meta name="author" content="Amintex Labs">
-    <meta name="theme-color" content="#0f172a"> 
-
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚛️</text></svg>">
+    <meta name="description" content="Secure login for authorized Amintex Labs research partners. Access COAs, track shipments, and manage institutional accounts.">
+    <meta name="theme-color" content="#2563eb"> 
+    <meta name="robots" content="noindex, nofollow"> <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚛️</text></svg>">
 
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        .scan-line {
-            width: 100%;
-            height: 2px;
-            background: rgba(37, 99, 235, 0.5);
-            animation: scan 3s linear infinite;
-            box-shadow: 0 0 10px rgba(37, 99, 235, 0.8);
-        }
-        @keyframes scan { 0% { transform: translateY(-100%); opacity: 0; } 50% { opacity: 1; } 100% { transform: translateY(400px); opacity: 0; } }
-        /* Base transition for fallback */
-        .tilt-card { transition: transform 0.1s ease-out; }
-        * { -webkit-tap-highlight-color: transparent; }
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
+        .input-field:focus { box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1); }
+        /* Clean transitions without 3D wobble */
+        .btn-primary { transition: all 0.2s ease; }
+        .btn-primary:active { transform: scale(0.98); }
     </style>
 </head>
-<body class="bg-slate-900 font-sans antialiased text-white min-h-screen flex items-center justify-center relative overflow-hidden">
+<body class="min-h-screen flex items-center justify-center p-6 text-slate-900">
 
-    <script>
-        // If the user is already logged in, skip the login screen and go straight to the Hub
-        if (localStorage.getItem('portalAuthorized') === 'true') {
-            window.location.href = 'dashboard.html';
-        }
-    </script>
-
-    <div class="absolute inset-0 z-0 opacity-20">
-        <div class="absolute top-0 left-0 w-full h-full" style="background-image: radial-gradient(#2563eb 1px, transparent 1px); background-size: 30px 30px;"></div>
-    </div>
-    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-blue-600 rounded-full blur-[150px] opacity-10 z-0"></div>
-
-    <div class="w-full max-w-md p-8 relative z-10">
+    <div class="max-w-md w-full bg-white border border-slate-200 rounded-[2.5rem] p-10 shadow-xl shadow-slate-200/50">
         
         <div class="text-center mb-10">
-            <div class="inline-flex items-center gap-2 mb-6">
-                <div class="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center text-white shadow-lg shadow-blue-600/30">
-                    <i class="fas fa-atom text-sm"></i>
-                </div>
-                <span class="font-black text-2xl tracking-tighter uppercase italic">Amintex<span class="text-blue-500">Labs</span></span>
-            </div>
-            <h1 class="text-xs font-bold uppercase tracking-[0.3em] text-slate-400">Researcher Terminal</h1>
+            <a href="index.html" class="inline-flex items-center gap-2 mb-6 hover:opacity-75 transition-opacity">
+                <div class="w-8 h-8 bg-blue-600 rounded flex items-center justify-center text-white"><i class="fas fa-atom text-xs"></i></div>
+                <span class="font-bold text-lg tracking-tighter uppercase italic text-slate-900">Amintex<span class="text-blue-600">Labs</span></span>
+            </a>
+            <h1 class="text-2xl font-black italic text-slate-900 uppercase tracking-tight">Researcher Access</h1>
+            <p class="text-slate-400 text-xs font-bold uppercase tracking-widest mt-2">Secure Terminal Login</p>
         </div>
 
-        <div class="tilt-card bg-slate-800/50 backdrop-blur-xl border border-slate-700/50 rounded-[2rem] p-8 shadow-2xl relative overflow-hidden">
-            
-            <div class="absolute top-0 left-0 w-full h-full pointer-events-none overflow-hidden rounded-[2rem]">
-                <div class="scan-line"></div>
-            </div>
-
-            <form onsubmit="validateAccess(event)" class="space-y-6 relative z-10">
-                <div>
-                    <label class="block text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2 ml-4">Access Code</label>
-                    <div class="relative">
-                        <input type="password" id="accessCode" placeholder="ENTER-CODE" 
-                        class="w-full bg-slate-900/80 border border-slate-700 rounded-2xl py-4 px-6 text-center text-lg font-mono tracking-widest text-white focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all placeholder-slate-600">
-                        <i class="fas fa-key absolute right-6 top-1/2 -translate-y-1/2 text-slate-500 text-xs"></i>
-                    </div>
+        <form onsubmit="handleLogin(event)" class="space-y-6">
+            <div>
+                <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">Institutional Email</label>
+                <div class="relative">
+                    <i class="fas fa-envelope absolute left-4 top-1/2 -translate-y-1/2 text-slate-300"></i>
+                    <input type="email" id="email" required class="input-field w-full bg-slate-50 border border-slate-200 rounded-xl py-3 pl-10 pr-4 text-sm font-medium focus:outline-none focus:border-blue-500 focus:bg-white transition-all" placeholder="researcher@lab.edu">
                 </div>
-
-                <button type="submit" class="w-full bg-blue-600 text-white py-4 rounded-2xl font-black uppercase tracking-widest text-xs hover:bg-white hover:text-slate-900 transition-all shadow-lg shadow-blue-600/20">
-                    Authenticate
-                </button>
-            </form>
-
-            <div id="error-msg" class="hidden mt-6 text-center">
-                <p class="text-[10px] font-bold text-red-400 uppercase tracking-widest bg-red-500/10 py-2 rounded-lg border border-red-500/20">
-                    <i class="fas fa-circle-xmark mr-1"></i> Invalid Credentials
-                </p>
             </div>
 
-        </div>
+            <div>
+                <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">Access Key</label>
+                <div class="relative">
+                    <i class="fas fa-key absolute left-4 top-1/2 -translate-y-1/2 text-slate-300"></i>
+                    <input type="password" id="password" required class="input-field w-full bg-slate-50 border border-slate-200 rounded-xl py-3 pl-10 pr-4 text-sm font-medium focus:outline-none focus:border-blue-500 focus:bg-white transition-all" placeholder="••••••••">
+                </div>
+            </div>
 
-        <div class="text-center mt-8">
-            <p class="text-[9px] text-slate-500 uppercase tracking-widest">
-                Protected System • Authorized Use Only
-            </p>
-            <a href="index.html" class="inline-block mt-4 text-[10px] font-bold text-slate-400 hover:text-white transition-colors">
-                <i class="fas fa-arrow-left mr-1"></i> Return Home
+            <div class="flex items-center justify-between text-[10px] font-bold uppercase tracking-widest">
+                <label class="flex items-center gap-2 cursor-pointer text-slate-500 hover:text-slate-900">
+                    <input type="checkbox" class="rounded border-slate-300 text-blue-600 focus:ring-0">
+                    <span>Remember Node</span>
+                </label>
+                <a href="#" class="text-blue-600 hover:text-blue-800">Lost Key?</a>
+            </div>
+
+            <button type="submit" class="btn-primary w-full bg-slate-900 text-white py-4 rounded-xl font-black uppercase tracking-widest text-xs hover:bg-blue-600 shadow-lg hover:shadow-blue-600/30">
+                Authenticate
+            </button>
+        </form>
+
+        <div class="mt-8 pt-8 border-t border-slate-100 text-center">
+            <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-4">New Institution?</p>
+            <a href="support.html" class="inline-block text-xs font-bold text-blue-600 border border-blue-100 bg-blue-50 px-6 py-2 rounded-lg hover:bg-blue-100 transition-colors uppercase tracking-widest">
+                Request Account
             </a>
         </div>
 
     </div>
 
-    <script src="godmode.js"></script>
-
     <script>
-        function validateAccess(e) {
+        function handleLogin(e) {
             e.preventDefault();
-            const input = document.getElementById('accessCode');
-            const error = document.getElementById('error-msg');
-            
-            // THE ACCESS CODE (You can change this)
-            if (input.value.trim() === 'LAB2026') {
-                // Success
+            const email = document.getElementById('email').value;
+            const pass = document.getElementById('password').value;
+
+            // Simple Logic for Demo
+            if (pass === 'admin') {
+                localStorage.setItem('userRole', 'admin');
                 localStorage.setItem('portalAuthorized', 'true');
-                
-                // Visual success feedback before redirect
-                input.classList.remove('border-slate-700', 'text-white');
-                input.classList.add('border-emerald-500', 'text-emerald-400', 'bg-emerald-500/10');
-                
-                setTimeout(() => {
-                    window.location.href = 'dashboard.html'; // Direct link to the Hub
-                }, 500);
+                window.location.href = 'admin.html';
             } else {
-                // Fail
-                error.classList.remove('hidden');
-                input.classList.add('border-red-500', 'animate-pulse');
-                setTimeout(() => input.classList.remove('animate-pulse'), 500);
+                localStorage.setItem('userRole', 'researcher');
+                localStorage.setItem('portalAuthorized', 'true');
+                window.location.href = 'dashboard.html'; // Regular user dashboard
             }
         }
     </script>
