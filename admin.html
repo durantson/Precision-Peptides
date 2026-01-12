@@ -11,9 +11,14 @@
     <style>
         body { font-family: 'Inter', sans-serif; } 
         .mono { font-family: 'JetBrains Mono', monospace; }
-        /* Toggle Switch Styling */
-        .toggle-checkbox:checked { right: 0; border-color: #10b981; }
-        .toggle-checkbox:checked + .toggle-label { background-color: #10b981; }
+        /* Custom Select Styling */
+        select {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%2394a3b8' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+            background-position: right 0.5rem center;
+            background-repeat: no-repeat;
+            background-size: 1.5em 1.5em;
+        }
     </style>
 </head>
 <body class="bg-slate-900 text-white min-h-screen flex">
@@ -63,7 +68,7 @@
             <div class="flex justify-between items-center mb-8">
                 <h3 class="text-xl font-black uppercase italic">Inventory Status Protocol</h3>
                 <div class="relative">
-                    <input type="text" id="adminSearch" onkeyup="renderAdminTable()" placeholder="Search Database..." class="bg-slate-900 border border-slate-700 rounded-xl py-2 px-4 text-sm text-white focus:outline-none focus:border-blue-500">
+                    <input type="text" id="adminSearch" onkeyup="renderAdminTable()" placeholder="Search Database..." class="bg-slate-900 border border-slate-700 rounded-xl py-2 px-4 text-sm text-white focus:outline-none focus:border-blue-500 w-64">
                 </div>
             </div>
 
@@ -74,8 +79,8 @@
                             <th class="px-6 py-4">SKU / Code</th>
                             <th class="px-6 py-4">Reagent Name</th>
                             <th class="px-6 py-4">Price</th>
-                            <th class="px-6 py-4 text-center">Catalog Visibility</th>
-                            <th class="px-6 py-4 text-center">Stock Status</th>
+                            <th class="px-6 py-4 w-48">Catalog Visibility</th>
+                            <th class="px-6 py-4 w-48">Stock Status</th>
                         </tr>
                     </thead>
                     <tbody id="admin-table-body" class="divide-y divide-slate-700 bg-slate-800/30">
@@ -97,30 +102,30 @@
             const filtered = masterInventory.filter(p => p.name.toLowerCase().includes(search) || p.code.toLowerCase().includes(search));
 
             filtered.forEach(item => {
-                // Status Colors
-                const stockColor = item.inStock ? 'text-emerald-400' : 'text-red-400';
-                const stockText = item.inStock ? 'In Stock' : 'Out of Stock';
-                
-                const catalogColor = item.showInCatalog ? 'text-blue-400' : 'text-slate-500';
-                const catalogText = item.showInCatalog ? 'Visible' : 'Hidden (Ghost)';
+                // Dropdown Logic
+                const visibilitySelect = `
+                    <select onchange="updateVisibility('${item.id}', this.value)" 
+                        class="w-full bg-slate-900 border border-slate-600 text-xs font-bold text-slate-300 rounded-lg py-2 pl-3 pr-8 focus:outline-none focus:border-blue-500 cursor-pointer">
+                        <option value="true" ${item.showInCatalog ? 'selected' : ''}>Visible (Store)</option>
+                        <option value="false" ${!item.showInCatalog ? 'selected' : ''}>Hidden (Ghost)</option>
+                    </select>
+                `;
+
+                const stockSelect = `
+                    <select onchange="updateStock('${item.id}', this.value)" 
+                        class="w-full bg-slate-900 border border-slate-600 text-xs font-bold ${item.inStock ? 'text-emerald-400' : 'text-red-400'} rounded-lg py-2 pl-3 pr-8 focus:outline-none focus:border-blue-500 cursor-pointer">
+                        <option value="true" ${item.inStock ? 'selected' : ''} class="text-emerald-400">In Stock</option>
+                        <option value="false" ${!item.inStock ? 'selected' : ''} class="text-red-400">Out of Stock</option>
+                    </select>
+                `;
 
                 const row = `
                 <tr class="hover:bg-slate-700/50 transition-colors">
                     <td class="px-6 py-4 font-mono text-slate-400">${item.id}</td>
                     <td class="px-6 py-4 font-bold text-white">${item.name}</td>
                     <td class="px-6 py-4 text-slate-300">$${item.price.toFixed(2)}</td>
-                    
-                    <td class="px-6 py-4 text-center">
-                        <button onclick="toggleVisibility('${item.id}')" class="text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded border border-slate-600 hover:bg-white hover:text-slate-900 transition-all ${catalogColor}">
-                            ${catalogText}
-                        </button>
-                    </td>
-
-                    <td class="px-6 py-4 text-center">
-                        <button onclick="toggleStock('${item.id}')" class="text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded border border-slate-600 hover:bg-white hover:text-slate-900 transition-all ${stockColor}">
-                            ${stockText}
-                        </button>
-                    </td>
+                    <td class="px-6 py-4">${visibilitySelect}</td>
+                    <td class="px-6 py-4">${stockSelect}</td>
                 </tr>
                 `;
                 tbody.innerHTML += row;
@@ -128,21 +133,18 @@
         }
 
         // SIMULATION FUNCTIONS
-        // Note: In a static site, these changes only last until you refresh.
-        // To make them permanent, you would edit the inventory.js file directly.
-        
-        function toggleStock(id) {
+        function updateStock(id, value) {
             const item = masterInventory.find(i => i.id === id);
-            item.inStock = !item.inStock;
-            renderAdminTable();
-            alert(`Updated ${item.name}: Stock status changed locally.`);
+            item.inStock = (value === 'true');
+            // Re-render to update text colors immediately
+            renderAdminTable(); 
+            console.log(`Updated ${item.name}: Stock = ${item.inStock}`);
         }
 
-        function toggleVisibility(id) {
+        function updateVisibility(id, value) {
             const item = masterInventory.find(i => i.id === id);
-            item.showInCatalog = !item.showInCatalog;
-            renderAdminTable();
-            alert(`Updated ${item.name}: Visibility changed locally.`);
+            item.showInCatalog = (value === 'true');
+            console.log(`Updated ${item.name}: Visibility = ${item.showInCatalog}`);
         }
 
         function logout() {
