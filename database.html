@@ -17,9 +17,14 @@
     <style>
         body { font-family: 'Inter', sans-serif; } 
         .mono { font-family: 'JetBrains Mono', monospace; }
+        /* Base transition for fallback */
         .element-card { transition: all 0.3s ease; }
-        .element-card:hover { transform: translateY(-5px); box-shadow: 0 15px 30px -5px rgba(37, 99, 235, 0.15); border-color: #3b82f6; }
-        .element-card.archived:hover { border-color: #94a3b8; box-shadow: 0 15px 30px -5px rgba(148, 163, 184, 0.15); }
+        .element-card:hover { border-color: #3b82f6; }
+        .element-card.archived:hover { border-color: #94a3b8; }
+        
+        /* Tilt card base style */
+        .tilt-card { transition: transform 0.1s ease-out; }
+        
         * { -webkit-tap-highlight-color: transparent; }
     </style>
 </head>
@@ -32,6 +37,11 @@
                 Amintex<span class="text-blue-600">Labs</span>
             </span>
         </a>
+        
+        <div class="hidden lg:flex items-center gap-2 mr-6 text-[10px] font-bold text-slate-400 border border-slate-200 px-2 py-1 rounded bg-slate-50 cursor-pointer hover:border-blue-400 transition-colors" onclick="togglePalette()">
+            <i class="fas fa-search"></i> <span>CTRL + K</span>
+        </div>
+
         <div class="flex gap-6">
             <a href="catalog.html" class="text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-blue-600 transition-colors">Order Reagents</a>
             <a href="account.html" class="text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-blue-600 transition-colors">Client Hub</a>
@@ -75,6 +85,7 @@
     </footer>
 
     <script src="inventory.js"></script>
+    <script src="godmode.js"></script>
 
     <script>
         function renderLibrary() {
@@ -107,8 +118,9 @@
                     ? `<a href="catalog.html" class="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-400 hover:bg-blue-600 hover:text-white transition-all"><i class="fas fa-shopping-cart text-xs"></i></a>`
                     : `<span class="px-3 py-1 rounded-full bg-slate-100 text-[9px] font-bold text-slate-400 uppercase tracking-widest border border-slate-200">Reference</span>`;
 
+                // Added tilt-card class here
                 const card = `
-                <div class="element-card ${cardClass} rounded-3xl border p-6 relative overflow-hidden group">
+                <div class="tilt-card element-card ${cardClass} rounded-3xl border p-6 relative overflow-hidden group">
                     <div class="flex justify-between items-start mb-4">
                         <div class="w-12 h-12 rounded-xl flex items-center justify-center font-black text-xl mono ${badgeClass}">
                             ${item.code}
@@ -138,6 +150,9 @@
                 `;
                 grid.innerHTML += card;
             });
+            
+            // Re-init tilt since we just added new DOM elements
+            if(typeof initTilt === 'function') initTilt();
         }
 
         function filterDatabase() {
