@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Global Molecular Database | Amintex Labs</title>
+    
+    <meta name="description" content="Amintex Labs Peptide Reference Library. Comprehensive data on molecular weight, sequence, and CAS registry numbers for research peptides.">
+    <meta name="author" content="Amintex Labs">
+    <meta name="theme-color" content="#0f172a"> 
+
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚛️</text></svg>">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=JetBrains+Mono&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; } 
+        .mono { font-family: 'JetBrains Mono', monospace; }
+        .element-card { transition: all 0.3s ease; }
+        .element-card:hover { transform: translateY(-5px); box-shadow: 0 15px 30px -5px rgba(37, 99, 235, 0.15); border-color: #3b82f6; }
+        .element-card.archived:hover { border-color: #94a3b8; box-shadow: 0 15px 30px -5px rgba(148, 163, 184, 0.15); }
+        * { -webkit-tap-highlight-color: transparent; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900 min-h-screen flex flex-col">
+
+    <nav class="bg-white border-b border-slate-200 h-16 flex items-center px-6 justify-between sticky top-0 z-50">
+        <a href="index.html" class="flex items-center gap-2 hover:opacity-80 transition-opacity">
+            <div class="w-8 h-8 bg-blue-600 rounded flex items-center justify-center text-white text-sm"><i class="fas fa-atom"></i></div>
+            <span class="font-bold text-lg tracking-tighter uppercase italic text-slate-900">
+                Amintex<span class="text-blue-600">Labs</span>
+            </span>
+        </a>
+        <div class="flex gap-6">
+            <a href="catalog.html" class="text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-blue-600 transition-colors">Order Reagents</a>
+            <a href="account.html" class="text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-blue-600 transition-colors">Client Hub</a>
+        </div>
+    </nav>
+
+    <header class="bg-slate-900 text-white py-20 px-6 relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(#ffffff 1px, transparent 1px); background-size: 30px 30px;"></div>
+        <div class="max-w-7xl mx-auto relative z-10">
+            <div class="inline-flex items-center gap-2 border border-blue-500/30 bg-blue-500/10 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest text-blue-400 mb-6">
+                <span class="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></span>
+                Global Index
+            </div>
+            <h1 class="text-4xl md:text-6xl font-black italic uppercase tracking-tighter mb-6">Molecular Library</h1>
+            <p class="text-slate-400 max-w-2xl text-sm md:text-base leading-relaxed">
+                A comprehensive index of current and archival research peptides. Review chemical structures, molecular weights, and CAS registry numbers for institutional reference.
+            </p>
+            
+            <div class="mt-10 relative max-w-lg">
+                <input type="text" id="dbSearch" onkeyup="filterDatabase()" placeholder="Search by name, CAS, or sequence..." 
+                class="w-full bg-white/10 border border-white/20 backdrop-blur-md rounded-2xl py-4 px-6 text-white placeholder-slate-500 focus:outline-none focus:border-blue-500 focus:bg-white/20 transition-all text-sm font-bold">
+                <i class="fas fa-search absolute right-6 top-1/2 -translate-y-1/2 text-slate-500"></i>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-1 max-w-7xl mx-auto w-full px-6 py-16">
+        
+        <div class="flex justify-end mb-6 text-[10px] font-bold uppercase tracking-widest text-slate-400 gap-4">
+            <span class="flex items-center gap-2"><span class="w-2 h-2 bg-blue-600 rounded-full"></span> Active Synthesis</span>
+            <span class="flex items-center gap-2"><span class="w-2 h-2 bg-slate-300 rounded-full"></span> Archived / Reference</span>
+        </div>
+
+        <div id="library-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            </div>
+
+    </main>
+
+    <footer class="bg-white border-t border-slate-200 py-12 text-center">
+        <p class="text-[10px] font-bold text-slate-300 uppercase tracking-widest">&copy; 2026 Amintex Labs. Research Use Only.</p>
+    </footer>
+
+    <script>
+        // MASTER PEPTIDE DATABASE
+        // status: 1 = Active (Stock), 0 = Archived (Ghost Inventory)
+        const database = [
+            // --- ACTIVE STOCK ---
+            { status: 1, name: "Tirzepatide", code: "TZ", type: "GIP/GLP-1", mw: "4813.53", cas: "2023788-19-2", seq: "Y-{Aib}-EGTFTSDYSIYLDKQAA..." },
+            { status: 1, name: "Semaglutide", code: "SM", type: "GLP-1 Agonist", mw: "4113.58", cas: "910463-68-2", seq: "H-{Aib}-EGTFTSDVSSYLEGQAA..." },
+            { status: 1, name: "Retatrutide", code: "RT", type: "Triple Agonist", mw: "4731.33", cas: "2381089-83-2", seq: "Y-{Aib}-QGTFTSDYSKYLDE..." },
+            { status: 1, name: "BPC-157", code: "BP", type: "Regenerative", mw: "1419.50", cas: "137525-51-0", seq: "Gly-Glu-Pro-Pro-Pro-Gly..." },
+            { status: 1, name: "TB-500", code: "TB", type: "Regenerative", mw: "4963.50", cas: "77591-33-4", seq: "Ac-Ser-Asp-Lys-Pro-Asp..." },
+            { status: 1, name: "GHK-Cu", code: "GC", type: "Dermal/Repair", mw: "340.38", cas: "49557-75-7", seq: "Gly-His-Lys (Copper)" },
+            { status: 1, name: "Epitalon", code: "EP", type: "Telomerase", mw: "390.35", cas: "307297-39-8", seq: "Ala-Glu-Asp-Gly" },
+            { status: 1, name: "NAD+", code: "ND", type: "Coenzyme", mw: "663.43", cas: "53-84-9", seq: "Nicotinamide Adenine Dinuc..." },
+            { status: 1, name: "Tesamorelin", code: "TM", type: "GHRH Analog", mw: "5135.90", cas: "218949-48-5", seq: "Trans-3-hexenoyl-GHRH..." },
+            { status: 1, name: "Ipamorelin", code: "IP", type: "Secretagogue", mw: "711.85", cas: "170851-70-4", seq: "Aib-His-D-2-Nal-D-Phe-Lys" },
+            { status: 1, name: "CJC-1295", code: "CJ", type: "GHRH Analog", mw: "3367.97", cas: "863288-34-0", seq: "Tyr-D-Ala-Asp-Ala-Ile..." },
+            { status: 1, name: "MOTS-c", code: "MC", type: "Mitochondrial", mw: "2174.60", cas: "1627580-64-6", seq: "Met-Arg-Trp-Gln-Glu-Met..." },
+            { status: 1, name: "FOXO4-DRI", code: "FX", type: "Senolytic", mw: "5358.10", cas: "N/A (Exp)", seq: "L-T-L-R-K-E-P-A-S-E..." },
+            { status: 1, name: "Semax", code: "SX", type: "Nootropic", mw: "813.90", cas: "80714-61-0", seq: "Met-Glu-His-Phe-Pro-Gly-Pro" },
+            { status: 1, name: "Selank", code: "SL", type: "Anxiolytic", mw: "751.90", cas: "129954-34-3", seq: "Thr-Lys-Pro-Arg-Pro-Gly-Pro" },
+
+            // --- GHOST INVENTORY (ARCHIVED) ---
+            // These make the lab look HUGE and established
+            { status: 0, name: "Dihexa", code: "DH", type: "Neurogenic", mw: "509.29", cas: "1401708-83-5", seq: "N-hexanoic-Tyr-Ile-(6)AHx..." },
+            { status: 0, name: "Sermorelin", code: "SR", type: "GHRH (1-29)", mw: "3357.88", cas: "86168-78-7", seq: "YADAIFTNSYRKVLGQLSARK..." },
+            { status: 0, name: "Hexarelin", code: "HX", type: "GHRP", mw: "887.04", cas: "140703-51-1", seq: "His-D-2-Me-Trp-Ala-Trp..." },
+            { status: 0, name: "GHRP-6", code: "G6", type: "GHRP", mw: "873.01", cas: "87616-84-0", seq: "His-D-Trp-Ala-Trp-D-Phe..." },
+            { status: 0, name: "GHRP-2", code: "G2", type: "GHRP", mw: "817.90", cas: "158861-67-7", seq: "D-Ala-D-2-Nal-Ala-Trp..." },
+            { status: 0, name: "Thymalin", code: "TL", type: "Bioregulator", mw: "859.10", cas: "63958-90-7", seq: "Pyr-L-Ala-L-Glu-L-Asp..." },
+            { status: 0, name: "Kisspeptin-10", code: "KP", type: "Hormonal", mw: "1302.45", cas: "374675-21-5", seq: "Y-N-W-N-S-F-G-L-R-F-NH2" },
+            { status: 0, name: "Oxytocin", code: "OX", type: "Hormonal", mw: "1007.19", cas: "50-56-6", seq: "Cys-Tyr-Ile-Gln-Asn-Cys..." },
+            { status: 0, name: "Argireline", code: "AR", type: "Cosmetic", mw: "888.99", cas: "616204-22-9", seq: "Ac-Glu-Glu-Met-Gln-Arg..." },
+            { status: 0, name: "Snap-8", code: "S8", type: "Cosmetic", mw: "1075.16", cas: "868844-74-0", seq: "Ac-Glu-Glu-Met-Gln-Arg..." },
+            { status: 0, name: "ARA-290", code: "A2", type: "Anti-Inflam", mw: "1257.30", cas: "1208243-50-8", seq: "Glp-Glu-Gln-Leu-Glu..." },
+            { status: 0, name: "5-Amino-1MQ", code: "5A", type: "Metabolic", mw: "179.20", cas: "42464-96-0", seq: "Small Molecule (NNMTi)" },
+            { status: 0, name: "SS-31", code: "SS", type: "Mitochondrial", mw: "639.80", cas: "736999-31-1", seq: "D-Arg-Dmt-Lys-Phe-NH2" },
+            { status: 0, name: "Pinealon", code: "PN", type: "Bioregulator", mw: "301.30", cas: "N/A", seq: "Glu-Asp-Arg" },
+            { status: 0, name: "Vesugen", code: "VS", type: "Bioregulator", mw: "329.40", cas: "N/A", seq: "Lys-Glu-Asp" },
+            { status: 0, name: "Thymosin A1", code: "TA", type: "Immune", mw: "3108.32", cas: "62304-98-7", seq: "Ac-S-D-A-A-V-D-T-S-S-E..." }
+        ];
+
+        function renderLibrary() {
+            const grid = document.getElementById('library-grid');
+            const search = document.getElementById('dbSearch').value.toLowerCase();
+            grid.innerHTML = '';
+
+            const filtered = database.filter(item => {
+                return item.name.toLowerCase().includes(search) || 
+                       item.cas.toLowerCase().includes(search) || 
+                       item.code.toLowerCase().includes(search) ||
+                       item.type.toLowerCase().includes(search);
+            });
+
+            filtered.forEach(item => {
+                // Design Logic: Active vs Archived
+                const isActive = item.status === 1;
+                const cardClass = isActive ? 'border-slate-200' : 'border-slate-100 bg-slate-50/50 archived opacity-75';
+                const badgeClass = isActive ? 'bg-slate-900 text-white border-b-4 border-blue-500' : 'bg-slate-200 text-slate-400 border-b-4 border-slate-300';
+                const textClass = isActive ? 'text-slate-900' : 'text-slate-500';
+                const typeClass = isActive ? 'text-blue-600' : 'text-slate-400';
+                
+                // Button Logic
+                const buttonHtml = isActive 
+                    ? `<a href="catalog.html" class="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-400 hover:bg-blue-600 hover:text-white transition-all"><i class="fas fa-shopping-cart text-xs"></i></a>`
+                    : `<span class="px-3 py-1 rounded-full bg-slate-100 text-[9px] font-bold text-slate-400 uppercase tracking-widest border border-slate-200">Archived</span>`;
+
+                const card = `
+                <div class="element-card ${cardClass} rounded-3xl border p-6 relative overflow-hidden group">
+                    <div class="flex justify-between items-start mb-4">
+                        <div class="w-12 h-12 rounded-xl flex items-center justify-center font-black text-xl mono ${badgeClass}">
+                            ${item.code}
+                        </div>
+                        <div class="text-right">
+                            <p class="text-[9px] font-black uppercase tracking-widest text-slate-400">CAS Reg.</p>
+                            <p class="font-mono text-xs font-bold text-slate-600">${item.cas}</p>
+                        </div>
+                    </div>
+                    
+                    <h3 class="text-2xl font-black italic ${textClass} mb-1">${item.name}</h3>
+                    <p class="text-[10px] font-bold ${typeClass} uppercase tracking-widest mb-6">${item.type}</p>
+                    
+                    <div class="bg-white/50 rounded-xl p-4 border border-slate-100 mb-4">
+                        <p class="text-[9px] font-black uppercase tracking-widest text-slate-400 mb-1">Sequence Start</p>
+                        <p class="font-mono text-xs text-slate-500 truncate">${item.seq}</p>
+                    </div>
+
+                    <div class="flex justify-between items-end border-t border-slate-200/50 pt-4">
+                        <div>
+                            <p class="text-[9px] font-black uppercase tracking-widest text-slate-400">Mol. Weight</p>
+                            <p class="font-bold text-sm ${textClass}">${item.mw} <span class="text-[10px] text-slate-400 font-normal">g/mol</span></p>
+                        </div>
+                        ${buttonHtml}
+                    </div>
+                </div>
+                `;
+                grid.innerHTML += card;
+            });
+        }
+
+        function filterDatabase() {
+            renderLibrary();
+        }
+
+        renderLibrary();
+    </script>
+</body>
+</html>
