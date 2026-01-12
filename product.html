@@ -19,6 +19,9 @@
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         .fade-in { animation: fadeIn 0.5s ease-out forwards; }
         
+        /* Base transition for fallback */
+        .tilt-card { transition: transform 0.1s ease-out; }
+        
         * { -webkit-tap-highlight-color: transparent; }
     </style>
 </head>
@@ -29,6 +32,11 @@
             <div class="w-8 h-8 bg-blue-600 rounded flex items-center justify-center text-white"><i class="fas fa-atom text-xs"></i></div>
             <span class="font-bold text-lg tracking-tighter uppercase italic text-slate-900">Amintex<span class="text-blue-600">Labs</span></span>
         </a>
+        
+        <div class="hidden lg:flex items-center gap-2 mr-6 text-[10px] font-bold text-slate-400 border border-slate-200 px-2 py-1 rounded bg-slate-50 cursor-pointer hover:border-blue-400 transition-colors" onclick="togglePalette()">
+            <i class="fas fa-search"></i> <span>CTRL + K</span>
+        </div>
+
         <div class="flex items-center gap-6">
             <a href="catalog.html" class="text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-blue-600 transition-colors">Back to Catalog</a>
             <button onclick="window.location.href='checkout.html'" class="relative group">
@@ -51,14 +59,14 @@
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 mb-24">
             
             <div class="space-y-8">
-                <div class="bg-slate-50 rounded-[2.5rem] p-12 flex items-center justify-center border border-slate-100 relative overflow-hidden h-[500px]">
+                <div class="tilt-card bg-slate-50 rounded-[2.5rem] p-12 flex items-center justify-center border border-slate-100 relative overflow-hidden h-[500px]">
                     <div id="stock-badge" class="absolute top-8 right-8 bg-white/80 backdrop-blur border border-slate-200 px-3 py-1 rounded text-[10px] font-bold uppercase tracking-widest">
                         Loading...
                     </div>
                     <img id="product-img" src="" onerror="this.src='https://placehold.co/400x400/f1f5f9/94a3b8?text=No+Image'" class="max-h-full object-contain mix-blend-multiply drop-shadow-2xl transition-transform duration-700 hover:scale-105" alt="Reagent Vial">
                 </div>
 
-                <div class="bg-white rounded-3xl border border-slate-200 p-8 shadow-sm relative overflow-hidden group hover:border-blue-400 transition-colors cursor-pointer">
+                <div class="tilt-card bg-white rounded-3xl border border-slate-200 p-8 shadow-sm relative overflow-hidden group hover:border-blue-400 transition-colors cursor-pointer">
                     <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity text-blue-600">
                         <i class="fas fa-file-contract text-6xl"></i>
                     </div>
@@ -152,7 +160,7 @@
 
         <div id="recommendation-section" class="border-t border-slate-200 pt-16 hidden">
             <div class="flex justify-between items-end mb-8">
-                <div>
+                <div class="tilt-card">
                     <h2 class="text-[10px] font-black uppercase tracking-[0.4em] text-blue-600 mb-2">Protocol Synergies</h2>
                     <h3 class="text-2xl font-black italic text-slate-900 uppercase tracking-tight">Recommended Stacks</h3>
                 </div>
@@ -171,6 +179,8 @@
     </footer>
 
     <script src="inventory.js"></script>
+    
+    <script src="godmode.js"></script>
 
     <script>
         const urlParams = new URLSearchParams(window.location.search);
@@ -244,8 +254,10 @@
                 related.forEach((item, index) => {
                     // Staggered animation delay
                     const delay = index * 100;
+                    
+                    // Added tilt-card class
                     const card = `
-                        <a href="product.html?id=${item.id}" class="fade-in block bg-white p-6 rounded-3xl border border-slate-200 hover:border-blue-400 hover:-translate-y-1 transition-all group" style="animation-delay: ${delay}ms">
+                        <a href="product.html?id=${item.id}" class="tilt-card fade-in block bg-white p-6 rounded-3xl border border-slate-200 hover:border-blue-400 group" style="animation-delay: ${delay}ms">
                             <div class="flex items-center gap-4 mb-4">
                                 <div class="w-12 h-12 bg-slate-50 rounded-xl flex items-center justify-center">
                                     <img src="images/${item.img}" onerror="this.src='https://placehold.co/100x100/f1f5f9/94a3b8?text=Img'" class="w-8 h-8 object-contain mix-blend-multiply">
@@ -262,6 +274,9 @@
                     `;
                     grid.innerHTML += card;
                 });
+                
+                // Re-init tilt since we just added new DOM elements
+                if(typeof initTilt === 'function') initTilt();
             }
         }
 
@@ -323,6 +338,12 @@
             const originalText = btn.innerText;
             btn.innerText = "Added to Manifest";
             btn.classList.add('btn-added');
+            
+            // GOD MODE TOAST
+            if(typeof showToast === 'function') {
+                showToast(`Added ${qty}x ${product.name} to manifest`);
+            }
+
             setTimeout(() => {
                 btn.innerText = originalText;
                 btn.classList.remove('btn-added');
