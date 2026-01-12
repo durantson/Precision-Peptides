@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Researcher Registration | Amintex Labs</title>
+    <meta name="theme-color" content="#0f172a"> 
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚛️</text></svg>">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=JetBrains+Mono&display=swap" rel="stylesheet">
+    <style>body { font-family: 'Inter', sans-serif; background-color: #0f172a; color: white; }</style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-6 relative overflow-hidden">
+
+    <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-600 rounded-full blur-[120px] opacity-20 pointer-events-none"></div>
+    <div class="absolute bottom-0 left-0 w-[300px] h-[300px] bg-emerald-600 rounded-full blur-[100px] opacity-10 pointer-events-none"></div>
+
+    <div class="max-w-4xl w-full grid grid-cols-1 md:grid-cols-2 gap-0 bg-slate-900 border border-white/10 rounded-[2.5rem] shadow-2xl relative z-10 overflow-hidden">
+        
+        <div class="p-12 flex flex-col justify-between bg-white/5 backdrop-blur-sm border-r border-white/5">
+            <div>
+                <a href="index.html" class="flex items-center gap-2 mb-12 opacity-50 hover:opacity-100 transition-opacity">
+                    <i class="fas fa-arrow-left"></i> <span class="text-xs font-bold uppercase tracking-widest">Return Home</span>
+                </a>
+                <h1 class="text-4xl font-black italic uppercase tracking-tight mb-4">Create Account</h1>
+                <p class="text-slate-400 text-sm leading-relaxed mb-8">
+                    Register your institution to unlock the Amintex Client Hub. Access wholesale pricing, 3D molecular data, and batch analytics immediately.
+                </p>
+                <div class="bg-blue-900/30 border border-blue-500/30 p-4 rounded-xl">
+                    <p class="text-[10px] text-blue-300 font-bold uppercase tracking-widest mb-1">Instant Activation</p>
+                    <p class="text-xs text-blue-100">Your terminal access code will be generated immediately upon registration.</p>
+                </div>
+            </div>
+            <div class="mt-12 text-[10px] text-slate-500 font-mono">
+                SECURE REGISTRATION • 256-BIT ENCRYPTED
+            </div>
+        </div>
+
+        <div class="p-12 bg-white text-slate-900">
+            <h2 class="text-xl font-black italic uppercase tracking-tight mb-6 text-slate-900">Investigator Details</h2>
+            
+            <form action="https://formsubmit.co/amintexlabs@gmail.com" method="POST" class="space-y-5">
+                
+                <input type="hidden" name="_subject" value="New Account Registration">
+                <input type="hidden" name="_captcha" value="false">
+                <input type="hidden" name="_next" value="https://amintexlabs.com/access-granted.html">
+
+                <div>
+                    <label class="block text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-1">Full Name</label>
+                    <input type="text" name="name" required class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm font-bold focus:outline-none focus:border-blue-600 transition-all" placeholder="Dr. Jane Doe">
+                </div>
+
+                <div>
+                    <label class="block text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-1">Institutional Email</label>
+                    <input type="email" name="email" required class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm font-bold focus:outline-none focus:border-blue-600 transition-all" placeholder="name@university.edu">
+                </div>
+
+                <div>
+                    <label class="block text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-1">Create Password</label>
+                    <input type="password" name="password_dummy" required class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm font-bold focus:outline-none focus:border-blue-600 transition-all" placeholder="••••••••">
+                    <p class="text-[9px] text-slate-400 mt-1">For account verification purposes only.</p>
+                </div>
+
+                <button type="submit" class="w-full bg-blue-600 text-white py-4 rounded-xl font-black uppercase tracking-widest text-xs hover:bg-slate-900 transition-all shadow-lg shadow-blue-600/20 mt-4">
+                    Register & Unlock Hub
+                </button>
+                
+                <p class="text-[9px] text-center text-slate-400 mt-4">
+                    Already have an account? <a href="login.html" class="text-blue-600 font-bold underline">Login here</a>.
+                </p>
+            </form>
+        </div>
+
+    </div>
+
+</body>
+</html>
