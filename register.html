@@ -45,7 +45,6 @@
                 <input type="hidden" name="_subject" value="New Account Registration">
                 <input type="hidden" name="_captcha" value="false">
                 <input type="hidden" name="_template" value="table">
-
                 <div>
                     <label class="block text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-1">Full Name</label>
                     <input type="text" name="name" required class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm font-bold focus:outline-none focus:border-blue-600 transition-all" placeholder="Dr. Jane Doe">
@@ -76,31 +75,28 @@
 
     <script>
         function handleRegistration(e) {
-            e.preventDefault();
+            e.preventDefault(); // Stop standard form submit
             
             const btn = document.getElementById('submitBtn');
-            const originalContent = btn.innerHTML;
-            
-            // 1. Change button state to loading
             btn.disabled = true;
             btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Establishing Uplink...';
             btn.classList.add('opacity-75', 'cursor-not-allowed');
 
             const formData = new FormData(e.target);
 
-            // 2. Send Data to Email (Background)
+            // Send data to FormSubmit in the background (AJAX)
             fetch("https://formsubmit.co/ajax/amintexlabs@gmail.com", {
                 method: "POST",
                 body: formData
             })
             .then(response => response.json())
             .then(data => {
-                // 3. SUCCESS: Redirect to the local file
-                window.location.href = 'access-granted.html';
+                // SUCCESS: Redirect to the LOCAL file
+                window.location.href = 'access-granted.html'; 
             })
             .catch(error => {
                 console.error('Error:', error);
-                // Even if email fails (e.g. adblocker), let the user in so the demo works
+                // Fallback: If email fails (e.g. adblocker), still let them in
                 window.location.href = 'access-granted.html';
             });
         }
