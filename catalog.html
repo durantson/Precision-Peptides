@@ -37,7 +37,6 @@
         </a>
         <div class="flex items-center gap-6">
             <a href="account.html" class="hidden md:block text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-blue-600 transition-colors">Client Hub</a>
-            
             <button onclick="viewManifest()" class="relative group">
                 <i class="fas fa-shopping-bag text-slate-900 text-lg group-hover:text-blue-600 transition-colors"></i>
                 <span id="cart-badge" class="absolute -top-2 -right-2 bg-red-500 text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center opacity-0 transition-opacity">0</span>
@@ -107,37 +106,9 @@
         </div>
     </footer>
 
-    <script>
-        // Data Source
-        const products = [
-            { name: "Tirzepatide", cat: "Metabolic", price: "$69.00", img: "vial-tirzepatide.jpg", url: "product-tirzepatide.html", desc: "Dual GIP/GLP-1 agonist." },
-            { name: "Retatrutide", cat: "Metabolic", price: "$115.00", img: "vial-retatrutide.jpg", url: "product-retatrutide.html", desc: "Triple agonist (GLP-1/GIP/GCGR)." },
-            { name: "Semaglutide", cat: "Metabolic", price: "$85.00", img: "vial-semaglutide.jpg", url: "product-semaglutide.html", desc: "GLP-1 Analogue." },
-            { name: "AOD-9604", cat: "Metabolic", price: "$45.00", img: "vial-aod9604.jpg", url: "product-aod9604.html", desc: "Lipolytic fragment 177-191." },
-            { name: "BPC-157", cat: "Regenerative", price: "$45.00", img: "vial-bpc157.jpg", url: "product-bpc157.html", desc: "Stable Arginine Salt." },
-            { name: "TB-500", cat: "Regenerative", price: "$55.00", img: "vial-tb500.jpg", url: "product-tb500.html", desc: "Thymosin Beta-4 synthetic." },
-            { name: "GHK-Cu", cat: "Regenerative", price: "$45.00", img: "vial-ghkcu.jpg", url: "product-ghkcu.html", desc: "Copper peptide complex." },
-            { name: "Semax", cat: "Nootropic", price: "$45.00", img: "vial-semax.jpg", url: "product-semax.html", desc: "ACTH(4-10) Analogue." },
-            { name: "NA-Semax Amidate", cat: "Nootropic", price: "$55.00", img: "vial-na-semax.jpg", url: "product-na-semax-amidate.html", desc: "Acetylated/Amidated Semax." },
-            { name: "Selank", cat: "Nootropic", price: "$45.00", img: "vial-selank.jpg", url: "product-selank.html", desc: "Tuftsin analogue." },
-            { name: "NA-Selank Amidate", cat: "Nootropic", price: "$55.00", img: "vial-na-selank.jpg", url: "product-na-selank-amidate.html", desc: "Acetylated/Amidated Selank." },
-            { name: "Epitalon", cat: "Longevity", price: "$45.00", img: "vial-epitalon.jpg", url: "product-epitalon.html", desc: "Telomerase activator." },
-            { name: "NAD+", cat: "Longevity", price: "$45.00", img: "vial-nad.jpg", url: "product-nad.html", desc: "Oxidized Coenzyme." },
-            { name: "DSIP", cat: "Nootropic", price: "$35.00", img: "vial-dsip.jpg", url: "product-dsip.html", desc: "Delta Sleep-Inducing Peptide." },
-            { name: "Tesamorelin", cat: "Metabolic", price: "$45.00", img: "vial-tesamorelin.jpg", url: "product-tesamorelin.html", desc: "GHRH Analogue." },
-            { name: "Ipamorelin", cat: "Metabolic", price: "$35.00", img: "vial-ipamorelin.jpg", url: "product-ipamorelin.html", desc: "Selective GH Secretagogue." },
-            { name: "CJC-1295", cat: "Metabolic", price: "$35.00", img: "vial-cjc1295.jpg", url: "product-cjc1295.html", desc: "Mod GRF 1-29 No DAC." },
-            { name: "Melanotan 2", cat: "Longevity", price: "$35.00", img: "vial-mt2.jpg", url: "product-melanotan2.html", desc: "Alpha-MSH analog." },
-            { name: "PT-141", cat: "Longevity", price: "$45.00", img: "vial-pt141.jpg", url: "product-pt141.html", desc: "Bremelanotide." },
-            { name: "Cardarine", cat: "Metabolic", price: "$40.00", img: "vial-cardarine.jpg", url: "product-cardarine.html", desc: "GW-501516." },
-            { name: "MOTS-c", cat: "Metabolic", price: "$55.00", img: "vial-motsc.jpg", url: "product-motsc.html", desc: "Mitochondrial-Derived Peptide." },
-            { name: "FOXO4-DRI", cat: "Longevity", price: "$120.00", img: "vial-foxo4dri.jpg", url: "product-foxo4dri.html", desc: "Senolytic Peptide." },
-            { name: "LL-37", cat: "Immune", price: "$55.00", img: "vial-ll37.jpg", url: "product-ll37.html", desc: "Antimicrobial Peptide." },
-            { name: "Thymosin Alpha-1", cat: "Immune", price: "$45.00", img: "vial-ta1.jpg", url: "product-thymosin-alpha1.html", desc: "Immune Modulator." },
-            { name: "KPV", cat: "Regenerative", price: "$45.00", img: "vial-kpv.jpg", url: "product-kpv.html", desc: "Anti-inflammatory tripeptide." },
-            { name: "IGF-1 LR3", cat: "Regenerative", price: "$75.00", img: "vial-igf1lr3.jpg", url: "product-igf1lr3.html", desc: "Long R3 Growth Factor." }
-        ];
+    <script src="inventory.js"></script>
 
+    <script>
         let currentCategory = 'all';
         let cart = JSON.parse(localStorage.getItem('precisionCart')) || []; 
         updateBadge();
@@ -147,27 +118,32 @@
             const search = document.getElementById('searchInput').value.toLowerCase();
             grid.innerHTML = '';
 
-            const filtered = products.filter(p => {
-                const matchesCat = currentCategory === 'all' || p.cat === currentCategory;
+            // FILTER: Only show items where showInCatalog is TRUE
+            const filtered = masterInventory.filter(p => {
+                const isForSale = p.showInCatalog === true;
+                const matchesCat = currentCategory === 'all' || p.category === currentCategory;
                 const matchesSearch = p.name.toLowerCase().includes(search) || p.desc.toLowerCase().includes(search);
-                return matchesCat && matchesSearch;
+                return isForSale && matchesCat && matchesSearch;
             });
 
             filtered.forEach(item => {
+                // STOCK LOGIC
+                const stockBadge = item.inStock 
+                    ? '<div class="absolute top-4 right-4 bg-white/80 backdrop-blur border border-slate-200 px-2 py-0.5 rounded text-[8px] font-bold uppercase tracking-widest text-emerald-600">In Stock</div>'
+                    : '<div class="absolute top-4 right-4 bg-red-50 backdrop-blur border border-red-200 px-2 py-0.5 rounded text-[8px] font-bold uppercase tracking-widest text-red-600">Out of Stock</div>';
+
                 const card = `
                 <div class="product-card bg-white p-6 rounded-2xl border border-slate-200 group relative">
-                    <div class="absolute top-4 right-4 bg-white/80 backdrop-blur border border-slate-200 px-2 py-0.5 rounded text-[8px] font-bold uppercase tracking-widest text-emerald-600">
-                        In Stock
-                    </div>
+                    ${stockBadge}
                     <div class="h-40 bg-slate-50 rounded-xl mb-4 flex items-center justify-center overflow-hidden">
                         <img src="images/${item.img}" class="h-32 object-contain mix-blend-multiply group-hover:scale-110 transition-transform duration-500" alt="${item.name}">
                     </div>
-                    <div class="text-[10px] font-bold text-blue-600 uppercase tracking-widest mb-1">${item.cat}</div>
+                    <div class="text-[10px] font-bold text-blue-600 uppercase tracking-widest mb-1">${item.category}</div>
                     <h3 class="text-xl font-black italic text-slate-900 mb-1">${item.name}</h3>
                     <p class="text-xs text-slate-400 mb-4 line-clamp-2">${item.desc}</p>
                     <div class="flex items-center justify-between border-t border-slate-100 pt-4">
-                        <span class="font-bold text-slate-900">${item.price}+</span>
-                        <a href="${item.url}" class="text-xs font-bold text-blue-600 hover:text-slate-900 transition-colors uppercase tracking-wider">View Data <i class="fas fa-arrow-right ml-1"></i></a>
+                        <span class="font-bold text-slate-900">$${item.price.toFixed(2)}</span>
+                        <a href="product.html?id=${item.id}" class="text-xs font-bold text-blue-600 hover:text-slate-900 transition-colors uppercase tracking-wider">View Data <i class="fas fa-arrow-right ml-1"></i></a>
                     </div>
                 </div>
                 `;
