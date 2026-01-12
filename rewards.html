@@ -11,9 +11,15 @@
     <style>
         body { font-family: 'Inter', sans-serif; } 
         .glass-panel { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); }
-        .perk-card { transition: all 0.3s ease; }
-        .perk-card:hover { transform: translateY(-5px); border-color: #3b82f6; }
+        
+        /* Modified for compatibility with God Mode Tilt */
+        .perk-card { transition: border-color 0.3s ease, box-shadow 0.3s ease; }
+        .perk-card:hover { border-color: #3b82f6; }
+        
         .btn-disabled { opacity: 0.5; cursor: not-allowed; filter: grayscale(1); }
+        
+        /* Base transition for tilt fallback */
+        .tilt-card { transition: transform 0.1s ease-out; }
     </style>
 </head>
 <body class="bg-slate-900 text-white min-h-screen flex flex-col">
@@ -23,6 +29,11 @@
             <div class="w-8 h-8 bg-blue-600 rounded flex items-center justify-center text-white text-sm"><i class="fas fa-atom"></i></div>
             <span class="font-bold text-lg tracking-tighter uppercase italic text-white">Amintex<span class="text-blue-500">Labs</span></span>
         </a>
+        
+        <div class="hidden lg:flex items-center gap-2 mr-6 text-[10px] font-bold text-slate-400 border border-slate-700 px-2 py-1 rounded bg-slate-800 cursor-pointer hover:border-blue-400 transition-colors" onclick="togglePalette()">
+            <i class="fas fa-search"></i> <span>CTRL + K</span>
+        </div>
+
         <a href="dashboard.html" class="text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-white transition-colors">Back to Hub</a>
     </nav>
 
@@ -36,7 +47,7 @@
                 </p>
             </div>
             
-            <div class="glass-panel p-8 rounded-[2.5rem] relative overflow-hidden">
+            <div class="tilt-card glass-panel p-8 rounded-[2.5rem] relative overflow-hidden">
                 <div class="flex justify-between items-end mb-4">
                     <div>
                         <p class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-1">Available Balance</p>
@@ -53,7 +64,7 @@
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
             
-            <div class="perk-card border border-slate-700 bg-slate-800/30 p-8 rounded-3xl relative flex flex-col justify-between h-full">
+            <div class="tilt-card perk-card border border-slate-700 bg-slate-800/30 p-8 rounded-3xl relative flex flex-col justify-between h-full">
                 <div>
                     <h3 class="text-lg font-black uppercase italic mb-2 text-slate-300">Priority Batching</h3>
                     <p class="text-[10px] font-bold uppercase tracking-widest text-blue-500 mb-4">Cost: 10,000 Pts</p>
@@ -66,7 +77,7 @@
                 </button>
             </div>
 
-            <div class="perk-card border border-amber-500/20 bg-amber-900/5 p-8 rounded-3xl relative flex flex-col justify-between h-full">
+            <div class="tilt-card perk-card border border-amber-500/20 bg-amber-900/5 p-8 rounded-3xl relative flex flex-col justify-between h-full">
                 <div>
                     <h3 class="text-lg font-black uppercase italic mb-2 text-white">Ghost Inventory</h3>
                     <p class="text-[10px] font-bold uppercase tracking-widest text-amber-500 mb-4">Cost: 50,000 Pts</p>
@@ -79,7 +90,7 @@
                 </button>
             </div>
 
-            <div class="perk-card border border-emerald-500/30 bg-emerald-900/10 p-8 rounded-3xl relative overflow-hidden flex flex-col justify-between h-full">
+            <div class="tilt-card perk-card border border-emerald-500/30 bg-emerald-900/10 p-8 rounded-3xl relative overflow-hidden flex flex-col justify-between h-full">
                 <div class="absolute -right-10 -top-10 w-32 h-32 bg-emerald-500 rounded-full blur-[60px] opacity-20"></div>
                 <div>
                     <h3 class="text-lg font-black uppercase italic mb-2 text-white">Logistics Waiver</h3>
@@ -96,6 +107,8 @@
         </div>
 
     </main>
+
+    <script src="godmode.js"></script>
 
     <script>
         // --- LOGIC: PERKS & POINTS ---
@@ -168,7 +181,13 @@
                     localStorage.setItem('perk_' + perkKey, 'true'); // FLAG SET FOR CHECKOUT
                     saveData();
                     updateUI();
-                    alert("Directorate Status Confirmed. Shipping waiver applied to account.");
+                    
+                    // Use God Mode Toast if available
+                    if (typeof showToast === 'function') {
+                        showToast("Perk Unlocked: " + perkKey.toUpperCase(), "success");
+                    } else {
+                        alert("Perk Unlocked!");
+                    }
                 }
             }
         }
