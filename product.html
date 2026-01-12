@@ -63,7 +63,7 @@
                     <div id="stock-badge" class="absolute top-8 right-8 bg-white/80 backdrop-blur border border-slate-200 px-3 py-1 rounded text-[10px] font-bold uppercase tracking-widest">
                         Loading...
                     </div>
-                    <img id="product-img" src="" onerror="this.src='https://placehold.co/400x400/f1f5f9/94a3b8?text=No+Image'" class="max-h-full object-contain mix-blend-multiply drop-shadow-2xl transition-transform duration-700 hover:scale-105" alt="Reagent Vial">
+                    <img id="product-img" src="" onerror="this.src='https://placehold.co/400x400/f1f5f9/94a3b8?text=Structure+Image'" class="max-h-full object-contain mix-blend-multiply drop-shadow-2xl transition-transform duration-700 hover:scale-105" alt="Reagent Vial">
                 </div>
 
                 <div class="tilt-card bg-white rounded-3xl border border-slate-200 p-8 shadow-sm relative overflow-hidden group hover:border-blue-400 transition-colors cursor-pointer">
@@ -112,14 +112,15 @@
 
                 <div class="border-t border-b border-slate-100 py-6 mb-8">
                     <div class="grid grid-cols-3 gap-y-4 text-xs">
+                        
+                        <div class="text-slate-400 font-bold uppercase tracking-widest">Mechanism</div>
+                        <div id="spec-mech" class="col-span-2 font-bold text-blue-600">Loading...</div>
+
                         <div class="text-slate-400 font-bold uppercase tracking-widest">Sequence</div>
                         <div id="spec-seq" class="col-span-2 font-mono text-slate-700 truncate">Loading...</div>
 
                         <div class="text-slate-400 font-bold uppercase tracking-widest">CAS Reg.</div>
                         <div id="spec-cas" class="col-span-2 font-bold text-slate-900">Loading...</div>
-
-                        <div class="text-slate-400 font-bold uppercase tracking-widest">Mechanism</div>
-                        <div id="spec-mech" class="col-span-2 font-bold text-blue-600">Loading...</div>
 
                         <div class="text-slate-400 font-bold uppercase tracking-widest">Mol. Weight</div>
                         <div id="spec-mw" class="col-span-2 font-bold text-slate-900">Loading...</div>
@@ -194,11 +195,7 @@
         const badge = document.getElementById('cart-badge');
 
         function init() {
-            if (!product) { 
-                // If ID is invalid or missing, go back to catalog
-                window.location.href = 'catalog.html'; 
-                return; 
-            }
+            if (!product) { window.location.href = 'catalog.html'; return; }
 
             // 1. Populate Main Data
             document.title = `${product.name} | Analysis Data`;
@@ -214,9 +211,9 @@
             document.getElementById('crumb-name').innerText = product.name;
 
             // 3. Specs
+            document.getElementById('spec-mech').innerText = product.mechanism || "Unclassified"; 
             document.getElementById('spec-seq').innerText = product.seq;
             document.getElementById('spec-cas').innerText = product.cas;
-            document.getElementById('spec-mech').innerText = product.mechanism; // NEW
             document.getElementById('spec-mw').innerText = `${product.mw} g/mol`;
 
             // 4. Stock / Availability Logic
@@ -224,6 +221,7 @@
             const addBtn = document.getElementById('add-btn');
 
             if (!product.showInCatalog) {
+                // GHOST INVENTORY LOGIC
                 stockBadge.innerText = "Reference Only";
                 stockBadge.className = "absolute top-8 right-8 bg-slate-100 backdrop-blur border border-slate-200 px-3 py-1 rounded text-[10px] font-bold uppercase tracking-widest text-slate-500";
                 addBtn.disabled = true;
@@ -231,10 +229,12 @@
                 addBtn.className = "flex-1 bg-slate-100 text-slate-400 py-4 rounded-xl font-black uppercase tracking-widest text-xs cursor-not-allowed";
                 document.getElementById('product-price').innerText = "Inquire";
             } else if (product.inStock) {
+                // IN STOCK LOGIC
                 stockBadge.innerText = "In Stock";
                 stockBadge.className = "absolute top-8 right-8 bg-white/80 backdrop-blur border border-slate-200 px-3 py-1 rounded text-[10px] font-bold uppercase tracking-widest text-emerald-600";
                 updateDynamicPrice();
             } else {
+                // OUT OF STOCK LOGIC
                 stockBadge.innerText = "Out of Stock";
                 stockBadge.className = "absolute top-8 right-8 bg-red-50 backdrop-blur border border-red-200 px-3 py-1 rounded text-[10px] font-bold uppercase tracking-widest text-red-600";
                 addBtn.disabled = true;
