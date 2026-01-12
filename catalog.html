@@ -14,41 +14,121 @@
     <meta property="og:title" content="Amintex Labs | Master Catalog">
     <meta property="og:description" content="View live stock status and institutional pricing.">
     <meta property="og:image" content="images/catalog-banner.jpg"> 
-    <meta property="og:url" content="https://www.your-website.com/catalog.html">
+    <meta property="og:url" content="https://www.amintexlabs.com/catalog.html">
 
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚛️</text></svg>">
 
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        /* Note: We use .tilt-card from godmode.js for the main effect now, 
-           but keep the base transition for mobile/fallback */
+        /* Base transition for mobile/fallback */
         .product-card { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
         .product-card:hover { border-color: #93c5fd; }
         
         .filter-btn.active { background-color: #0f172a; color: white; border-color: #0f172a; }
         .filter-btn:hover:not(.active) { border-color: #2563eb; color: #2563eb; }
+        
+        /* Tilt card base style */
+        .tilt-card { transition: transform 0.1s ease-out; }
         * { -webkit-tap-highlight-color: transparent; }
     </style>
 </head>
 <body class="bg-slate-50 font-sans antialiased text-slate-900 flex flex-col min-h-screen">
 
-    <nav class="bg-white border-b border-slate-100 h-16 flex items-center px-6 justify-between sticky top-0 z-50">
-        <a href="index.html" class="flex items-center gap-2 hover:opacity-75 transition-opacity">
-            <div class="w-8 h-8 bg-blue-600 rounded flex items-center justify-center text-white"><i class="fas fa-atom text-xs"></i></div>
-            <span class="font-bold text-lg tracking-tighter uppercase italic text-slate-900">Amintex<span class="text-blue-600">Labs</span></span>
+    <nav class="bg-white/90 backdrop-blur-xl border-b border-slate-200 h-20 flex items-center px-6 md:px-12 justify-between sticky top-0 z-[100]">
+        
+        <a href="index.html" class="flex items-center gap-3 hover:opacity-75 transition-opacity z-50">
+            <div class="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center text-white shadow-lg shadow-blue-600/20">
+                <i class="fas fa-atom text-sm"></i>
+            </div>
+            <span class="font-black text-xl tracking-tighter uppercase italic text-slate-900">Amintex<span class="text-blue-600">Labs</span></span>
         </a>
         
-        <div class="hidden lg:flex items-center gap-2 mr-6 text-[10px] font-bold text-slate-400 border border-slate-200 px-2 py-1 rounded bg-slate-50 cursor-pointer hover:border-blue-400 transition-colors" onclick="togglePalette()">
-            <i class="fas fa-search"></i> <span>CTRL + K</span>
+        <div class="hidden lg:flex items-center gap-8">
+            
+            <div class="group relative py-6"> 
+                <button class="flex items-center gap-2 text-[11px] font-black uppercase tracking-[0.15em] text-slate-500 group-hover:text-blue-600 transition-colors">
+                    Catalog <i class="fas fa-chevron-down text-[8px] opacity-50"></i>
+                </button>
+                
+                <div class="absolute top-full -left-10 w-[500px] bg-white border border-slate-100 rounded-2xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform group-hover:translate-y-0 translate-y-2 overflow-hidden">
+                    <div class="grid grid-cols-2">
+                        <div class="p-6 space-y-1 bg-slate-50/50">
+                            <p class="text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-3 ml-2">Categories</p>
+                            <a href="#" onclick="setCategory('Metabolic', document.querySelectorAll('.filter-btn')[1])" class="flex items-center gap-3 p-2 rounded-lg hover:bg-white hover:shadow-sm transition-all group/item">
+                                <div class="w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center"><i class="fas fa-fire"></i></div>
+                                <div>
+                                    <div class="text-xs font-bold text-slate-900">Metabolic</div>
+                                    <div class="text-[9px] text-slate-400">GLP-1 & GIP Agonists</div>
+                                </div>
+                            </a>
+                            <a href="#" onclick="setCategory('Regenerative', document.querySelectorAll('.filter-btn')[2])" class="flex items-center gap-3 p-2 rounded-lg hover:bg-white hover:shadow-sm transition-all group/item">
+                                <div class="w-8 h-8 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center"><i class="fas fa-dna"></i></div>
+                                <div>
+                                    <div class="text-xs font-bold text-slate-900">Regenerative</div>
+                                    <div class="text-[9px] text-slate-400">Tissue & Cellular Repair</div>
+                                </div>
+                            </a>
+                            <a href="#" onclick="setCategory('Nootropic', document.querySelectorAll('.filter-btn')[3])" class="flex items-center gap-3 p-2 rounded-lg hover:bg-white hover:shadow-sm transition-all group/item">
+                                <div class="w-8 h-8 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center"><i class="fas fa-brain"></i></div>
+                                <div>
+                                    <div class="text-xs font-bold text-slate-900">Nootropic</div>
+                                    <div class="text-[9px] text-slate-400">Cognitive Enhancement</div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="p-6 bg-slate-900 text-white flex flex-col justify-between">
+                            <div>
+                                <span class="bg-blue-600 text-white text-[8px] font-bold px-2 py-1 rounded-full uppercase tracking-wide">New Arrival</span>
+                                <h4 class="font-black italic text-lg mt-3">Retatrutide</h4>
+                                <p class="text-[10px] text-slate-400 mt-1 leading-relaxed">Next-gen triple agonist (GLP-1/GIP/GCGR) now available for synthesis.</p>
+                            </div>
+                            <a href="product.html?id=AM-103" class="text-[10px] font-bold uppercase tracking-widest text-blue-400 hover:text-white flex items-center gap-2">View Data <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="group relative py-6">
+                <button class="flex items-center gap-2 text-[11px] font-black uppercase tracking-[0.15em] text-slate-500 group-hover:text-blue-600 transition-colors">
+                    Resources <i class="fas fa-chevron-down text-[8px] opacity-50"></i>
+                </button>
+                
+                <div class="absolute top-full left-1/2 -translate-x-1/2 w-64 bg-white border border-slate-100 rounded-2xl shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform group-hover:translate-y-0 translate-y-2 p-2">
+                    <a href="batch-verification.html" class="flex items-center gap-3 p-3 rounded-xl hover:bg-slate-50 transition-colors">
+                        <i class="fas fa-check-circle text-emerald-500"></i>
+                        <span class="text-xs font-bold text-slate-700">Batch Verification</span>
+                    </a>
+                    <a href="molecular-structures.html" class="flex items-center gap-3 p-3 rounded-xl hover:bg-slate-50 transition-colors">
+                        <i class="fas fa-cubes text-blue-500"></i>
+                        <span class="text-xs font-bold text-slate-700">3D Database</span>
+                    </a>
+                    <a href="support.html" class="flex items-center gap-3 p-3 rounded-xl hover:bg-slate-50 transition-colors">
+                        <i class="fas fa-book text-slate-400"></i>
+                        <span class="text-xs font-bold text-slate-700">Documentation</span>
+                    </a>
+                    <div class="h-px bg-slate-100 my-1"></div>
+                    <a href="account.html" class="flex items-center gap-3 p-3 rounded-xl hover:bg-slate-50 transition-colors">
+                        <i class="fas fa-user-circle text-slate-900"></i>
+                        <span class="text-xs font-bold text-slate-700">Client Portal</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="flex items-center gap-2 text-[10px] font-bold text-slate-400 border border-slate-200 px-3 py-1.5 rounded-lg bg-slate-50 cursor-pointer hover:border-blue-400 hover:text-blue-600 transition-all group" onclick="togglePalette()">
+                <i class="fas fa-search group-hover:scale-110 transition-transform"></i> <span>CTRL + K</span>
+            </div>
+
         </div>
 
         <div class="flex items-center gap-6">
-            <a href="account.html" class="hidden md:block text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-blue-600 transition-colors">Client Hub</a>
-            <button onclick="viewManifest()" class="relative group">
+            <button onclick="viewManifest()" class="relative group p-2">
                 <i class="fas fa-shopping-bag text-slate-900 text-lg group-hover:text-blue-600 transition-colors"></i>
-                <span id="cart-badge" class="absolute -top-2 -right-2 bg-red-500 text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center opacity-0 transition-opacity">0</span>
+                <span id="cart-badge" class="absolute top-0 right-0 bg-red-500 text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center opacity-0 transition-opacity ring-2 ring-white">0</span>
             </button>
+            <a href="catalog.html" class="hidden md:block bg-slate-900 text-white px-6 py-2.5 rounded-xl font-bold text-[10px] uppercase tracking-widest hover:bg-blue-600 transition-all shadow-lg shadow-slate-900/20">
+                View Stock
+            </a>
         </div>
     </nav>
 
@@ -141,7 +221,6 @@
                     ? '<div class="absolute top-4 right-4 bg-white/80 backdrop-blur border border-slate-200 px-2 py-0.5 rounded text-[8px] font-bold uppercase tracking-widest text-emerald-600">In Stock</div>'
                     : '<div class="absolute top-4 right-4 bg-red-50 backdrop-blur border border-red-200 px-2 py-0.5 rounded text-[8px] font-bold uppercase tracking-widest text-red-600">Out of Stock</div>';
 
-                // Added 'tilt-card' class here for the 3D effect
                 const card = `
                 <div class="tilt-card product-card bg-white p-6 rounded-2xl border border-slate-200 group relative">
                     ${stockBadge}
