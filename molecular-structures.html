@@ -3,256 +3,229 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Global Molecular Database | Amintex Labs</title>
+    <title>3D Molecular Database | Amintex Labs</title>
     
-    <meta name="description" content="Amintex Labs Global Molecular Database. NIH-linked 3D discovery engine for advanced peptide research and structural comparison.">
-    <meta name="author" content="Amintex Labs">
+    <meta name="description" content="Interactive 3D molecular visualization engine linked to the NIH PubChem database.">
     <meta name="theme-color" content="#2563eb"> 
-
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="Amintex Labs | Molecular Database">
-    <meta property="og:description" content="Access 3D structural data and side-by-side molecular comparisons.">
-    <meta property="og:image" content="images/social-preview.jpg"> 
-    <meta property="og:url" content="https://www.your-website.com/molecular-structures.html">
-
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚛️</text></svg>">
-    
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=JetBrains+Mono&display=swap" rel="stylesheet">
     <script src="https://3Dmol.org/build/3Dmol-min.js"></script>
+
     <style>
-        .mol-container { width: 100%; height: 400px; position: relative; background: #0f172a; border-radius: 2rem; }
-        .glass-card { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(10px); border: 1px solid rgba(226, 232, 240, 1); }
-        .no-scrollbar::-webkit-scrollbar { display: none; }
-        @keyframes pulse-blue { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
-        .loading-pulse { animation: pulse-blue 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
-        .mode-btn.active { background-color: #2563eb; color: white; border-color: #2563eb; }
-        
-        /* STABILIZATION FIX: Standard hover effect instead of 3D Tilt */
-        .stable-card { transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease; }
-        .stable-card:hover { transform: translateY(-5px); box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15); border-color: #3b82f6; }
-        
-        * { -webkit-tap-highlight-color: transparent; }
+        body { font-family: 'Inter', sans-serif; }
+        .glass-panel { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(12px); border: 1px solid rgba(0,0,0,0.05); }
+        .canvas-container { background: radial-gradient(circle at center, #f8fafc 0%, #e2e8f0 100%); }
+        .loader { border-top-color: #2563eb; -webkit-animation: spinner 1.5s linear infinite; animation: spinner 1.5s linear infinite; }
+        @keyframes spinner { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        /* Mega Menu Transition */
+        .tilt-card { transition: transform 0.1s ease-out; }
     </style>
 </head>
-<body class="bg-slate-50 font-sans antialiased text-slate-900 min-h-screen flex flex-col">
+<body class="bg-slate-50 font-sans antialiased text-slate-900 h-screen flex flex-col overflow-hidden">
 
-    <script>
-        if (localStorage.getItem('portalAuthorized') !== 'true') { window.location.href = 'account.html'; }
-    </script>
-
-    <nav class="bg-white border-b border-slate-200 h-16 flex items-center px-6 justify-between sticky top-0 z-50">
-        <a href="index.html" class="flex items-center gap-2 hover:opacity-80 transition-opacity">
-            <div class="w-8 h-8 bg-blue-600 rounded flex items-center justify-center text-white"><i class="fas fa-atom text-xs"></i></div>
-            <span class="font-bold text-lg tracking-tighter uppercase italic">Amintex<span class="text-blue-600">Labs</span></span>
+    <nav class="bg-white/90 backdrop-blur-xl border-b border-slate-200 h-20 flex items-center px-6 md:px-12 justify-between shrink-0 z-[100]">
+        <a href="index.html" class="flex items-center gap-3 hover:opacity-75 transition-opacity z-50">
+            <div class="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center text-white shadow-lg shadow-blue-600/20">
+                <i class="fas fa-atom text-sm"></i>
+            </div>
+            <span class="font-black text-xl tracking-tighter uppercase italic text-slate-900">Amintex<span class="text-blue-600">Labs</span></span>
         </a>
-        
-        <div class="hidden lg:flex items-center gap-2 mr-6 text-[10px] font-bold text-slate-400 border border-slate-200 px-2 py-1 rounded bg-slate-50 cursor-pointer hover:border-blue-400 transition-colors" onclick="togglePalette()">
-            <i class="fas fa-search"></i> <span>CTRL + K</span>
+        <div class="hidden lg:flex items-center gap-8">
+            <div class="group relative py-6"> 
+                <button class="flex items-center gap-2 text-[11px] font-black uppercase tracking-[0.15em] text-slate-500 group-hover:text-blue-600 transition-colors">
+                    Catalog <i class="fas fa-chevron-down text-[8px] opacity-50"></i>
+                </button>
+                <div class="absolute top-full -left-10 w-[500px] bg-white border border-slate-100 rounded-2xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform group-hover:translate-y-0 translate-y-2 overflow-hidden">
+                    <div class="grid grid-cols-2">
+                        <div class="p-6 space-y-1 bg-slate-50/50">
+                            <p class="text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-3 ml-2">Categories</p>
+                            <a href="catalog.html" class="flex items-center gap-3 p-2 rounded-lg hover:bg-white hover:shadow-sm transition-all group/item">
+                                <div class="w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center"><i class="fas fa-fire"></i></div>
+                                <div><div class="text-xs font-bold text-slate-900">Metabolic</div><div class="text-[9px] text-slate-400">GLP-1 & GIP Agonists</div></div>
+                            </a>
+                            <a href="catalog.html" class="flex items-center gap-3 p-2 rounded-lg hover:bg-white hover:shadow-sm transition-all group/item">
+                                <div class="w-8 h-8 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center"><i class="fas fa-dna"></i></div>
+                                <div><div class="text-xs font-bold text-slate-900">Regenerative</div><div class="text-[9px] text-slate-400">Tissue & Cellular Repair</div></div>
+                            </a>
+                            <a href="catalog.html" class="flex items-center gap-3 p-2 rounded-lg hover:bg-white hover:shadow-sm transition-all group/item">
+                                <div class="w-8 h-8 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center"><i class="fas fa-brain"></i></div>
+                                <div><div class="text-xs font-bold text-slate-900">Nootropic</div><div class="text-[9px] text-slate-400">Cognitive Enhancement</div></div>
+                            </a>
+                        </div>
+                        <div class="p-6 bg-slate-900 text-white flex flex-col justify-between">
+                            <div>
+                                <span class="bg-blue-600 text-white text-[8px] font-bold px-2 py-1 rounded-full uppercase tracking-wide">New Arrival</span>
+                                <h4 class="font-black italic text-lg mt-3">Retatrutide</h4>
+                                <p class="text-[10px] text-slate-400 mt-1 leading-relaxed">Next-gen triple agonist (GLP-1/GIP/GCGR) now available for synthesis.</p>
+                            </div>
+                            <a href="catalog.html" class="text-[10px] font-bold uppercase tracking-widest text-blue-400 hover:text-white flex items-center gap-2">View Data <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="group relative py-6">
+                <button class="flex items-center gap-2 text-[11px] font-black uppercase tracking-[0.15em] text-slate-500 group-hover:text-blue-600 transition-colors">
+                    Resources <i class="fas fa-chevron-down text-[8px] opacity-50"></i>
+                </button>
+                <div class="absolute top-full left-1/2 -translate-x-1/2 w-64 bg-white border border-slate-100 rounded-2xl shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform group-hover:translate-y-0 translate-y-2 p-2">
+                    <a href="batch-verification.html" class="flex items-center gap-3 p-3 rounded-xl hover:bg-slate-50 transition-colors"><i class="fas fa-check-circle text-emerald-500"></i><span class="text-xs font-bold text-slate-700">Batch Verification</span></a>
+                    <a href="molecular-structures.html" class="flex items-center gap-3 p-3 rounded-xl hover:bg-slate-50 transition-colors"><i class="fas fa-cubes text-blue-500"></i><span class="text-xs font-bold text-slate-700">3D Database</span></a>
+                    <a href="support.html" class="flex items-center gap-3 p-3 rounded-xl hover:bg-slate-50 transition-colors"><i class="fas fa-book text-slate-400"></i><span class="text-xs font-bold text-slate-700">Documentation</span></a>
+                    <div class="h-px bg-slate-100 my-1"></div>
+                    <a href="account.html" class="flex items-center gap-3 p-3 rounded-xl hover:bg-slate-50 transition-colors"><i class="fas fa-user-circle text-slate-900"></i><span class="text-xs font-bold text-slate-700">Client Portal</span></a>
+                </div>
+            </div>
+            <div class="flex items-center gap-2 text-[10px] font-bold text-slate-400 border border-slate-200 px-3 py-1.5 rounded-lg bg-slate-50 cursor-pointer hover:border-blue-400 hover:text-blue-600 transition-all group" onclick="togglePalette()">
+                <i class="fas fa-search group-hover:scale-110 transition-transform"></i> <span>CTRL + K</span>
+            </div>
         </div>
-
-        <div class="flex gap-4">
-            <button onclick="switchMode('discovery')" id="btn-discovery" class="mode-btn active px-4 py-2 rounded-xl border border-slate-200 text-[10px] font-black uppercase tracking-widest transition-all">Discovery</button>
-            <button onclick="switchMode('comparison')" id="btn-comparison" class="mode-btn px-4 py-2 rounded-xl border border-slate-200 text-[10px] font-black uppercase tracking-widest transition-all">Comparison Lab</button>
-            <a href="dashboard.html" class="px-4 py-2 rounded-xl border border-slate-200 text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-blue-600 transition-all flex items-center gap-2">
-                <i class="fas fa-th-large"></i> Hub
-            </a>
+        <div class="flex items-center gap-6">
+            <button onclick="window.location.href='checkout.html'" class="relative group p-2">
+                <i class="fas fa-shopping-bag text-slate-900 text-lg group-hover:text-blue-600 transition-colors"></i>
+                <span id="cart-badge" class="absolute top-0 right-0 bg-red-500 text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center opacity-0 transition-opacity ring-2 ring-white">0</span>
+            </button>
+            <a href="catalog.html" class="hidden md:block bg-slate-900 text-white px-6 py-2.5 rounded-xl font-bold text-[10px] uppercase tracking-widest hover:bg-blue-600 transition-all shadow-lg shadow-slate-900/20">View Stock</a>
         </div>
     </nav>
 
-    <header id="discovery-header" class="bg-slate-900 py-16 px-6 relative overflow-hidden">
-        <div class="max-w-4xl mx-auto relative z-10 text-center">
-            <h2 class="text-[10px] font-black uppercase tracking-[0.4em] text-blue-500 mb-4">NIH-Linked Discovery Engine</h2>
-            <h1 class="text-4xl md:text-6xl font-black text-white italic uppercase tracking-tighter mb-8">Global Reagent Database</h1>
-            <div class="relative max-w-2xl mx-auto">
-                <input type="text" id="globalSearch" placeholder="Search by name (e.g. Oxytocin, Ghrelin, GHK-Cu)..." 
-                class="w-full bg-white/10 border border-white/20 rounded-2xl py-5 px-8 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:bg-white/20 transition-all text-lg">
-                <button onclick="searchPubChem()" class="absolute right-3 top-1/2 -translate-y-1/2 bg-blue-600 text-white p-3 rounded-xl hover:bg-white hover:text-blue-600 transition-all">
-                    <i class="fas fa-search"></i>
-                </button>
+    <div class="flex-1 flex relative overflow-hidden">
+        
+        <aside class="w-80 bg-white border-r border-slate-200 p-6 flex flex-col z-20 shadow-xl overflow-y-auto">
+            
+            <div class="mb-8">
+                <h1 class="text-xl font-black italic uppercase text-slate-900">Structure Viewer</h1>
+                <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest">Powered by PubChem API</p>
             </div>
-        </div>
-        <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(#2563eb 1px, transparent 1px); background-size: 30px 30px;"></div>
-    </header>
-
-    <header id="comparison-header" class="hidden bg-white border-b border-slate-200 py-10 px-6">
-        <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8">
-            <div class="text-center md:text-left">
-                <h2 class="text-[10px] font-black uppercase tracking-[0.4em] text-blue-600 mb-2">Side-by-Side Analysis</h2>
-                <h1 class="text-3xl font-black italic uppercase tracking-tighter">Comparison Lab</h1>
-            </div>
-            <div class="flex flex-col sm:flex-row gap-4 w-full max-w-2xl">
-                <input type="text" id="compA" placeholder="Compound A (e.g. Semaglutide)" class="flex-1 bg-slate-100 border-none rounded-xl py-4 px-6 text-sm focus:ring-2 focus:ring-blue-600">
-                <input type="text" id="compB" placeholder="Compound B (e.g. Tirzepatide)" class="flex-1 bg-slate-100 border-none rounded-xl py-4 px-6 text-sm focus:ring-2 focus:ring-blue-600">
-                <button onclick="runComparison()" class="bg-blue-600 text-white px-8 py-4 rounded-xl font-black uppercase tracking-widest text-[10px] hover:bg-slate-900 transition-all">Analyze</button>
-            </div>
-        </div>
-    </header>
-
-    <main class="flex-1 max-w-7xl mx-auto px-6 py-12 w-full">
-        <div id="view-discovery">
-            <div id="search-results-area" class="mb-20 hidden">
-                <h3 class="text-[10px] font-black uppercase tracking-widest text-blue-600 mb-8 border-b border-blue-100 pb-4">Discovery Result</h3>
-                <div id="search-card-container"></div>
-            </div>
-            <div class="mb-12">
-                <h3 class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-8 border-b border-slate-200 pb-4">Featured Research Compounds</h3>
-                <div id="featured-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
-            </div>
-        </div>
-
-        <div id="view-comparison" class="hidden">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div class="space-y-4">
-                    <div id="compare-view-A" class="mol-container shadow-2xl stable-card">
-                        <div class="absolute inset-0 flex items-center justify-center text-slate-700 font-bold uppercase text-[9px] tracking-widest">Awaiting Input A</div>
-                    </div>
-                    <div id="data-A" class="hidden p-6 bg-white border border-slate-200 rounded-3xl">
-                        <h4 id="title-A" class="font-black italic text-xl uppercase mb-2 text-blue-600">---</h4>
-                        <p id="mw-A" class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">---</p>
+            
+            <div class="space-y-6">
+                <div>
+                    <label class="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-2 block">Quick Load Protocol</label>
+                    <div class="grid grid-cols-2 gap-2">
+                        <button onclick="loadCid(16135327, 'Tirzepatide')" class="px-3 py-2 bg-slate-50 border border-slate-200 rounded text-xs font-bold text-slate-600 hover:border-blue-500 hover:text-blue-600 text-left transition-colors">Tirzepatide</button>
+                        <button onclick="loadCid(56843331, 'Semaglutide')" class="px-3 py-2 bg-slate-50 border border-slate-200 rounded text-xs font-bold text-slate-600 hover:border-blue-500 hover:text-blue-600 text-left transition-colors">Semaglutide</button>
+                        <button onclick="loadCid(73084, 'GHK-Cu')" class="px-3 py-2 bg-slate-50 border border-slate-200 rounded text-xs font-bold text-slate-600 hover:border-blue-500 hover:text-blue-600 text-left transition-colors">GHK-Cu</button>
+                        <button onclick="loadCid(9941957, 'BPC-157')" class="px-3 py-2 bg-slate-50 border border-slate-200 rounded text-xs font-bold text-slate-600 hover:border-blue-500 hover:text-blue-600 text-left transition-colors">BPC-157</button>
+                        <button onclick="loadCid(16133171, 'Sermorelin')" class="px-3 py-2 bg-slate-50 border border-slate-200 rounded text-xs font-bold text-slate-600 hover:border-blue-500 hover:text-blue-600 text-left transition-colors">Sermorelin</button>
+                        <button onclick="loadCid(439302, 'Oxytocin')" class="px-3 py-2 bg-slate-50 border border-slate-200 rounded text-xs font-bold text-slate-600 hover:border-blue-500 hover:text-blue-600 text-left transition-colors">Oxytocin</button>
                     </div>
                 </div>
-                <div class="space-y-4">
-                    <div id="compare-view-B" class="mol-container shadow-2xl stable-card">
-                        <div class="absolute inset-0 flex items-center justify-center text-slate-700 font-bold uppercase text-[9px] tracking-widest">Awaiting Input B</div>
+
+                <div>
+                    <label class="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-2 block">Import via CID</label>
+                    <div class="flex gap-2">
+                        <input type="text" id="cidInput" placeholder="e.g. 16135327" class="w-full bg-slate-50 border border-slate-200 rounded px-3 py-2 text-sm font-mono focus:outline-blue-600">
+                        <button onclick="manualLoad()" class="bg-slate-900 text-white px-4 rounded text-xs font-bold uppercase hover:bg-blue-600 transition-colors"><i class="fas fa-arrow-right"></i></button>
                     </div>
-                    <div id="data-B" class="hidden p-6 bg-white border border-slate-200 rounded-3xl">
-                        <h4 id="title-B" class="font-black italic text-xl uppercase mb-2 text-blue-600">---</h4>
-                        <p id="mw-B" class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">---</p>
+                </div>
+
+                <div class="border-t border-slate-100 pt-6">
+                    <p class="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-2">Render Style</p>
+                    <div class="flex gap-2">
+                        <button onclick="setStyle('stick')" class="flex-1 py-2 bg-blue-50 text-blue-600 rounded text-[10px] font-bold uppercase border border-blue-100 hover:bg-blue-100 transition-colors">Stick</button>
+                        <button onclick="setStyle('sphere')" class="flex-1 py-2 bg-slate-50 text-slate-500 rounded text-[10px] font-bold uppercase border border-slate-200 hover:bg-slate-100 transition-colors">Sphere</button>
                     </div>
                 </div>
             </div>
-        </div>
-    </main>
 
-    <footer class="bg-white border-t border-slate-200 py-16">
-        <div class="max-w-7xl mx-auto px-6 md:px-12 text-center md:text-left">
-            <div class="flex flex-col md:flex-row justify-between items-center gap-8">
-                <div class="flex items-center gap-2">
-                    <div class="w-8 h-8 bg-slate-900 rounded flex items-center justify-center text-white"><i class="fas fa-atom text-xs"></i></div>
-                    <span class="font-black text-lg italic uppercase tracking-tighter text-slate-900">Amintex<span class="text-blue-600">Labs</span></span>
+            <div class="mt-auto pt-6 border-t border-slate-100">
+                <div class="bg-emerald-50 border border-emerald-100 p-4 rounded-xl">
+                    <div class="flex items-center gap-2 mb-1">
+                        <div class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
+                        <span class="text-[10px] font-bold uppercase text-emerald-600">Live NIH Connection</span>
+                    </div>
+                    <p class="text-[9px] text-emerald-700/70 leading-relaxed">
+                        Data streamed directly from the National Library of Medicine via PubChem PUG REST API.
+                    </p>
                 </div>
-                <p class="text-[10px] font-bold text-slate-300 uppercase tracking-widest">&copy; 2026 Amintex Labs. Molecular Database Access Tier: Authorized.</p>
+            </div>
+        </aside>
+
+        <div id="viewer" class="flex-1 h-full canvas-container relative">
+            <div class="absolute top-6 left-6 z-10 glass-panel px-6 py-4 rounded-2xl shadow-lg">
+                <div class="flex items-center gap-3 mb-1">
+                    <div class="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></div>
+                    <h2 id="mol-title" class="text-sm font-black uppercase tracking-widest text-slate-900">System Ready</h2>
+                </div>
+                <p id="mol-subtitle" class="text-[10px] font-mono text-slate-500 font-bold">Waiting for input...</p>
+            </div>
+            
+            <div id="loader" class="absolute inset-0 flex items-center justify-center bg-white/50 backdrop-blur-sm z-20 hidden">
+                <div class="loader ease-linear rounded-full border-4 border-t-4 border-gray-200 h-12 w-12 mb-4"></div>
             </div>
         </div>
-    </footer>
 
+    </div>
+
+    <script src="inventory.js"></script>
     <script src="godmode.js"></script>
 
     <script>
-        const featured = [
-            { name: "Tirzepatide", cid: "16235086" },
-            { name: "Retatrutide", cid: "16761502" },
-            { name: "Semaglutide", cid: "56843331" },
-            { name: "BPC-157", cid: "10182582" },
-            { name: "Oxytocin", cid: "439302" },
-            { name: "Vasopressin", cid: "108162" },
-            { name: "Gonadorelin", cid: "439155" },
-            { name: "Sermorelin", cid: "16133171" },
-            { name: "Ipamorelin", cid: "9811365" }
-        ];
+        let element = document.getElementById('viewer');
+        let viewer = $3Dmol.createViewer(element, { backgroundColor: 'white' });
+        let currentStyle = 'stick';
 
-        function switchMode(mode) {
-            const isDisc = mode === 'discovery';
-            document.getElementById('discovery-header').classList.toggle('hidden', !isDisc);
-            document.getElementById('view-discovery').classList.toggle('hidden', !isDisc);
-            document.getElementById('btn-discovery').classList.toggle('active', isDisc);
-            document.getElementById('comparison-header').classList.toggle('hidden', isDisc);
-            document.getElementById('view-comparison').classList.toggle('hidden', isDisc);
-            document.getElementById('btn-comparison').classList.toggle('active', !isDisc);
+        // Cart Badge Update
+        let cart = JSON.parse(localStorage.getItem('precisionCart')) || []; 
+        const badge = document.getElementById('cart-badge');
+        if(badge) {
+            const totalQty = cart.reduce((a,b)=>a+b.qty,0);
+            badge.innerText = totalQty;
+            badge.style.opacity = totalQty > 0 ? '1' : '0';
         }
 
-        // REMOVED 'tilt-card' CLASS - REPLACED WITH 'stable-card'
-        function createCard(m, idPrefix) {
-            return `
-                <div class="stable-card glass-card rounded-[2.5rem] overflow-hidden shadow-sm transition-all">
-                    <div id="${idPrefix}-${m.cid}" class="mol-container">
-                        <div class="absolute inset-0 flex flex-col items-center justify-center">
-                            <button onclick="initViewer('${idPrefix}-${m.cid}', '${m.cid}')" class="bg-blue-600 text-white px-8 py-4 rounded-2xl font-black uppercase tracking-widest text-[10px] shadow-xl shadow-blue-600/30 hover:scale-105 transition-transform">
-                                Initialize Structure
-                            </button>
-                        </div>
-                    </div>
-                    <div class="p-8">
-                        <h4 class="text-xl font-black italic uppercase tracking-tighter mb-2">${m.name}</h4>
-                        <div class="flex justify-between items-center text-[10px] font-bold uppercase tracking-widest text-slate-400">
-                            <span>NIH Reference</span>
-                            <span class="text-blue-600">CID: ${m.cid}</span>
-                        </div>
-                    </div>
-                </div>
-            `;
-        }
-
-        async function fetchCompoundData(name, suffix) {
-            const containerId = suffix === 'search' ? `search-${name}` : `compare-view-${suffix}`;
-            try {
-                const cidRes = await fetch(`https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/name/${name}/cids/JSON`);
-                const cidData = await cidRes.json();
-                const cid = cidData.IdentifierList.CID[0];
-                if (suffix === 'A' || suffix === 'B') {
-                    const propRes = await fetch(`https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/${cid}/property/MolecularWeight/JSON`);
-                    const propData = await propRes.json();
-                    document.getElementById(`data-${suffix}`).classList.remove('hidden');
-                    document.getElementById(`title-${suffix}`).innerText = name;
-                    document.getElementById(`mw-${suffix}`).innerText = "Mol Weight: " + propData.PropertyTable.Properties[0].MolecularWeight + " g/mol";
-                }
-                initViewer(containerId, cid);
-            } catch (e) { alert(`Compound "${name}" not found in NIH Database.`); }
-        }
-
-        async function initViewer(id, cid) {
-            const el = document.getElementById(id);
-            el.innerHTML = `<div class="absolute inset-0 flex items-center justify-center text-blue-500 font-black text-[10px] uppercase tracking-widest loading-pulse">Fetching SDF Data...</div>`;
-            const viewer = $3Dmol.createViewer(id, { backgroundColor: 'transparent' });
+        async function loadCid(cid, name) {
+            const loader = document.getElementById('loader');
+            loader.classList.remove('hidden');
+            
+            document.getElementById('mol-title').innerText = name || "Loading Structure...";
+            document.getElementById('mol-subtitle').innerText = `Fetching CID: ${cid}`;
+            
             try {
                 const response = await fetch(`https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/${cid}/record/SDF/?record_type=3d`);
-                if (!response.ok) throw new Error("No 3D Data");
+                if (!response.ok) throw new Error("Molecule not found");
+                
                 const data = await response.text();
-                const pulse = el.querySelector('.loading-pulse');
-                if(pulse) pulse.remove();
+                viewer.clear();
                 viewer.addModel(data, "sdf");
-                viewer.setStyle({}, { stick: {radius: 0.15}, sphere: {scale: 0.25} });
+                applyStyle();
                 viewer.zoomTo();
                 viewer.render();
-                viewer.animate({loop: "backAndForth", step: 0.5});
-            } catch (error) {
-                viewer.clear();
-                el.innerHTML = `
-                    <div class="absolute inset-0 flex flex-col items-center justify-center bg-white/5 p-6">
-                        <img src="https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/${cid}/PNG?record_type=2d&image_size=300x300" 
-                             class="w-full h-full object-contain opacity-80" alt="2D Structure">
-                        <div class="absolute bottom-4 bg-slate-900/80 text-white px-3 py-1 rounded-full text-[9px] font-bold uppercase tracking-widest border border-white/10">
-                            3D Model Unavailable • Showing 2D Schematic
-                        </div>
-                    </div>`;
+                viewer.animate({ loop: "forward", step: 0.5 }); 
+
+                document.getElementById('mol-subtitle').innerText = `PubChem CID: ${cid} • Verified`;
+
+            } catch (e) {
+                alert("Error loading molecule. CID might be invalid or no 3D data available.");
+                document.getElementById('mol-title').innerText = "Error";
+            } finally {
+                loader.classList.add('hidden');
             }
         }
 
-        async function searchPubChem() {
-            const query = document.getElementById('globalSearch').value;
-            if(!query) return;
-            const resArea = document.getElementById('search-results-area');
-            const container = document.getElementById('search-card-container');
-            resArea.classList.remove('hidden');
-            container.innerHTML = `<div class="text-slate-400 font-bold uppercase text-[10px] tracking-widest animate-pulse">Querying NIH Database...</div>`;
-            try {
-                const res = await fetch(`https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/name/${query}/cids/JSON`);
-                const data = await res.json();
-                const cid = data.IdentifierList.CID[0];
-                container.innerHTML = createCard({ name: query, cid: cid }, 'search');
-            } catch (e) { container.innerHTML = `<div class="text-red-500 font-bold uppercase text-[10px] tracking-widest">Compound not found.</div>`; }
+        function applyStyle() {
+            if (currentStyle === 'stick') {
+                viewer.setStyle({}, { stick: {radius: 0.2, colorscheme: 'Jmol'} });
+            } else {
+                viewer.setStyle({}, { sphere: {scale: 0.3, colorscheme: 'Jmol'} });
+            }
+            viewer.render();
         }
 
-        function runComparison() {
-            const a = document.getElementById('compA').value;
-            const b = document.getElementById('compB').value;
-            if(a) fetchCompoundData(a, 'A');
-            if(b) fetchCompoundData(b, 'B');
+        function setStyle(style) {
+            currentStyle = style;
+            applyStyle();
         }
 
-        document.getElementById('featured-grid').innerHTML = featured.map(m => createCard(m, 'feat')).join('');
-        document.getElementById('globalSearch').addEventListener('keypress', e => { if(e.key === 'Enter') searchPubChem(); });
+        function manualLoad() {
+            const cid = document.getElementById('cidInput').value;
+            if(cid) loadCid(cid, "Custom Import");
+        }
+
+        // Init with GHK-Cu
+        loadCid(73084, "GHK-Cu");
     </script>
 </body>
 </html>
