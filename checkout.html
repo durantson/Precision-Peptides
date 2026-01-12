@@ -3,225 +3,256 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Research Manifest | Amintex Labs</title>
+    <title>Secure Checkout | Amintex Labs</title>
+    
     <meta name="theme-color" content="#2563eb"> 
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚛️</text></svg>">
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        /* Note: We use .tilt-card from godmode.js for the main effect now, 
-           but keep the base transition for mobile/fallback */
-        .manifest-card { background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%); transition: all 0.3s ease; }
-        .manifest-card:hover { border-color: #93c5fd; }
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
+        .input-group input:focus { border-color: #2563eb; ring: 2px; ring-color: #bfdbfe; }
+        .tilt-card { transition: transform 0.1s ease-out; }
         * { -webkit-tap-highlight-color: transparent; }
     </style>
 </head>
-<body class="bg-slate-50 font-sans antialiased text-slate-900 min-h-screen flex flex-col">
+<body class="text-slate-900 min-h-screen flex flex-col">
 
-    <nav class="bg-white border-b border-slate-100 h-16 flex items-center px-6 justify-between sticky top-0 z-50">
+    <nav class="bg-white border-b border-slate-200 h-16 flex items-center px-6 justify-between sticky top-0 z-50">
         <a href="index.html" class="flex items-center gap-2 hover:opacity-75 transition-opacity">
             <div class="w-8 h-8 bg-blue-600 rounded flex items-center justify-center text-white"><i class="fas fa-atom text-xs"></i></div>
             <span class="font-bold text-lg tracking-tighter uppercase italic text-slate-900">Amintex<span class="text-blue-600">Labs</span></span>
         </a>
-        
-        <div class="hidden lg:flex items-center gap-2 mr-6 text-[10px] font-bold text-slate-400 border border-slate-200 px-2 py-1 rounded bg-slate-50 cursor-pointer hover:border-blue-400 transition-colors" onclick="togglePalette()">
-            <i class="fas fa-search"></i> <span>CTRL + K</span>
-        </div>
-
-        <div class="flex items-center gap-6">
-            <a href="account.html" class="text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-blue-600 transition-colors">Client Hub</a>
-            <a href="catalog.html" class="text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-blue-600 transition-colors">Catalog</a>
+        <div class="flex items-center gap-2 text-[10px] font-bold text-emerald-600 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-100">
+            <i class="fas fa-lock"></i> 256-Bit SSL Secured
         </div>
     </nav>
 
-    <main class="flex-1 max-w-7xl mx-auto w-full px-4 md:px-6 py-12">
-        <div class="text-center mb-12">
-            <h2 class="text-[10px] font-black uppercase tracking-[0.4em] text-blue-600 mb-4">Procurement</h2>
-            <h1 class="text-4xl md:text-5xl font-black text-slate-900 italic uppercase tracking-tighter mb-4">Research Manifest</h1>
-            <p class="text-slate-500 text-sm leading-relaxed max-w-lg mx-auto">Review your selected reagents and submit for institutional clearance.</p>
+    <main class="flex-1 max-w-7xl mx-auto w-full px-6 py-12">
+        
+        <div class="mb-12">
+            <h1 class="text-3xl font-black italic text-slate-900 uppercase tracking-tight">Requisition Manifest</h1>
+            <p class="text-slate-500 text-sm mt-2">Review your reagents and confirm shipping logistics.</p>
         </div>
 
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
-            <div class="lg:col-span-7 space-y-4">
-                <div id="manifest-items" class="space-y-4"></div>
-                <div id="empty-state" class="hidden text-center py-20 bg-white rounded-[2.5rem] border-2 border-dashed border-slate-200">
-                    <i class="fas fa-folder-open text-slate-200 text-5xl mb-4"></i>
-                    <p class="text-slate-400 font-bold uppercase text-xs tracking-widest">No reagents selected</p>
-                    <a href="catalog.html" class="text-blue-600 font-black text-[10px] uppercase mt-4 inline-block tracking-widest hover:underline">Return to Catalog</a>
+        <div id="empty-cart-msg" class="hidden text-center py-20">
+            <div class="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-6 text-slate-300">
+                <i class="fas fa-box-open text-2xl"></i>
+            </div>
+            <h2 class="text-xl font-bold text-slate-900 mb-2">Manifest Empty</h2>
+            <p class="text-slate-500 text-sm mb-8">No reagents currently selected for procurement.</p>
+            <a href="catalog.html" class="bg-slate-900 text-white px-8 py-3 rounded-xl font-bold text-xs uppercase tracking-widest hover:bg-blue-600 transition-colors">Return to Catalog</a>
+        </div>
+
+        <div id="checkout-grid" class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+            
+            <div class="lg:col-span-7 space-y-8">
+                <div class="bg-white border border-slate-200 rounded-[2rem] p-8 shadow-sm">
+                    <h3 class="text-sm font-black uppercase tracking-widest text-slate-900 mb-6 flex items-center gap-2">
+                        <i class="fas fa-building text-blue-600"></i> Institutional Details
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="input-group">
+                            <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">Principal Investigator</label>
+                            <input type="text" class="w-full bg-slate-50 border border-slate-200 rounded-xl py-3 px-4 text-sm font-bold text-slate-900 focus:outline-none" placeholder="Dr. First Last">
+                        </div>
+                        <div class="input-group">
+                            <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">Institution / Lab Name</label>
+                            <input type="text" class="w-full bg-slate-50 border border-slate-200 rounded-xl py-3 px-4 text-sm font-bold text-slate-900 focus:outline-none" placeholder="University or Company">
+                        </div>
+                        <div class="input-group md:col-span-2">
+                            <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">Institutional Email</label>
+                            <input type="email" class="w-full bg-slate-50 border border-slate-200 rounded-xl py-3 px-4 text-sm font-bold text-slate-900 focus:outline-none" placeholder="researcher@lab.edu">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white border border-slate-200 rounded-[2rem] p-8 shadow-sm">
+                    <h3 class="text-sm font-black uppercase tracking-widest text-slate-900 mb-6 flex items-center gap-2">
+                        <i class="fas fa-truck-fast text-blue-600"></i> Logistics Address
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="input-group md:col-span-2">
+                            <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">Street Address</label>
+                            <input type="text" class="w-full bg-slate-50 border border-slate-200 rounded-xl py-3 px-4 text-sm font-bold text-slate-900 focus:outline-none" placeholder="123 Science Dr, Building 4">
+                        </div>
+                        <div class="input-group">
+                            <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">City</label>
+                            <input type="text" class="w-full bg-slate-50 border border-slate-200 rounded-xl py-3 px-4 text-sm font-bold text-slate-900 focus:outline-none">
+                        </div>
+                        <div class="input-group">
+                            <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">ZIP / Postal Code</label>
+                            <input type="text" class="w-full bg-slate-50 border border-slate-200 rounded-xl py-3 px-4 text-sm font-bold text-slate-900 focus:outline-none">
+                        </div>
+                    </div>
                 </div>
             </div>
 
             <div class="lg:col-span-5">
-                <div class="tilt-card bg-white rounded-[2.5rem] border border-slate-200 p-8 sticky top-24 shadow-xl shadow-slate-200/50">
-                    <h3 class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-6 border-b border-slate-50 pb-4">Manifest Summary</h3>
-                    
-                    <div class="space-y-4 mb-8">
-                        <div class="flex justify-between text-sm">
-                            <span class="text-slate-400 font-medium">Subtotal</span>
-                            <span id="subtotal" class="font-bold text-slate-900">$0.00</span>
-                        </div>
-                        
-                        <div class="flex justify-between text-sm items-center">
-                            <span class="text-slate-400 font-medium">Cold-Chain Shipping</span>
-                            <div class="text-right">
-                                <span id="shipping-cost" class="font-bold text-slate-900">$50.00</span>
-                                <p id="shipping-note" class="text-[9px] font-bold text-emerald-600 uppercase tracking-wide hidden">Directorate Waiver Applied</p>
-                            </div>
+                <div class="tilt-card bg-white border-2 border-slate-100 rounded-[2.5rem] p-8 shadow-xl shadow-slate-200/50 sticky top-24">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="text-sm font-black uppercase tracking-widest text-slate-900">Manifest Summary</h3>
+                        <span id="item-count" class="bg-slate-100 text-slate-500 px-2 py-1 rounded text-[10px] font-bold uppercase">0 Items</span>
+                    </div>
+
+                    <div id="cart-items" class="space-y-4 max-h-[300px] overflow-y-auto mb-8 pr-2">
                         </div>
 
-                        <div class="pt-4 border-t border-slate-100 flex justify-between items-baseline">
-                            <span class="text-xs font-black uppercase tracking-widest text-slate-900">Total Est.</span>
-                            <span id="total" class="text-3xl font-black text-blue-600 italic tracking-tighter">$0.00</span>
+                    <div class="border-t-2 border-dashed border-slate-100 pt-6 space-y-3">
+                        <div class="flex justify-between text-xs font-bold text-slate-500">
+                            <span>Subtotal</span>
+                            <span id="subtotal-display">$0.00</span>
+                        </div>
+                        <div class="flex justify-between text-xs font-bold text-slate-500">
+                            <span>Cold Chain Shipping</span>
+                            <span id="shipping-display">$35.00</span>
+                        </div>
+                        <div id="waiver-message" class="hidden text-right">
+                            <span class="text-[9px] font-black uppercase tracking-widest text-amber-500 bg-amber-50 px-2 py-1 rounded">Directorate Status Applied</span>
+                        </div>
+                        <div class="flex justify-between text-xs font-bold text-slate-500">
+                            <span>Estimated Tax (5%)</span>
+                            <span id="tax-display">$0.00</span>
+                        </div>
+                        <div class="flex justify-between items-end pt-4">
+                            <span class="text-sm font-black uppercase tracking-widest text-slate-900">Total Funding Req.</span>
+                            <span id="total-display" class="text-3xl font-black text-blue-600">$0.00</span>
                         </div>
                     </div>
 
-                    <form action="https://formsubmit.co/precisionpeptidelabs@gmail.com" method="POST" class="space-y-4" onsubmit="clearCartOnSubmit()">
-                        <input type="hidden" name="_next" value="https://durantson.github.io/Precision-Peptides/success.html">
-                        <input type="hidden" name="_captcha" value="false">
-                        <input type="hidden" name="_subject" value="New Amintex Labs Manifest Submitted">
-                        <input type="hidden" name="_autorespond" value="MANIFEST RECEIVED: Your procurement request has been logged by Amintex Labs.">
-                        <input type="hidden" id="manifest-data-field" name="Manifest_Details" value="">
+                    <div class="mt-8 mb-6">
+                        <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">Purchase Order (Optional)</label>
+                        <input type="text" class="w-full bg-slate-50 border border-slate-200 rounded-xl py-3 px-4 text-sm font-bold text-slate-900 focus:outline-none" placeholder="PO-2026-XXXX">
+                    </div>
 
-                        <input type="text" name="name" required placeholder="Principal Investigator / Full Name" class="w-full bg-slate-50 border border-slate-100 rounded-xl py-3 px-4 text-xs font-bold text-slate-900 focus:outline-none focus:border-blue-600 focus:bg-white transition-all">
-                        <input type="email" name="email" required placeholder="Institutional Email (@university.edu)" class="w-full bg-slate-50 border border-slate-100 rounded-xl py-3 px-4 text-xs font-bold text-slate-900 focus:outline-none focus:border-blue-600 focus:bg-white transition-all">
-                        <textarea name="shipping" required placeholder="Shipping Address / Lab Location Details" rows="2" class="w-full bg-slate-50 border border-slate-100 rounded-xl py-3 px-4 text-xs font-bold text-slate-900 focus:outline-none focus:border-blue-600 focus:bg-white transition-all resize-none"></textarea>
-
-                        <button type="submit" id="submit-btn" class="w-full bg-blue-600 text-white py-4 rounded-xl font-black uppercase tracking-widest text-[10px] hover:bg-slate-900 transition-all shadow-lg shadow-blue-600/30 active:scale-95">
-                            Submit Manifest
-                        </button>
-                    </form>
-                    
-                    <button onclick="clearManifest()" class="w-full mt-6 text-[9px] font-black text-slate-300 uppercase tracking-widest hover:text-red-500 transition-colors">
-                        Clear Manifest
+                    <button onclick="processOrder()" class="w-full bg-slate-900 text-white py-5 rounded-2xl font-black uppercase tracking-widest text-xs hover:bg-emerald-600 transition-all shadow-lg hover:shadow-emerald-600/30">
+                        Submit Requisition
                     </button>
+                    
+                    <p class="text-center mt-4 text-[9px] text-slate-400 font-bold uppercase tracking-widest">
+                        <i class="fas fa-flask mr-1"></i> For Research Use Only
+                    </p>
                 </div>
             </div>
+
         </div>
     </main>
-
-    <footer class="bg-white border-t border-slate-200 py-12 text-center mt-auto">
-        <div class="text-[10px] text-slate-300 uppercase tracking-widest">
-            &copy; 2026 Amintex Labs. Verified Science.
-        </div>
-    </footer>
 
     <script src="godmode.js"></script>
 
     <script>
-        // AUTOMATIC CHECK FOR DIRECTORATE STATUS
-        const isDirectorate = localStorage.getItem('perk_shipping') === 'true';
-
+        // --- CART LOGIC ---
         let cart = JSON.parse(localStorage.getItem('precisionCart')) || [];
-        const itemsContainer = document.getElementById('manifest-items');
-        const emptyState = document.getElementById('empty-state');
-        const dataField = document.getElementById('manifest-data-field');
+        const shippingRate = 35.00;
+        const taxRate = 0.05;
+        
+        // CHECK FOR DIRECTORATE WAIVER (From Admin/Rewards Page)
+        const hasWaiver = localStorage.getItem('perk_shipping') === 'true';
 
-        function renderManifest() {
+        function initCheckout() {
             if (cart.length === 0) {
-                itemsContainer.innerHTML = '';
-                emptyState.classList.remove('hidden');
-                document.getElementById('submit-btn').disabled = true;
-                document.getElementById('submit-btn').classList.add('opacity-50', 'cursor-not-allowed');
-                document.getElementById('subtotal').innerText = '$0.00';
-                document.getElementById('total').innerText = '$0.00';
+                document.getElementById('checkout-grid').classList.add('hidden');
+                document.getElementById('empty-cart-msg').classList.remove('hidden');
                 return;
             }
 
-            document.getElementById('submit-btn').disabled = false;
-            document.getElementById('submit-btn').classList.remove('opacity-50', 'cursor-not-allowed');
-            emptyState.classList.add('hidden');
+            renderCartItems();
+            calculateTotals();
+        }
 
-            let subtotal = 0;
-            let manifestText = "";
-
-            itemsContainer.innerHTML = cart.map((item, index) => {
-                // --- AUTOMATED BULK DISCOUNT LOGIC ---
-                let discount = 0;
-                if (item.qty >= 20) discount = 0.15;      // 15% off for 20+
-                else if (item.qty >= 10) discount = 0.10; // 10% off for 10+
-                else if (item.qty >= 5) discount = 0.05;  // 5% off for 5+
-
-                const discountedPrice = item.price * (1 - discount);
-                const itemTotal = discountedPrice * item.qty;
-                
-                subtotal += itemTotal;
-                
-                // Add note to manifest text if discounted
-                const discountNote = discount > 0 ? ` [${discount*100}% Bulk Rate]` : '';
-                manifestText += `${item.name} | Qty: ${item.qty} | $${itemTotal.toFixed(2)}${discountNote}\n`;
-
-                // Added tilt-card class here for 3D effect on rows
-                return `
-                    <div class="tilt-card manifest-card border border-slate-200 rounded-3xl p-5 flex justify-between items-center group">
-                        <div class="flex items-center gap-4">
-                            <div class="w-12 h-12 bg-white rounded-xl border border-slate-100 flex items-center justify-center text-blue-600 group-hover:bg-blue-600 group-hover:text-white transition-colors">
-                                <i class="fas fa-vial"></i>
-                            </div>
-                            <div>
-                                <h4 class="font-black text-slate-900 uppercase italic text-sm tracking-tight">${item.name}</h4>
-                                <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest">
-                                    Qty: ${item.qty} 
-                                    ${discount > 0 ? `<span class="text-emerald-500 ml-2">(${discount*100}% Off)</span>` : ''}
-                                </p>
-                            </div>
-                        </div>
-                        <div class="text-right">
-                            <div class="font-black text-slate-900 text-lg">$${itemTotal.toFixed(2)}</div>
-                            <button onclick="removeItem(${index})" class="text-[9px] font-bold text-slate-300 uppercase hover:text-red-500 transition-colors tracking-wider">Remove</button>
+        function renderCartItems() {
+            const container = document.getElementById('cart-items');
+            container.innerHTML = '';
+            
+            cart.forEach((item, index) => {
+                const row = `
+                <div class="flex justify-between items-center bg-slate-50 p-3 rounded-xl border border-slate-100">
+                    <div>
+                        <h4 class="font-bold text-slate-900 text-xs uppercase">${item.name}</h4>
+                        <div class="flex items-center gap-2 mt-1">
+                            <button onclick="adjustQty(${index}, -1)" class="w-5 h-5 flex items-center justify-center bg-white border border-slate-200 rounded text-slate-400 hover:text-blue-600 text-[10px]"><i class="fas fa-minus"></i></button>
+                            <span class="text-[10px] font-bold text-slate-600 w-4 text-center">${item.qty}</span>
+                            <button onclick="adjustQty(${index}, 1)" class="w-5 h-5 flex items-center justify-center bg-white border border-slate-200 rounded text-slate-400 hover:text-blue-600 text-[10px]"><i class="fas fa-plus"></i></button>
                         </div>
                     </div>
+                    <div class="text-right">
+                        <p class="font-bold text-slate-900 text-sm">$${(item.price * item.qty).toFixed(2)}</p>
+                        <button onclick="removeItem(${index})" class="text-[9px] font-bold text-red-400 uppercase hover:text-red-600">Remove</button>
+                    </div>
+                </div>
                 `;
-            }).join('');
+                container.innerHTML += row;
+            });
+            document.getElementById('item-count').innerText = `${cart.length} Items`;
+        }
 
-            // --- SHIPPING LOGIC ---
-            let shipping = 50.00; // Standard Rate
+        function calculateTotals() {
+            const subtotal = cart.reduce((acc, item) => acc + (item.price * item.qty), 0);
             
-            if (isDirectorate) {
-                shipping = 0.00;
-                document.getElementById('shipping-cost').innerText = "FREE";
-                document.getElementById('shipping-cost').classList.add('text-emerald-600');
-                document.getElementById('shipping-note').classList.remove('hidden');
-                manifestText += `\n[DIRECTORATE STATUS: SHIPPING WAIVED]`;
+            // WAIVER LOGIC
+            const shipping = hasWaiver ? 0 : shippingRate;
+            const tax = subtotal * taxRate;
+            const total = subtotal + shipping + tax;
+
+            document.getElementById('subtotal-display').innerText = `$${subtotal.toFixed(2)}`;
+            document.getElementById('tax-display').innerText = `$${tax.toFixed(2)}`;
+            document.getElementById('total-display').innerText = `$${total.toFixed(2)}`;
+
+            const shipDisplay = document.getElementById('shipping-display');
+            const waiverMsg = document.getElementById('waiver-message');
+
+            if (hasWaiver) {
+                shipDisplay.innerHTML = `<span class="line-through text-slate-300 mr-2">$${shippingRate.toFixed(2)}</span> <span class="text-emerald-500 font-black">WAIVED</span>`;
+                waiverMsg.classList.remove('hidden');
             } else {
-                document.getElementById('shipping-cost').innerText = `$${shipping.toFixed(2)}`;
-                document.getElementById('shipping-cost').classList.remove('text-emerald-600');
-                document.getElementById('shipping-note').classList.add('hidden');
-                manifestText += `\nShipping: $${shipping.toFixed(2)}`;
+                shipDisplay.innerText = `$${shippingRate.toFixed(2)}`;
+                waiverMsg.classList.add('hidden');
             }
+        }
 
-            const total = subtotal + shipping;
-
-            document.getElementById('subtotal').innerText = `$${subtotal.toFixed(2)}`;
-            document.getElementById('total').innerText = `$${total.toFixed(2)}`;
-            
-            // Add totals to the hidden email field
-            manifestText += `\n----------------\nTOTAL: $${total.toFixed(2)}`;
-            dataField.value = manifestText; 
-            
-            // Re-init tilt since we just added new DOM elements
-            if(typeof initTilt === 'function') initTilt();
+        function adjustQty(index, delta) {
+            cart[index].qty += delta;
+            if (cart[index].qty < 1) cart[index].qty = 1;
+            saveAndRender();
         }
 
         function removeItem(index) {
             cart.splice(index, 1);
+            saveAndRender();
+            if (cart.length === 0) location.reload();
+        }
+
+        function saveAndRender() {
             localStorage.setItem('precisionCart', JSON.stringify(cart));
-            renderManifest();
+            renderCartItems();
+            calculateTotals();
         }
 
-        function clearManifest() {
-            if(confirm('Clear all research items from the manifest?')) {
+        function processOrder() {
+            // Simulate processing
+            const btn = document.querySelector('button[onclick="processOrder()"]');
+            btn.innerHTML = '<i class="fas fa-circle-notch fa-spin mr-2"></i> Encrypting Data...';
+            btn.disabled = true;
+            btn.classList.add('bg-slate-400');
+
+            setTimeout(() => {
+                // Clear cart
                 localStorage.removeItem('precisionCart');
-                cart = [];
-                renderManifest();
-                if(typeof showToast === 'function') showToast("Manifest Cleared", "success");
-            }
+                
+                // Add points based on total spend (Simulated reward integration)
+                let currentPoints = parseInt(localStorage.getItem('amintexPoints')) || 0;
+                // Add simplified points: 1 point per $1 spend
+                const totalSpend = parseFloat(document.getElementById('total-display').innerText.replace('$',''));
+                localStorage.setItem('amintexPoints', currentPoints + Math.floor(totalSpend));
+
+                // Redirect
+                window.location.href = 'success.html';
+            }, 2000);
         }
 
-        function clearCartOnSubmit() {
-            setTimeout(() => { localStorage.removeItem('precisionCart'); }, 500);
-        }
-
-        renderManifest();
+        initCheckout();
     </script>
+
 </body>
 </html>
