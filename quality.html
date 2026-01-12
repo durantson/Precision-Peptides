@@ -21,13 +21,13 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        .step-card { transition: all 0.3s ease; }
-        .step-card:hover { transform: translateY(-5px); border-color: #2563eb; box-shadow: 0 10px 30px -10px rgba(37, 99, 235, 0.1); }
         .step-number { 
             background: linear-gradient(135deg, #e2e8f0 0%, #cbd5e1 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
+        /* Base transition for fallback */
+        .tilt-card { transition: transform 0.1s ease-out; }
         * { -webkit-tap-highlight-color: transparent; }
     </style>
 </head>
@@ -38,6 +38,11 @@
             <div class="w-8 h-8 bg-blue-600 rounded flex items-center justify-center text-white"><i class="fas fa-atom text-xs"></i></div>
             <span class="font-bold text-lg tracking-tighter uppercase italic text-slate-900">Amintex<span class="text-blue-600">Labs</span></span>
         </a>
+        
+        <div class="hidden lg:flex items-center gap-2 mr-6 text-[10px] font-bold text-slate-400 border border-slate-200 px-2 py-1 rounded bg-slate-50 cursor-pointer hover:border-blue-400 transition-colors" onclick="togglePalette()">
+            <i class="fas fa-search"></i> <span>CTRL + K</span>
+        </div>
+
         <div class="flex items-center gap-6">
             <a href="catalog.html" class="text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-blue-600 transition-colors">Catalog</a>
             <button onclick="viewManifest()" class="relative group">
@@ -72,7 +77,7 @@
 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                     
-                    <div class="step-card bg-white p-8 rounded-[2rem] border border-slate-200 shadow-sm relative overflow-hidden group">
+                    <div class="tilt-card bg-white p-8 rounded-[2rem] border border-slate-200 shadow-sm relative overflow-hidden group">
                         <span class="text-8xl font-black step-number absolute -right-6 -top-6 opacity-20 group-hover:opacity-40 transition-opacity">01</span>
                         <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-blue-600 mb-6 relative z-10"><i class="fas fa-dna"></i></div>
                         <h3 class="font-bold text-lg text-slate-900 mb-2 relative z-10">Synthesis</h3>
@@ -81,7 +86,7 @@
                         </p>
                     </div>
 
-                    <div class="step-card bg-white p-8 rounded-[2rem] border border-slate-200 shadow-sm relative overflow-hidden group">
+                    <div class="tilt-card bg-white p-8 rounded-[2rem] border border-slate-200 shadow-sm relative overflow-hidden group">
                         <span class="text-8xl font-black step-number absolute -right-6 -top-6 opacity-20 group-hover:opacity-40 transition-opacity">02</span>
                         <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-blue-600 mb-6 relative z-10"><i class="fas fa-filter"></i></div>
                         <h3 class="font-bold text-lg text-slate-900 mb-2 relative z-10">Purification</h3>
@@ -90,7 +95,7 @@
                         </p>
                     </div>
 
-                    <div class="step-card bg-white p-8 rounded-[2rem] border border-slate-200 shadow-sm relative overflow-hidden group">
+                    <div class="tilt-card bg-white p-8 rounded-[2rem] border border-slate-200 shadow-sm relative overflow-hidden group">
                         <span class="text-8xl font-black step-number absolute -right-6 -top-6 opacity-20 group-hover:opacity-40 transition-opacity">03</span>
                         <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-blue-600 mb-6 relative z-10"><i class="fas fa-snowflake"></i></div>
                         <h3 class="font-bold text-lg text-slate-900 mb-2 relative z-10">Lyophilization</h3>
@@ -99,7 +104,7 @@
                         </p>
                     </div>
 
-                    <div class="step-card bg-white p-8 rounded-[2rem] border border-slate-200 shadow-sm relative overflow-hidden group border-b-4 border-b-emerald-500">
+                    <div class="tilt-card bg-white p-8 rounded-[2rem] border border-slate-200 shadow-sm relative overflow-hidden group border-b-4 border-b-emerald-500">
                         <span class="text-8xl font-black step-number absolute -right-6 -top-6 opacity-20 group-hover:opacity-40 transition-opacity">04</span>
                         <div class="w-12 h-12 bg-emerald-50 rounded-xl flex items-center justify-center text-emerald-600 mb-6 relative z-10"><i class="fas fa-microscope"></i></div>
                         <h3 class="font-bold text-lg text-slate-900 mb-2 relative z-10">Validation</h3>
@@ -125,14 +130,14 @@
                 </div>
                 
                 <div class="flex-1 grid grid-cols-2 gap-6">
-                    <div class="bg-white border border-slate-200 p-8 rounded-2xl flex flex-col items-center justify-center text-center hover:shadow-lg transition-shadow group">
+                    <div class="tilt-card bg-white border border-slate-200 p-8 rounded-2xl flex flex-col items-center justify-center text-center hover:shadow-lg transition-shadow group">
                         <div class="w-16 h-16 bg-slate-50 rounded-full flex items-center justify-center mb-4 group-hover:bg-blue-50 transition-colors">
                             <i class="fas fa-flask text-2xl text-slate-400 group-hover:text-blue-600 transition-colors"></i>
                         </div>
                         <h4 class="font-black text-slate-900 uppercase italic">Janoshik</h4>
                         <p class="text-[10px] text-slate-400 mt-1 uppercase tracking-widest">Czech Republic</p>
                     </div>
-                    <div class="bg-white border border-slate-200 p-8 rounded-2xl flex flex-col items-center justify-center text-center hover:shadow-lg transition-shadow group">
+                    <div class="tilt-card bg-white border border-slate-200 p-8 rounded-2xl flex flex-col items-center justify-center text-center hover:shadow-lg transition-shadow group">
                         <div class="w-16 h-16 bg-slate-50 rounded-full flex items-center justify-center mb-4 group-hover:bg-blue-50 transition-colors">
                             <i class="fas fa-vial text-2xl text-slate-400 group-hover:text-blue-600 transition-colors"></i>
                         </div>
@@ -220,16 +225,19 @@
     </footer>
 
     <script>
-        let cart = JSON.parse(localStorage.getItem('precisionCart')) || []; 
-        updateBadge();
-
         function updateBadge() { 
             const badge = document.getElementById('cart-badge');
+            // Assuming cart logic exists globally or in local storage
+            let cart = JSON.parse(localStorage.getItem('precisionCart')) || [];
             const totalQty = cart.reduce((a,b)=>a+b.qty,0);
             badge.innerText = totalQty;
             badge.style.opacity = totalQty > 0 ? '1' : '0';
         }
         function viewManifest() { window.location.href = 'checkout.html'; }
+        updateBadge();
     </script>
+
+    <script src="godmode.js"></script>
+
 </body>
 </html>
