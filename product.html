@@ -118,6 +118,9 @@
                         <div class="text-slate-400 font-bold uppercase tracking-widest">CAS Reg.</div>
                         <div id="spec-cas" class="col-span-2 font-bold text-slate-900">Loading...</div>
 
+                        <div class="text-slate-400 font-bold uppercase tracking-widest">Mechanism</div>
+                        <div id="spec-mech" class="col-span-2 font-bold text-blue-600">Loading...</div>
+
                         <div class="text-slate-400 font-bold uppercase tracking-widest">Mol. Weight</div>
                         <div id="spec-mw" class="col-span-2 font-bold text-slate-900">Loading...</div>
                     </div>
@@ -191,7 +194,11 @@
         const badge = document.getElementById('cart-badge');
 
         function init() {
-            if (!product) { window.location.href = 'catalog.html'; return; }
+            if (!product) { 
+                // If ID is invalid or missing, go back to catalog
+                window.location.href = 'catalog.html'; 
+                return; 
+            }
 
             // 1. Populate Main Data
             document.title = `${product.name} | Analysis Data`;
@@ -209,6 +216,7 @@
             // 3. Specs
             document.getElementById('spec-seq').innerText = product.seq;
             document.getElementById('spec-cas').innerText = product.cas;
+            document.getElementById('spec-mech').innerText = product.mechanism; // NEW
             document.getElementById('spec-mw').innerText = `${product.mw} g/mol`;
 
             // 4. Stock / Availability Logic
