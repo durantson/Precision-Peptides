@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Investigator Support Hub | Precision Labs</title>
+    <title>Investigator Support Hub | Amintex Labs</title>
     
-    <meta name="description" content="Technical documentation and Materials & Methods assets for NIH/NSF grant submissions. Precision Labs institutional support.">
-    <meta name="author" content="Precision Labs">
+    <meta name="description" content="Technical documentation and Materials & Methods assets for NIH/NSF grant submissions. Amintex Labs institutional support.">
+    <meta name="author" content="Amintex Labs">
     <meta name="theme-color" content="#0f172a"> 
 
     <meta property="og:type" content="website">
-    <meta property="og:title" content="Precision Labs | Grant Resources">
+    <meta property="og:title" content="Amintex Labs | Grant Resources">
     <meta property="og:description" content="Technical documentation and assets for institutional research grant submissions.">
     <meta property="og:image" content="images/social-preview.jpg"> 
     <meta property="og:url" content="https://www.your-website.com/grants.html">
@@ -28,7 +28,8 @@
 <body class="bg-slate-50 text-slate-900 leading-relaxed flex flex-col min-h-screen">
 
     <script>
-        if (localStorage.getItem('portalAuthorized') !== 'true') { window.location.href = 'login.html'; }
+        // Security Gatekeeper: Redirect to new Account page if not authorized
+        if (localStorage.getItem('portalAuthorized') !== 'true') { window.location.href = 'account.html'; }
     </script>
 
     <nav class="bg-white border-b border-slate-200 h-16 flex items-center px-6 justify-between sticky top-0 z-50">
@@ -37,7 +38,7 @@
                 <i class="fas fa-atom text-xs"></i>
             </div>
             <span class="font-bold text-lg tracking-tighter uppercase italic text-slate-900">
-                Precision<span class="text-blue-600">Labs</span>
+                Amintex<span class="text-blue-600">Labs</span>
             </span>
         </a>
         <div class="flex gap-6">
@@ -81,14 +82,14 @@
                             <button onclick="copySnippet()" class="text-[10px] font-black text-slate-400 uppercase hover:text-blue-600"><i class="fas fa-copy mr-2"></i>Copy</button>
                         </div>
                         <p id="snippet" class="text-xs font-mono text-slate-700 leading-relaxed bg-slate-50 p-6 rounded-xl border border-slate-100">
-                            "Synthetic peptides were sourced from Precision Labs (Drayton Valley, AB). Reagents were synthesized via FMOC solid-phase peptide synthesis (SPPS), purified by reverse-phase high-performance liquid chromatography (RP-HPLC) to &ge;99% purity, and identity-verified by electrospray ionization mass spectrometry (ESI-MS). Peptides were provided as lyophilized salts and stored at -80&deg;C prior to reconstitution."
+                            "Synthetic peptides were sourced from Amintex Labs (Drayton Valley, AB). Reagents were synthesized via FMOC solid-phase peptide synthesis (SPPS), purified by reverse-phase high-performance liquid chromatography (RP-HPLC) to &ge;99% purity, and identity-verified by electrospray ionization mass spectrometry (ESI-MS). Peptides were provided as lyophilized salts and stored at -80&deg;C prior to reconstitution."
                         </p>
                     </div>
                 </section>
 
                 <section id="purity">
                     <h2 class="text-2xl font-black mb-6 uppercase tracking-tight italic text-slate-900">Analytical Validation Benchmarks</h2>
-                    <p class="text-slate-500 text-sm mb-8 leading-relaxed">Reviewing committees prioritize reproducibility. Precision Labs ensures all reagents meet the following institutional standards:</p>
+                    <p class="text-slate-500 text-sm mb-8 leading-relaxed">Reviewing committees prioritize reproducibility. Amintex Labs ensures all reagents meet the following institutional standards:</p>
                     
                     <div class="grid md:grid-cols-2 gap-6">
                         <div class="p-6 bg-white rounded-[2rem] border border-slate-200 shadow-sm">
@@ -121,10 +122,10 @@
                 <div class="col-span-1 md:col-span-2">
                     <div class="flex items-center gap-2 mb-6">
                         <div class="w-8 h-8 bg-slate-900 rounded flex items-center justify-center text-white"><i class="fas fa-atom text-xs"></i></div>
-                        <span class="font-black text-lg italic uppercase tracking-tighter text-slate-900">Precision<span class="text-blue-600">Labs</span></span>
+                        <span class="font-black text-lg italic uppercase tracking-tighter text-slate-900">Amintex<span class="text-blue-600">Labs</span></span>
                     </div>
                     <p class="text-slate-400 text-xs leading-loose max-w-sm">
-                        Precision Labs is a specialized supplier serving academic institutions and private laboratories.
+                        Amintex Labs is a specialized supplier serving academic institutions and private laboratories.
                     </p>
                 </div>
                 <div>
@@ -138,7 +139,7 @@
                 <div>
                     <h4 class="font-bold text-slate-900 uppercase tracking-widest text-xs mb-6">Resources</h4>
                     <ul class="space-y-4 text-xs font-medium text-slate-500">
-                        <li><a href="login.html" class="hover:text-blue-600 transition-colors">Researcher Portal</a></li>
+                        <li><a href="account.html" class="hover:text-blue-600 transition-colors">Client Hub</a></li>
                         <li><a href="batch-verification.html" class="hover:text-blue-600 transition-colors">Batch Verification</a></li>
                         <li><a href="support.html" class="hover:text-blue-600 transition-colors">Help Center</a></li>
                     </ul>
@@ -153,7 +154,7 @@
                     </p>
                 </div>
                 <div class="text-center mt-8 text-[10px] text-slate-300 uppercase tracking-widest">
-                    &copy; 2026 Precision Labs. All rights reserved.
+                    &copy; 2026 Amintex Labs. All rights reserved.
                 </div>
             </div>
         </div>
