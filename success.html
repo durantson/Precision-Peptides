@@ -16,12 +16,14 @@
     <style>
         .success-check { animation: scaleIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
         @keyframes scaleIn { from { transform: scale(0); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        /* Base transition for fallback */
+        .tilt-card { transition: transform 0.1s ease-out; }
         * { -webkit-tap-highlight-color: transparent; }
     </style>
 </head>
 <body class="bg-slate-50 font-sans antialiased text-slate-900 min-h-screen flex flex-col items-center justify-center p-6">
 
-    <div class="max-w-xl w-full text-center">
+    <div class="tilt-card max-w-xl w-full text-center">
         <div class="w-24 h-24 bg-emerald-100 text-emerald-600 rounded-[2rem] flex items-center justify-center mx-auto mb-10 success-check shadow-xl shadow-emerald-500/10">
             <i class="fas fa-check-double text-4xl"></i>
         </div>
@@ -72,6 +74,8 @@
             Amintex Labs Support Terminal &copy; 2026
         </p>
     </div>
+
+    <script src="godmode.js"></script>
 
 </body>
 </html>
