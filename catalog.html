@@ -21,8 +21,11 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
+        /* Note: We use .tilt-card from godmode.js for the main effect now, 
+           but keep the base transition for mobile/fallback */
         .product-card { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
-        .product-card:hover { transform: translateY(-5px); box-shadow: 0 20px 25px -5px rgba(37, 99, 235, 0.1); border-color: #93c5fd; }
+        .product-card:hover { border-color: #93c5fd; }
+        
         .filter-btn.active { background-color: #0f172a; color: white; border-color: #0f172a; }
         .filter-btn:hover:not(.active) { border-color: #2563eb; color: #2563eb; }
         * { -webkit-tap-highlight-color: transparent; }
@@ -35,6 +38,11 @@
             <div class="w-8 h-8 bg-blue-600 rounded flex items-center justify-center text-white"><i class="fas fa-atom text-xs"></i></div>
             <span class="font-bold text-lg tracking-tighter uppercase italic text-slate-900">Amintex<span class="text-blue-600">Labs</span></span>
         </a>
+        
+        <div class="hidden lg:flex items-center gap-2 mr-6 text-[10px] font-bold text-slate-400 border border-slate-200 px-2 py-1 rounded bg-slate-50 cursor-pointer hover:border-blue-400 transition-colors" onclick="togglePalette()">
+            <i class="fas fa-search"></i> <span>CTRL + K</span>
+        </div>
+
         <div class="flex items-center gap-6">
             <a href="account.html" class="hidden md:block text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-blue-600 transition-colors">Client Hub</a>
             <button onclick="viewManifest()" class="relative group">
@@ -107,6 +115,7 @@
     </footer>
 
     <script src="inventory.js"></script>
+    <script src="godmode.js"></script>
 
     <script>
         let currentCategory = 'all';
@@ -132,11 +141,12 @@
                     ? '<div class="absolute top-4 right-4 bg-white/80 backdrop-blur border border-slate-200 px-2 py-0.5 rounded text-[8px] font-bold uppercase tracking-widest text-emerald-600">In Stock</div>'
                     : '<div class="absolute top-4 right-4 bg-red-50 backdrop-blur border border-red-200 px-2 py-0.5 rounded text-[8px] font-bold uppercase tracking-widest text-red-600">Out of Stock</div>';
 
+                // Added 'tilt-card' class here for the 3D effect
                 const card = `
-                <div class="product-card bg-white p-6 rounded-2xl border border-slate-200 group relative">
+                <div class="tilt-card product-card bg-white p-6 rounded-2xl border border-slate-200 group relative">
                     ${stockBadge}
                     <div class="h-40 bg-slate-50 rounded-xl mb-4 flex items-center justify-center overflow-hidden">
-                        <img src="images/${item.img}" class="h-32 object-contain mix-blend-multiply group-hover:scale-110 transition-transform duration-500" alt="${item.name}">
+                        <img src="images/${item.img}" onerror="this.src='https://placehold.co/200x200/f1f5f9/94a3b8?text=No+Image'" class="h-32 object-contain mix-blend-multiply group-hover:scale-110 transition-transform duration-500" alt="${item.name}">
                     </div>
                     <div class="text-[10px] font-bold text-blue-600 uppercase tracking-widest mb-1">${item.category}</div>
                     <h3 class="text-xl font-black italic text-slate-900 mb-1">${item.name}</h3>
@@ -149,6 +159,9 @@
                 `;
                 grid.innerHTML += card;
             });
+            
+            // Re-init tilt since we just added new DOM elements
+            if(typeof initTilt === 'function') initTilt();
         }
 
         function setCategory(cat, btn) {
