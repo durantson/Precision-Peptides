@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Database Query | Precision Labs</title>
+    <title>Database Query | Amintex Labs</title>
     
-    <meta name="description" content="Search the Precision Labs inventory database. Lookup reagents by CAS number, peptide name, or category.">
+    <meta name="description" content="Search the Amintex Labs inventory database. Lookup reagents by CAS number, peptide name, or category.">
     <meta name="keywords" content="peptide search, CAS lookup, chemical inventory, reagent database, buy peptides online">
-    <meta name="author" content="Precision Labs">
+    <meta name="author" content="Amintex Labs">
     <meta name="theme-color" content="#2563eb"> 
 
     <meta property="og:type" content="website">
-    <meta property="og:title" content="Inventory Search | Precision Labs">
+    <meta property="og:title" content="Inventory Search | Amintex Labs">
     <meta property="og:description" content="Query our live inventory of research peptides and reagents.">
     <meta property="og:image" content="images/search-banner.jpg"> 
     <meta property="og:url" content="https://www.your-website.com/search.html">
@@ -31,7 +31,7 @@
     <nav class="bg-white border-b border-slate-100 h-16 flex items-center px-6 justify-between sticky top-0 z-50">
         <a href="index.html" class="flex items-center gap-2 hover:opacity-75 transition-opacity">
             <div class="w-8 h-8 bg-blue-600 rounded flex items-center justify-center text-white"><i class="fas fa-atom text-xs"></i></div>
-            <span class="font-bold text-lg tracking-tighter uppercase italic text-slate-900">Precision<span class="text-blue-600">Labs</span></span>
+            <span class="font-bold text-lg tracking-tighter uppercase italic text-slate-900">Amintex<span class="text-blue-600">Labs</span></span>
         </a>
         <div class="flex items-center gap-6">
             <a href="catalog.html" class="text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-blue-600 transition-colors">Catalog</a>
@@ -94,73 +94,14 @@
     </main>
 
     <footer class="bg-white border-t border-slate-200 py-16">
-        <div class="max-w-7xl mx-auto px-6 md:px-12">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
-                <div class="col-span-1 md:col-span-2">
-                    <div class="flex items-center gap-2 mb-6">
-                        <div class="w-8 h-8 bg-slate-900 rounded flex items-center justify-center text-white"><i class="fas fa-atom text-xs"></i></div>
-                        <span class="font-black text-lg italic uppercase tracking-tighter text-slate-900">Precision<span class="text-blue-600">Labs</span></span>
-                    </div>
-                    <p class="text-slate-400 text-xs leading-loose max-w-sm">Precision Labs is a specialized supplier serving academic institutions and private laboratories.</p>
-                </div>
-                <div>
-                    <h4 class="font-bold text-slate-900 uppercase tracking-widest text-xs mb-6">Catalog</h4>
-                    <ul class="space-y-4 text-xs font-medium text-slate-500">
-                        <li><a href="catalog.html" class="hover:text-blue-600 transition-colors">Metabolic</a></li>
-                        <li><a href="catalog.html" class="hover:text-blue-600 transition-colors">Regenerative</a></li>
-                        <li><a href="catalog.html" class="hover:text-blue-600 transition-colors">Nootropics</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 class="font-bold text-slate-900 uppercase tracking-widest text-xs mb-6">Resources</h4>
-                    <ul class="space-y-4 text-xs font-medium text-slate-500">
-                        <li><a href="login.html" class="hover:text-blue-600 transition-colors">Researcher Portal</a></li>
-                        <li><a href="batch-verification.html" class="hover:text-blue-600 transition-colors">Batch Verification</a></li>
-                        <li><a href="support.html" class="hover:text-blue-600 transition-colors">Help Center</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="border-t border-slate-100 pt-8 mt-8">
-                <div class="bg-red-50 border border-red-100 p-6 rounded-2xl text-center">
-                    <p class="text-[10px] text-red-600/70 font-bold uppercase tracking-widest mb-2">Research Use Only</p>
-                    <p class="text-[10px] text-red-800/60 leading-relaxed max-w-4xl mx-auto uppercase">Strictly for in-vitro laboratory research purposes only. Not for human consumption.</p>
-                </div>
-                <div class="text-center mt-8 text-[10px] text-slate-300 uppercase tracking-widest">&copy; 2026 Precision Labs. All rights reserved.</div>
-            </div>
+        <div class="max-w-7xl mx-auto px-6 md:px-12 text-center">
+            <p class="text-[10px] text-slate-300 uppercase tracking-widest">&copy; 2026 Amintex Labs. Research Use Only.</p>
         </div>
     </footer>
 
-    <script>
-        // Full Inventory Database
-        const products = [
-            { name: "Tirzepatide", cat: "Metabolic", price: "$69.00", img: "vial-tirzepatide.jpg", url: "product-tirzepatide.html", desc: "Dual GIP/GLP-1 agonist." },
-            { name: "Retatrutide", cat: "Metabolic", price: "$115.00", img: "vial-retatrutide.jpg", url: "product-retatrutide.html", desc: "Triple agonist (GLP-1/GIP/GCGR)." },
-            { name: "Semaglutide", cat: "Metabolic", price: "$85.00", img: "vial-semaglutide.jpg", url: "product-semaglutide.html", desc: "GLP-1 Analogue." },
-            { name: "AOD-9604", cat: "Metabolic", price: "$45.00", img: "vial-aod9604.jpg", url: "product-aod9604.html", desc: "Lipolytic fragment 177-191." },
-            { name: "BPC-157", cat: "Regenerative", price: "$45.00", img: "vial-bpc157.jpg", url: "product-bpc157.html", desc: "Stable Arginine Salt." },
-            { name: "TB-500", cat: "Regenerative", price: "$55.00", img: "vial-tb500.jpg", url: "product-tb500.html", desc: "Thymosin Beta-4 synthetic." },
-            { name: "GHK-Cu", cat: "Regenerative", price: "$45.00", img: "vial-ghkcu.jpg", url: "product-ghkcu.html", desc: "Copper peptide complex." },
-            { name: "Semax", cat: "Nootropic", price: "$45.00", img: "vial-semax.jpg", url: "product-semax.html", desc: "ACTH(4-10) Analogue." },
-            { name: "NA-Semax Amidate", cat: "Nootropic", price: "$55.00", img: "vial-na-semax.jpg", url: "product-na-semax.html", desc: "Acetylated/Amidated Semax." },
-            { name: "Selank", cat: "Nootropic", price: "$45.00", img: "vial-selank.jpg", url: "product-selank.html", desc: "Tuftsin analogue." },
-            { name: "NA-Selank Amidate", cat: "Nootropic", price: "$55.00", img: "vial-na-selank.jpg", url: "product-na-selank.html", desc: "Acetylated/Amidated Selank." },
-            { name: "Epitalon", cat: "Longevity", price: "$45.00", img: "vial-epitalon.jpg", url: "product-epitalon.html", desc: "Telomerase activator." },
-            { name: "NAD+", cat: "Longevity", price: "$45.00", img: "vial-nad.jpg", url: "product-nad.html", desc: "Oxidized Coenzyme." },
-            { name: "DSIP", cat: "Nootropic", price: "$35.00", img: "vial-dsip.jpg", url: "product-dsip.html", desc: "Delta Sleep-Inducing Peptide." },
-            { name: "Tesamorelin", cat: "Metabolic", price: "$45.00", img: "vial-tesamorelin.jpg", url: "product-tesamorelin.html", desc: "GHRH Analogue." },
-            { name: "Ipamorelin", cat: "Metabolic", price: "$35.00", img: "vial-ipamorelin.jpg", url: "product-ipamorelin.html", desc: "Selective GH Secretagogue." },
-            { name: "CJC-1295", cat: "Metabolic", price: "$35.00", img: "vial-cjc1295.jpg", url: "product-cjc1295.html", desc: "Mod GRF 1-29 No DAC." },
-            { name: "Melanotan 2", cat: "Longevity", price: "$35.00", img: "vial-mt2.jpg", url: "product-melanotan2.html", desc: "Alpha-MSH analog." },
-            { name: "PT-141", cat: "Longevity", price: "$45.00", img: "vial-pt141.jpg", url: "product-pt141.html", desc: "Bremelanotide." },
-            { name: "Cardarine", cat: "Metabolic", price: "$40.00", img: "vial-cardarine.jpg", url: "product-cardarine.html", desc: "GW-501516." },
-            { name: "MOTS-c", cat: "Metabolic", price: "$55.00", img: "vial-motsc.jpg", url: "product-motsc.html", desc: "Mitochondrial-Derived Peptide." },
-            { name: "FOXO4-DRI", cat: "Longevity", price: "$120.00", img: "vial-foxo4dri.jpg", url: "product-foxo4dri.html", desc: "Senolytic Peptide." },
-            { name: "LL-37", cat: "Immune", price: "$55.00", img: "vial-ll37.jpg", url: "product-ll37.html", desc: "Antimicrobial Peptide." },
-            { name: "Thymosin Alpha-1", cat: "Immune", price: "$45.00", img: "vial-ta1.jpg", url: "product-thymosin-alpha1.html", desc: "Immune Modulator." },
-            { name: "KPV", cat: "Regenerative", price: "$45.00", img: "vial-kpv.jpg", url: "product-kpv.html", desc: "Anti-inflammatory tripeptide." },
-            { name: "IGF-1 LR3", cat: "Regenerative", price: "$75.00", img: "vial-igf1lr3.jpg", url: "product-igf1lr3.html", desc: "Long R3 Growth Factor." }
-        ];
+    <script src="inventory.js"></script>
 
+    <script>
         // Initialization
         let cart = JSON.parse(localStorage.getItem('precisionCart')) || []; 
         updateBadge();
@@ -172,7 +113,8 @@
                 document.getElementById('queryInput').value = query;
                 runSearch();
             } else {
-                renderResults(products);
+                // Show all items initially (or maybe just top 4)
+                renderResults(masterInventory);
             }
         };
 
@@ -180,7 +122,7 @@
             if (e.key === 'Enter') runSearch();
         }
 
-        // Search Logic
+        // Search Logic using masterInventory from inventory.js
         function runSearch() {
             const query = document.getElementById('queryInput').value.toLowerCase().trim();
             const loader = document.getElementById('loader');
@@ -190,15 +132,16 @@
             loader.classList.remove('hidden');
 
             setTimeout(() => {
-                const filtered = products.filter(p => 
+                const filtered = masterInventory.filter(p => 
                     p.name.toLowerCase().includes(query) || 
-                    p.cat.toLowerCase().includes(query) ||
-                    p.desc.toLowerCase().includes(query)
+                    p.category.toLowerCase().includes(query) ||
+                    p.id.toLowerCase().includes(query) ||
+                    (p.cas && p.cas.includes(query)) // Search by CAS if it exists
                 );
                 renderResults(filtered);
                 loader.classList.add('hidden');
                 resultsArea.classList.remove('hidden');
-            }, 500);
+            }, 400); // Simulated delay
         }
 
         // Render Results
@@ -218,20 +161,31 @@
             }
 
             items.forEach(item => {
+                // Determine Badge Logic
+                let badgeHTML = '';
+                if (!item.showInCatalog) {
+                    badgeHTML = `<div class="absolute top-4 right-4 bg-slate-100 border border-slate-200 px-2 py-0.5 rounded text-[8px] font-bold uppercase tracking-widest text-slate-500">Reference Only</div>`;
+                } else if (item.inStock) {
+                    badgeHTML = `<div class="absolute top-4 right-4 bg-white/80 backdrop-blur border border-slate-200 px-2 py-0.5 rounded text-[8px] font-bold uppercase tracking-widest text-emerald-600">In Stock</div>`;
+                } else {
+                    badgeHTML = `<div class="absolute top-4 right-4 bg-red-50 border border-red-100 px-2 py-0.5 rounded text-[8px] font-bold uppercase tracking-widest text-red-500">Out of Stock</div>`;
+                }
+
+                // Determine Price Display
+                const priceDisplay = item.showInCatalog ? `$${item.price.toFixed(2)}+` : 'Inquire';
+
                 const card = `
                 <div class="product-card bg-white p-6 rounded-2xl border border-slate-200 group relative">
-                    <div class="absolute top-4 right-4 bg-white/80 backdrop-blur border border-slate-200 px-2 py-0.5 rounded text-[8px] font-bold uppercase tracking-widest text-emerald-600">
-                        In Stock
-                    </div>
+                    ${badgeHTML}
                     <div class="h-40 bg-slate-50 rounded-xl mb-4 flex items-center justify-center overflow-hidden">
-                        <img src="images/${item.img}" class="h-32 object-contain mix-blend-multiply group-hover:scale-110 transition-transform duration-500" alt="${item.name}">
+                        <img src="images/${item.img}" onerror="this.src='https://placehold.co/200x200/f1f5f9/94a3b8?text=No+Image'" class="h-32 object-contain mix-blend-multiply group-hover:scale-110 transition-transform duration-500" alt="${item.name}">
                     </div>
-                    <div class="text-[10px] font-bold text-blue-600 uppercase tracking-widest mb-1">${item.cat}</div>
+                    <div class="text-[10px] font-bold text-blue-600 uppercase tracking-widest mb-1">${item.category}</div>
                     <h3 class="text-xl font-black italic text-slate-900 mb-1">${item.name}</h3>
                     <p class="text-xs text-slate-400 mb-4 line-clamp-2">${item.desc}</p>
                     <div class="flex items-center justify-between border-t border-slate-100 pt-4">
-                        <span class="font-bold text-slate-900">${item.price}+</span>
-                        <a href="${item.url}" class="text-xs font-bold text-blue-600 hover:text-slate-900 transition-colors uppercase tracking-wider">View Data <i class="fas fa-arrow-right ml-1"></i></a>
+                        <span class="font-bold text-slate-900">${priceDisplay}</span>
+                        <a href="product.html?id=${item.id}" class="text-xs font-bold text-blue-600 hover:text-slate-900 transition-colors uppercase tracking-wider">View Data <i class="fas fa-arrow-right ml-1"></i></a>
                     </div>
                 </div>
                 `;
