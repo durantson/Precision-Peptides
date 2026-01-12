@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Investigator Dashboard | Precision Labs</title>
+    <title>Investigator Dashboard | Amintex Labs</title>
     
-    <meta name="description" content="Precision Labs Investigator Dashboard. Secure terminal for authorized research partners.">
-    <meta name="author" content="Precision Labs">
+    <meta name="description" content="Amintex Labs Investigator Dashboard. Secure terminal for authorized research partners.">
+    <meta name="author" content="Amintex Labs">
     <meta name="theme-color" content="#0f172a"> 
 
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚛️</text></svg>">
@@ -22,14 +22,16 @@
 <body class="bg-slate-50 text-slate-900">
 
     <script>
+        // Security Gatekeeper
         if (localStorage.getItem('portalAuthorized') !== 'true') { window.location.href = 'login.html'; }
     </script>
 
     <div class="flex min-h-screen">
-        <aside class="w-64 bg-slate-900 text-white hidden md:flex flex-col p-6 fixed h-full">
+        
+        <aside class="w-64 bg-slate-900 text-white hidden md:flex flex-col p-6 fixed h-full z-50">
             <div class="text-xl font-black italic uppercase mb-12 flex items-center gap-2">
                 <div class="w-8 h-8 bg-blue-600 rounded flex items-center justify-center text-white text-sm"><i class="fas fa-atom"></i></div>
-                <span>Precision<span class="text-blue-500">Labs</span></span>
+                <span>Amintex<span class="text-blue-500">Labs</span></span>
             </div>
             
             <nav class="space-y-6 flex-1 text-xs font-bold uppercase tracking-widest">
@@ -49,12 +51,14 @@
 
             <div class="pt-6 border-t border-slate-800">
                 <button onclick="logout()" class="text-[10px] text-slate-500 hover:text-white uppercase font-bold tracking-widest flex items-center gap-2">
+                    <i class="fas fa-sign-out-alt"></i>
                     <span>Sign Out</span>
                 </button>
             </div>
         </aside>
 
         <main class="flex-1 p-8 md:p-12 md:ml-64">
+            
             <header class="flex flex-col md:flex-row justify-between items-start md:items-center mb-12 gap-4">
                 <div>
                     <h1 class="text-3xl font-extrabold tracking-tight text-slate-900">Investigator Overview</h1>
@@ -82,6 +86,7 @@
             </div>
 
             <div class="grid lg:grid-cols-2 gap-8">
+                
                 <div class="bg-white rounded-[2.5rem] border border-slate-200 overflow-hidden shadow-sm">
                     <div class="p-8 border-b border-slate-100 flex justify-between items-center">
                         <h3 class="font-black uppercase text-xs tracking-widest text-slate-900">Recent Procurement</h3>
@@ -91,14 +96,14 @@
                         <div class="flex justify-between items-center">
                             <div>
                                 <p class="font-bold text-sm text-slate-900">Tirzepatide (5mg)</p>
-                                <p class="text-[10px] text-slate-400 mono mt-1">BATCH: PL-101-TIRZ</p>
+                                <p class="text-[10px] text-slate-400 mono mt-1">BATCH: AM-101-TIRZ</p>
                             </div>
                             <span class="bg-emerald-50 text-emerald-600 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wide">Verified</span>
                         </div>
                         <div class="flex justify-between items-center">
                             <div>
                                 <p class="font-bold text-sm text-slate-900">BPC-157 (Arginine)</p>
-                                <p class="text-[10px] text-slate-400 mono mt-1">BATCH: PL-104-BPC</p>
+                                <p class="text-[10px] text-slate-400 mono mt-1">BATCH: AM-104-BPC</p>
                             </div>
                             <span class="bg-emerald-50 text-emerald-600 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wide">Verified</span>
                         </div>
@@ -116,7 +121,7 @@
             </div>
             
             <footer class="mt-12 pt-8 border-t border-slate-200 text-center md:text-left">
-                <p class="text-[10px] font-bold text-slate-300 uppercase tracking-widest">&copy; 2026 Precision Labs. Authorized Access Only.</p>
+                <p class="text-[10px] font-bold text-slate-300 uppercase tracking-widest">&copy; 2026 Amintex Labs. Authorized Access Only.</p>
             </footer>
         </main>
     </div>
