@@ -18,12 +18,14 @@
             background-size: cover;
             background-position: center;
         }
+        /* Base transition for fallback */
+        .tilt-card { transition: transform 0.1s ease-out; }
         * { -webkit-tap-highlight-color: transparent; }
     </style>
 </head>
 <body class="bg-white font-sans antialiased text-slate-900 min-h-screen flex">
 
-    <div class="hidden lg:flex w-1/2 split-bg relative items-center justify-center overflow-hidden">
+    <div class="tilt-card hidden lg:flex w-1/2 split-bg relative items-center justify-center overflow-hidden">
         <div class="absolute inset-0 bg-slate-900/80 backdrop-blur-sm"></div>
         <div class="relative z-10 text-white p-16 max-w-xl">
             <div class="w-12 h-12 bg-blue-600 rounded-xl flex items-center justify-center text-white mb-8 shadow-lg shadow-blue-600/50">
@@ -109,12 +111,14 @@
                     Create Profile
                 </button>
                 <p class="text-[10px] text-center text-slate-400 mt-4 leading-relaxed">
-                    By registering, you confirm that you are a qualified researcher and agree to our <a href="compliance.html" class="text-blue-600 underline">Terms of Service</a>.
+                    By registering, you confirm that you are a qualified researcher and agree to our <a href="#" class="text-blue-600 underline">Terms of Service</a>.
                 </p>
             </form>
         </div>
 
     </div>
+
+    <script src="godmode.js"></script>
 
     <script>
         function switchTab(tab) {
@@ -162,8 +166,13 @@
         function handleRegister(e) {
             e.preventDefault();
             // Verification Simulation
-            alert("Security Protocol: Verification email sent to institutional address. Please verify to unlock access.");
-            switchTab('login'); // Send them back to login to wait for verification
+            // Using God Mode Toast if available, else fallback to alert
+            if (typeof showToast === 'function') {
+                showToast("Verification email sent to institutional address.");
+            } else {
+                alert("Security Protocol: Verification email sent to institutional address.");
+            }
+            switchTab('login'); 
         }
     </script>
 </body>
