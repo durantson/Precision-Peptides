@@ -14,6 +14,11 @@
         body { font-family: 'Inter', sans-serif; } 
         .spec-row:nth-child(odd) { background-color: #f8fafc; }
         .btn-added { background-color: #10b981 !important; color: white !important; }
+        
+        /* Smooth fade in for recommendations */
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .fade-in { animation: fadeIn 0.5s ease-out forwards; }
+        
         * { -webkit-tap-highlight-color: transparent; }
     </style>
 </head>
@@ -35,7 +40,15 @@
 
     <main class="flex-1 max-w-7xl mx-auto px-6 py-12 w-full">
         
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
+        <div class="flex items-center gap-2 text-[10px] uppercase font-bold tracking-widest text-slate-400 mb-8">
+            <a href="catalog.html" class="hover:text-blue-600">Catalog</a>
+            <i class="fas fa-chevron-right text-[8px]"></i>
+            <span id="crumb-category" class="text-slate-900">...</span>
+            <i class="fas fa-chevron-right text-[8px]"></i>
+            <span id="crumb-name" class="text-blue-600">...</span>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 mb-24">
             
             <div class="space-y-8">
                 <div class="bg-slate-50 rounded-[2.5rem] p-12 flex items-center justify-center border border-slate-100 relative overflow-hidden h-[500px]">
@@ -137,6 +150,18 @@
 
         </div>
 
+        <div id="recommendation-section" class="border-t border-slate-200 pt-16 hidden">
+            <div class="flex justify-between items-end mb-8">
+                <div>
+                    <h2 class="text-[10px] font-black uppercase tracking-[0.4em] text-blue-600 mb-2">Protocol Synergies</h2>
+                    <h3 class="text-2xl font-black italic text-slate-900 uppercase tracking-tight">Recommended Stacks</h3>
+                </div>
+                <a href="catalog.html" class="hidden md:block text-[10px] font-bold uppercase tracking-widest text-slate-400 hover:text-blue-600">View Full Library</a>
+            </div>
+            <div id="related-grid" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                </div>
+        </div>
+
     </main>
 
     <footer class="bg-white border-t border-slate-200 py-16 mt-auto">
@@ -148,77 +173,96 @@
     <script src="inventory.js"></script>
 
     <script>
-        // 1. Get Product ID from URL
         const urlParams = new URLSearchParams(window.location.search);
         const productId = urlParams.get('id');
-
-        // 2. Find Product in Brain
         const product = masterInventory.find(p => p.id === productId);
-        
-        // 3. Handle Cart Logic
         let cart = JSON.parse(localStorage.getItem('precisionCart')) || [];
-        
-        // DOM ELEMENTS
         const qtyInput = document.getElementById('qty-input');
         const badge = document.getElementById('cart-badge');
 
         function init() {
-            if (!product) {
-                window.location.href = 'catalog.html';
-                return;
-            }
+            if (!product) { window.location.href = 'catalog.html'; return; }
 
-            // POPULATE DATA
+            // 1. Populate Main Data
             document.title = `${product.name} | Analysis Data`;
             document.getElementById('product-name').innerText = product.name;
             document.getElementById('product-code').innerText = `SKU: ${product.id}`;
             document.getElementById('category-badge').innerText = product.category;
             document.getElementById('product-desc').innerText = product.desc;
-            
-            // Image Loading
             document.getElementById('product-img').src = `images/${product.img}`;
             document.getElementById('product-img').alt = product.name;
             
-            // Specs
+            // 2. Populate Breadcrumbs
+            document.getElementById('crumb-category').innerText = product.category;
+            document.getElementById('crumb-name').innerText = product.name;
+
+            // 3. Specs
             document.getElementById('spec-seq').innerText = product.seq;
             document.getElementById('spec-cas').innerText = product.cas;
             document.getElementById('spec-mw').innerText = `${product.mw} g/mol`;
 
-            // Stock / Availability Status
+            // 4. Stock / Availability Logic
             const stockBadge = document.getElementById('stock-badge');
             const addBtn = document.getElementById('add-btn');
 
             if (!product.showInCatalog) {
-                // GHOST ITEM (Archived/Reference Only)
                 stockBadge.innerText = "Reference Only";
                 stockBadge.className = "absolute top-8 right-8 bg-slate-100 backdrop-blur border border-slate-200 px-3 py-1 rounded text-[10px] font-bold uppercase tracking-widest text-slate-500";
-                
                 addBtn.disabled = true;
                 addBtn.innerText = "Synthesis Required";
                 addBtn.className = "flex-1 bg-slate-100 text-slate-400 py-4 rounded-xl font-black uppercase tracking-widest text-xs cursor-not-allowed";
-                
                 document.getElementById('product-price').innerText = "Inquire";
-                document.getElementById('product-price').classList.add('text-slate-400');
             } else if (product.inStock) {
-                // ACTIVE & IN STOCK
                 stockBadge.innerText = "In Stock";
                 stockBadge.className = "absolute top-8 right-8 bg-white/80 backdrop-blur border border-slate-200 px-3 py-1 rounded text-[10px] font-bold uppercase tracking-widest text-emerald-600";
-                
-                // Initialize Price Engine
                 updateDynamicPrice();
-                
             } else {
-                // ACTIVE BUT OUT OF STOCK
                 stockBadge.innerText = "Out of Stock";
                 stockBadge.className = "absolute top-8 right-8 bg-red-50 backdrop-blur border border-red-200 px-3 py-1 rounded text-[10px] font-bold uppercase tracking-widest text-red-600";
-                
                 addBtn.disabled = true;
                 addBtn.innerText = "Unavailable";
                 addBtn.className = "flex-1 bg-slate-100 text-slate-400 py-4 rounded-xl font-black uppercase tracking-widest text-xs cursor-not-allowed";
                 document.getElementById('product-price').innerText = `$${product.price.toFixed(2)}`;
             }
 
+            // 5. Initialize Neural Engine
+            generateRecommendations();
             updateBadge();
+        }
+
+        // --- NEURAL RECOMMENDATION ENGINE ---
+        function generateRecommendations() {
+            // Find items in same category, exclude current item, take top 3
+            const related = masterInventory
+                .filter(p => p.category === product.category && p.id !== product.id && p.showInCatalog)
+                .slice(0, 3);
+
+            if (related.length > 0) {
+                const grid = document.getElementById('related-grid');
+                document.getElementById('recommendation-section').classList.remove('hidden');
+                
+                related.forEach((item, index) => {
+                    // Staggered animation delay
+                    const delay = index * 100;
+                    const card = `
+                        <a href="product.html?id=${item.id}" class="fade-in block bg-white p-6 rounded-3xl border border-slate-200 hover:border-blue-400 hover:-translate-y-1 transition-all group" style="animation-delay: ${delay}ms">
+                            <div class="flex items-center gap-4 mb-4">
+                                <div class="w-12 h-12 bg-slate-50 rounded-xl flex items-center justify-center">
+                                    <img src="images/${item.img}" onerror="this.src='https://placehold.co/100x100/f1f5f9/94a3b8?text=Img'" class="w-8 h-8 object-contain mix-blend-multiply">
+                                </div>
+                                <div>
+                                    <h4 class="font-black italic text-slate-900 uppercase text-sm">${item.name}</h4>
+                                    <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">$${item.price.toFixed(2)}</p>
+                                </div>
+                            </div>
+                            <div class="text-[10px] font-bold text-blue-600 uppercase tracking-widest flex items-center gap-2 group-hover:gap-3 transition-all">
+                                View Data <i class="fas fa-arrow-right"></i>
+                            </div>
+                        </a>
+                    `;
+                    grid.innerHTML += card;
+                });
+            }
         }
 
         function adjQty(amount) {
@@ -226,27 +270,22 @@
             current += amount;
             if (current < 1) current = 1;
             qtyInput.value = current;
-            
-            // Recalculate price whenever quantity changes
             if (product.inStock) updateDynamicPrice();
         }
 
-        // --- NEW: AUTOMATED BULK PRICING ENGINE ---
         function updateDynamicPrice() {
             const qty = parseInt(qtyInput.value);
             let unitPrice = product.price;
             let discount = 0;
 
-            // Discount Tiers
-            if (qty >= 20) { discount = 0.15; }      // 15% off
-            else if (qty >= 10) { discount = 0.10; } // 10% off
-            else if (qty >= 5) { discount = 0.05; }  // 5% off
+            if (qty >= 20) { discount = 0.15; }
+            else if (qty >= 10) { discount = 0.10; }
+            else if (qty >= 5) { discount = 0.05; }
 
             const finalUnitPrice = unitPrice * (1 - discount);
             const priceDisplay = document.getElementById('product-price');
             
             if (discount > 0) {
-                // Show discounted price with visual indicators
                 priceDisplay.innerHTML = `
                     <div class="flex flex-col items-start">
                         <div class="flex items-center gap-3">
@@ -259,20 +298,16 @@
                     </div>
                 `;
             } else {
-                // Normal Price
                 priceDisplay.innerHTML = `$${unitPrice.toFixed(2)}`;
             }
         }
 
         function addToCart() {
             const qty = parseInt(qtyInput.value);
-            
-            // Check if item exists in cart
             const existing = cart.find(item => item.id === product.id);
             
-            if (existing) {
-                existing.qty += qty;
-            } else {
+            if (existing) { existing.qty += qty; } 
+            else {
                 cart.push({
                     id: product.id,
                     name: product.name,
@@ -281,16 +316,13 @@
                 });
             }
 
-            // Save
             localStorage.setItem('precisionCart', JSON.stringify(cart));
             updateBadge();
 
-            // Button Feedback
             const btn = document.getElementById('add-btn');
             const originalText = btn.innerText;
             btn.innerText = "Added to Manifest";
             btn.classList.add('btn-added');
-            
             setTimeout(() => {
                 btn.innerText = originalText;
                 btn.classList.remove('btn-added');
@@ -303,7 +335,6 @@
             badge.style.opacity = totalQty > 0 ? '1' : '0';
         }
 
-        // START
         init();
     </script>
 </body>
