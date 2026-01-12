@@ -19,6 +19,8 @@
             background-size: 1.5em 1.5em;
         }
         .nav-btn.active { background-color: #1e293b; color: white; border-left: 3px solid #3b82f6; }
+        /* Base transition for fallback */
+        .tilt-card { transition: transform 0.1s ease-out; }
     </style>
 </head>
 <body class="bg-slate-900 text-white min-h-screen flex">
@@ -50,6 +52,10 @@
             </button>
         </nav>
 
+        <div class="mb-6 px-4 py-3 bg-slate-800/50 rounded-xl text-[10px] font-bold text-slate-500 border border-slate-700 cursor-pointer hover:border-slate-500 transition-colors" onclick="togglePalette()">
+            <i class="fas fa-search mr-2"></i> Quick Jump (CTRL+K)
+        </div>
+
         <button onclick="logout()" class="text-xs font-bold text-red-500 uppercase tracking-widest flex items-center gap-2 mb-4 hover:text-red-400 transition-colors">
             <i class="fas fa-power-off"></i> Secure Logout
         </button>
@@ -75,7 +81,7 @@
         </header>
 
         <div id="view-inventory" class="view-section">
-            <div class="bg-slate-800/50 border border-slate-700 rounded-[2.5rem] p-8">
+            <div class="tilt-card bg-slate-800/50 border border-slate-700 rounded-[2.5rem] p-8">
                 <div class="flex justify-between items-center mb-8">
                     <h3 class="text-xl font-black uppercase italic">Master Database</h3>
                     <div class="relative">
@@ -100,7 +106,7 @@
         </div>
 
         <div id="view-clients" class="view-section hidden">
-            <div class="bg-slate-800/50 border border-slate-700 rounded-[2.5rem] p-8">
+            <div class="tilt-card bg-slate-800/50 border border-slate-700 rounded-[2.5rem] p-8">
                 <div class="flex justify-between items-center mb-8">
                     <h3 class="text-xl font-black uppercase italic">Registered Researchers</h3>
                     <button class="bg-blue-600 text-white px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-widest hover:bg-blue-500">Export CSV</button>
@@ -145,7 +151,7 @@
         </div>
 
         <div id="view-manifests" class="view-section hidden">
-            <div class="bg-slate-800/50 border border-slate-700 rounded-[2.5rem] p-8">
+            <div class="tilt-card bg-slate-800/50 border border-slate-700 rounded-[2.5rem] p-8">
                 <div class="flex justify-between items-center mb-8">
                     <h3 class="text-xl font-black uppercase italic">Incoming Requisitions</h3>
                 </div>
@@ -191,6 +197,8 @@
     </main>
 
     <script src="inventory.js"></script>
+    
+    <script src="godmode.js"></script>
 
     <script>
         // --- NAVIGATION LOGIC ---
@@ -262,19 +270,19 @@
 
         // --- AUTOMATION ENGINE: EXPORT DATABASE ---
         function exportDatabase() {
-            // 1. Serialize the current state of the brain
             const dataStr = "const masterInventory = " + JSON.stringify(masterInventory, null, 4) + ";";
-            
-            // 2. Create blob
             const dataUri = 'data:application/javascript;charset=utf-8,'+ encodeURIComponent(dataStr);
-            
-            // 3. Trigger download
             const linkElement = document.createElement('a');
             linkElement.setAttribute('href', dataUri);
             linkElement.setAttribute('download', 'inventory.js');
             linkElement.click();
             
-            alert("New Brain Generated! 🧠\n\n1. Check your downloads folder for 'inventory.js'\n2. Replace the file in your website folder.\n3. Your stock changes are now live.");
+            // Using God Mode Toast if available, else fallback
+            if (typeof showToast === 'function') {
+                showToast("Brain exported successfully. Replace inventory.js to apply changes.");
+            } else {
+                alert("New Brain Generated! 🧠\n\nCheck your downloads folder for 'inventory.js'.");
+            }
         }
 
         function logout() {
