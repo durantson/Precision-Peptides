@@ -22,6 +22,8 @@
             box-shadow: 0 0 10px rgba(37, 99, 235, 0.8);
         }
         @keyframes scan { 0% { transform: translateY(-100%); opacity: 0; } 50% { opacity: 1; } 100% { transform: translateY(400px); opacity: 0; } }
+        /* Base transition for fallback */
+        .tilt-card { transition: transform 0.1s ease-out; }
         * { -webkit-tap-highlight-color: transparent; }
     </style>
 </head>
@@ -51,7 +53,7 @@
             <h1 class="text-xs font-bold uppercase tracking-[0.3em] text-slate-400">Researcher Terminal</h1>
         </div>
 
-        <div class="bg-slate-800/50 backdrop-blur-xl border border-slate-700/50 rounded-[2rem] p-8 shadow-2xl relative overflow-hidden">
+        <div class="tilt-card bg-slate-800/50 backdrop-blur-xl border border-slate-700/50 rounded-[2rem] p-8 shadow-2xl relative overflow-hidden">
             
             <div class="absolute top-0 left-0 w-full h-full pointer-events-none overflow-hidden rounded-[2rem]">
                 <div class="scan-line"></div>
@@ -90,6 +92,8 @@
         </div>
 
     </div>
+
+    <script src="godmode.js"></script>
 
     <script>
         function validateAccess(e) {
