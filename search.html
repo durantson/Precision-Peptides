@@ -20,8 +20,10 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
+        /* Note: We use .tilt-card from godmode.js for the main effect now, 
+           but keep the base transition for mobile/fallback */
         .product-card { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
-        .product-card:hover { transform: translateY(-5px); box-shadow: 0 20px 25px -5px rgba(37, 99, 235, 0.1); border-color: #93c5fd; }
+        .product-card:hover { border-color: #93c5fd; }
         * { -webkit-tap-highlight-color: transparent; }
     </style>
 </head>
@@ -32,6 +34,11 @@
             <div class="w-8 h-8 bg-blue-600 rounded flex items-center justify-center text-white"><i class="fas fa-atom text-xs"></i></div>
             <span class="font-bold text-lg tracking-tighter uppercase italic text-slate-900">Amintex<span class="text-blue-600">Labs</span></span>
         </a>
+        
+        <div class="hidden lg:flex items-center gap-2 mr-6 text-[10px] font-bold text-slate-400 border border-slate-200 px-2 py-1 rounded bg-slate-50 cursor-pointer hover:border-blue-400 transition-colors" onclick="togglePalette()">
+            <i class="fas fa-search"></i> <span>CTRL + K</span>
+        </div>
+
         <div class="flex items-center gap-6">
             <a href="catalog.html" class="text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-blue-600 transition-colors">Catalog</a>
             <button onclick="viewManifest()" class="relative group">
@@ -70,7 +77,7 @@
             </div>
 
             <div id="grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                </div>
+            </div>
 
             <div id="noResults" class="hidden bg-white p-12 rounded-[2rem] border-2 border-dashed border-slate-200 text-center">
                 <div class="w-16 h-16 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-6 text-slate-300 text-2xl">
@@ -100,6 +107,7 @@
     </footer>
 
     <script src="inventory.js"></script>
+    <script src="godmode.js"></script>
 
     <script>
         // Initialization
@@ -123,7 +131,6 @@
         }
 
         // --- FUZZY SEARCH ALGORITHM (Levenshtein Distance) ---
-        // Calculates how many "edits" (insert, delete, sub) it takes to turn word A into word B
         function getEditDistance(a, b) {
             if (a.length === 0) return b.length; 
             if (b.length === 0) return a.length; 
@@ -149,8 +156,8 @@
                         matrix[i][j] = matrix[i - 1][j - 1];
                     } else {
                         matrix[i][j] = Math.min(matrix[i - 1][j - 1] + 1, // substitution
-                                       Math.min(matrix[i][j - 1] + 1, // insertion
-                                       matrix[i - 1][j] + 1)); // deletion
+                                            Math.min(matrix[i][j - 1] + 1, // insertion
+                                            matrix[i - 1][j] + 1)); // deletion
                     }
                 }
             }
@@ -181,9 +188,7 @@
                     }
 
                     // 2. FUZZY MATCH (Typo Tolerance)
-                    // We only run this if the search query is at least 3 chars long to prevent false positives
                     if (query.length > 2) {
-                        // Allow 1 typo for short words, 2-3 for longer words
                         const threshold = query.length > 5 ? 3 : 1; 
                         const distance = getEditDistance(name, query);
                         
@@ -229,8 +234,9 @@
                 // Determine Price Display
                 const priceDisplay = item.showInCatalog ? `$${item.price.toFixed(2)}+` : 'Inquire';
 
+                // Added tilt-card class here
                 const card = `
-                <div class="product-card bg-white p-6 rounded-2xl border border-slate-200 group relative">
+                <div class="tilt-card product-card bg-white p-6 rounded-2xl border border-slate-200 group relative">
                     ${badgeHTML}
                     <div class="h-40 bg-slate-50 rounded-xl mb-4 flex items-center justify-center overflow-hidden">
                         <img src="images/${item.img}" onerror="this.src='https://placehold.co/200x200/f1f5f9/94a3b8?text=No+Image'" class="h-32 object-contain mix-blend-multiply group-hover:scale-110 transition-transform duration-500" alt="${item.name}">
@@ -246,6 +252,9 @@
                 `;
                 grid.innerHTML += card;
             });
+            
+            // Re-init tilt since we just added new DOM elements
+            if(typeof initTilt === 'function') initTilt();
         }
 
         function updateBadge() { 
