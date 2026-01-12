@@ -100,7 +100,6 @@
 
     <script>
         // AUTOMATIC CHECK FOR DIRECTORATE STATUS
-        // This looks at the memory to see if they clicked "Unlock" in the Rewards page
         const isDirectorate = localStorage.getItem('perk_shipping') === 'true';
 
         let cart = JSON.parse(localStorage.getItem('precisionCart')) || [];
@@ -127,9 +126,21 @@
             let manifestText = "";
 
             itemsContainer.innerHTML = cart.map((item, index) => {
-                const itemTotal = item.price * item.qty;
+                // --- AUTOMATED BULK DISCOUNT LOGIC ---
+                let discount = 0;
+                if (item.qty >= 20) discount = 0.15;      // 15% off for 20+
+                else if (item.qty >= 10) discount = 0.10; // 10% off for 10+
+                else if (item.qty >= 5) discount = 0.05;  // 5% off for 5+
+
+                const discountedPrice = item.price * (1 - discount);
+                const itemTotal = discountedPrice * item.qty;
+                
                 subtotal += itemTotal;
-                manifestText += `${item.name} | Qty: ${item.qty} | $${itemTotal.toFixed(2)}\n`;
+                
+                // Add note to manifest text if discounted
+                const discountNote = discount > 0 ? ` [${discount*100}% Bulk Rate]` : '';
+                manifestText += `${item.name} | Qty: ${item.qty} | $${itemTotal.toFixed(2)}${discountNote}\n`;
+
                 return `
                     <div class="manifest-card border border-slate-200 rounded-3xl p-5 flex justify-between items-center group">
                         <div class="flex items-center gap-4">
@@ -138,7 +149,10 @@
                             </div>
                             <div>
                                 <h4 class="font-black text-slate-900 uppercase italic text-sm tracking-tight">${item.name}</h4>
-                                <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest">Quantity: ${item.qty}</p>
+                                <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest">
+                                    Qty: ${item.qty} 
+                                    ${discount > 0 ? `<span class="text-emerald-500 ml-2">(${discount*100}% Off)</span>` : ''}
+                                </p>
                             </div>
                         </div>
                         <div class="text-right">
