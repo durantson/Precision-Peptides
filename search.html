@@ -221,13 +221,20 @@
             }
 
             items.forEach(item => {
-                // Determine Badge Logic
+                // Determine Badge Logic - STRATEGY UPDATE
                 let badgeHTML = '';
+                
                 if (!item.showInCatalog) {
-                    badgeHTML = `<div class="absolute top-4 right-4 bg-slate-100 border border-slate-200 px-2 py-0.5 rounded text-[8px] font-bold uppercase tracking-widest text-slate-500">Reference Only</div>`;
+                    // CASE 1: Ghost Inventory (Not listed for public sale)
+                    // Changed from "Reference Only" to "Synthesis Req." to imply manufacturing capability
+                    badgeHTML = `<div class="absolute top-4 right-4 bg-slate-100 border border-slate-200 px-2 py-0.5 rounded text-[8px] font-bold uppercase tracking-widest text-slate-500">Synthesis Req.</div>`;
+                
                 } else if (item.inStock) {
+                    // CASE 2: Active & In Stock
                     badgeHTML = `<div class="absolute top-4 right-4 bg-white/80 backdrop-blur border border-slate-200 px-2 py-0.5 rounded text-[8px] font-bold uppercase tracking-widest text-emerald-600">In Stock</div>`;
+                
                 } else {
+                    // CASE 3: Active but Sold Out
                     badgeHTML = `<div class="absolute top-4 right-4 bg-red-50 border border-red-100 px-2 py-0.5 rounded text-[8px] font-bold uppercase tracking-widest text-red-500">Out of Stock</div>`;
                 }
 
