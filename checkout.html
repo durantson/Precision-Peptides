@@ -99,9 +99,9 @@
     </footer>
 
     <script>
-        // SIMULATED USER SPEND - In a real app, this comes from a database
-        // Change this number to test: 105000 = Free Shipping, 5000 = $50 Shipping
-        const userLifetimeSpend = 105000; 
+        // AUTOMATIC CHECK FOR DIRECTORATE STATUS
+        // This looks at the memory to see if they clicked "Unlock" in the Rewards page
+        const isDirectorate = localStorage.getItem('perk_shipping') === 'true';
 
         let cart = JSON.parse(localStorage.getItem('precisionCart')) || [];
         const itemsContainer = document.getElementById('manifest-items');
@@ -149,15 +149,15 @@
                 `;
             }).join('');
 
-            // --- AUTOMATIC SHIPPING LOGIC ---
-            let shipping = 50.00; // Base rate
+            // --- SHIPPING LOGIC ---
+            let shipping = 50.00; // Standard Rate
             
-            if (userLifetimeSpend >= 100000) {
+            if (isDirectorate) {
                 shipping = 0.00;
                 document.getElementById('shipping-cost').innerText = "FREE";
                 document.getElementById('shipping-cost').classList.add('text-emerald-600');
                 document.getElementById('shipping-note').classList.remove('hidden');
-                manifestText += `\n[DIRECTORATE STATUS DETECTED: SHIPPING WAIVED]`;
+                manifestText += `\n[DIRECTORATE STATUS: SHIPPING WAIVED]`;
             } else {
                 document.getElementById('shipping-cost').innerText = `$${shipping.toFixed(2)}`;
                 document.getElementById('shipping-cost').classList.remove('text-emerald-600');
