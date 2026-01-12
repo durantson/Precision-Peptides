@@ -26,11 +26,14 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=JetBrains+Mono&display=swap" rel="stylesheet">
+    
+    <script src="https://3Dmol.org/build/3Dmol-min.js"></script>
+
     <style>
         body { font-family: 'Inter', sans-serif; }
         html { scroll-behavior: smooth; }
         
-        /* Floating Animation for Molecules */
+        /* Floating Animation for Background SVG */
         @keyframes float { 
             0% { transform: translateY(0px) rotate(0deg); } 
             50% { transform: translateY(-20px) rotate(10deg); } 
@@ -51,6 +54,70 @@
         .opacity-0 { opacity: 0; }
         .opacity-100 { opacity: 1; }
         
+        /* --- NEW ANIMATION STYLES (Light Mode Adapted) --- */
+        .hero-stage { perspective: 1000px; height: 500px; position: relative; width: 100%; display: flex; align-items: center; justify-content: center; }
+        
+        .pt-grid { 
+            display: grid; 
+            grid-template-columns: repeat(18, 1fr); 
+            gap: 4px; 
+            width: 100%; 
+            max-width: 600px;
+            transition: all 1s ease;
+        }
+        
+        .element { 
+            background: rgba(15, 23, 42, 0.05); /* Slate-900 at 5% opacity */
+            border: 1px solid rgba(15, 23, 42, 0.1); 
+            color: rgba(15, 23, 42, 0.4);
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            font-family: 'JetBrains Mono'; 
+            font-weight: bold; 
+            font-size: 10px;
+            border-radius: 4px;
+            aspect-ratio: 1;
+            transition: all 0.5s ease;
+        }
+        
+        .element.active { 
+            background: #2563eb; /* Blue-600 */
+            color: white; 
+            box-shadow: 0 0 15px rgba(37, 99, 235, 0.6); 
+            border-color: #2563eb;
+            z-index: 10;
+            transform: scale(1.1);
+        }
+
+        .pt-grid.implode .element:not(.active) { opacity: 0; transform: scale(0); }
+        .pt-grid.implode .element.active { 
+            position: absolute; 
+            top: 50%; left: 50%; 
+            transform: translate(-50%, -50%) scale(0.1); 
+            opacity: 0; 
+        }
+
+        .flash-overlay {
+            position: absolute; inset: 0; 
+            background: white; 
+            opacity: 0; pointer-events: none; 
+            transition: opacity 0.5s ease-out;
+            z-index: 50;
+        }
+        .flash-overlay.trigger { opacity: 1; }
+
+        #molecule-stage { 
+            opacity: 0; 
+            transition: opacity 2s ease; 
+            position: absolute; inset: 0; 
+            z-index: 20;
+            background: radial-gradient(circle at center, #f8fafc 0%, #ffffff 70%);
+        }
+        #molecule-stage.visible { opacity: 1; }
+        .empty-cell { visibility: hidden; }
+
+        .tilt-card { transition: transform 0.1s ease-out; }
         * { -webkit-tap-highlight-color: transparent; }
     </style>
 </head>
@@ -100,8 +167,8 @@
         </div>
 
         <div class="max-w-7xl mx-auto px-6 md:px-12 w-full grid grid-cols-1 lg:grid-cols-2 gap-16 items-center relative z-10">
+            
             <div class="space-y-8">
-                
                 <div class="inline-flex items-center gap-3 bg-blue-50 border border-blue-100 px-4 py-2 rounded-full">
                     <span class="relative flex h-2 w-2">
                         <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
@@ -116,6 +183,7 @@
                     DEFINING <br>
                     <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">PURITY</span>
                 </h1>
+                
                 <p class="text-xl text-slate-500 font-medium max-w-lg leading-relaxed">
                     High-performance lyophilized reagents for institutional research. HPLC verified >99% purity. Synthesized for precision.
                 </p>
@@ -136,23 +204,16 @@
             </div>
 
             <div class="relative hidden lg:block h-full min-h-[500px]">
-                <div class="tilt-card absolute top-10 right-10 bg-white p-8 rounded-[2.5rem] shadow-2xl border border-slate-100 molecule-float w-80 z-20">
-                    <div class="flex justify-between items-start mb-6">
-                        <div class="w-14 h-14 bg-emerald-100 rounded-2xl flex items-center justify-center text-emerald-600"><i class="fas fa-check text-xl"></i></div>
-                        <span class="bg-emerald-50 text-emerald-600 text-[10px] font-black px-3 py-1 rounded uppercase tracking-widest">Verified</span>
-                    </div>
-                    <h3 class="font-black text-5xl text-slate-900 italic mb-2"><span id="purity-counter">0</span>%</h3>
-                    <p class="text-xs text-slate-400 font-bold uppercase tracking-widest">Chromatography Purity</p>
-                    <div class="w-full bg-slate-100 h-2 mt-6 rounded-full overflow-hidden">
-                        <div id="purity-bar" class="bg-emerald-500 w-0 h-full transition-all duration-[2000ms] ease-out"></div>
-                    </div>
-                </div>
                 
-                <div class="tilt-card absolute top-64 right-64 bg-slate-900 p-8 rounded-[2.5rem] shadow-2xl molecule-float-delay w-72 z-10">
-                    <div class="flex justify-between items-start mb-6"><div class="w-14 h-14 bg-white/10 rounded-2xl flex items-center justify-center text-white"><i class="fas fa-box text-xl"></i></div></div>
-                    <h3 class="font-black text-2xl text-white italic">Priority</h3>
-                    <p class="text-xs text-slate-400 mt-2 leading-relaxed font-medium">Cold-chain insulated packaging for molecular stability.</p>
+                <div id="flash" class="flash-overlay rounded-[3rem]"></div>
+
+                <div id="molecule-stage" class="w-full h-[500px] rounded-[3rem] border border-slate-100 shadow-2xl"></div>
+
+                <div id="pt-container" class="hero-stage absolute inset-0">
+                    <div id="pt-grid" class="pt-grid">
+                        </div>
                 </div>
+
             </div>
         </div>
     </header>
@@ -238,58 +299,129 @@
     </footer>
 
     <script src="inventory.js"></script>
-    
     <script src="godmode.js"></script>
 
     <script>
-        // 1. LIVE TICKER LOGIC
+        // 1. LIVE TICKER LOGIC (Re-integrated from your original code idea, updated for inventory.js)
         const ticker = document.getElementById('hero-ticker');
-        const availableItems = masterInventory.filter(item => item.inStock && item.showInCatalog);
-        const shuffled = availableItems.sort(() => 0.5 - Math.random());
-        let currentIndex = 0;
-
-        function cycleTicker() {
-            if (shuffled.length === 0) {
-                ticker.innerText = "Catalog Online";
-                return;
+        
+        window.addEventListener('load', () => {
+            // Check if inventory.js is loaded
+            if(typeof masterInventory !== 'undefined') {
+                const availableItems = masterInventory.filter(item => item.inStock && item.showInCatalog);
+                let currentIndex = 0;
+                
+                setInterval(() => {
+                    if (availableItems.length > 0) {
+                        ticker.classList.remove('opacity-100');
+                        ticker.classList.add('opacity-0');
+                        setTimeout(() => {
+                            ticker.innerText = availableItems[currentIndex].name + " Verified";
+                            currentIndex = (currentIndex + 1) % availableItems.length;
+                            ticker.classList.remove('opacity-0');
+                            ticker.classList.add('opacity-100');
+                        }, 500);
+                    }
+                }, 4000);
             }
-            ticker.classList.remove('opacity-100');
-            ticker.classList.add('opacity-0');
-            setTimeout(() => {
-                ticker.innerText = shuffled[currentIndex].name;
-                currentIndex = (currentIndex + 1) % shuffled.length;
-                ticker.classList.remove('opacity-0');
-                ticker.classList.add('opacity-100');
-            }, 500); 
+        });
+
+        // 2. PERIODIC TABLE ANIMATION LOGIC
+        // Layout: 18 columns wide. 0 = empty space. Strings = Elements.
+        const ptLayout = [
+            ["H",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"He"],
+            ["Li","Be",0,0,0,0,0,0,0,0,0,0,"B","C","N","O","F","Ne"],
+            ["Na","Mg",0,0,0,0,0,0,0,0,0,0,"Al","Si","P","S","Cl","Ar"],
+            ["K","Ca","Sc","Ti","V","Cr","Mn","Fe","Co","Ni","Cu","Zn","Ga","Ge","As","Se","Br","Kr"]
+        ];
+
+        // The composition of GHK-Cu (Carbon, Hydrogen, Nitrogen, Oxygen, Copper)
+        const targetElements = ["C", "H", "N", "O", "Cu"];
+
+        function buildPeriodicTable() {
+            const grid = document.getElementById('pt-grid');
+            let html = '';
+            
+            ptLayout.forEach(row => {
+                row.forEach(cell => {
+                    if (cell === 0) {
+                        html += `<div class="empty-cell"></div>`;
+                    } else {
+                        html += `<div class="element" data-sym="${cell}">${cell}</div>`;
+                    }
+                });
+            });
+            grid.innerHTML = html;
         }
-        setInterval(cycleTicker, 4000);
-        cycleTicker();
 
-        // 2. COUNTER ANIMATION
-        window.onload = function() {
-            // Animate Bar
+        function runHeroAnimation() {
+            // 1. Highlight GHK-Cu Elements (Sequence Start)
             setTimeout(() => {
-                document.getElementById('purity-bar').style.width = '99.9%';
-            }, 500);
+                document.querySelectorAll('.element').forEach(el => {
+                    if(targetElements.includes(el.dataset.sym)) {
+                        el.classList.add('active');
+                    }
+                });
+            }, 1500); 
 
-            // Animate Number
-            const counterElement = document.getElementById('purity-counter');
-            let count = 0;
-            const target = 99.9;
-            const duration = 2000; // 2 seconds
-            const stepTime = 20;
-            const steps = duration / stepTime;
-            const increment = target / steps;
+            // 2. Implode
+            setTimeout(() => {
+                document.getElementById('pt-grid').classList.add('implode');
+            }, 3500);
 
-            const timer = setInterval(() => {
-                count += increment;
-                if (count >= target) {
-                    count = target;
-                    clearInterval(timer);
-                }
-                counterElement.innerText = count.toFixed(1);
-            }, stepTime);
-        };
+            // 3. Flash & Switch to 3D Molecule
+            setTimeout(() => {
+                const flash = document.getElementById('flash');
+                flash.classList.add('trigger');
+                
+                // Hide Table
+                document.getElementById('pt-container').style.display = 'none';
+                
+                // Show Viewer
+                const viewer = document.getElementById('molecule-stage');
+                viewer.classList.add('visible');
+                
+                // Init 3D Molecule (GHK-Cu CID: 73084)
+                init3DModel('molecule-stage', '73084');
+
+                // Remove Flash
+                setTimeout(() => {
+                    flash.classList.remove('trigger');
+                }, 500);
+
+            }, 4300);
+        }
+
+        async function init3DModel(id, cid) {
+            // Background is set via CSS, so we leave backgroundColor transparent
+            const viewer = $3Dmol.createViewer(id, { backgroundColor: 'transparent' });
+            try {
+                // Fetch GHK-Cu Structure from PubChem
+                const response = await fetch(`https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/${cid}/record/SDF/?record_type=3d`);
+                if (!response.ok) return;
+                const data = await response.text();
+                
+                viewer.addModel(data, "sdf");
+                
+                // Style: Blue sticks, Emerald spheres (matches site theme)
+                viewer.setStyle({}, { 
+                    stick: {radius: 0.2, color: '#2563eb'}, 
+                    sphere: {scale: 0.3, color: '#10b981'} 
+                }); 
+                
+                viewer.zoomTo();
+                viewer.render();
+                
+                // Slow rotation loop
+                viewer.animate({ loop: "forward", step: 0.5 }); 
+                
+            } catch (e) { console.log("3D Load Error"); }
+        }
+
+        // Init Animation
+        buildPeriodicTable();
+        runHeroAnimation();
+
     </script>
 
 </body>
