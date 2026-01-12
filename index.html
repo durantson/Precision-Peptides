@@ -76,6 +76,11 @@
             </div>
             <span class="font-black text-xl tracking-tighter uppercase italic text-slate-900">Amintex<span class="text-blue-600">Labs</span></span>
         </a>
+        
+        <div class="hidden lg:flex items-center gap-2 mr-6 text-[10px] font-bold text-slate-400 border border-slate-200 px-2 py-1 rounded bg-slate-50 cursor-pointer hover:border-blue-400 transition-colors" onclick="togglePalette()">
+            <i class="fas fa-search"></i> <span>CTRL + K</span>
+        </div>
+
         <div class="hidden md:flex gap-8 text-[11px] font-black uppercase tracking-[0.2em] text-slate-400">
             <a href="catalog.html" class="hover:text-blue-600 transition-colors">Catalog</a>
             <a href="batch-verification.html" class="hover:text-blue-600 transition-colors">Verification</a>
@@ -131,7 +136,7 @@
             </div>
 
             <div class="relative hidden lg:block h-full min-h-[500px]">
-                <div class="absolute top-10 right-10 bg-white p-8 rounded-[2.5rem] shadow-2xl border border-slate-100 molecule-float w-80 z-20">
+                <div class="tilt-card absolute top-10 right-10 bg-white p-8 rounded-[2.5rem] shadow-2xl border border-slate-100 molecule-float w-80 z-20">
                     <div class="flex justify-between items-start mb-6">
                         <div class="w-14 h-14 bg-emerald-100 rounded-2xl flex items-center justify-center text-emerald-600"><i class="fas fa-check text-xl"></i></div>
                         <span class="bg-emerald-50 text-emerald-600 text-[10px] font-black px-3 py-1 rounded uppercase tracking-widest">Verified</span>
@@ -143,7 +148,7 @@
                     </div>
                 </div>
                 
-                <div class="absolute top-64 right-64 bg-slate-900 p-8 rounded-[2.5rem] shadow-2xl molecule-float-delay w-72 z-10">
+                <div class="tilt-card absolute top-64 right-64 bg-slate-900 p-8 rounded-[2.5rem] shadow-2xl molecule-float-delay w-72 z-10">
                     <div class="flex justify-between items-start mb-6"><div class="w-14 h-14 bg-white/10 rounded-2xl flex items-center justify-center text-white"><i class="fas fa-box text-xl"></i></div></div>
                     <h3 class="font-black text-2xl text-white italic">Priority</h3>
                     <p class="text-xs text-slate-400 mt-2 leading-relaxed font-medium">Cold-chain insulated packaging for molecular stability.</p>
@@ -173,99 +178,24 @@
                 <a href="catalog.html" class="hidden md:block text-blue-600 font-bold text-xs uppercase tracking-widest hover:text-slate-900 transition-colors">View All Reagents <i class="fas fa-arrow-right ml-2"></i></a>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <a href="catalog.html" class="feature-card bg-white p-10 rounded-[2.5rem] border border-slate-100 relative overflow-hidden group">
+                <a href="catalog.html" class="tilt-card bg-white p-10 rounded-[2.5rem] border border-slate-100 relative overflow-hidden group">
                     <div class="absolute -right-10 -top-10 w-40 h-40 bg-blue-50 rounded-full group-hover:scale-150 transition-transform duration-700"></div>
                     <i class="fas fa-burn text-4xl text-blue-600 mb-6 relative z-10"></i>
                     <h3 class="text-2xl font-black text-slate-900 italic mb-2 relative z-10">Metabolic</h3>
                     <p class="text-slate-500 text-sm leading-relaxed mb-6 relative z-10">GLP-1 agonists and lipolytic agents for obesity and diabetes research.</p>
                 </a>
-                <a href="catalog.html" class="feature-card bg-white p-10 rounded-[2.5rem] border border-slate-100 relative overflow-hidden group">
+                <a href="catalog.html" class="tilt-card bg-white p-10 rounded-[2.5rem] border border-slate-100 relative overflow-hidden group">
                     <div class="absolute -right-10 -top-10 w-40 h-40 bg-emerald-50 rounded-full group-hover:scale-150 transition-transform duration-700"></div>
                     <i class="fas fa-dna text-4xl text-emerald-600 mb-6 relative z-10"></i>
                     <h3 class="text-2xl font-black text-slate-900 italic mb-2 relative z-10">Regenerative</h3>
                     <p class="text-slate-500 text-sm leading-relaxed mb-6 relative z-10">Tissue repair and angiogenic peptides for musculoskeletal recovery.</p>
                 </a>
-                <a href="catalog.html" class="feature-card bg-white p-10 rounded-[2.5rem] border border-slate-100 relative overflow-hidden group">
+                <a href="catalog.html" class="tilt-card bg-white p-10 rounded-[2.5rem] border border-slate-100 relative overflow-hidden group">
                     <div class="absolute -right-10 -top-10 w-40 h-40 bg-purple-50 rounded-full group-hover:scale-150 transition-transform duration-700"></div>
                     <i class="fas fa-brain text-4xl text-purple-600 mb-6 relative z-10"></i>
                     <h3 class="text-2xl font-black text-slate-900 italic mb-2 relative z-10">Cognitive</h3>
                     <p class="text-slate-500 text-sm leading-relaxed mb-6 relative z-10">Neurological agents for BDNF enhancement and anxiolytic studies.</p>
                 </a>
-            </div>
-        </div>
-    </section>
-
-    <section class="py-24 bg-slate-50 border-y border-slate-100 overflow-hidden">
-        <div class="max-w-7xl mx-auto px-6 md:px-12">
-            <div class="text-center mb-20">
-                <h2 class="text-[10px] font-black uppercase tracking-[0.4em] text-blue-600 mb-4">Our Methodology</h2>
-                <h3 class="text-4xl md:text-5xl font-black text-slate-900 italic uppercase tracking-tighter">The Path to 99% Purity</h3>
-                <p class="text-slate-500 mt-6 max-w-xl mx-auto text-sm font-medium italic leading-relaxed">
-                    From molecular design to cold-chain dispatch—transparency at every stage of the synthesis.
-                </p>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 md:gap-0 relative">
-                <div class="relative p-8 md:p-12 group">
-                    <div class="hidden md:block absolute top-1/2 right-0 w-full h-[1px] bg-slate-200 z-0"></div>
-                    <div class="relative z-10 text-center md:text-left">
-                        <div class="w-12 h-12 bg-slate-900 text-white rounded-xl flex items-center justify-center font-black italic mb-6 mx-auto md:mx-0 group-hover:bg-blue-600 transition-all duration-500 shadow-xl">01</div>
-                        <h4 class="text-lg font-black uppercase italic tracking-tighter mb-3">Sequence Synthesis</h4>
-                        <p class="text-[11px] text-slate-400 leading-relaxed uppercase font-bold tracking-widest mb-4">Fmoc Solid-Phase</p>
-                        <p class="text-xs text-slate-500 leading-relaxed">Precision-engineered amino acid assembly ensuring zero-deletion sequences.</p>
-                    </div>
-                </div>
-                <div class="relative p-8 md:p-12 group">
-                    <div class="hidden md:block absolute top-1/2 right-0 w-full h-[1px] bg-slate-200 z-0"></div>
-                    <div class="relative z-10 text-center md:text-left">
-                        <div class="w-12 h-12 bg-slate-900 text-white rounded-xl flex items-center justify-center font-black italic mb-6 mx-auto md:mx-0 group-hover:bg-blue-600 transition-all duration-500 shadow-xl">02</div>
-                        <h4 class="text-lg font-black uppercase italic tracking-tighter mb-3">Lyophilization</h4>
-                        <p class="text-[11px] text-slate-400 leading-relaxed uppercase font-bold tracking-widest mb-4">Vacuum-Drying</p>
-                        <p class="text-xs text-slate-500 leading-relaxed">Water removal at -50°C to lock the molecular structure for long-term stability.</p>
-                    </div>
-                </div>
-                <div class="relative p-8 md:p-12 group">
-                    <div class="hidden md:block absolute top-1/2 right-0 w-full h-[1px] bg-slate-200 z-0"></div>
-                    <div class="relative z-10 text-center md:text-left">
-                        <div class="w-12 h-12 bg-slate-900 text-white rounded-xl flex items-center justify-center font-black italic mb-6 mx-auto md:mx-0 group-hover:bg-blue-600 transition-all duration-500 shadow-xl">03</div>
-                        <h4 class="text-lg font-black uppercase italic tracking-tighter mb-3">Analytical QC</h4>
-                        <p class="text-[11px] text-slate-400 leading-relaxed uppercase font-bold tracking-widest mb-4">HPLC & MS Analysis</p>
-                        <p class="text-xs text-slate-500 leading-relaxed">Rigorous third-party testing to verify exact molecular weight and purity.</p>
-                    </div>
-                </div>
-                <div class="relative p-8 md:p-12 group">
-                    <div class="relative z-10 text-center md:text-left">
-                        <div class="w-12 h-12 bg-slate-900 text-white rounded-xl flex items-center justify-center font-black italic mb-6 mx-auto md:mx-0 group-hover:bg-emerald-500 transition-all duration-500 shadow-xl">04</div>
-                        <h4 class="text-lg font-black uppercase italic tracking-tighter mb-3">Fulfillment</h4>
-                        <p class="text-[11px] text-slate-400 leading-relaxed uppercase font-bold tracking-widest mb-4">Cold-Chain Prep</p>
-                        <p class="text-xs text-slate-500 leading-relaxed">Insulated packaging and express dispatch to maintain bio-activity.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="max-w-7xl mx-auto px-6 py-24">
-        <div class="text-center mb-16">
-            <h2 class="text-[10px] font-black uppercase tracking-[0.4em] text-blue-600 mb-4">Quality & Ethics</h2>
-            <h3 class="text-4xl md:text-5xl font-black text-slate-900 italic uppercase tracking-tighter mb-6">Institutional Commitment</h3>
-            <p class="text-slate-500 max-w-2xl mx-auto text-sm md:text-base leading-relaxed font-medium">Amintex Labs operates at the intersection of rigorous analytical chemistry and logistical excellence.</p>
-        </div>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div class="bg-white border border-slate-200 rounded-[2.5rem] p-10 hover:shadow-2xl transition-all group">
-                <div class="w-14 h-14 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center mb-8 text-2xl group-hover:bg-blue-600 group-hover:text-white transition-all"><i class="fas fa-shield-vial"></i></div>
-                <h4 class="text-xl font-black italic uppercase tracking-tighter mb-4">Verified Purity</h4>
-                <p class="text-xs text-slate-500 leading-relaxed mb-6">Every lot is sequestered and tested by independent labs via HPLC and MS to confirm purity exceeds 99%.</p>
-                <a href="batch-verification.html" class="text-[10px] font-black uppercase tracking-widest text-blue-600 hover:text-slate-900 transition-colors">View Lab Reports <i class="fas fa-arrow-right ml-2"></i></a>
-            </div>
-            <div class="bg-white border border-slate-200 rounded-[2.5rem] p-10 hover:shadow-2xl transition-all group">
-                <div class="w-14 h-14 bg-emerald-50 text-emerald-600 rounded-2xl flex items-center justify-center mb-8 text-2xl group-hover:bg-emerald-600 group-hover:text-white transition-all"><i class="fas fa-snowflake"></i></div>
-                <h4 class="text-xl font-black italic uppercase tracking-tighter mb-4">Cold-Chain Protocol</h4>
-                <p class="text-xs text-slate-500 leading-relaxed mb-6">We utilize climate-controlled storage and insulated shipping to prevent thermal degradation of molecular integrity.</p>
-            </div>
-            <div class="bg-white border border-slate-200 rounded-[2.5rem] p-10 hover:shadow-2xl transition-all group">
-                <div class="w-14 h-14 bg-slate-900 text-white rounded-2xl flex items-center justify-center mb-8 text-2xl group-hover:bg-blue-600 transition-all"><i class="fas fa-microscope"></i></div>
-                <h4 class="text-xl font-black italic uppercase tracking-tighter mb-4">Ethical Compliance</h4>
-                <p class="text-xs text-slate-500 leading-relaxed mb-6">Amintex Labs is strictly dedicated to in-vitro laboratory research. We maintain full regulatory compliance.</p>
             </div>
         </div>
     </section>
@@ -308,6 +238,8 @@
     </footer>
 
     <script src="inventory.js"></script>
+    
+    <script src="godmode.js"></script>
 
     <script>
         // 1. LIVE TICKER LOGIC
