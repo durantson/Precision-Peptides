@@ -24,6 +24,7 @@
 <body class="bg-slate-900 text-white min-h-screen flex">
 
     <script>
+        // Security Check
         if (localStorage.getItem('userRole') !== 'admin') { window.location.href = 'account.html'; }
     </script>
 
@@ -43,9 +44,13 @@
             <button onclick="switchView('manifests')" id="nav-manifests" class="nav-btn w-full text-left py-4 px-4 rounded-xl hover:bg-slate-800 transition-all flex items-center gap-3">
                 <i class="fas fa-file-invoice w-4"></i> Orders
             </button>
+
+            <button onclick="exportDatabase()" class="w-full bg-emerald-600 text-white py-4 px-4 rounded-xl font-black uppercase tracking-widest text-[10px] hover:bg-emerald-500 transition-all flex items-center justify-center gap-2 mt-8 shadow-lg shadow-emerald-900/50">
+                <i class="fas fa-microchip"></i> Export Brain
+            </button>
         </nav>
 
-        <button onclick="logout()" class="text-xs font-bold text-red-500 uppercase tracking-widest flex items-center gap-2 mb-4">
+        <button onclick="logout()" class="text-xs font-bold text-red-500 uppercase tracking-widest flex items-center gap-2 mb-4 hover:text-red-400 transition-colors">
             <i class="fas fa-power-off"></i> Secure Logout
         </button>
     </aside>
@@ -158,7 +163,7 @@
                         </thead>
                         <tbody class="divide-y divide-slate-700 bg-slate-800/30">
                             <tr class="hover:bg-slate-700/50">
-                                <td class="px-6 py-4 font-mono text-blue-400">#REQ-2026</td>
+                                <td class="px-6 py-4 font-mono text-blue-400">#AM-2026</td>
                                 <td class="px-6 py-4 font-bold">LabCorp Procurement</td>
                                 <td class="px-6 py-4 text-slate-400">Tirzepatide (50x)</td>
                                 <td class="px-6 py-4 mono">$3,450.00</td>
@@ -168,7 +173,7 @@
                                 </td>
                             </tr>
                             <tr class="hover:bg-slate-700/50">
-                                <td class="px-6 py-4 font-mono text-blue-400">#REQ-2025</td>
+                                <td class="px-6 py-4 font-mono text-blue-400">#AM-2025</td>
                                 <td class="px-6 py-4 font-bold">Dr. Sarah Connor</td>
                                 <td class="px-6 py-4 text-slate-400">BPC-157 (10x), TB-500 (5x)</td>
                                 <td class="px-6 py-4 mono">$725.00</td>
@@ -190,15 +195,11 @@
     <script>
         // --- NAVIGATION LOGIC ---
         function switchView(viewName) {
-            // Hide all views
             document.querySelectorAll('.view-section').forEach(el => el.classList.add('hidden'));
             document.querySelectorAll('.nav-btn').forEach(el => el.classList.remove('active'));
-
-            // Show selected view
             document.getElementById('view-' + viewName).classList.remove('hidden');
             document.getElementById('nav-' + viewName).classList.add('active');
 
-            // Update Header Title
             const titles = {
                 'inventory': 'Inventory Control',
                 'clients': 'Client Roster',
@@ -213,7 +214,7 @@
             const search = document.getElementById('adminSearch').value.toLowerCase();
             tbody.innerHTML = '';
 
-            const filtered = masterInventory.filter(p => p.name.toLowerCase().includes(search) || p.code.toLowerCase().includes(search));
+            const filtered = masterInventory.filter(p => p.name.toLowerCase().includes(search) || p.id.toLowerCase().includes(search));
 
             filtered.forEach(item => {
                 const visibilitySelect = `
@@ -245,15 +246,35 @@
             });
         }
 
+        // --- UPDATE FUNCTIONS ---
         function updateStock(id, value) {
             const item = masterInventory.find(i => i.id === id);
-            item.inStock = (value === 'true');
-            renderInventoryTable(); // Re-render to update color
+            if (item) {
+                item.inStock = (value === 'true');
+                renderInventoryTable(); // Re-render to update color immediately
+            }
         }
 
         function updateVisibility(id, value) {
             const item = masterInventory.find(i => i.id === id);
-            item.showInCatalog = (value === 'true');
+            if (item) item.showInCatalog = (value === 'true');
+        }
+
+        // --- AUTOMATION ENGINE: EXPORT DATABASE ---
+        function exportDatabase() {
+            // 1. Serialize the current state of the brain
+            const dataStr = "const masterInventory = " + JSON.stringify(masterInventory, null, 4) + ";";
+            
+            // 2. Create blob
+            const dataUri = 'data:application/javascript;charset=utf-8,'+ encodeURIComponent(dataStr);
+            
+            // 3. Trigger download
+            const linkElement = document.createElement('a');
+            linkElement.setAttribute('href', dataUri);
+            linkElement.setAttribute('download', 'inventory.js');
+            linkElement.click();
+            
+            alert("New Brain Generated! 🧠\n\n1. Check your downloads folder for 'inventory.js'\n2. Replace the file in your website folder.\n3. Your stock changes are now live.");
         }
 
         function logout() {
