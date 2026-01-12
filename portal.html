@@ -17,6 +17,8 @@
         .study-row:hover { background-color: #f8fafc; }
         .sidebar-item.active { background-color: #f1f5f9; color: #2563eb; border-right: 4px solid #2563eb; }
         .no-scrollbar::-webkit-scrollbar { display: none; }
+        /* Base transition for fallback */
+        .tilt-card { transition: transform 0.1s ease-out; }
         * { -webkit-tap-highlight-color: transparent; }
     </style>
 </head>
@@ -34,6 +36,11 @@
             </div>
             <span class="font-bold text-lg tracking-tighter uppercase italic">Amintex<span class="text-blue-600">Labs</span></span>
         </a>
+        
+        <div class="hidden lg:flex items-center gap-2 mr-6 text-[10px] font-bold text-slate-400 border border-slate-200 px-2 py-1 rounded bg-slate-50 cursor-pointer hover:border-blue-400 transition-colors" onclick="togglePalette()">
+            <i class="fas fa-search"></i> <span>CTRL + K</span>
+        </div>
+
         <div class="flex items-center gap-4">
             <span class="hidden md:block text-[9px] font-black uppercase tracking-widest text-emerald-500 bg-emerald-50 px-3 py-1 rounded-full">Secure Session Active</span>
             <button onclick="logout()" class="text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-red-500 transition-colors">Sign Out</button>
@@ -61,7 +68,7 @@
                 </nav>
             </div>
 
-            <div class="bg-slate-900 rounded-2xl p-4 text-white">
+            <div class="tilt-card bg-slate-900 rounded-2xl p-4 text-white">
                 <p class="text-[9px] font-black uppercase tracking-[0.2em] text-blue-400 mb-2">Support Terminal</p>
                 <p class="text-[11px] leading-relaxed text-slate-300 mb-4">Direct access to lab staff for technical inquiries.</p>
                 <a href="support.html" class="block w-full text-center bg-white text-slate-900 py-2 rounded-lg text-[9px] font-black uppercase tracking-widest hover:bg-blue-600 hover:text-white transition-all">Open Ticket</a>
@@ -77,12 +84,12 @@
                 </header>
                 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div class="bg-white border border-slate-200 rounded-3xl p-6 shadow-sm">
+                    <div class="tilt-card bg-white border border-slate-200 rounded-3xl p-6 shadow-sm">
                         <div class="w-10 h-10 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center mb-4"><i class="fas fa-snowflake"></i></div>
                         <h4 class="font-black uppercase italic tracking-tight mb-2">Cold Chain Integrity</h4>
                         <p class="text-xs text-slate-500 leading-relaxed">Lyophilized peptides should be stored at -20°C for long-term stability. Avoid refrigerator door storage due to heat spikes.</p>
                     </div>
-                    <div class="bg-white border border-slate-200 rounded-3xl p-6 shadow-sm">
+                    <div class="tilt-card bg-white border border-slate-200 rounded-3xl p-6 shadow-sm">
                         <div class="w-10 h-10 bg-emerald-50 text-emerald-600 rounded-full flex items-center justify-center mb-4"><i class="fas fa-tint"></i></div>
                         <h4 class="font-black uppercase italic tracking-tight mb-2">Reconstitution Best Practices</h4>
                         <p class="text-xs text-slate-500 leading-relaxed">Always use Bacteriostatic Water (0.9% Benzyl Alcohol) for multi-use research vials to prevent microbial growth.</p>
@@ -96,7 +103,7 @@
                     <p class="text-slate-500 text-sm italic">Verified research papers and trials from PubMed and NIH Database.</p>
                 </header>
 
-                <div class="bg-white border border-slate-200 rounded-3xl overflow-hidden shadow-sm">
+                <div class="tilt-card bg-white border border-slate-200 rounded-3xl overflow-hidden shadow-sm">
                     <div class="overflow-x-auto">
                         <table class="w-full text-left border-collapse">
                             <thead class="bg-slate-50 border-b border-slate-200">
@@ -119,7 +126,7 @@
                     <p class="text-slate-500 text-sm italic">Calculate precise concentrations for research accuracy.</p>
                 </header>
 
-                <div class="max-w-md bg-slate-900 rounded-[2.5rem] p-8 text-white shadow-2xl">
+                <div class="tilt-card max-w-md bg-slate-900 rounded-[2.5rem] p-8 text-white shadow-2xl">
                     <div class="space-y-6">
                         <div>
                             <label class="text-[9px] font-black uppercase tracking-widest text-blue-400 block mb-2">Vial Total (mg)</label>
@@ -142,7 +149,7 @@
     </div>
 
     <div id="disclaimerModal" class="fixed inset-0 z-[100] flex items-center justify-center bg-slate-900/90 backdrop-blur-sm p-4">
-        <div class="bg-white max-w-lg w-full rounded-[2.5rem] p-10 md:p-12 shadow-2xl text-center">
+        <div class="tilt-card bg-white max-w-lg w-full rounded-[2.5rem] p-10 md:p-12 shadow-2xl text-center">
             <div class="w-16 h-16 bg-amber-50 text-amber-500 rounded-full flex items-center justify-center mx-auto mb-6">
                 <i class="fas fa-exclamation-triangle text-2xl"></i>
             </div>
@@ -156,6 +163,8 @@
             </button>
         </div>
     </div>
+
+    <script src="godmode.js"></script>
 
     <script>
         function logout() {
@@ -203,6 +212,9 @@
             document.querySelectorAll('.module-section').forEach(sec => sec.classList.add('hidden'));
             document.getElementById('module-' + id).classList.remove('hidden');
             if(id === 'studies') populateStudies();
+            
+            // Re-init tilt when switching modules to ensure dimensions are correct
+            if(typeof initTilt === 'function') setTimeout(initTilt, 100);
         }
 
         function runCalc() {
