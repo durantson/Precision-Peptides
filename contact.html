@@ -27,6 +27,8 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         .input-focus:focus { border-color: #2563eb; ring: 4px; ring-color: rgba(37, 99, 235, 0.1); }
+        /* Base transition for fallback */
+        .tilt-card { transition: transform 0.1s ease-out; }
         * { -webkit-tap-highlight-color: transparent; }
     </style>
 </head>
@@ -41,14 +43,19 @@
                 Amintex<span class="text-blue-600">Labs</span>
             </span>
         </a>
+        
+        <div class="hidden lg:flex items-center gap-2 mr-6 text-[10px] font-bold text-slate-400 border border-slate-200 px-2 py-1 rounded bg-slate-50 cursor-pointer hover:border-blue-400 transition-colors" onclick="togglePalette()">
+            <i class="fas fa-search"></i> <span>CTRL + K</span>
+        </div>
+
         <div class="flex gap-6">
             <a href="catalog.html" class="text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-blue-600 transition-colors">Catalog</a>
-            <a href="login.html" class="text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-blue-600 transition-colors">Portal</a>
+            <a href="account.html" class="text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-blue-600 transition-colors">Portal</a>
         </div>
     </nav>
 
     <main class="flex-1 flex items-center justify-center p-4 md:p-6 py-12">
-        <div class="max-w-xl w-full bg-white rounded-[2.5rem] md:rounded-[3rem] shadow-2xl shadow-slate-200 border border-slate-100 overflow-hidden">
+        <div class="tilt-card max-w-xl w-full bg-white rounded-[2.5rem] md:rounded-[3rem] shadow-2xl shadow-slate-200 border border-slate-100 overflow-hidden">
             
             <div class="p-8 md:p-12 text-center border-b border-slate-50">
                 <h2 class="text-[10px] font-black uppercase tracking-[0.4em] text-blue-600 mb-4">Technical Inquiry</h2>
@@ -61,9 +68,7 @@
             <form action="https://formsubmit.co/precisionpeptidelabs@gmail.com" method="POST" class="p-8 md:p-12 space-y-6">
                 
                 <input type="hidden" name="_next" value="https://durantson.github.io/Precision-Peptides/success.html">
-                
-                <input type="hidden" name="_autorespond" value="ACCESS GRANTED: Your Amintex Labs access code is LAB2026. You may access the secure terminal at: https://durantson.github.io/Precision-Peptides/login.html">
-                
+                <input type="hidden" name="_autorespond" value="ACCESS GRANTED: Your Amintex Labs access code is LAB2026. You may access the secure terminal at: https://durantson.github.io/Precision-Peptides/account.html">
                 <input type="hidden" name="_captcha" value="false">
                 <input type="hidden" name="_subject" value="New Amintex Labs Research Inquiry">
 
@@ -128,7 +133,7 @@
                 <div>
                     <h4 class="font-bold text-slate-900 uppercase tracking-widest text-xs mb-6">Resources</h4>
                     <ul class="space-y-4 text-xs font-medium text-slate-500">
-                        <li><a href="login.html" class="hover:text-blue-600 transition-colors">Researcher Portal</a></li>
+                        <li><a href="account.html" class="hover:text-blue-600 transition-colors">Client Hub</a></li>
                         <li><a href="batch-verification.html" class="hover:text-blue-600 transition-colors">Batch Verification</a></li>
                         <li><a href="support.html" class="hover:text-blue-600 transition-colors">Help Center</a></li>
                     </ul>
@@ -148,6 +153,8 @@
             </div>
         </div>
     </footer>
+
+    <script src="godmode.js"></script>
 
 </body>
 </html>
