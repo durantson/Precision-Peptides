@@ -3,76 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Submission Successful | Amintex Labs</title>
-    
-    <meta name="description" content="Research inquiry transmission successful. Amintex Labs authorized partner credentials generated.">
-    <meta name="theme-color" content="#10b981"> 
-    <meta name="robots" content="noindex"> 
-    
+    <title>Requisition Confirmed | Amintex Labs</title>
+    <meta name="theme-color" content="#2563eb"> 
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚛️</text></svg>">
-
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <style>
-        .success-check { animation: scaleIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
-        @keyframes scaleIn { from { transform: scale(0); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-        /* Base transition for fallback */
-        .tilt-card { transition: transform 0.1s ease-out; }
-        * { -webkit-tap-highlight-color: transparent; }
-    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=JetBrains+Mono&display=swap" rel="stylesheet">
+    <style>body { font-family: 'Inter', sans-serif; background-color: #f8fafc; } .tilt-card { transition: transform 0.1s ease-out; }</style>
 </head>
-<body class="bg-slate-50 font-sans antialiased text-slate-900 min-h-screen flex flex-col items-center justify-center p-6">
+<body class="min-h-screen flex items-center justify-center p-6 text-slate-900">
 
-    <div class="tilt-card max-w-xl w-full text-center">
-        <div class="w-24 h-24 bg-emerald-100 text-emerald-600 rounded-[2rem] flex items-center justify-center mx-auto mb-10 success-check shadow-xl shadow-emerald-500/10">
-            <i class="fas fa-check-double text-4xl"></i>
+    <div class="max-w-md w-full bg-white p-10 rounded-[2.5rem] border border-slate-200 shadow-2xl text-center tilt-card">
+        
+        <div class="w-20 h-20 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-8 text-emerald-600 animate-bounce">
+            <i class="fas fa-check text-3xl"></i>
         </div>
 
-        <h2 class="text-[10px] font-black uppercase tracking-[0.4em] text-blue-600 mb-4">Transmission Received</h2>
-        <h1 class="text-4xl md:text-5xl font-black text-slate-900 italic uppercase tracking-tighter mb-8 leading-tight">
-            Manifest Logged & <br> Authorized
-        </h1>
-
-        <div class="bg-white border border-slate-200 rounded-[2.5rem] p-8 md:p-12 mb-10 shadow-2xl shadow-slate-200/50">
-            <p class="text-slate-500 text-sm leading-relaxed mb-8">
-                Your research inquiry has been successfully transmitted to the Amintex Labs database. As an authorized partner, your credentials have been generated.
-            </p>
-            
-            <div class="space-y-6">
-                <div class="flex items-start gap-4 text-left">
-                    <div class="w-10 h-10 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center shrink-0">
-                        <i class="fas fa-envelope-open-text text-sm"></i>
-                    </div>
-                    <div>
-                        <h4 class="text-xs font-black uppercase tracking-widest text-slate-900 mb-1">Check Your Email</h4>
-                        <p class="text-[11px] text-slate-400 leading-relaxed">A secure message containing your order confirmation and tracking details is being dispatched to your institutional address.</p>
-                    </div>
-                </div>
-
-                <div class="flex items-start gap-4 text-left">
-                    <div class="w-10 h-10 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center shrink-0">
-                        <i class="fas fa-lock text-sm"></i>
-                    </div>
-                    <div>
-                        <h4 class="text-xs font-black uppercase tracking-widest text-slate-900 mb-1">Enter Terminal</h4>
-                        <p class="text-[11px] text-slate-400 leading-relaxed">Utilize the Client Hub to track real-time shipment telemetry and access the 3D molecular database.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="flex flex-col sm:flex-row gap-4 justify-center">
-            <a href="index.html" class="px-8 py-4 bg-slate-900 text-white rounded-xl font-black uppercase tracking-widest text-[10px] hover:bg-blue-600 transition-all shadow-lg hover:shadow-blue-600/20">
-                Return Home
-            </a>
-            <a href="account.html" class="px-8 py-4 bg-white border border-slate-200 text-slate-900 rounded-xl font-black uppercase tracking-widest text-[10px] hover:border-blue-600 hover:text-blue-600 transition-all">
-                Access Portal
-            </a>
-        </div>
-
-        <p class="mt-12 text-[10px] font-bold text-slate-300 uppercase tracking-widest">
-            Amintex Labs Support Terminal &copy; 2026
+        <h1 class="text-3xl font-black italic text-slate-900 mb-4 uppercase tracking-tight">Requisition Secured</h1>
+        <p class="text-slate-500 mb-8 text-sm leading-relaxed">
+            Your manifest has been secured in our queue. A formal invoice (PDF) has been sent to your institutional email.
         </p>
+
+        <div class="bg-slate-50 rounded-2xl p-6 mb-8 border border-slate-200 text-left">
+            <div class="flex justify-between items-center mb-2">
+                <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Order Reference</p>
+                <div class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></div>
+            </div>
+            <p class="text-2xl font-mono font-bold text-blue-600 tracking-wider">#AM-2026-X92</p>
+        </div>
+
+        <div class="flex gap-4">
+            <a href="dashboard.html" class="flex-1 py-4 rounded-xl border border-slate-200 text-slate-600 font-bold text-xs uppercase hover:bg-slate-50 transition-colors">
+                Dashboard
+            </a>
+            <a href="catalog.html" class="flex-1 py-4 rounded-xl bg-slate-900 text-white font-bold text-xs uppercase hover:bg-blue-600 transition-colors shadow-lg">
+                New Order
+            </a>
+        </div>
+
     </div>
 
     <script src="godmode.js"></script>
