@@ -18,7 +18,6 @@
     <style>
         body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
         .input-field:focus { box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1); }
-        /* Clean transitions only for button clicks/hovers */
         .btn-primary { transition: all 0.2s ease; }
         .btn-primary:active { transform: scale(0.98); }
         * { -webkit-tap-highlight-color: transparent; }
@@ -67,11 +66,22 @@
             </button>
         </form>
 
-        <div class="mt-8 pt-8 border-t border-slate-100 text-center">
-            <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-4">New Institution?</p>
-            <a href="support.html" class="inline-block text-xs font-bold text-blue-600 border border-blue-100 bg-blue-50 px-6 py-2 rounded-lg hover:bg-blue-100 transition-colors uppercase tracking-widest">
-                Request Account
-            </a>
+        <div class="mt-8 pt-8 border-t border-slate-100 grid grid-cols-2 gap-4">
+            
+            <div class="text-center">
+                <p class="text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-2">Full Access</p>
+                <a href="register.html" class="block w-full bg-blue-50 border border-blue-100 text-blue-600 py-3 rounded-xl font-bold uppercase tracking-widest text-[10px] hover:bg-blue-100 transition-colors">
+                    Create Account
+                </a>
+            </div>
+
+            <div class="text-center">
+                <p class="text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-2">Tools Only</p>
+                <a href="hub-request.html" class="block w-full bg-slate-50 border border-slate-200 text-slate-500 py-3 rounded-xl font-bold uppercase tracking-widest text-[10px] hover:bg-slate-100 transition-colors">
+                    Request Access
+                </a>
+            </div>
+
         </div>
 
     </div>
@@ -81,15 +91,20 @@
             e.preventDefault();
             const pass = document.getElementById('password').value;
 
-            // Simple Logic for Demo
             if (pass === 'admin') {
+                // FULL ACCOUNT ACCESS
                 localStorage.setItem('userRole', 'admin');
                 localStorage.setItem('portalAuthorized', 'true');
-                window.location.href = 'admin.html';
-            } else {
-                localStorage.setItem('userRole', 'researcher');
+                window.location.href = 'dashboard.html';
+            } 
+            else if (pass === 'guest') {
+                // LIMITED HUB ACCESS (Tools Only)
+                localStorage.setItem('userRole', 'guest');
                 localStorage.setItem('portalAuthorized', 'true');
-                window.location.href = 'dashboard.html'; // Regular user dashboard
+                window.location.href = 'molecular-structures.html'; // Directs to tools, not dashboard
+            } 
+            else {
+                alert("Invalid Access Key");
             }
         }
     </script>
