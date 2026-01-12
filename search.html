@@ -3,10 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Database Query | Amintex Labs</title>
+    <title>Smart Database Query | Amintex Labs</title>
     
-    <meta name="description" content="Search the Amintex Labs inventory database. Lookup reagents by CAS number, peptide name, or category.">
-    <meta name="keywords" content="peptide search, CAS lookup, chemical inventory, reagent database, buy peptides online">
+    <meta name="description" content="Search the Amintex Labs inventory database with typo-tolerance. Lookup reagents by CAS number, peptide name, or category.">
     <meta name="author" content="Amintex Labs">
     <meta name="theme-color" content="#2563eb"> 
 
@@ -55,6 +54,7 @@
             <div class="flex justify-center gap-6 mt-6 text-[10px] font-bold text-slate-400 uppercase tracking-widest">
                 <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> Index: Active</span>
                 <span><i class="fas fa-server mr-1"></i> Node: US-East</span>
+                <span class="text-blue-500"><i class="fas fa-magic mr-1"></i> Fuzzy Search: ON</span>
             </div>
         </div>
 
@@ -113,7 +113,7 @@
                 document.getElementById('queryInput').value = query;
                 runSearch();
             } else {
-                // Show all items initially (or maybe just top 4)
+                // Show all items initially
                 renderResults(masterInventory);
             }
         };
@@ -122,9 +122,46 @@
             if (e.key === 'Enter') runSearch();
         }
 
-        // Search Logic using masterInventory from inventory.js
+        // --- FUZZY SEARCH ALGORITHM (Levenshtein Distance) ---
+        // Calculates how many "edits" (insert, delete, sub) it takes to turn word A into word B
+        function getEditDistance(a, b) {
+            if (a.length === 0) return b.length; 
+            if (b.length === 0) return a.length; 
+
+            var matrix = [];
+
+            // increment along the first column of each row
+            var i;
+            for (i = 0; i <= b.length; i++) {
+                matrix[i] = [i];
+            }
+
+            // increment each column in the first row
+            var j;
+            for (j = 0; j <= a.length; j++) {
+                matrix[0][j] = j;
+            }
+
+            // Fill in the rest of the matrix
+            for (i = 1; i <= b.length; i++) {
+                for (j = 1; j <= a.length; j++) {
+                    if (b.charAt(i - 1) == a.charAt(j - 1)) {
+                        matrix[i][j] = matrix[i - 1][j - 1];
+                    } else {
+                        matrix[i][j] = Math.min(matrix[i - 1][j - 1] + 1, // substitution
+                                       Math.min(matrix[i][j - 1] + 1, // insertion
+                                       matrix[i - 1][j] + 1)); // deletion
+                    }
+                }
+            }
+
+            return matrix[b.length][a.length];
+        }
+
+        // --- SMART SEARCH ENGINE ---
         function runSearch() {
-            const query = document.getElementById('queryInput').value.toLowerCase().trim();
+            const rawQuery = document.getElementById('queryInput').value.trim();
+            const query = rawQuery.toLowerCase();
             const loader = document.getElementById('loader');
             const resultsArea = document.getElementById('resultsArea');
             
@@ -132,16 +169,34 @@
             loader.classList.remove('hidden');
 
             setTimeout(() => {
-                const filtered = masterInventory.filter(p => 
-                    p.name.toLowerCase().includes(query) || 
-                    p.category.toLowerCase().includes(query) ||
-                    p.id.toLowerCase().includes(query) ||
-                    (p.cas && p.cas.includes(query)) // Search by CAS if it exists
-                );
+                const filtered = masterInventory.filter(p => {
+                    const name = p.name.toLowerCase();
+                    const cat = p.category.toLowerCase();
+                    const code = p.id.toLowerCase();
+                    const cas = p.cas ? p.cas.toLowerCase() : "";
+
+                    // 1. EXACT MATCH (Highest Priority)
+                    if (name.includes(query) || cat.includes(query) || code.includes(query) || cas.includes(query)) {
+                        return true;
+                    }
+
+                    // 2. FUZZY MATCH (Typo Tolerance)
+                    // We only run this if the search query is at least 3 chars long to prevent false positives
+                    if (query.length > 2) {
+                        // Allow 1 typo for short words, 2-3 for longer words
+                        const threshold = query.length > 5 ? 3 : 1; 
+                        const distance = getEditDistance(name, query);
+                        
+                        if (distance <= threshold) return true;
+                    }
+
+                    return false;
+                });
+
                 renderResults(filtered);
                 loader.classList.add('hidden');
                 resultsArea.classList.remove('hidden');
-            }, 400); // Simulated delay
+            }, 300); 
         }
 
         // Render Results
