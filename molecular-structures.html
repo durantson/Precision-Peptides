@@ -27,6 +27,8 @@
         @keyframes pulse-blue { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
         .loading-pulse { animation: pulse-blue 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
         .mode-btn.active { background-color: #2563eb; color: white; border-color: #2563eb; }
+        /* Base transition for fallback */
+        .tilt-card { transition: transform 0.1s ease-out; }
         * { -webkit-tap-highlight-color: transparent; }
     </style>
 </head>
@@ -41,6 +43,11 @@
             <div class="w-8 h-8 bg-blue-600 rounded flex items-center justify-center text-white"><i class="fas fa-atom text-xs"></i></div>
             <span class="font-bold text-lg tracking-tighter uppercase italic">Amintex<span class="text-blue-600">Labs</span></span>
         </a>
+        
+        <div class="hidden lg:flex items-center gap-2 mr-6 text-[10px] font-bold text-slate-400 border border-slate-200 px-2 py-1 rounded bg-slate-50 cursor-pointer hover:border-blue-400 transition-colors" onclick="togglePalette()">
+            <i class="fas fa-search"></i> <span>CTRL + K</span>
+        </div>
+
         <div class="flex gap-4">
             <button onclick="switchMode('discovery')" id="btn-discovery" class="mode-btn active px-4 py-2 rounded-xl border border-slate-200 text-[10px] font-black uppercase tracking-widest transition-all">Discovery</button>
             <button onclick="switchMode('comparison')" id="btn-comparison" class="mode-btn px-4 py-2 rounded-xl border border-slate-200 text-[10px] font-black uppercase tracking-widest transition-all">Comparison Lab</button>
@@ -94,7 +101,7 @@
         <div id="view-comparison" class="hidden">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div class="space-y-4">
-                    <div id="compare-view-A" class="mol-container shadow-2xl">
+                    <div id="compare-view-A" class="mol-container shadow-2xl tilt-card">
                         <div class="absolute inset-0 flex items-center justify-center text-slate-700 font-bold uppercase text-[9px] tracking-widest">Awaiting Input A</div>
                     </div>
                     <div id="data-A" class="hidden p-6 bg-white border border-slate-200 rounded-3xl">
@@ -103,7 +110,7 @@
                     </div>
                 </div>
                 <div class="space-y-4">
-                    <div id="compare-view-B" class="mol-container shadow-2xl">
+                    <div id="compare-view-B" class="mol-container shadow-2xl tilt-card">
                         <div class="absolute inset-0 flex items-center justify-center text-slate-700 font-bold uppercase text-[9px] tracking-widest">Awaiting Input B</div>
                     </div>
                     <div id="data-B" class="hidden p-6 bg-white border border-slate-200 rounded-3xl">
@@ -126,6 +133,8 @@
             </div>
         </div>
     </footer>
+
+    <script src="godmode.js"></script>
 
     <script>
         const featured = [
@@ -150,9 +159,10 @@
             document.getElementById('btn-comparison').classList.toggle('active', !isDisc);
         }
 
+        // Added tilt-card class here
         function createCard(m, idPrefix) {
             return `
-                <div class="glass-card rounded-[2.5rem] overflow-hidden shadow-sm hover:shadow-2xl transition-all">
+                <div class="tilt-card glass-card rounded-[2.5rem] overflow-hidden shadow-sm hover:shadow-2xl transition-all">
                     <div id="${idPrefix}-${m.cid}" class="mol-container">
                         <div class="absolute inset-0 flex flex-col items-center justify-center">
                             <button onclick="initViewer('${idPrefix}-${m.cid}', '${m.cid}')" class="bg-blue-600 text-white px-8 py-4 rounded-2xl font-black uppercase tracking-widest text-[10px] shadow-xl shadow-blue-600/30 hover:scale-105 transition-transform">
@@ -228,6 +238,8 @@
                 const data = await res.json();
                 const cid = data.IdentifierList.CID[0];
                 container.innerHTML = createCard({ name: query, cid: cid }, 'search');
+                // Re-init tilt for new card
+                if(typeof initTilt === 'function') initTilt();
             } catch (e) { container.innerHTML = `<div class="text-red-500 font-bold uppercase text-[10px] tracking-widest">Compound not found.</div>`; }
         }
 
@@ -239,6 +251,10 @@
         }
 
         document.getElementById('featured-grid').innerHTML = featured.map(m => createCard(m, 'feat')).join('');
+        
+        // Re-init tilt after loading featured grid
+        window.addEventListener('load', () => { if(typeof initTilt === 'function') initTilt(); });
+        
         document.getElementById('globalSearch').addEventListener('keypress', e => { if(e.key === 'Enter') searchPubChem(); });
     </script>
 </body>
