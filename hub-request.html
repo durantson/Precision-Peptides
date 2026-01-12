@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Request Tool Access | Amintex Labs</title>
+    <meta name="theme-color" content="#0f172a"> 
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚛️</text></svg>">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=JetBrains+Mono&display=swap" rel="stylesheet">
+    <style>body { font-family: 'Inter', sans-serif; background-color: #0f172a; color: white; }</style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-6 relative overflow-hidden">
+
+    <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-600 rounded-full blur-[120px] opacity-20 pointer-events-none"></div>
+    <div class="absolute bottom-0 left-0 w-[300px] h-[300px] bg-emerald-600 rounded-full blur-[100px] opacity-10 pointer-events-none"></div>
+
+    <div class="max-w-4xl w-full grid grid-cols-1 md:grid-cols-2 gap-0 bg-slate-900 border border-white/10 rounded-[2.5rem] shadow-2xl relative z-10 overflow-hidden">
+        
+        <div class="p-12 flex flex-col justify-between bg-white/5 backdrop-blur-sm border-r border-white/5">
+            <div>
+                <a href="login.html" class="flex items-center gap-2 mb-12 opacity-50 hover:opacity-100 transition-opacity">
+                    <i class="fas fa-arrow-left"></i> <span class="text-xs font-bold uppercase tracking-widest">Return to Login</span>
+                </a>
+                <h1 class="text-4xl font-black italic uppercase tracking-tight mb-4">Research Hub</h1>
+                <p class="text-slate-400 text-sm leading-relaxed mb-8">
+                    Gain instant access to our suite of premium research utilities without creating a full institutional profile.
+                </p>
+                
+                <div class="space-y-4">
+                    <div class="flex items-center gap-4 p-3 rounded-xl bg-white/5 border border-white/5">
+                        <div class="w-8 h-8 rounded bg-blue-500/20 flex items-center justify-center text-blue-400"><i class="fas fa-cubes"></i></div>
+                        <div class="text-xs">
+                            <strong class="block text-white uppercase tracking-widest">3D Database</strong>
+                            <span class="text-slate-500">Molecular Visualization Engine</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-4 p-3 rounded-xl bg-white/5 border border-white/5">
+                        <div class="w-8 h-8 rounded bg-emerald-500/20 flex items-center justify-center text-emerald-400"><i class="fas fa-calculator"></i></div>
+                        <div class="text-xs">
+                            <strong class="block text-white uppercase tracking-widest">Dosimetry</strong>
+                            <span class="text-slate-500">Reconstitution Calculator</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-12 text-[10px] text-slate-500 font-mono">
+                LIMITED ACCESS MODE
+            </div>
+        </div>
+
+        <div class="p-12 bg-white text-slate-900 flex flex-col justify-center">
+            
+            <div id="request-form">
+                <h2 class="text-xl font-black italic uppercase tracking-tight mb-6 text-slate-900">Guest Access Request</h2>
+                <form onsubmit="revealCode(event)" class="space-y-5">
+                    <div>
+                        <label class="block text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-1">Email Address</label>
+                        <input type="email" required class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm font-bold focus:outline-none focus:border-blue-600 transition-all" placeholder="researcher@lab.edu">
+                    </div>
+                    
+                    <button type="submit" class="w-full bg-slate-900 text-white py-4 rounded-xl font-black uppercase tracking-widest text-xs hover:bg-blue-600 transition-all shadow-lg">
+                        Get Hub Key
+                    </button>
+                </form>
+            </div>
+
+            <div id="success-message" class="hidden text-center">
+                <div class="w-16 h-16 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center mx-auto mb-6 text-2xl animate-bounce">
+                    <i class="fas fa-unlock"></i>
+                </div>
+                <h2 class="text-xl font-black italic uppercase tracking-tight mb-2 text-slate-900">Access Granted</h2>
+                <p class="text-xs text-slate-500 mb-6">Use this limited-access key to enter the Research Hub.</p>
+                
+                <div class="bg-slate-50 border border-slate-200 rounded-xl p-4 mb-6">
+                    <span class="font-mono text-3xl font-bold text-blue-600 tracking-widest select-all">guest</span>
+                </div>
+
+                <a href="login.html" class="block w-full bg-blue-600 text-white py-4 rounded-xl font-black uppercase tracking-widest text-xs hover:bg-slate-900 transition-all shadow-lg">
+                    Login Now
+                </a>
+            </div>
+
+        </div>
+
+    </div>
+
+    <script>
+        function revealCode(e) {
+            e.preventDefault();
+            // Simulate processing
+            const btn = e.target.querySelector('button');
+            btn.innerText = "Verifying...";
+            
+            setTimeout(() => {
+                document.getElementById('request-form').classList.add('hidden');
+                document.getElementById('success-message').classList.remove('hidden');
+            }, 1000);
+        }
+    </script>
+
+</body>
+</html>
