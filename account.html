@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Client Access | Amintex Labs</title>
+    
+    <meta name="description" content="Amintex Labs Secure Client Access. Manage requisitions, track cold-chain shipments, and access the researcher terminal.">
+    <meta name="theme-color" content="#0f172a"> 
+
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚛️</text></svg>">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .split-bg {
+            background-image: url('https://images.unsplash.com/photo-1579165466741-7f35a4755657?q=80&w=2500&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+        }
+        * { -webkit-tap-highlight-color: transparent; }
+    </style>
+</head>
+<body class="bg-white font-sans antialiased text-slate-900 min-h-screen flex">
+
+    <div class="hidden lg:flex w-1/2 split-bg relative items-center justify-center overflow-hidden">
+        <div class="absolute inset-0 bg-slate-900/80 backdrop-blur-sm"></div>
+        <div class="relative z-10 text-white p-16 max-w-xl">
+            <div class="w-12 h-12 bg-blue-600 rounded-xl flex items-center justify-center text-white mb-8 shadow-lg shadow-blue-600/50">
+                <i class="fas fa-atom text-xl"></i>
+            </div>
+            <h1 class="text-5xl font-black italic uppercase tracking-tighter mb-6">Precision<br>Intelligence.</h1>
+            <p class="text-slate-300 text-lg leading-relaxed mb-8">
+                Access the Amintex Hub to manage institutional requisitions, view real-time cold-chain telemetry, and utilize our proprietary peptide calculators.
+            </p>
+            <div class="flex gap-4">
+                <div class="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-blue-400">
+                    <i class="fas fa-check-circle"></i> Order History
+                </div>
+                <div class="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-blue-400">
+                    <i class="fas fa-check-circle"></i> Batch Data
+                </div>
+                <div class="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-blue-400">
+                    <i class="fas fa-check-circle"></i> Direct Support
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="w-full lg:w-1/2 flex flex-col justify-center p-8 md:p-24 relative">
+        <a href="index.html" class="absolute top-8 left-8 text-slate-400 hover:text-blue-600 transition-colors flex items-center gap-2 text-xs font-bold uppercase tracking-widest">
+            <i class="fas fa-arrow-left"></i> Home
+        </a>
+
+        <div class="flex bg-slate-100 p-1 rounded-xl w-max mb-12 self-center lg:self-start">
+            <button onclick="switchTab('login')" id="tab-login" class="px-8 py-3 rounded-lg text-xs font-bold uppercase tracking-widest transition-all bg-white text-slate-900 shadow-sm">Sign In</button>
+            <button onclick="switchTab('register')" id="tab-register" class="px-8 py-3 rounded-lg text-xs font-bold uppercase tracking-widest transition-all text-slate-400 hover:text-slate-600">Register</button>
+        </div>
+
+        <div id="form-login" class="max-w-md w-full mx-auto lg:mx-0">
+            <h2 class="text-3xl font-black italic uppercase text-slate-900 mb-2">Welcome Back</h2>
+            <p class="text-slate-500 text-sm mb-8">Enter your credentials to access the terminal.</p>
+
+            <form onsubmit="handleLogin(event)" class="space-y-4">
+                <div>
+                    <label class="block text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2">Email</label>
+                    <input type="email" required class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3.5 text-sm font-bold focus:outline-none focus:border-blue-600 transition-colors">
+                </div>
+                <div>
+                    <label class="block text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2">Password</label>
+                    <input type="password" required class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3.5 text-sm font-bold focus:outline-none focus:border-blue-600 transition-colors">
+                </div>
+                <div class="flex justify-end">
+                    <a href="#" class="text-[10px] font-bold text-blue-600 hover:underline">Forgot Password?</a>
+                </div>
+                <button type="submit" class="w-full bg-slate-900 text-white py-4 rounded-xl font-black uppercase tracking-widest text-xs hover:bg-blue-600 transition-all shadow-xl shadow-slate-900/10">
+                    Secure Login <i class="fas fa-lock ml-2 text-[10px] opacity-50"></i>
+                </button>
+            </form>
+        </div>
+
+        <div id="form-register" class="hidden max-w-md w-full mx-auto lg:mx-0">
+            <h2 class="text-3xl font-black italic uppercase text-slate-900 mb-2">New Account</h2>
+            <p class="text-slate-500 text-sm mb-8">Create an institutional profile to begin procurement.</p>
+
+            <form onsubmit="handleRegister(event)" class="space-y-4">
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2">First Name</label>
+                        <input type="text" required class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3.5 text-sm font-bold focus:outline-none focus:border-blue-600 transition-colors">
+                    </div>
+                    <div>
+                        <label class="block text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2">Last Name</label>
+                        <input type="text" required class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3.5 text-sm font-bold focus:outline-none focus:border-blue-600 transition-colors">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2">Email</label>
+                    <input type="email" required class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3.5 text-sm font-bold focus:outline-none focus:border-blue-600 transition-colors">
+                </div>
+                <div>
+                    <label class="block text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2">Password</label>
+                    <input type="password" required class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3.5 text-sm font-bold focus:outline-none focus:border-blue-600 transition-colors">
+                </div>
+                
+                <button type="submit" class="w-full bg-blue-600 text-white py-4 rounded-xl font-black uppercase tracking-widest text-xs hover:bg-slate-900 transition-all shadow-xl shadow-blue-600/20">
+                    Create Profile
+                </button>
+                <p class="text-[10px] text-center text-slate-400 mt-4 leading-relaxed">
+                    By registering, you confirm that you are a qualified researcher and agree to our <a href="compliance.html" class="text-blue-600 underline">Terms of Service</a>.
+                </p>
+            </form>
+        </div>
+
+    </div>
+
+    <script>
+        function switchTab(tab) {
+            const loginForm = document.getElementById('form-login');
+            const regForm = document.getElementById('form-register');
+            const loginBtn = document.getElementById('tab-login');
+            const regBtn = document.getElementById('tab-register');
+
+            if (tab === 'login') {
+                loginForm.classList.remove('hidden');
+                regForm.classList.add('hidden');
+                loginBtn.classList.add('bg-white', 'text-slate-900', 'shadow-sm');
+                loginBtn.classList.remove('text-slate-400');
+                regBtn.classList.remove('bg-white', 'text-slate-900', 'shadow-sm');
+                regBtn.classList.add('text-slate-400');
+            } else {
+                loginForm.classList.add('hidden');
+                regForm.classList.remove('hidden');
+                regBtn.classList.add('bg-white', 'text-slate-900', 'shadow-sm');
+                regBtn.classList.remove('text-slate-400');
+                loginBtn.classList.remove('bg-white', 'text-slate-900', 'shadow-sm');
+                loginBtn.classList.add('text-slate-400');
+            }
+        }
+
+        function handleLogin(e) {
+            e.preventDefault();
+            // Simulate Login
+            localStorage.setItem('portalAuthorized', 'true');
+            window.location.href = 'dashboard.html';
+        }
+
+        function handleRegister(e) {
+            e.preventDefault();
+            // Simulate Registration
+            localStorage.setItem('portalAuthorized', 'true');
+            window.location.href = 'dashboard.html';
+        }
+    </script>
+</body>
+</html>
