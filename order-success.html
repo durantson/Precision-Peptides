@@ -3,11 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Order Confirmed | Precision Labs</title>
+    <title>Order Confirmed | Amintex Labs</title>
     
-    <meta name="description" content="Precision Labs Order Confirmation. Your research requisition has been successfully logged.">
-    <meta name="author" content="Precision Labs">
-    <meta name="theme-color" content="#10b981"> <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚛️</text></svg>">
+    <meta name="description" content="Amintex Labs Order Confirmation. Your research requisition has been successfully logged.">
+    <meta name="author" content="Amintex Labs">
+    <meta name="theme-color" content="#10b981"> 
+    
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚛️</text></svg>">
 
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
@@ -33,13 +35,13 @@
 
         <h1 class="text-3xl font-black italic text-slate-900 uppercase tracking-tighter mb-3">Order Confirmed</h1>
         <p class="text-slate-500 text-sm leading-relaxed mb-8">
-            Thank you for your research contribution. Your requisition has been logged and queued for cold-chain dispatch.
+            Thank you for your research contribution. Your requisition has been logged with Amintex Labs and queued for cold-chain dispatch.
         </p>
 
         <div class="bg-slate-50 rounded-2xl p-6 mb-8 border border-slate-100 text-left">
             <div class="flex justify-between items-center text-xs mb-3">
                 <span class="text-slate-400 font-bold uppercase tracking-widest">Manifest ID</span>
-                <span class="text-slate-900 font-mono font-bold bg-white px-2 py-1 rounded border border-slate-200">#PL-8824-X</span>
+                <span class="text-slate-900 font-mono font-bold bg-white px-2 py-1 rounded border border-slate-200">#AM-8824-X</span>
             </div>
             <div class="flex justify-between items-center text-xs">
                 <span class="text-slate-400 font-bold uppercase tracking-widest">Est. Dispatch</span>
@@ -60,6 +62,7 @@
 
     <script>
         // CLEANUP: Wipe the cart now that the order is complete
+        // Uses the same key 'precisionCart' to maintain compatibility with your other files
         localStorage.removeItem('precisionCart');
     </script>
 
