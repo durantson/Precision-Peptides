@@ -24,6 +24,8 @@
         .faq-tab.active { background-color: #0f172a; color: white; border-color: #0f172a; }
         .faq-item { transition: all 0.3s ease; }
         .faq-item:hover { border-color: #2563eb; transform: translateX(5px); }
+        /* Base transition for fallback */
+        .tilt-card { transition: transform 0.1s ease-out; }
         * { -webkit-tap-highlight-color: transparent; }
     </style>
 </head>
@@ -34,6 +36,11 @@
             <div class="w-8 h-8 bg-blue-600 rounded flex items-center justify-center text-white"><i class="fas fa-atom text-xs"></i></div>
             <span class="font-bold text-lg tracking-tighter uppercase italic text-slate-900">Amintex<span class="text-blue-600">Labs</span></span>
         </a>
+        
+        <div class="hidden lg:flex items-center gap-2 mr-6 text-[10px] font-bold text-slate-400 border border-slate-200 px-2 py-1 rounded bg-slate-50 cursor-pointer hover:border-blue-400 transition-colors" onclick="togglePalette()">
+            <i class="fas fa-search"></i> <span>CTRL + K</span>
+        </div>
+
         <div class="flex items-center gap-6">
             <a href="catalog.html" class="text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-blue-600 transition-colors">Catalog</a>
             <button onclick="viewManifest()" class="relative group">
@@ -54,13 +61,13 @@
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-24">
-            <div class="bg-white border border-slate-200 p-8 rounded-[2.5rem] shadow-sm hover:shadow-md transition-shadow">
+            <div class="tilt-card bg-white border border-slate-200 p-8 rounded-[2.5rem] shadow-sm hover:shadow-md transition-shadow">
                 <i class="fas fa-truck-ramp-box text-blue-600 text-2xl mb-4"></i>
                 <h3 class="font-black uppercase italic tracking-tight text-lg mb-2 text-slate-900">Shipping Logistics</h3>
                 <p class="text-xs text-slate-500 leading-relaxed mb-4">Reagents are dispatched within 24 hours. Cold-chain integrity is maintained using proprietary insulated laboratory packaging.</p>
                 <a href="#" class="text-[10px] font-bold uppercase tracking-widest text-blue-600 hover:text-slate-900">View Protocols <i class="fas fa-arrow-right ml-1"></i></a>
             </div>
-            <div class="bg-white border border-slate-200 p-8 rounded-[2.5rem] shadow-sm hover:shadow-md transition-shadow">
+            <div class="tilt-card bg-white border border-slate-200 p-8 rounded-[2.5rem] shadow-sm hover:shadow-md transition-shadow">
                 <i class="fas fa-microscope text-emerald-600 text-2xl mb-4"></i>
                 <h3 class="font-black uppercase italic tracking-tight text-lg mb-2 text-slate-900">Quality Standards</h3>
                 <p class="text-xs text-slate-500 leading-relaxed mb-4">All batches undergo independent third-party HPLC and Mass Spec analysis. Certificates of Analysis (COA) are authenticated via our portal.</p>
@@ -68,7 +75,7 @@
             </div>
         </div>
 
-        <section id="technical-knowledge-base" class="mt-16 bg-white border border-slate-200 rounded-[3rem] p-6 md:p-12 shadow-2xl shadow-slate-200/50 mb-24">
+        <section id="technical-knowledge-base" class="tilt-card mt-16 bg-white border border-slate-200 rounded-[3rem] p-6 md:p-12 shadow-2xl shadow-slate-200/50 mb-24">
             <div class="max-w-3xl mx-auto text-center mb-12">
                 <h2 class="text-[10px] font-black uppercase tracking-[0.4em] text-blue-600 mb-4">Precision Intelligence</h2>
                 <h3 class="text-3xl md:text-4xl font-black text-slate-900 italic uppercase tracking-tighter">Technical Knowledge Base</h3>
@@ -97,7 +104,6 @@
                     </div>
                     <div id="f1" class="hidden mt-4 text-sm text-slate-600 leading-relaxed border-t border-slate-200 pt-4">
                         To prevent molecular denaturing (breaking the peptide bonds via kinetic force), point the needle at the glass wall of the vial. Allow the bacteriostatic water to run down the glass rather than spraying directly onto the lyophilized powder.
-                        
                     </div>
                 </div>
 
@@ -224,5 +230,8 @@
             });
         }
     </script>
+
+    <script src="godmode.js"></script>
+
 </body>
 </html>
