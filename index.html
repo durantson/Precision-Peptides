@@ -32,6 +32,7 @@
             height: 100%; 
             width: 100%; 
             display: flex; 
+            flex-direction: column; /* Changed to column to stack table and label */
             align-items: center; 
             justify-content: center; 
         }
@@ -57,7 +58,7 @@
             font-size: 10px;
             border-radius: 4px;
             aspect-ratio: 1;
-            transition: all 1.5s ease; /* Slow fade out */
+            transition: all 2s ease; /* Very slow fade out */
             cursor: default;
             position: relative;
         }
@@ -67,30 +68,33 @@
             background: #2563eb; 
             color: white; 
             border-color: #60a5fa;
-            
-            /* Layered shadows for "Light Source" look */
-            box-shadow: 
-                0 0 10px #3b82f6,       /* Inner tight glow */
-                0 0 30px #2563eb,       /* Outer wide glow */
-                0 0 60px rgba(37, 99, 235, 0.6); /* Atmospheric haze */
-            
-            /* Text Glow */
+            box-shadow: 0 0 10px #3b82f6, 0 0 30px #2563eb; 
             text-shadow: 0 0 5px rgba(255, 255, 255, 0.9);
-            
             transform: scale(1.15);
-            z-index: 50; /* Bring to front */
-            transition: all 0.1s ease-out; /* Instant activation */
+            z-index: 50; 
+            transition: all 0.5s ease-out; /* Smooth activation */
         }
 
-        /* White Highlight Core */
         .element.active::after {
-            content: '';
-            position: absolute;
-            inset: 0;
+            content: ''; position: absolute; inset: 0;
             background: radial-gradient(circle at center, rgba(255,255,255,0.8) 0%, transparent 70%);
-            opacity: 0.5;
-            border-radius: 4px;
+            opacity: 0.5; border-radius: 4px;
         }
+
+        /* Synthesis Label Styling */
+        #synthesis-label {
+            margin-top: 2rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: #2563eb;
+            opacity: 0;
+            transition: opacity 1s ease;
+            height: 20px; /* Fixed height to prevent jump */
+        }
+        #synthesis-label.visible { opacity: 1; }
 
         .empty-cell { visibility: hidden; }
         .tilt-card { transition: transform 0.1s ease-out; }
@@ -122,34 +126,25 @@
         
         <div class="hidden lg:flex items-center gap-8">
             
-            <div class="group relative py-6"> <button class="flex items-center gap-2 text-[11px] font-black uppercase tracking-[0.15em] text-slate-500 group-hover:text-blue-600 transition-colors">
+            <div class="group relative py-6"> 
+                <button class="flex items-center gap-2 text-[11px] font-black uppercase tracking-[0.15em] text-slate-500 group-hover:text-blue-600 transition-colors">
                     Catalog <i class="fas fa-chevron-down text-[8px] opacity-50"></i>
                 </button>
-                
                 <div class="absolute top-full -left-10 w-[500px] bg-white border border-slate-100 rounded-2xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform group-hover:translate-y-0 translate-y-2 overflow-hidden">
                     <div class="grid grid-cols-2">
                         <div class="p-6 space-y-1 bg-slate-50/50">
                             <p class="text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-3 ml-2">Categories</p>
                             <a href="catalog.html" class="flex items-center gap-3 p-2 rounded-lg hover:bg-white hover:shadow-sm transition-all group/item">
                                 <div class="w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center"><i class="fas fa-fire"></i></div>
-                                <div>
-                                    <div class="text-xs font-bold text-slate-900">Metabolic</div>
-                                    <div class="text-[9px] text-slate-400">GLP-1 & GIP Agonists</div>
-                                </div>
+                                <div><div class="text-xs font-bold text-slate-900">Metabolic</div><div class="text-[9px] text-slate-400">GLP-1 & GIP Agonists</div></div>
                             </a>
                             <a href="catalog.html" class="flex items-center gap-3 p-2 rounded-lg hover:bg-white hover:shadow-sm transition-all group/item">
                                 <div class="w-8 h-8 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center"><i class="fas fa-dna"></i></div>
-                                <div>
-                                    <div class="text-xs font-bold text-slate-900">Regenerative</div>
-                                    <div class="text-[9px] text-slate-400">Tissue & Cellular Repair</div>
-                                </div>
+                                <div><div class="text-xs font-bold text-slate-900">Regenerative</div><div class="text-[9px] text-slate-400">Tissue & Cellular Repair</div></div>
                             </a>
                             <a href="catalog.html" class="flex items-center gap-3 p-2 rounded-lg hover:bg-white hover:shadow-sm transition-all group/item">
                                 <div class="w-8 h-8 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center"><i class="fas fa-brain"></i></div>
-                                <div>
-                                    <div class="text-xs font-bold text-slate-900">Nootropic</div>
-                                    <div class="text-[9px] text-slate-400">Cognitive Enhancement</div>
-                                </div>
+                                <div><div class="text-xs font-bold text-slate-900">Nootropic</div><div class="text-[9px] text-slate-400">Cognitive Enhancement</div></div>
                             </a>
                         </div>
                         <div class="p-6 bg-slate-900 text-white flex flex-col justify-between">
@@ -168,32 +163,18 @@
                 <button class="flex items-center gap-2 text-[11px] font-black uppercase tracking-[0.15em] text-slate-500 group-hover:text-blue-600 transition-colors">
                     Resources <i class="fas fa-chevron-down text-[8px] opacity-50"></i>
                 </button>
-                
                 <div class="absolute top-full left-1/2 -translate-x-1/2 w-64 bg-white border border-slate-100 rounded-2xl shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform group-hover:translate-y-0 translate-y-2 p-2">
-                    <a href="batch-verification.html" class="flex items-center gap-3 p-3 rounded-xl hover:bg-slate-50 transition-colors">
-                        <i class="fas fa-check-circle text-emerald-500"></i>
-                        <span class="text-xs font-bold text-slate-700">Batch Verification</span>
-                    </a>
-                    <a href="molecular-structures.html" class="flex items-center gap-3 p-3 rounded-xl hover:bg-slate-50 transition-colors">
-                        <i class="fas fa-cubes text-blue-500"></i>
-                        <span class="text-xs font-bold text-slate-700">3D Database</span>
-                    </a>
-                    <a href="support.html" class="flex items-center gap-3 p-3 rounded-xl hover:bg-slate-50 transition-colors">
-                        <i class="fas fa-book text-slate-400"></i>
-                        <span class="text-xs font-bold text-slate-700">Documentation</span>
-                    </a>
+                    <a href="batch-verification.html" class="flex items-center gap-3 p-3 rounded-xl hover:bg-slate-50 transition-colors"><i class="fas fa-check-circle text-emerald-500"></i><span class="text-xs font-bold text-slate-700">Batch Verification</span></a>
+                    <a href="molecular-structures.html" class="flex items-center gap-3 p-3 rounded-xl hover:bg-slate-50 transition-colors"><i class="fas fa-cubes text-blue-500"></i><span class="text-xs font-bold text-slate-700">3D Database</span></a>
+                    <a href="support.html" class="flex items-center gap-3 p-3 rounded-xl hover:bg-slate-50 transition-colors"><i class="fas fa-book text-slate-400"></i><span class="text-xs font-bold text-slate-700">Documentation</span></a>
                     <div class="h-px bg-slate-100 my-1"></div>
-                    <a href="account.html" class="flex items-center gap-3 p-3 rounded-xl hover:bg-slate-50 transition-colors">
-                        <i class="fas fa-user-circle text-slate-900"></i>
-                        <span class="text-xs font-bold text-slate-700">Client Portal</span>
-                    </a>
+                    <a href="account.html" class="flex items-center gap-3 p-3 rounded-xl hover:bg-slate-50 transition-colors"><i class="fas fa-user-circle text-slate-900"></i><span class="text-xs font-bold text-slate-700">Client Portal</span></a>
                 </div>
             </div>
 
             <div class="flex items-center gap-2 text-[10px] font-bold text-slate-400 border border-slate-200 px-3 py-1.5 rounded-lg bg-slate-50 cursor-pointer hover:border-blue-400 hover:text-blue-600 transition-all group" onclick="togglePalette()">
                 <i class="fas fa-search group-hover:scale-110 transition-transform"></i> <span>CTRL + K</span>
             </div>
-
         </div>
 
         <div class="flex items-center gap-6">
@@ -255,6 +236,7 @@
                 <div id="pt-container" class="hero-stage">
                     <div id="pt-grid" class="pt-grid p-4">
                         </div>
+                    <div id="synthesis-label">Initializing...</div>
                 </div>
             </div>
         </div>
@@ -331,10 +313,6 @@
                 </div>
             </div>
             <div class="border-t border-slate-100 pt-8 mt-8">
-                <div class="bg-red-50 border border-red-100 p-6 rounded-2xl text-center">
-                    <p class="text-[10px] text-red-600/70 font-bold uppercase tracking-widest mb-2">Research Use Only</p>
-                    <p class="text-[10px] text-red-800/60 leading-relaxed max-w-4xl mx-auto uppercase">Strictly for in-vitro laboratory research purposes only. Not for human consumption.</p>
-                </div>
                 <div class="text-center mt-8 text-[10px] text-slate-300 uppercase tracking-widest">&copy; 2026 Amintex Labs. All rights reserved.</div>
             </div>
         </div>
@@ -365,12 +343,20 @@
             }
         });
 
-        // 2. PERIODIC TABLE AMBIENT ANIMATION
+        // 2. INTELLIGENT PERIODIC TABLE ANIMATION
         const ptLayout = [
             ["H",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"He"],
             ["Li","Be",0,0,0,0,0,0,0,0,0,0,"B","C","N","O","F","Ne"],
             ["Na","Mg",0,0,0,0,0,0,0,0,0,0,"Al","Si","P","S","Cl","Ar"],
             ["K","Ca","Sc","Ti","V","Cr","Mn","Fe","Co","Ni","Cu","Zn","Ga","Ge","As","Se","Br","Kr"]
+        ];
+
+        // Define "Formulas" to animate based on real products
+        const formulas = [
+            { name: "Tirzepatide Synthesis", elements: ["C", "H", "N", "O"] },
+            { name: "GHK-Cu Complex", elements: ["C", "H", "N", "O", "Cu"] },
+            { name: "Semaglutide Chain", elements: ["C", "H", "N", "O"] },
+            { name: "BPC-157 Arginine", elements: ["C", "H", "N", "O"] }
         ];
 
         function buildPeriodicTable() {
@@ -388,33 +374,43 @@
             grid.innerHTML = html;
         }
 
-        function runAmbientAnimation() {
-            const elements = document.querySelectorAll('.element');
-            
-            // Randomly flash elements to simulate processing/activity
+        function runIntelligentAnimation() {
+            let formulaIndex = 0;
+            const label = document.getElementById('synthesis-label');
+
             setInterval(() => {
-                // Pick 1-2 random elements to glow
-                const count = Math.floor(Math.random() * 2) + 1;
-                for(let i=0; i<count; i++) {
-                    const idx = Math.floor(Math.random() * elements.length);
-                    const el = elements[idx];
-                    
-                    // Activate
-                    el.classList.add('active');
-                    
-                    // Deactivate after random duration (0.5s - 1.5s)
-                    setTimeout(() => {
-                        el.classList.remove('active');
-                    }, 500 + Math.random() * 1000);
-                }
-            }, 800); // Trigger every 800ms
+                const current = formulas[formulaIndex];
+                
+                // 1. Update Label
+                label.classList.remove('visible');
+                setTimeout(() => {
+                    label.innerText = `>> Analyzing: ${current.name}`;
+                    label.classList.add('visible');
+                }, 500);
+
+                // 2. Light up Elements
+                const domElements = document.querySelectorAll('.element');
+                domElements.forEach(el => el.classList.remove('active')); // Clear previous
+
+                setTimeout(() => {
+                    domElements.forEach(el => {
+                        if (current.elements.includes(el.dataset.sym)) {
+                            el.classList.add('active');
+                        }
+                    });
+                }, 500);
+
+                // Next formula
+                formulaIndex = (formulaIndex + 1) % formulas.length;
+
+            }, 3000); // 3-second cycle (Slower, deliberate pace)
         }
 
         // Init
         buildPeriodicTable();
-        runAmbientAnimation();
+        runIntelligentAnimation();
 
-        // Cart Logic for Nav
+        // Nav Logic
         function viewManifest() { window.location.href = 'checkout.html'; }
         let cart = JSON.parse(localStorage.getItem('precisionCart')) || []; 
         updateBadge();
