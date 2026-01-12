@@ -20,12 +20,14 @@
             100% { transform: scale(1); opacity: 1; }
         }
         .check-anim { animation: pop 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards; }
+        /* Base transition for fallback */
+        .tilt-card { transition: transform 0.1s ease-out; }
         * { -webkit-tap-highlight-color: transparent; }
     </style>
 </head>
 <body class="bg-slate-50 font-sans antialiased text-slate-900 h-screen flex items-center justify-center p-6">
 
-    <div class="max-w-md w-full bg-white p-10 md:p-12 rounded-[3rem] border border-slate-200 shadow-2xl text-center relative overflow-hidden">
+    <div class="tilt-card max-w-md w-full bg-white p-10 md:p-12 rounded-[3rem] border border-slate-200 shadow-2xl text-center relative overflow-hidden">
         
         <div class="absolute -top-10 -right-10 w-32 h-32 bg-emerald-50 rounded-full blur-3xl opacity-50"></div>
 
@@ -60,9 +62,10 @@
 
     </div>
 
+    <script src="godmode.js"></script>
+
     <script>
         // CLEANUP: Wipe the cart now that the order is complete
-        // Uses the same key 'precisionCart' to maintain compatibility with your other files
         localStorage.removeItem('precisionCart');
     </script>
 
