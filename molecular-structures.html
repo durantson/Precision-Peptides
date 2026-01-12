@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Global Molecular Database | Precision Labs</title>
+    <title>Global Molecular Database | Amintex Labs</title>
     
-    <meta name="description" content="Precision Labs Global Molecular Database. NIH-linked 3D discovery engine for advanced peptide research and structural comparison.">
-    <meta name="author" content="Precision Labs">
-    <meta name="theme-color" content="#0f172a"> 
+    <meta name="description" content="Amintex Labs Global Molecular Database. NIH-linked 3D discovery engine for advanced peptide research and structural comparison.">
+    <meta name="author" content="Amintex Labs">
+    <meta name="theme-color" content="#2563eb"> 
 
     <meta property="og:type" content="website">
-    <meta property="og:title" content="Precision Labs | Molecular Database">
+    <meta property="og:title" content="Amintex Labs | Molecular Database">
     <meta property="og:description" content="Access 3D structural data and side-by-side molecular comparisons.">
     <meta property="og:image" content="images/social-preview.jpg"> 
     <meta property="og:url" content="https://www.your-website.com/molecular-structures.html">
@@ -33,13 +33,13 @@
 <body class="bg-slate-50 font-sans antialiased text-slate-900 min-h-screen flex flex-col">
 
     <script>
-        if (localStorage.getItem('portalAuthorized') !== 'true') { window.location.href = 'login.html'; }
+        if (localStorage.getItem('portalAuthorized') !== 'true') { window.location.href = 'account.html'; }
     </script>
 
     <nav class="bg-white border-b border-slate-200 h-16 flex items-center px-6 justify-between sticky top-0 z-50">
         <a href="index.html" class="flex items-center gap-2 hover:opacity-80 transition-opacity">
             <div class="w-8 h-8 bg-blue-600 rounded flex items-center justify-center text-white"><i class="fas fa-atom text-xs"></i></div>
-            <span class="font-bold text-lg tracking-tighter uppercase italic">Precision<span class="text-blue-600">Labs</span></span>
+            <span class="font-bold text-lg tracking-tighter uppercase italic">Amintex<span class="text-blue-600">Labs</span></span>
         </a>
         <div class="flex gap-4">
             <button onclick="switchMode('discovery')" id="btn-discovery" class="mode-btn active px-4 py-2 rounded-xl border border-slate-200 text-[10px] font-black uppercase tracking-widest transition-all">Discovery</button>
@@ -72,8 +72,8 @@
                 <h1 class="text-3xl font-black italic uppercase tracking-tighter">Comparison Lab</h1>
             </div>
             <div class="flex flex-col sm:flex-row gap-4 w-full max-w-2xl">
-                <input type="text" id="compA" placeholder="Compound A" class="flex-1 bg-slate-100 border-none rounded-xl py-4 px-6 text-sm focus:ring-2 focus:ring-blue-600">
-                <input type="text" id="compB" placeholder="Compound B" class="flex-1 bg-slate-100 border-none rounded-xl py-4 px-6 text-sm focus:ring-2 focus:ring-blue-600">
+                <input type="text" id="compA" placeholder="Compound A (e.g. Semaglutide)" class="flex-1 bg-slate-100 border-none rounded-xl py-4 px-6 text-sm focus:ring-2 focus:ring-blue-600">
+                <input type="text" id="compB" placeholder="Compound B (e.g. Tirzepatide)" class="flex-1 bg-slate-100 border-none rounded-xl py-4 px-6 text-sm focus:ring-2 focus:ring-blue-600">
                 <button onclick="runComparison()" class="bg-blue-600 text-white px-8 py-4 rounded-xl font-black uppercase tracking-widest text-[10px] hover:bg-slate-900 transition-all">Analyze</button>
             </div>
         </div>
@@ -120,9 +120,9 @@
             <div class="flex flex-col md:flex-row justify-between items-center gap-8">
                 <div class="flex items-center gap-2">
                     <div class="w-8 h-8 bg-slate-900 rounded flex items-center justify-center text-white"><i class="fas fa-atom text-xs"></i></div>
-                    <span class="font-black text-lg italic uppercase tracking-tighter text-slate-900">Precision<span class="text-blue-600">Labs</span></span>
+                    <span class="font-black text-lg italic uppercase tracking-tighter text-slate-900">Amintex<span class="text-blue-600">Labs</span></span>
                 </div>
-                <p class="text-[10px] font-bold text-slate-300 uppercase tracking-widest">&copy; 2026 Precision Labs. Molecular Database Access Tier: Authorized.</p>
+                <p class="text-[10px] font-bold text-slate-300 uppercase tracking-widest">&copy; 2026 Amintex Labs. Molecular Database Access Tier: Authorized.</p>
             </div>
         </div>
     </footer>
