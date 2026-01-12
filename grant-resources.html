@@ -22,6 +22,8 @@
     <style>
         body { font-family: 'Inter', sans-serif; } 
         .mono { font-family: 'JetBrains Mono', monospace; }
+        /* Base transition for fallback */
+        .tilt-card { transition: transform 0.1s ease-out; }
         * { -webkit-tap-highlight-color: transparent; }
     </style>
 </head>
@@ -41,6 +43,11 @@
                 Amintex<span class="text-blue-600">Labs</span>
             </span>
         </a>
+        
+        <div class="hidden lg:flex items-center gap-2 mr-6 text-[10px] font-bold text-slate-400 border border-slate-200 px-2 py-1 rounded bg-slate-50 cursor-pointer hover:border-blue-400 transition-colors" onclick="togglePalette()">
+            <i class="fas fa-search"></i> <span>CTRL + K</span>
+        </div>
+
         <div class="flex gap-6">
             <a href="dashboard.html" class="text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-blue-600 transition-colors">Dashboard</a>
             <a href="support.html" class="text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-blue-600 transition-colors">Contact Liaison</a>
@@ -60,7 +67,7 @@
         <div class="grid lg:grid-cols-3 gap-12">
             
             <aside class="lg:col-span-1 space-y-4">
-                <div class="p-8 bg-white rounded-[2rem] border border-slate-200 shadow-sm sticky top-24">
+                <div class="tilt-card p-8 bg-white rounded-[2rem] border border-slate-200 shadow-sm sticky top-24">
                     <h3 class="font-black uppercase text-[10px] tracking-[0.2em] text-blue-600 mb-6">Resource Index</h3>
                     <ul class="space-y-4 text-xs font-bold uppercase tracking-widest text-slate-400">
                         <li><a href="#methods" class="hover:text-blue-600 transition-colors flex items-center gap-2"><i class="fas fa-file-alt text-[10px]"></i> Methods Language</a></li>
@@ -76,7 +83,7 @@
                     <h2 class="text-2xl font-black mb-6 uppercase tracking-tight italic text-slate-900">Standardized Methods Language</h2>
                     <p class="text-slate-500 text-sm mb-8 leading-relaxed">Researchers may utilize the following technical description for the "Reagents and Materials" sections of academic publications or grant proposals:</p>
                     
-                    <div class="bg-white p-8 rounded-[2rem] border border-slate-200 relative group shadow-sm">
+                    <div class="tilt-card bg-white p-8 rounded-[2rem] border border-slate-200 relative group shadow-sm">
                         <div class="flex justify-between items-center mb-6">
                             <span class="text-[10px] font-black text-blue-600 uppercase tracking-widest">Protocol Snippet v1.0</span>
                             <button onclick="copySnippet()" class="text-[10px] font-black text-slate-400 uppercase hover:text-blue-600"><i class="fas fa-copy mr-2"></i>Copy</button>
@@ -92,18 +99,18 @@
                     <p class="text-slate-500 text-sm mb-8 leading-relaxed">Reviewing committees prioritize reproducibility. Amintex Labs ensures all reagents meet the following institutional standards:</p>
                     
                     <div class="grid md:grid-cols-2 gap-6">
-                        <div class="p-6 bg-white rounded-[2rem] border border-slate-200 shadow-sm">
+                        <div class="tilt-card p-6 bg-white rounded-[2rem] border border-slate-200 shadow-sm">
                             <h4 class="font-black text-xs uppercase mb-3 text-slate-900 tracking-wider">Lot-to-Lot Consistency</h4>
                             <p class="text-xs text-slate-500 leading-relaxed">Intra-assay coefficient of variation (CV) &lt; 5% across multiple independent synthesis runs to ensure study repeatability.</p>
                         </div>
-                        <div class="p-6 bg-white rounded-[2rem] border border-slate-200 shadow-sm">
+                        <div class="tilt-card p-6 bg-white rounded-[2rem] border border-slate-200 shadow-sm">
                             <h4 class="font-black text-xs uppercase mb-3 text-slate-900 tracking-wider">Residual Content Control</h4>
                             <p class="text-xs text-slate-500 leading-relaxed">Residual TFA and solvent content minimized to &lt; 1% to prevent extraneous cellular toxicity in sensitive in-vitro assays.</p>
                         </div>
                     </div>
                 </section>
 
-                <section id="support" class="bg-slate-900 p-10 md:p-12 rounded-[3rem] text-white relative overflow-hidden shadow-2xl">
+                <section id="support" class="tilt-card bg-slate-900 p-10 md:p-12 rounded-[3rem] text-white relative overflow-hidden shadow-2xl">
                     <div class="relative z-10">
                         <h2 class="text-2xl font-black mb-4 uppercase italic">Institutional Letters of Support</h2>
                         <p class="text-slate-400 text-sm mb-8 leading-relaxed max-w-lg">If your grant requires a formal Letter of Support (LOS) from your reagent supplier confirming availability, technical specs, and analytical cooperation, contact our liaison.</p>
@@ -162,11 +169,17 @@
 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 
+    <script src="godmode.js"></script>
+
     <script>
         function copySnippet() {
             const text = document.getElementById('snippet').innerText;
             navigator.clipboard.writeText(text).then(() => {
-                alert('Methods language copied to clipboard.');
+                if(typeof showToast === 'function') {
+                    showToast('Methods language copied to clipboard.');
+                } else {
+                    alert('Methods language copied to clipboard.');
+                }
             });
         }
     </script>
