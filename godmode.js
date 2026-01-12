@@ -1,5 +1,5 @@
 // AMINTEX LABS - GOD MODE ENGINE (UX/UI CONTROLLER)
-// Handles: Command Palette, 3D Tilt, Global Notifications
+// Handles: Command Palette, 3D Tilt, Global Notifications, Mobile Menu
 
 // --- 1. COMMAND PALETTE (CTRL + K) ---
 document.addEventListener('keydown', (e) => {
@@ -16,7 +16,7 @@ function togglePalette() {
         // Create Palette if it doesn't exist
         palette = document.createElement('div');
         palette.id = 'cmd-palette';
-        palette.className = 'fixed inset-0 z-[100] bg-slate-900/80 backdrop-blur-sm flex items-start justify-center pt-24 opacity-0 transition-opacity duration-200';
+        palette.className = 'fixed inset-0 z-[200] bg-slate-900/80 backdrop-blur-sm flex items-start justify-center pt-24 opacity-0 transition-opacity duration-200';
         palette.onclick = (e) => { if(e.target === palette) togglePalette(); };
         
         palette.innerHTML = `
@@ -82,7 +82,9 @@ function runCmdSearch(query) {
     const navs = [
         { name: "Catalog", url: "catalog.html", icon: "fa-th" },
         { name: "Admin Portal", url: "admin.html", icon: "fa-lock" },
-        { name: "Track Order", url: "account.html", icon: "fa-truck" }
+        { name: "Track Order", url: "account.html", icon: "fa-truck" },
+        { name: "Lab Calculator", url: "calculator.html", icon: "fa-calculator" },
+        { name: "3D Database", url: "molecular-structures.html", icon: "fa-cubes" }
     ];
     
     navs.filter(n => n.name.toLowerCase().includes(query.toLowerCase())).forEach(n => {
@@ -132,4 +134,58 @@ function showToast(msg) {
     toast.innerHTML = `<i class="fas fa-check-circle text-emerald-400"></i> ${msg}`;
     document.body.appendChild(toast);
     setTimeout(() => toast.remove(), 3000);
+}
+
+// --- 4. MOBILE MENU INJECTOR (NEW) ---
+document.addEventListener("DOMContentLoaded", () => {
+    const nav = document.querySelector('nav');
+    if(!nav) return;
+
+    // A. Create Hamburger Button
+    const btn = document.createElement('button');
+    btn.className = "lg:hidden text-slate-900 text-xl p-2 ml-auto";
+    btn.innerHTML = '<i class="fas fa-bars"></i>';
+    btn.onclick = toggleMobileMenu;
+    
+    // Insert button logic
+    const rightActions = nav.querySelector('.flex.items-center.gap-6'); 
+    if(rightActions) {
+        // Hide desktop actions on mobile, insert hamburger
+        rightActions.classList.add('hidden', 'lg:flex'); 
+        nav.appendChild(btn);
+    }
+
+    // B. Create Mobile Drawer
+    const drawer = document.createElement('div');
+    drawer.id = 'mobile-menu';
+    drawer.className = "fixed inset-0 bg-white z-[200] transform translate-x-full transition-transform duration-300 flex flex-col p-6 shadow-2xl";
+    drawer.innerHTML = `
+        <div class="flex justify-between items-center mb-8">
+            <span class="font-black text-xl italic uppercase text-slate-900">Amintex<span class="text-blue-600">Labs</span></span>
+            <button onclick="toggleMobileMenu()" class="text-slate-400 text-2xl"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="flex flex-col gap-6 text-lg font-bold text-slate-900">
+            <a href="index.html" class="hover:text-blue-600">Home</a>
+            <a href="catalog.html" class="hover:text-blue-600">Catalog</a>
+            <a href="molecular-structures.html" class="hover:text-blue-600">3D Database</a>
+            <a href="batch-verification.html" class="hover:text-blue-600">Batch Verification</a>
+            <a href="calculator.html" class="hover:text-blue-600">Lab Calculator</a>
+            <a href="support.html" class="hover:text-blue-600">Support</a>
+            <a href="account.html" class="hover:text-blue-600">Client Portal</a>
+        </div>
+        <div class="mt-auto space-y-4">
+            <a href="catalog.html" class="block w-full bg-slate-900 text-white text-center py-4 rounded-xl font-bold uppercase tracking-widest text-xs">View Stock</a>
+            <button onclick="togglePalette(); toggleMobileMenu()" class="block w-full border border-slate-200 text-slate-500 text-center py-4 rounded-xl font-bold uppercase tracking-widest text-xs">Search</button>
+        </div>
+    `;
+    document.body.appendChild(drawer);
+});
+
+function toggleMobileMenu() {
+    const drawer = document.getElementById('mobile-menu');
+    if (drawer.classList.contains('translate-x-full')) {
+        drawer.classList.remove('translate-x-full');
+    } else {
+        drawer.classList.add('translate-x-full');
+    }
 }
