@@ -42,7 +42,7 @@
                     <div id="stock-badge" class="absolute top-8 right-8 bg-white/80 backdrop-blur border border-slate-200 px-3 py-1 rounded text-[10px] font-bold uppercase tracking-widest">
                         Loading...
                     </div>
-                    <img id="product-img" src="" class="max-h-full object-contain mix-blend-multiply drop-shadow-2xl transition-transform duration-700 hover:scale-105" alt="Reagent Vial">
+                    <img id="product-img" src="" onerror="this.src='https://placehold.co/400x400/f1f5f9/94a3b8?text=No+Image'" class="max-h-full object-contain mix-blend-multiply drop-shadow-2xl transition-transform duration-700 hover:scale-105" alt="Reagent Vial">
                 </div>
 
                 <div class="bg-white rounded-3xl border border-slate-200 p-8 shadow-sm relative overflow-hidden group hover:border-blue-400 transition-colors cursor-pointer">
@@ -164,7 +164,7 @@
 
         function init() {
             if (!product) {
-                // If product not found, go back to catalog
+                // If product not found (e.g. broken link), go back to catalog
                 window.location.href = 'catalog.html';
                 return;
             }
@@ -175,27 +175,45 @@
             document.getElementById('product-code').innerText = `SKU: ${product.id}`;
             document.getElementById('category-badge').innerText = product.category;
             document.getElementById('product-desc').innerText = product.desc;
-            document.getElementById('product-price').innerText = `$${product.price.toFixed(2)}`;
+            
+            // Image Loading
             document.getElementById('product-img').src = `images/${product.img}`;
+            document.getElementById('product-img').alt = product.name;
             
             // Specs
             document.getElementById('spec-seq').innerText = product.seq;
             document.getElementById('spec-cas').innerText = product.cas;
             document.getElementById('spec-mw').innerText = `${product.mw} g/mol`;
 
-            // Stock Status
+            // Stock / Availability Status
             const stockBadge = document.getElementById('stock-badge');
             const addBtn = document.getElementById('add-btn');
 
-            if (product.inStock) {
+            if (!product.showInCatalog) {
+                // GHOST ITEM (Archived/Reference Only)
+                stockBadge.innerText = "Reference Only";
+                stockBadge.className = "absolute top-8 right-8 bg-slate-100 backdrop-blur border border-slate-200 px-3 py-1 rounded text-[10px] font-bold uppercase tracking-widest text-slate-500";
+                
+                addBtn.disabled = true;
+                addBtn.innerText = "Synthesis Required";
+                addBtn.className = "flex-1 bg-slate-100 text-slate-400 py-4 rounded-xl font-black uppercase tracking-widest text-xs cursor-not-allowed";
+                
+                document.getElementById('product-price').innerText = "Inquire";
+                document.getElementById('product-price').classList.add('text-slate-400');
+            } else if (product.inStock) {
+                // ACTIVE & IN STOCK
                 stockBadge.innerText = "In Stock";
                 stockBadge.className = "absolute top-8 right-8 bg-white/80 backdrop-blur border border-slate-200 px-3 py-1 rounded text-[10px] font-bold uppercase tracking-widest text-emerald-600";
+                document.getElementById('product-price').innerText = `$${product.price.toFixed(2)}`;
             } else {
+                // ACTIVE BUT OUT OF STOCK
                 stockBadge.innerText = "Out of Stock";
                 stockBadge.className = "absolute top-8 right-8 bg-red-50 backdrop-blur border border-red-200 px-3 py-1 rounded text-[10px] font-bold uppercase tracking-widest text-red-600";
+                
                 addBtn.disabled = true;
                 addBtn.innerText = "Unavailable";
                 addBtn.className = "flex-1 bg-slate-100 text-slate-400 py-4 rounded-xl font-black uppercase tracking-widest text-xs cursor-not-allowed";
+                document.getElementById('product-price').innerText = `$${product.price.toFixed(2)}`;
             }
 
             updateBadge();
