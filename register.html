@@ -40,11 +40,11 @@
         <div class="p-12 bg-white text-slate-900">
             <h2 class="text-xl font-black italic uppercase tracking-tight mb-6 text-slate-900">Investigator Details</h2>
             
-            <form action="https://formsubmit.co/amintexlabs@gmail.com" method="POST" class="space-y-5">
+            <form onsubmit="handleRegistration(event)" class="space-y-5">
                 
                 <input type="hidden" name="_subject" value="New Account Registration">
                 <input type="hidden" name="_captcha" value="false">
-                <input type="hidden" name="_next" value="https://amintexlabs.com/access-granted.html">
+                <input type="hidden" name="_template" value="table">
 
                 <div>
                     <label class="block text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-1">Full Name</label>
@@ -62,8 +62,8 @@
                     <p class="text-[9px] text-slate-400 mt-1">For account verification purposes only.</p>
                 </div>
 
-                <button type="submit" class="w-full bg-blue-600 text-white py-4 rounded-xl font-black uppercase tracking-widest text-xs hover:bg-slate-900 transition-all shadow-lg shadow-blue-600/20 mt-4">
-                    Register & Unlock Hub
+                <button type="submit" id="submitBtn" class="w-full bg-blue-600 text-white py-4 rounded-xl font-black uppercase tracking-widest text-xs hover:bg-slate-900 transition-all shadow-lg shadow-blue-600/20 mt-4 flex justify-center items-center gap-2">
+                    <span>Register & Unlock Hub</span>
                 </button>
                 
                 <p class="text-[9px] text-center text-slate-400 mt-4">
@@ -73,6 +73,38 @@
         </div>
 
     </div>
+
+    <script>
+        function handleRegistration(e) {
+            e.preventDefault();
+            
+            const btn = document.getElementById('submitBtn');
+            const originalContent = btn.innerHTML;
+            
+            // 1. Change button state to loading
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Establishing Uplink...';
+            btn.classList.add('opacity-75', 'cursor-not-allowed');
+
+            const formData = new FormData(e.target);
+
+            // 2. Send Data to Email (Background)
+            fetch("https://formsubmit.co/ajax/amintexlabs@gmail.com", {
+                method: "POST",
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                // 3. SUCCESS: Redirect to the local file
+                window.location.href = 'access-granted.html';
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                // Even if email fails (e.g. adblocker), let the user in so the demo works
+                window.location.href = 'access-granted.html';
+            });
+        }
+    </script>
 
 </body>
 </html>
