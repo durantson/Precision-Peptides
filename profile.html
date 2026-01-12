@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Investigator Profile | Amintex Labs</title>
+    <meta name="theme-color" content="#2563eb"> 
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚛️</text></svg>">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=JetBrains+Mono&display=swap" rel="stylesheet">
+
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .input-group label { display: block; font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; color: #94a3b8; margin-bottom: 0.5rem; }
+        .input-group input { width: 100%; background: #f8fafc; border: 1px solid #e2e8f0; padding: 0.75rem 1rem; border-radius: 0.75rem; font-weight: 600; font-size: 0.875rem; color: #0f172a; transition: all 0.2s; }
+        .input-group input:focus { outline: none; border-color: #2563eb; background: white; box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1); }
+        .tilt-card { transition: transform 0.1s ease-out; }
+        * { -webkit-tap-highlight-color: transparent; }
+    </style>
+</head>
+<body class="bg-slate-50 font-sans antialiased text-slate-900 min-h-screen flex flex-col">
+
+    <script>
+        if (localStorage.getItem('portalAuthorized') !== 'true') { window.location.href = 'login.html'; }
+    </script>
+
+    <nav class="bg-white/90 backdrop-blur-xl border-b border-slate-200 h-20 flex items-center px-6 md:px-12 justify-between sticky top-0 z-[100]">
+        <a href="index.html" class="flex items-center gap-3 hover:opacity-75 transition-opacity z-50">
+            <div class="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center text-white shadow-lg shadow-blue-600/20">
+                <i class="fas fa-atom text-sm"></i>
+            </div>
+            <span class="font-black text-xl tracking-tighter uppercase italic text-slate-900">Amintex<span class="text-blue-600">Labs</span></span>
+        </a>
+        <div class="hidden lg:flex items-center gap-8">
+            <div class="flex items-center gap-2 px-3 py-1 rounded-full bg-slate-100 border border-slate-200">
+                <div class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></div>
+                <span class="text-[10px] font-bold uppercase tracking-widest text-slate-500">Secure Terminal Active</span>
+            </div>
+        </div>
+        <div class="flex items-center gap-6">
+            <a href="dashboard.html" class="text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-blue-600 transition-colors">Back to Dashboard</a>
+        </div>
+    </nav>
+
+    <main class="flex-1 max-w-5xl mx-auto w-full px-6 py-12">
+        
+        <header class="flex items-center gap-6 mb-12">
+            <div class="w-20 h-20 bg-slate-200 rounded-full overflow-hidden border-4 border-white shadow-lg flex items-center justify-center text-slate-400 text-3xl">
+                <i class="fas fa-user"></i>
+            </div>
+            <div>
+                <h1 class="text-3xl font-black italic uppercase tracking-tight text-slate-900">Investigator Profile</h1>
+                <p class="text-slate-500 text-sm font-medium">Manage institutional credentials and logistics endpoints.</p>
+            </div>
+        </header>
+
+        <form onsubmit="saveProfile(event)" class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            
+            <div class="md:col-span-2 space-y-8">
+                
+                <div class="bg-white p-8 rounded-[2.5rem] border border-slate-200 shadow-sm tilt-card">
+                    <h3 class="text-xs font-black uppercase tracking-widest text-blue-600 mb-6 flex items-center gap-2">
+                        <i class="fas fa-id-card"></i> Identity Protocol
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="input-group">
+                            <label>Principal Investigator</label>
+                            <input type="text" id="p_name" placeholder="Dr. Name">
+                        </div>
+                        <div class="input-group">
+                            <label>Contact Email</label>
+                            <input type="email" id="p_email" placeholder="researcher@lab.edu">
+                        </div>
+                        <div class="input-group">
+                            <label>Institution / Lab</label>
+                            <input type="text" id="p_company" placeholder="University or Facility Name">
+                        </div>
+                        <div class="input-group">
+                            <label>Direct Phone</label>
+                            <input type="tel" id="p_phone" placeholder="+1 (555) 000-0000">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white p-8 rounded-[2.5rem] border border-slate-200 shadow-sm tilt-card">
+                    <h3 class="text-xs font-black uppercase tracking-widest text-emerald-600 mb-6 flex items-center gap-2">
+                        <i class="fas fa-truck-fast"></i> Logistics Node (Default Shipping)
+                    </h3>
+                    <div class="space-y-6">
+                        <div class="input-group">
+                            <label>Street Address</label>
+                            <input type="text" id="p_address" placeholder="123 Research Blvd, Suite 400">
+                        </div>
+                        <div class="grid grid-cols-2 gap-6">
+                            <div class="input-group">
+                                <label>City</label>
+                                <input type="text" id="p_city" placeholder="Cambridge">
+                            </div>
+                            <div class="input-group">
+                                <label>State / Province</label>
+                                <input type="text" id="p_state" placeholder="MA">
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-2 gap-6">
+                            <div class="input-group">
+                                <label>Postal Code</label>
+                                <input type="text" id="p_zip" placeholder="02139">
+                            </div>
+                            <div class="input-group">
+                                <label>Country</label>
+                                <select id="p_country" class="w-full bg-slate-50 border border-slate-200 px-4 py-3 rounded-xl font-bold text-sm text-slate-700 outline-none focus:border-blue-600">
+                                    <option value="US">United States</option>
+                                    <option value="CA">Canada</option>
+                                    <option value="UK">United Kingdom</option>
+                                    <option value="AU">Australia</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="space-y-6">
+                
+                <div class="bg-slate-900 text-white p-8 rounded-[2.5rem] shadow-xl relative overflow-hidden tilt-card">
+                    <div class="absolute top-0 right-0 p-6 opacity-10"><i class="fas fa-save text-6xl"></i></div>
+                    <h3 class="font-bold text-lg mb-2">System Status</h3>
+                    <p class="text-xs text-slate-400 mb-6">Profile changes are synchronized locally to your secure terminal.</p>
+                    
+                    <button type="submit" class="w-full bg-blue-600 text-white py-4 rounded-xl font-black uppercase tracking-widest text-xs hover:bg-white hover:text-slate-900 transition-all shadow-lg shadow-blue-600/30">
+                        Save Configuration
+                    </button>
+                </div>
+
+                <div class="bg-white border border-slate-200 p-8 rounded-[2.5rem] tilt-card">
+                    <h4 class="text-xs font-bold uppercase tracking-widest text-slate-400 mb-4">Security Zone</h4>
+                    <button type="button" onclick="logout()" class="w-full border border-red-200 text-red-500 py-3 rounded-xl font-bold uppercase tracking-widest text-[10px] hover:bg-red-50 transition-colors">
+                        Log Out
+                    </button>
+                </div>
+
+            </div>
+
+        </form>
+
+    </main>
+
+    <footer class="bg-white border-t border-slate-200 py-8 text-center mt-auto">
+        <p class="text-[10px] text-slate-300 uppercase tracking-widest">&copy; 2026 Amintex Labs. Internal System.</p>
+    </footer>
+
+    <script src="godmode.js"></script>
+
+    <script>
+        // Load Profile Logic
+        document.addEventListener('DOMContentLoaded', () => {
+            const saved = JSON.parse(localStorage.getItem('userProfile')) || {};
+            
+            if (saved.name) document.getElementById('p_name').value = saved.name;
+            if (saved.email) document.getElementById('p_email').value = saved.email;
+            if (saved.company) document.getElementById('p_company').value = saved.company;
+            if (saved.phone) document.getElementById('p_phone').value = saved.phone;
+            if (saved.address) document.getElementById('p_address').value = saved.address;
+            if (saved.city) document.getElementById('p_city').value = saved.city;
+            if (saved.state) document.getElementById('p_state').value = saved.state;
+            if (saved.zip) document.getElementById('p_zip').value = saved.zip;
+            if (saved.country) document.getElementById('p_country').value = saved.country;
+        });
+
+        // Save Profile Logic
+        function saveProfile(e) {
+            e.preventDefault();
+            
+            const profile = {
+                name: document.getElementById('p_name').value,
+                email: document.getElementById('p_email').value,
+                company: document.getElementById('p_company').value,
+                phone: document.getElementById('p_phone').value,
+                address: document.getElementById('p_address').value,
+                city: document.getElementById('p_city').value,
+                state: document.getElementById('p_state').value,
+                zip: document.getElementById('p_zip').value,
+                country: document.getElementById('p_country').value
+            };
+
+            localStorage.setItem('userProfile', JSON.stringify(profile));
+            
+            if(typeof showToast === 'function') {
+                showToast('Profile Updated Successfully');
+            } else {
+                alert('Profile Saved');
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem('portalAuthorized');
+            localStorage.removeItem('userRole');
+            window.location.href = 'index.html';
+        }
+    </script>
+
+</body>
+</html>
