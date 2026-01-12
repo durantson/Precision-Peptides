@@ -20,9 +20,12 @@
     
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=JetBrains+Mono&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         body { font-family: 'Inter', sans-serif; } 
         .mono { font-family: 'JetBrains Mono', monospace; }
+        /* Base transition for fallback */
+        .tilt-card { transition: transform 0.1s ease-out; }
         * { -webkit-tap-highlight-color: transparent; }
     </style>
 </head>
@@ -37,6 +40,11 @@
                 Amintex<span class="text-blue-600">Labs</span>
             </span>
         </a>
+        
+        <div class="hidden lg:flex items-center gap-2 mr-6 text-[10px] font-bold text-slate-400 border border-slate-200 px-2 py-1 rounded bg-slate-50 cursor-pointer hover:border-blue-400 transition-colors" onclick="togglePalette()">
+            <i class="fas fa-search"></i> <span>CTRL + K</span>
+        </div>
+
         <div class="flex gap-6">
             <a href="catalog.html" class="text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-blue-600 transition-colors">Catalog</a>
             <a href="account.html" class="text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-blue-600 transition-colors">Portal</a>
@@ -61,56 +69,56 @@
 
         <div class="space-y-6" id="glossaryList">
             
-            <div class="bg-white p-8 rounded-2xl border border-slate-200 term-item shadow-sm hover:shadow-md transition-all">
+            <div class="tilt-card bg-white p-8 rounded-2xl border border-slate-200 term-item shadow-sm hover:shadow-md transition-all">
                 <h3 class="text-xl font-bold text-blue-600 mb-2 uppercase tracking-tight">Acetate Salt</h3>
                 <p class="text-sm text-slate-600 leading-relaxed">
                     The most common counter-ion used in peptide synthesis to stabilize the molecule. Acetate salts are generally preferred in cell culture research over TFA (Trifluoroacetate) salts due to their lower cytotoxicity.
                 </p>
             </div>
 
-            <div class="bg-white p-8 rounded-2xl border border-slate-200 term-item shadow-sm hover:shadow-md transition-all">
+            <div class="tilt-card bg-white p-8 rounded-2xl border border-slate-200 term-item shadow-sm hover:shadow-md transition-all">
                 <h3 class="text-xl font-bold text-blue-600 mb-2 uppercase tracking-tight">Amidation (C-Terminus)</h3>
                 <p class="text-sm text-slate-600 leading-relaxed">
                     A modification where the C-terminal carboxyl group is replaced with an amide group. This mimics the natural state of many hormones and increases the peptide's resistance to carboxypeptidase degradation.
                 </p>
             </div>
 
-            <div class="bg-white p-8 rounded-2xl border border-slate-200 term-item shadow-sm hover:shadow-md transition-all">
+            <div class="tilt-card bg-white p-8 rounded-2xl border border-slate-200 term-item shadow-sm hover:shadow-md transition-all">
                 <h3 class="text-xl font-bold text-blue-600 mb-2 uppercase tracking-tight">Bacteriostatic Water</h3>
                 <p class="text-sm text-slate-600 leading-relaxed">
                     Sterile water containing 0.9% benzyl alcohol, used as a preservative to inhibit the growth of bacteria. Essential for the reconstitution of multi-dose research vials.
                 </p>
             </div>
 
-            <div class="bg-white p-8 rounded-2xl border border-slate-200 term-item shadow-sm hover:shadow-md transition-all">
+            <div class="tilt-card bg-white p-8 rounded-2xl border border-slate-200 term-item shadow-sm hover:shadow-md transition-all">
                 <h3 class="text-xl font-bold text-blue-600 mb-2 uppercase tracking-tight">HPLC</h3>
                 <p class="text-sm text-slate-600 leading-relaxed">
                     <strong>High-Performance Liquid Chromatography.</strong> The analytical "gold standard" used to determine the chemical purity of a peptide. It separates the target peptide from impurities based on their interaction with a stationary phase and a mobile phase.
                 </p>
             </div>
 
-            <div class="bg-white p-8 rounded-2xl border border-slate-200 term-item shadow-sm hover:shadow-md transition-all">
+            <div class="tilt-card bg-white p-8 rounded-2xl border border-slate-200 term-item shadow-sm hover:shadow-md transition-all">
                 <h3 class="text-xl font-bold text-blue-600 mb-2 uppercase tracking-tight">Lyophilization</h3>
                 <p class="text-sm text-slate-600 leading-relaxed">
                     The process of freeze-drying a peptide to remove solvent. This results in a stable "cake" or powder that can be stored and transported at room temperature without immediate degradation.
                 </p>
             </div>
 
-            <div class="bg-white p-8 rounded-2xl border border-slate-200 term-item shadow-sm hover:shadow-md transition-all">
+            <div class="tilt-card bg-white p-8 rounded-2xl border border-slate-200 term-item shadow-sm hover:shadow-md transition-all">
                 <h3 class="text-xl font-bold text-blue-600 mb-2 uppercase tracking-tight">Mass Spectrometry (MS)</h3>
                 <p class="text-sm text-slate-600 leading-relaxed">
                     An analytical technique that measures the mass-to-charge ratio of ions. It is used to verify the exact molecular weight of a synthesized peptide, ensuring the sequence of amino acids is correct.
                 </p>
             </div>
 
-            <div class="bg-white p-8 rounded-2xl border border-slate-200 term-item shadow-sm hover:shadow-md transition-all">
+            <div class="tilt-card bg-white p-8 rounded-2xl border border-slate-200 term-item shadow-sm hover:shadow-md transition-all">
                 <h3 class="text-xl font-bold text-blue-600 mb-2 uppercase tracking-tight">Reconstitution</h3>
                 <p class="text-sm text-slate-600 leading-relaxed">
                     The process of adding a liquid solvent (diluent) to a lyophilized (powdered) reagent to return it to a liquid state for research application.
                 </p>
             </div>
 
-            <div class="bg-white p-8 rounded-2xl border border-slate-200 term-item shadow-sm hover:shadow-md transition-all">
+            <div class="tilt-card bg-white p-8 rounded-2xl border border-slate-200 term-item shadow-sm hover:shadow-md transition-all">
                 <h3 class="text-xl font-bold text-blue-600 mb-2 uppercase tracking-tight">SPPS</h3>
                 <p class="text-sm text-slate-600 leading-relaxed">
                     <strong>Solid Phase Peptide Synthesis.</strong> A method of synthesizing peptides by adding amino acids step-by-step to a solid resin support. Invented by Robert Bruce Merrifield, it allows for the precise creation of complex sequences.
@@ -119,18 +127,6 @@
 
         </div>
     </main>
-
-    <script>
-        document.getElementById('glossarySearch').addEventListener('input', function(e) {
-            const term = e.target.value.toLowerCase();
-            const items = document.querySelectorAll('.term-item');
-            
-            items.forEach(item => {
-                const text = item.innerText.toLowerCase();
-                item.style.display = text.includes(term) ? 'block' : 'none';
-            });
-        });
-    </script>
 
     <footer class="bg-white border-t border-slate-200 py-16">
         <div class="max-w-7xl mx-auto px-6 md:px-12">
@@ -176,7 +172,19 @@
         </div>
     </footer>
 
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="godmode.js"></script>
+
+    <script>
+        document.getElementById('glossarySearch').addEventListener('input', function(e) {
+            const term = e.target.value.toLowerCase();
+            const items = document.querySelectorAll('.term-item');
+            
+            items.forEach(item => {
+                const text = item.innerText.toLowerCase();
+                item.style.display = text.includes(term) ? 'block' : 'none';
+            });
+        });
+    </script>
 
 </body>
 </html>
