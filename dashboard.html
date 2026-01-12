@@ -14,8 +14,11 @@
     <style>
         body { font-family: 'Inter', sans-serif; background-color: #0f172a; color: white; }
         .glass-panel { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.05); }
-        .stat-card { transition: all 0.3s ease; }
-        .stat-card:hover { transform: translateY(-5px); border-color: #3b82f6; }
+        .stat-card { transition: border-color 0.3s ease; }
+        .stat-card:hover { border-color: #3b82f6; }
+        
+        /* Base transition for fallback */
+        .tilt-card { transition: transform 0.1s ease-out; }
         * { -webkit-tap-highlight-color: transparent; }
     </style>
 </head>
@@ -48,6 +51,12 @@
             </a>
         </nav>
 
+        <div class="px-6 pb-6">
+             <button onclick="togglePalette()" class="w-full py-3 rounded-xl bg-slate-800 border border-slate-700 text-slate-400 text-[10px] font-bold uppercase tracking-widest hover:bg-slate-700 hover:text-white transition-all flex items-center justify-center gap-2">
+                <i class="fas fa-search"></i> Command (Ctrl+K)
+            </button>
+        </div>
+
         <div class="p-6 border-t border-white/5">
             <button onclick="logout()" class="flex items-center gap-2 text-xs font-bold text-red-400 uppercase tracking-widest hover:text-red-300">
                 <i class="fas fa-power-off"></i> Terminate Session
@@ -67,7 +76,7 @@
                 <p class="text-slate-400 text-sm mt-1">Welcome back, Principal Investigator.</p>
             </div>
             
-            <div class="glass-panel p-6 rounded-2xl w-full md:w-auto min-w-[300px]">
+            <div class="glass-panel tilt-card p-6 rounded-2xl w-full md:w-auto min-w-[300px]">
                 <div class="flex justify-between items-center mb-2">
                     <span class="text-[10px] font-bold uppercase tracking-widest text-slate-400">Current Clearance</span>
                     <span class="text-[10px] font-bold uppercase tracking-widest text-blue-400">Associate Level</span>
@@ -80,7 +89,7 @@
         </header>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-            <div class="glass-panel p-8 rounded-[2rem] stat-card relative overflow-hidden">
+            <div class="glass-panel tilt-card p-8 rounded-[2rem] stat-card relative overflow-hidden">
                 <div class="relative z-10">
                     <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Total Requisitions</p>
                     <h3 class="text-4xl font-black text-white">12</h3>
@@ -88,7 +97,7 @@
                 <i class="fas fa-file-signature absolute -bottom-4 -right-4 text-8xl text-white/5"></i>
             </div>
             
-            <div class="glass-panel p-8 rounded-[2rem] stat-card relative overflow-hidden">
+            <div class="glass-panel tilt-card p-8 rounded-[2rem] stat-card relative overflow-hidden">
                 <div class="relative z-10">
                     <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Pending Manifest</p>
                     <h3 id="pending-total" class="text-4xl font-black text-emerald-400">$0.00</h3>
@@ -97,7 +106,7 @@
                 <i class="fas fa-shopping-bag absolute -bottom-4 -right-4 text-8xl text-emerald-500/10"></i>
             </div>
 
-            <div class="glass-panel p-8 rounded-[2rem] stat-card relative overflow-hidden">
+            <div class="glass-panel tilt-card p-8 rounded-[2rem] stat-card relative overflow-hidden">
                 <div class="relative z-10">
                     <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Research Spend (YTD)</p>
                     <h3 class="text-4xl font-black text-blue-400">$8,450</h3>
@@ -162,6 +171,8 @@
         </div>
 
     </main>
+
+    <script src="godmode.js"></script>
 
     <script>
         function logout() {
