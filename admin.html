@@ -11,7 +11,6 @@
     <style>
         body { font-family: 'Inter', sans-serif; } 
         .mono { font-family: 'JetBrains Mono', monospace; }
-        /* Custom Select Styling */
         select {
             appearance: none;
             background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%2394a3b8' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
@@ -19,6 +18,7 @@
             background-repeat: no-repeat;
             background-size: 1.5em 1.5em;
         }
+        .nav-btn.active { background-color: #1e293b; color: white; border-left: 3px solid #3b82f6; }
     </style>
 </head>
 <body class="bg-slate-900 text-white min-h-screen flex">
@@ -33,14 +33,19 @@
             <span>Amintex<span class="text-white">Admin</span></span>
         </div>
         
-        <nav class="space-y-4 flex-1 text-xs font-bold uppercase tracking-widest text-slate-400">
-            <a href="#" class="block py-3 px-4 bg-slate-800 text-white rounded-xl"><i class="fas fa-tachometer-alt w-6"></i> Dashboard</a>
-            <a href="#" class="block py-3 px-4 hover:text-white transition-colors"><i class="fas fa-boxes w-6"></i> Inventory Control</a>
-            <a href="#" class="block py-3 px-4 hover:text-white transition-colors"><i class="fas fa-users w-6"></i> Client Roster</a>
-            <a href="#" class="block py-3 px-4 hover:text-white transition-colors"><i class="fas fa-file-invoice w-6"></i> Manifests</a>
+        <nav class="space-y-2 flex-1 text-xs font-bold uppercase tracking-widest text-slate-400">
+            <button onclick="switchView('inventory')" id="nav-inventory" class="nav-btn active w-full text-left py-4 px-4 rounded-xl hover:bg-slate-800 transition-all flex items-center gap-3">
+                <i class="fas fa-boxes w-4"></i> Inventory
+            </button>
+            <button onclick="switchView('clients')" id="nav-clients" class="nav-btn w-full text-left py-4 px-4 rounded-xl hover:bg-slate-800 transition-all flex items-center gap-3">
+                <i class="fas fa-users w-4"></i> Client Roster
+            </button>
+            <button onclick="switchView('manifests')" id="nav-manifests" class="nav-btn w-full text-left py-4 px-4 rounded-xl hover:bg-slate-800 transition-all flex items-center gap-3">
+                <i class="fas fa-file-invoice w-4"></i> Orders
+            </button>
         </nav>
 
-        <button onclick="logout()" class="text-xs font-bold text-red-500 uppercase tracking-widest flex items-center gap-2">
+        <button onclick="logout()" class="text-xs font-bold text-red-500 uppercase tracking-widest flex items-center gap-2 mb-4">
             <i class="fas fa-power-off"></i> Secure Logout
         </button>
     </aside>
@@ -49,7 +54,7 @@
         
         <header class="flex justify-between items-end mb-12">
             <div>
-                <h1 class="text-4xl font-black text-white uppercase italic tracking-tighter">System Overview</h1>
+                <h1 id="page-title" class="text-4xl font-black text-white uppercase italic tracking-tighter">Inventory Control</h1>
                 <p class="text-slate-400 text-sm mt-2">Administrator: Root User</p>
             </div>
             <div class="flex gap-4">
@@ -58,34 +63,123 @@
                     <p class="text-2xl font-black text-white">1,204</p>
                 </div>
                 <div class="bg-slate-800 px-6 py-3 rounded-2xl border border-slate-700 text-center">
-                    <p class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Revenue (MTD)</p>
-                    <p class="text-2xl font-black text-emerald-400">$84,320</p>
+                    <p class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Pending Orders</p>
+                    <p class="text-2xl font-black text-blue-400">3</p>
                 </div>
             </div>
         </header>
 
-        <div class="bg-slate-800/50 border border-slate-700 rounded-[2.5rem] p-8">
-            <div class="flex justify-between items-center mb-8">
-                <h3 class="text-xl font-black uppercase italic">Inventory Status Protocol</h3>
-                <div class="relative">
-                    <input type="text" id="adminSearch" onkeyup="renderAdminTable()" placeholder="Search Database..." class="bg-slate-900 border border-slate-700 rounded-xl py-2 px-4 text-sm text-white focus:outline-none focus:border-blue-500 w-64">
+        <div id="view-inventory" class="view-section">
+            <div class="bg-slate-800/50 border border-slate-700 rounded-[2.5rem] p-8">
+                <div class="flex justify-between items-center mb-8">
+                    <h3 class="text-xl font-black uppercase italic">Master Database</h3>
+                    <div class="relative">
+                        <input type="text" id="adminSearch" onkeyup="renderInventoryTable()" placeholder="Search SKU..." class="bg-slate-900 border border-slate-700 rounded-xl py-2 px-4 text-sm text-white focus:outline-none focus:border-blue-500 w-64">
+                    </div>
+                </div>
+                <div class="overflow-hidden rounded-xl border border-slate-700">
+                    <table class="w-full text-left text-sm">
+                        <thead class="bg-slate-900 text-[10px] font-black uppercase tracking-widest text-slate-400">
+                            <tr>
+                                <th class="px-6 py-4">SKU</th>
+                                <th class="px-6 py-4">Name</th>
+                                <th class="px-6 py-4">Price</th>
+                                <th class="px-6 py-4 w-48">Catalog</th>
+                                <th class="px-6 py-4 w-48">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="inventory-body" class="divide-y divide-slate-700 bg-slate-800/30"></tbody>
+                    </table>
                 </div>
             </div>
+        </div>
 
-            <div class="overflow-hidden rounded-xl border border-slate-700">
-                <table class="w-full text-left text-sm">
-                    <thead class="bg-slate-900 text-[10px] font-black uppercase tracking-widest text-slate-400">
-                        <tr>
-                            <th class="px-6 py-4">SKU / Code</th>
-                            <th class="px-6 py-4">Reagent Name</th>
-                            <th class="px-6 py-4">Price</th>
-                            <th class="px-6 py-4 w-48">Catalog Visibility</th>
-                            <th class="px-6 py-4 w-48">Stock Status</th>
-                        </tr>
-                    </thead>
-                    <tbody id="admin-table-body" class="divide-y divide-slate-700 bg-slate-800/30">
+        <div id="view-clients" class="view-section hidden">
+            <div class="bg-slate-800/50 border border-slate-700 rounded-[2.5rem] p-8">
+                <div class="flex justify-between items-center mb-8">
+                    <h3 class="text-xl font-black uppercase italic">Registered Researchers</h3>
+                    <button class="bg-blue-600 text-white px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-widest hover:bg-blue-500">Export CSV</button>
+                </div>
+                <div class="overflow-hidden rounded-xl border border-slate-700">
+                    <table class="w-full text-left text-sm">
+                        <thead class="bg-slate-900 text-[10px] font-black uppercase tracking-widest text-slate-400">
+                            <tr>
+                                <th class="px-6 py-4">Name</th>
+                                <th class="px-6 py-4">Institution/Email</th>
+                                <th class="px-6 py-4">Verified</th>
+                                <th class="px-6 py-4">Total Spend</th>
+                                <th class="px-6 py-4">Tier</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-700 bg-slate-800/30">
+                            <tr class="hover:bg-slate-700/50">
+                                <td class="px-6 py-4 font-bold">Dr. Sarah Connor</td>
+                                <td class="px-6 py-4 text-slate-400">sarah@ucla.edu</td>
+                                <td class="px-6 py-4"><span class="bg-emerald-500/20 text-emerald-400 px-2 py-1 rounded text-[10px] font-bold uppercase">Verified</span></td>
+                                <td class="px-6 py-4 mono">$12,450.00</td>
+                                <td class="px-6 py-4 text-blue-400 font-bold text-xs uppercase">Senior Inv.</td>
+                            </tr>
+                            <tr class="hover:bg-slate-700/50">
+                                <td class="px-6 py-4 font-bold">LabCorp Procurement</td>
+                                <td class="px-6 py-4 text-slate-400">orders@labcorp.com</td>
+                                <td class="px-6 py-4"><span class="bg-emerald-500/20 text-emerald-400 px-2 py-1 rounded text-[10px] font-bold uppercase">Verified</span></td>
+                                <td class="px-6 py-4 mono">$105,200.00</td>
+                                <td class="px-6 py-4 text-emerald-400 font-bold text-xs uppercase">Directorate</td>
+                            </tr>
+                            <tr class="hover:bg-slate-700/50">
+                                <td class="px-6 py-4 font-bold">John Doe</td>
+                                <td class="px-6 py-4 text-slate-400">jd_research@gmail.com</td>
+                                <td class="px-6 py-4"><span class="bg-amber-500/20 text-amber-400 px-2 py-1 rounded text-[10px] font-bold uppercase">Pending</span></td>
+                                <td class="px-6 py-4 mono">$0.00</td>
+                                <td class="px-6 py-4 text-slate-500 font-bold text-xs uppercase">Associate</td>
+                            </tr>
                         </tbody>
-                </table>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div id="view-manifests" class="view-section hidden">
+            <div class="bg-slate-800/50 border border-slate-700 rounded-[2.5rem] p-8">
+                <div class="flex justify-between items-center mb-8">
+                    <h3 class="text-xl font-black uppercase italic">Incoming Requisitions</h3>
+                </div>
+                <div class="overflow-hidden rounded-xl border border-slate-700">
+                    <table class="w-full text-left text-sm">
+                        <thead class="bg-slate-900 text-[10px] font-black uppercase tracking-widest text-slate-400">
+                            <tr>
+                                <th class="px-6 py-4">Order ID</th>
+                                <th class="px-6 py-4">Client</th>
+                                <th class="px-6 py-4">Items</th>
+                                <th class="px-6 py-4">Total</th>
+                                <th class="px-6 py-4">Status</th>
+                                <th class="px-6 py-4">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-700 bg-slate-800/30">
+                            <tr class="hover:bg-slate-700/50">
+                                <td class="px-6 py-4 font-mono text-blue-400">#REQ-2026</td>
+                                <td class="px-6 py-4 font-bold">LabCorp Procurement</td>
+                                <td class="px-6 py-4 text-slate-400">Tirzepatide (50x)</td>
+                                <td class="px-6 py-4 mono">$3,450.00</td>
+                                <td class="px-6 py-4"><span class="bg-blue-500/20 text-blue-400 px-2 py-1 rounded text-[10px] font-bold uppercase">Processing</span></td>
+                                <td class="px-6 py-4">
+                                    <button class="bg-slate-700 hover:bg-emerald-600 text-white px-3 py-1 rounded text-[10px] font-bold uppercase transition-colors">Mark Shipped</button>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-slate-700/50">
+                                <td class="px-6 py-4 font-mono text-blue-400">#REQ-2025</td>
+                                <td class="px-6 py-4 font-bold">Dr. Sarah Connor</td>
+                                <td class="px-6 py-4 text-slate-400">BPC-157 (10x), TB-500 (5x)</td>
+                                <td class="px-6 py-4 mono">$725.00</td>
+                                <td class="px-6 py-4"><span class="bg-amber-500/20 text-amber-400 px-2 py-1 rounded text-[10px] font-bold uppercase">Pending Payment</span></td>
+                                <td class="px-6 py-4">
+                                    <button class="bg-slate-700 hover:bg-emerald-600 text-white px-3 py-1 rounded text-[10px] font-bold uppercase transition-colors">Verify</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
 
@@ -94,15 +188,34 @@
     <script src="inventory.js"></script>
 
     <script>
-        function renderAdminTable() {
-            const tbody = document.getElementById('admin-table-body');
+        // --- NAVIGATION LOGIC ---
+        function switchView(viewName) {
+            // Hide all views
+            document.querySelectorAll('.view-section').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.nav-btn').forEach(el => el.classList.remove('active'));
+
+            // Show selected view
+            document.getElementById('view-' + viewName).classList.remove('hidden');
+            document.getElementById('nav-' + viewName).classList.add('active');
+
+            // Update Header Title
+            const titles = {
+                'inventory': 'Inventory Control',
+                'clients': 'Client Roster',
+                'manifests': 'Manifest Log'
+            };
+            document.getElementById('page-title').innerText = titles[viewName];
+        }
+
+        // --- INVENTORY LOGIC ---
+        function renderInventoryTable() {
+            const tbody = document.getElementById('inventory-body');
             const search = document.getElementById('adminSearch').value.toLowerCase();
             tbody.innerHTML = '';
 
             const filtered = masterInventory.filter(p => p.name.toLowerCase().includes(search) || p.code.toLowerCase().includes(search));
 
             filtered.forEach(item => {
-                // Dropdown Logic
                 const visibilitySelect = `
                     <select onchange="updateVisibility('${item.id}', this.value)" 
                         class="w-full bg-slate-900 border border-slate-600 text-xs font-bold text-slate-300 rounded-lg py-2 pl-3 pr-8 focus:outline-none focus:border-blue-500 cursor-pointer">
@@ -132,19 +245,15 @@
             });
         }
 
-        // SIMULATION FUNCTIONS
         function updateStock(id, value) {
             const item = masterInventory.find(i => i.id === id);
             item.inStock = (value === 'true');
-            // Re-render to update text colors immediately
-            renderAdminTable(); 
-            console.log(`Updated ${item.name}: Stock = ${item.inStock}`);
+            renderInventoryTable(); // Re-render to update color
         }
 
         function updateVisibility(id, value) {
             const item = masterInventory.find(i => i.id === id);
             item.showInCatalog = (value === 'true');
-            console.log(`Updated ${item.name}: Visibility = ${item.showInCatalog}`);
         }
 
         function logout() {
@@ -153,7 +262,8 @@
             window.location.href = 'account.html';
         }
 
-        renderAdminTable();
+        // Initialize
+        renderInventoryTable();
     </script>
 
 </body>
