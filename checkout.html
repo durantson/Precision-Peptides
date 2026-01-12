@@ -3,135 +3,122 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Secure Checkout | Amintex Labs</title>
+    <title>Secure Manifest | Amintex Labs</title>
     
     <meta name="theme-color" content="#2563eb"> 
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚛️</text></svg>">
 
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=JetBrains+Mono&display=swap" rel="stylesheet">
+
     <style>
         body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
-        .input-group input:focus { border-color: #2563eb; ring: 2px; ring-color: #bfdbfe; }
+        .input-group label { display: block; font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; color: #94a3b8; margin-bottom: 0.5rem; }
+        .input-group input { width: 100%; background: white; border: 1px solid #e2e8f0; padding: 0.75rem 1rem; border-radius: 0.75rem; font-weight: 600; font-size: 0.875rem; color: #0f172a; transition: all 0.2s; }
+        .input-group input:focus { outline: none; border-color: #2563eb; box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1); }
         .tilt-card { transition: transform 0.1s ease-out; }
-        * { -webkit-tap-highlight-color: transparent; }
     </style>
 </head>
-<body class="text-slate-900 min-h-screen flex flex-col">
+<body class="min-h-screen flex flex-col">
 
-    <nav class="bg-white border-b border-slate-200 h-16 flex items-center px-6 justify-between sticky top-0 z-50">
-        <a href="index.html" class="flex items-center gap-2 hover:opacity-75 transition-opacity">
-            <div class="w-8 h-8 bg-blue-600 rounded flex items-center justify-center text-white"><i class="fas fa-atom text-xs"></i></div>
-            <span class="font-bold text-lg tracking-tighter uppercase italic text-slate-900">Amintex<span class="text-blue-600">Labs</span></span>
+    <nav class="bg-white border-b border-slate-200 h-20 flex items-center px-6 md:px-12 justify-between sticky top-0 z-50">
+        <a href="index.html" class="flex items-center gap-3">
+            <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white"><i class="fas fa-atom text-xs"></i></div>
+            <span class="font-black text-xl tracking-tighter uppercase italic text-slate-900">Amintex<span class="text-blue-600">Labs</span></span>
         </a>
-        <div class="flex items-center gap-2 text-[10px] font-bold text-emerald-600 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-100">
-            <i class="fas fa-lock"></i> 256-Bit SSL Secured
-        </div>
+        <a href="catalog.html" class="text-xs font-bold uppercase tracking-widest text-slate-400 hover:text-blue-600">Back to Catalog</a>
     </nav>
 
     <main class="flex-1 max-w-7xl mx-auto w-full px-6 py-12">
-        
-        <div class="mb-12">
-            <h1 class="text-3xl font-black italic text-slate-900 uppercase tracking-tight">Requisition Manifest</h1>
-            <p class="text-slate-500 text-sm mt-2">Review your reagents and confirm shipping logistics.</p>
-        </div>
-
-        <div id="empty-cart-msg" class="hidden text-center py-20">
-            <div class="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-6 text-slate-300">
-                <i class="fas fa-box-open text-2xl"></i>
-            </div>
-            <h2 class="text-xl font-bold text-slate-900 mb-2">Manifest Empty</h2>
-            <p class="text-slate-500 text-sm mb-8">No reagents currently selected for procurement.</p>
-            <a href="catalog.html" class="bg-slate-900 text-white px-8 py-3 rounded-xl font-bold text-xs uppercase tracking-widest hover:bg-blue-600 transition-colors">Return to Catalog</a>
-        </div>
-
-        <div id="checkout-grid" class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
             
             <div class="lg:col-span-7 space-y-8">
-                <div class="bg-white border border-slate-200 rounded-[2rem] p-8 shadow-sm">
-                    <h3 class="text-sm font-black uppercase tracking-widest text-slate-900 mb-6 flex items-center gap-2">
-                        <i class="fas fa-building text-blue-600"></i> Institutional Details
-                    </h3>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div class="input-group">
-                            <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">Principal Investigator</label>
-                            <input type="text" class="w-full bg-slate-50 border border-slate-200 rounded-xl py-3 px-4 text-sm font-bold text-slate-900 focus:outline-none" placeholder="Dr. First Last">
-                        </div>
-                        <div class="input-group">
-                            <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">Institution / Lab Name</label>
-                            <input type="text" class="w-full bg-slate-50 border border-slate-200 rounded-xl py-3 px-4 text-sm font-bold text-slate-900 focus:outline-none" placeholder="University or Company">
-                        </div>
-                        <div class="input-group md:col-span-2">
-                            <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">Institutional Email</label>
-                            <input type="email" class="w-full bg-slate-50 border border-slate-200 rounded-xl py-3 px-4 text-sm font-bold text-slate-900 focus:outline-none" placeholder="researcher@lab.edu">
-                        </div>
+                
+                <div class="bg-white p-8 rounded-[2.5rem] border border-slate-200 shadow-sm tilt-card">
+                    <h2 class="text-xs font-black uppercase tracking-widest text-blue-600 mb-6">Current Manifest</h2>
+                    <div id="cart-container" class="space-y-4">
+                        <div class="text-center py-8 text-slate-400 text-sm">Loading Manifest...</div>
                     </div>
                 </div>
 
-                <div class="bg-white border border-slate-200 rounded-[2rem] p-8 shadow-sm">
-                    <h3 class="text-sm font-black uppercase tracking-widest text-slate-900 mb-6 flex items-center gap-2">
-                        <i class="fas fa-truck-fast text-blue-600"></i> Logistics Address
-                    </h3>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div class="input-group md:col-span-2">
-                            <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">Street Address</label>
-                            <input type="text" class="w-full bg-slate-50 border border-slate-200 rounded-xl py-3 px-4 text-sm font-bold text-slate-900 focus:outline-none" placeholder="123 Science Dr, Building 4">
-                        </div>
-                        <div class="input-group">
-                            <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">City</label>
-                            <input type="text" class="w-full bg-slate-50 border border-slate-200 rounded-xl py-3 px-4 text-sm font-bold text-slate-900 focus:outline-none">
-                        </div>
-                        <div class="input-group">
-                            <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">ZIP / Postal Code</label>
-                            <input type="text" class="w-full bg-slate-50 border border-slate-200 rounded-xl py-3 px-4 text-sm font-bold text-slate-900 focus:outline-none">
+                <div class="bg-white p-8 rounded-[2.5rem] border border-slate-200 shadow-sm tilt-card">
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="text-xs font-black uppercase tracking-widest text-emerald-600">Logistics Data</h2>
+                        
+                        <div id="autofill-badge" class="hidden flex items-center gap-2 bg-blue-50 px-3 py-1 rounded-full border border-blue-100">
+                            <i class="fas fa-magic text-blue-500 text-[10px]"></i>
+                            <span class="text-[9px] font-bold uppercase text-blue-600">Profile Loaded</span>
                         </div>
                     </div>
+
+                    <form id="checkout-form" class="space-y-6">
+                        <div class="grid grid-cols-2 gap-6">
+                            <div class="input-group">
+                                <label>Investigator Name</label>
+                                <input type="text" id="c_name" required placeholder="Dr. Doe">
+                            </div>
+                            <div class="input-group">
+                                <label>Lab / Institution</label>
+                                <input type="text" id="c_company" placeholder="Institute Name">
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <label>Email Address</label>
+                            <input type="email" id="c_email" required placeholder="lab@uni.edu">
+                        </div>
+                        <div class="input-group">
+                            <label>Shipping Address</label>
+                            <input type="text" id="c_address" required placeholder="Street Address">
+                        </div>
+                        <div class="grid grid-cols-3 gap-6">
+                            <div class="input-group">
+                                <label>City</label>
+                                <input type="text" id="c_city" required placeholder="City">
+                            </div>
+                            <div class="input-group">
+                                <label>State</label>
+                                <input type="text" id="c_state" required placeholder="State">
+                            </div>
+                            <div class="input-group">
+                                <label>Zip</label>
+                                <input type="text" id="c_zip" required placeholder="Zip">
+                            </div>
+                        </div>
+                    </form>
                 </div>
+
             </div>
 
             <div class="lg:col-span-5">
-                <div class="tilt-card bg-white border-2 border-slate-100 rounded-[2.5rem] p-8 shadow-xl shadow-slate-200/50 sticky top-24">
-                    <div class="flex justify-between items-center mb-6">
-                        <h3 class="text-sm font-black uppercase tracking-widest text-slate-900">Manifest Summary</h3>
-                        <span id="item-count" class="bg-slate-100 text-slate-500 px-2 py-1 rounded text-[10px] font-bold uppercase">0 Items</span>
-                    </div>
-
-                    <div id="cart-items" class="space-y-4 max-h-[300px] overflow-y-auto mb-8 pr-2">
+                <div class="bg-slate-900 text-white p-8 rounded-[2.5rem] shadow-2xl sticky top-28 tilt-card">
+                    <h2 class="text-xs font-black uppercase tracking-widest text-slate-500 mb-8">Requisition Summary</h2>
+                    
+                    <div class="space-y-4 mb-8 text-sm">
+                        <div class="flex justify-between">
+                            <span class="text-slate-400">Subtotal</span>
+                            <span class="font-bold" id="summ-sub">$0.00</span>
                         </div>
-
-                    <div class="border-t-2 border-dashed border-slate-100 pt-6 space-y-3">
-                        <div class="flex justify-between text-xs font-bold text-slate-500">
-                            <span>Subtotal</span>
-                            <span id="subtotal-display">$0.00</span>
+                        <div class="flex justify-between">
+                            <span class="text-slate-400">Processing</span>
+                            <span class="font-bold">$0.00</span>
                         </div>
-                        <div class="flex justify-between text-xs font-bold text-slate-500">
-                            <span>Cold Chain Shipping</span>
-                            <span id="shipping-display">$35.00</span>
+                        <div class="flex justify-between">
+                            <span class="text-slate-400">Shipping (Cold Chain)</span>
+                            <span class="font-bold text-emerald-400">Included</span>
                         </div>
-                        <div id="waiver-message" class="hidden text-right">
-                            <span class="text-[9px] font-black uppercase tracking-widest text-amber-500 bg-amber-50 px-2 py-1 rounded">Directorate Status Applied</span>
-                        </div>
-                        <div class="flex justify-between text-xs font-bold text-slate-500">
-                            <span>Estimated Tax (5%)</span>
-                            <span id="tax-display">$0.00</span>
-                        </div>
-                        <div class="flex justify-between items-end pt-4">
-                            <span class="text-sm font-black uppercase tracking-widest text-slate-900">Total Funding Req.</span>
-                            <span id="total-display" class="text-3xl font-black text-blue-600">$0.00</span>
+                        <div class="pt-4 border-t border-white/10 flex justify-between items-end">
+                            <span class="text-xs font-bold uppercase tracking-widest text-slate-400">Total</span>
+                            <span class="text-3xl font-black italic tracking-tight" id="summ-total">$0.00</span>
                         </div>
                     </div>
 
-                    <div class="mt-8 mb-6">
-                        <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">Purchase Order (Optional)</label>
-                        <input type="text" class="w-full bg-slate-50 border border-slate-200 rounded-xl py-3 px-4 text-sm font-bold text-slate-900 focus:outline-none" placeholder="PO-2026-XXXX">
-                    </div>
-
-                    <button onclick="processOrder()" class="w-full bg-slate-900 text-white py-5 rounded-2xl font-black uppercase tracking-widest text-xs hover:bg-emerald-600 transition-all shadow-lg hover:shadow-emerald-600/30">
-                        Submit Requisition
+                    <button onclick="processOrder()" class="w-full bg-blue-600 text-white py-4 rounded-xl font-black uppercase tracking-widest text-xs hover:bg-white hover:text-slate-900 transition-all shadow-lg shadow-blue-600/30">
+                        Finalize Requisition
                     </button>
                     
-                    <p class="text-center mt-4 text-[9px] text-slate-400 font-bold uppercase tracking-widest">
-                        <i class="fas fa-flask mr-1"></i> For Research Use Only
+                    <p class="text-[9px] text-center text-slate-500 mt-6 leading-relaxed">
+                        By finalizing, you confirm this order is for research purposes only. An invoice will be generated and sent to your institutional email.
                     </p>
                 </div>
             </div>
@@ -142,113 +129,97 @@
     <script src="godmode.js"></script>
 
     <script>
-        // --- CART LOGIC ---
         let cart = JSON.parse(localStorage.getItem('precisionCart')) || [];
-        const shippingRate = 35.00;
-        const taxRate = 0.05;
-        
-        // CHECK FOR DIRECTORATE WAIVER (From Admin/Rewards Page)
-        const hasWaiver = localStorage.getItem('perk_shipping') === 'true';
 
         function initCheckout() {
+            renderCart();
+            loadProfileData(); // AUTO-FILL MAGIC
+        }
+
+        function loadProfileData() {
+            const profile = JSON.parse(localStorage.getItem('userProfile'));
+            if (profile) {
+                if(profile.name) document.getElementById('c_name').value = profile.name;
+                if(profile.company) document.getElementById('c_company').value = profile.company;
+                if(profile.email) document.getElementById('c_email').value = profile.email;
+                if(profile.address) document.getElementById('c_address').value = profile.address;
+                if(profile.city) document.getElementById('c_city').value = profile.city;
+                if(profile.state) document.getElementById('c_state').value = profile.state;
+                if(profile.zip) document.getElementById('c_zip').value = profile.zip;
+                
+                // Show badge
+                document.getElementById('autofill-badge').classList.remove('hidden');
+            }
+        }
+
+        function renderCart() {
+            const container = document.getElementById('cart-container');
+            
             if (cart.length === 0) {
-                document.getElementById('checkout-grid').classList.add('hidden');
-                document.getElementById('empty-cart-msg').classList.remove('hidden');
+                container.innerHTML = '<div class="text-center py-8 text-slate-400 italic">Manifest is empty.</div>';
+                updateTotals(0);
                 return;
             }
 
-            renderCartItems();
-            calculateTotals();
-        }
-
-        function renderCartItems() {
-            const container = document.getElementById('cart-items');
             container.innerHTML = '';
-            
+            let total = 0;
+
             cart.forEach((item, index) => {
-                const row = `
-                <div class="flex justify-between items-center bg-slate-50 p-3 rounded-xl border border-slate-100">
-                    <div>
-                        <h4 class="font-bold text-slate-900 text-xs uppercase">${item.name}</h4>
-                        <div class="flex items-center gap-2 mt-1">
-                            <button onclick="adjustQty(${index}, -1)" class="w-5 h-5 flex items-center justify-center bg-white border border-slate-200 rounded text-slate-400 hover:text-blue-600 text-[10px]"><i class="fas fa-minus"></i></button>
-                            <span class="text-[10px] font-bold text-slate-600 w-4 text-center">${item.qty}</span>
-                            <button onclick="adjustQty(${index}, 1)" class="w-5 h-5 flex items-center justify-center bg-white border border-slate-200 rounded text-slate-400 hover:text-blue-600 text-[10px]"><i class="fas fa-plus"></i></button>
+                const lineTotal = item.price * item.qty;
+                total += lineTotal;
+
+                container.innerHTML += `
+                    <div class="flex items-center gap-4 border-b border-slate-100 pb-4 last:border-0 last:pb-0">
+                        <div class="w-12 h-12 bg-slate-50 rounded-xl flex items-center justify-center text-blue-600">
+                            <i class="fas fa-flask"></i>
+                        </div>
+                        <div class="flex-1">
+                            <h4 class="font-bold text-sm text-slate-900">${item.name}</h4>
+                            <p class="text-[10px] text-slate-400 uppercase tracking-widest">$${item.price.toFixed(2)} / unit</p>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <span class="text-xs font-bold text-slate-500">x${item.qty}</span>
+                            <span class="font-bold text-slate-900">$${lineTotal.toFixed(2)}</span>
+                            <button onclick="removeItem(${index})" class="text-slate-300 hover:text-red-500 transition-colors"><i class="fas fa-times"></i></button>
                         </div>
                     </div>
-                    <div class="text-right">
-                        <p class="font-bold text-slate-900 text-sm">$${(item.price * item.qty).toFixed(2)}</p>
-                        <button onclick="removeItem(${index})" class="text-[9px] font-bold text-red-400 uppercase hover:text-red-600">Remove</button>
-                    </div>
-                </div>
                 `;
-                container.innerHTML += row;
             });
-            document.getElementById('item-count').innerText = `${cart.length} Items`;
-        }
 
-        function calculateTotals() {
-            const subtotal = cart.reduce((acc, item) => acc + (item.price * item.qty), 0);
-            
-            // WAIVER LOGIC
-            const shipping = hasWaiver ? 0 : shippingRate;
-            const tax = subtotal * taxRate;
-            const total = subtotal + shipping + tax;
-
-            document.getElementById('subtotal-display').innerText = `$${subtotal.toFixed(2)}`;
-            document.getElementById('tax-display').innerText = `$${tax.toFixed(2)}`;
-            document.getElementById('total-display').innerText = `$${total.toFixed(2)}`;
-
-            const shipDisplay = document.getElementById('shipping-display');
-            const waiverMsg = document.getElementById('waiver-message');
-
-            if (hasWaiver) {
-                shipDisplay.innerHTML = `<span class="line-through text-slate-300 mr-2">$${shippingRate.toFixed(2)}</span> <span class="text-emerald-500 font-black">WAIVED</span>`;
-                waiverMsg.classList.remove('hidden');
-            } else {
-                shipDisplay.innerText = `$${shippingRate.toFixed(2)}`;
-                waiverMsg.classList.add('hidden');
-            }
-        }
-
-        function adjustQty(index, delta) {
-            cart[index].qty += delta;
-            if (cart[index].qty < 1) cart[index].qty = 1;
-            saveAndRender();
+            updateTotals(total);
         }
 
         function removeItem(index) {
             cart.splice(index, 1);
-            saveAndRender();
-            if (cart.length === 0) location.reload();
+            localStorage.setItem('precisionCart', JSON.stringify(cart));
+            renderCart();
         }
 
-        function saveAndRender() {
-            localStorage.setItem('precisionCart', JSON.stringify(cart));
-            renderCartItems();
-            calculateTotals();
+        function updateTotals(total) {
+            document.getElementById('summ-sub').innerText = `$${total.toFixed(2)}`;
+            document.getElementById('summ-total').innerText = `$${total.toFixed(2)}`;
         }
 
         function processOrder() {
-            // Simulate processing
-            const btn = document.querySelector('button[onclick="processOrder()"]');
-            btn.innerHTML = '<i class="fas fa-circle-notch fa-spin mr-2"></i> Encrypting Data...';
-            btn.disabled = true;
-            btn.classList.add('bg-slate-400');
+            if(cart.length === 0) { alert('Manifest is empty'); return; }
+            
+            // Validate Form
+            const req = ['c_name', 'c_email', 'c_address', 'c_city', 'c_state', 'c_zip'];
+            let valid = true;
+            req.forEach(id => {
+                const el = document.getElementById(id);
+                if(!el.value) { el.style.borderColor = 'red'; valid = false; }
+                else { el.style.borderColor = '#e2e8f0'; }
+            });
 
-            setTimeout(() => {
-                // Clear cart
-                localStorage.removeItem('precisionCart');
-                
-                // Add points based on total spend (Simulated reward integration)
-                let currentPoints = parseInt(localStorage.getItem('amintexPoints')) || 0;
-                // Add simplified points: 1 point per $1 spend
-                const totalSpend = parseFloat(document.getElementById('total-display').innerText.replace('$',''));
-                localStorage.setItem('amintexPoints', currentPoints + Math.floor(totalSpend));
+            if(!valid) {
+                if(typeof showToast === 'function') showToast('Please complete shipping details');
+                return;
+            }
 
-                // Redirect
-                window.location.href = 'success.html';
-            }, 2000);
+            // Success
+            localStorage.removeItem('precisionCart');
+            window.location.href = 'success.html';
         }
 
         initCheckout();
